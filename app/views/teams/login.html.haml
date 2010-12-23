@@ -1,0 +1,10 @@
+= flash[:message]
+Login Page For Division
+= @division
+Teams
+= form_tag login_url(@division)
+= select(:team, :id, @teams.map { |x| [x[:name], x[:id]] })
+%br
+= password_field_tag :password
+%br
+= submit_tag "Login"

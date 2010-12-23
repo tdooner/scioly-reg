@@ -1,0 +1,20 @@
+%p
+  There has to be an easier way than typing this in manually...
+
+- form_for @team do |f|
+  Team Name:
+  = f.text_field :name
+  %br
+  Team Number:
+  = f.text_field :number
+  %br
+  Coach's Name:
+  = f.text_field :coach
+  %br
+  Division:
+  = select(:team, :division, Team.divisions)
+  %br
+  Password:
+  = f.password_field :password
+  %br
+  = f.submit

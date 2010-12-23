@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  date: 2010-12-22
+  isCurrent: false
+  registrationBegins: 2010-12-22 15:50:45
+  registrationEnds: 2010-12-22 15:50:45
+
+two:
+  date: 2010-12-22
+  isCurrent: false
+  registrationBegins: 2010-12-22 15:50:45
+  registrationEnds: 2010-12-22 15:50:45
