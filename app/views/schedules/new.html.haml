@@ -1,0 +1,22 @@
+= flash[:message]
+
+- form_for(@schedule) do |f|
+  Event Name:
+  = f.text_field :event
+  %br
+  Tournament:
+  = select(:schedule, :tournament, Tournament.find(:all).map { |x| [x.date, x.id]})
+  %br
+  Division:
+  = select(:schedule, :division, Team.divisions)
+  %br
+  Event Start Time:
+  = f.time_select :starttime, :minute_step => 10
+  %br
+  Event End Time:
+  = f.time_select :endtime, :minute_step => 10
+  %br
+  Number Of Timeslots:
+  = f.text_field :timeslots
+  %br
+  = f.submit "Add Event To Schedule"

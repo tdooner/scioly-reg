@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  event: MyString
+  tournament: 1
+  division: MyString
+  starttime: 2010-12-24 13:38:29
+  endtime: 2010-12-24 13:38:29
+  timeslots: 1
+
+two:
+  event: MyString
+  tournament: 1
+  division: MyString
+  starttime: 2010-12-24 13:38:29
+  endtime: 2010-12-24 13:38:29
+  timeslots: 1

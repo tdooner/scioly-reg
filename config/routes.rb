@@ -1,4 +1,5 @@
 Scioly::Application.routes.draw do
+
   get "home/index"
 
   # The priority is based upon order of creation:
@@ -6,7 +7,7 @@ Scioly::Application.routes.draw do
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
-  resources :teams
+  resources :teams, :schedules
   match '/login' => "teams#login"
   match '/login/:division' => "teams#login", :as => :login
   # Keep in mind you can assign values other than :controller and :action

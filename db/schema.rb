@@ -10,7 +10,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101223001318) do
+ActiveRecord::Schema.define(:version => 20101224183829) do
+
+  create_table "schedules", :force => true do |t|
+    t.string   "event"
+    t.integer  "tournament"
+    t.string   "division"
+    t.time     "starttime"
+    t.time     "endtime"
+    t.integer  "timeslots"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "teams", :force => true do |t|
     t.string   "name"
