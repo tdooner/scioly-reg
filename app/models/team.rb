@@ -9,11 +9,13 @@ class Team < ActiveRecord::Base
 #	validates_confirmation_of :password # if we want to confirm a password with a password_confirmation method
 
 	belongs_to :tournament
+	has_many :signups
 	attr_accessor :password
 
 
 	@@divisions = {"B" => "B", "C" => "C"}
-	
+
+	# Counterintuitively, self denotes a class (static) method.	
 	def self.authenticate(id, password)
 		u = find(:first, :conditions=>["id = ?", id])
 		return nil if u.nil?

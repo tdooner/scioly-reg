@@ -1,0 +1,21 @@
+Schedule for 
+%b
+  = @schedule.event
+  %br
+
+%table
+  %tr
+    %td
+      Timeslot
+    %td
+      Availability
+- @allslots.each do |ts,signup|
+  %tr
+    %td
+      = ts.strftime("%I:%M %p")
+    %td
+      - if not signup.nil?
+        Taken
+      - else
+        Available!
+  %br

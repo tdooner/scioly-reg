@@ -7,7 +7,14 @@ Scioly::Application.routes.draw do
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
-  resources :teams, :schedules
+  resources :teams
+
+  # Rails and I disagree about schedules. Rails thinks they have all the methods
+  #   of resources (they do), but I think that it seems better to view the schedule for an
+  #   event at the singular:
+  #      example.com/schedule/event_name/
+  resources :schedules, :path => "/schedule"
+
   match '/login' => "teams#login"
   match '/login/:division' => "teams#login", :as => :login
   # Keep in mind you can assign values other than :controller and :action

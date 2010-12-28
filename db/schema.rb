@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101224183829) do
+ActiveRecord::Schema.define(:version => 20101228015340) do
 
   create_table "schedules", :force => true do |t|
     t.string   "event"
@@ -19,6 +19,14 @@ ActiveRecord::Schema.define(:version => 20101224183829) do
     t.time     "starttime"
     t.time     "endtime"
     t.integer  "timeslots"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sign_ups", :force => true do |t|
+    t.integer  "scheduleid"
+    t.integer  "teamid"
+    t.time     "time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

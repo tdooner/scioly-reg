@@ -1,7 +1,7 @@
 - @schedules.each do |s|
-  = s.event
+  = link_to(s.event, url_for(s))
   @
-  = s.starttime
+  = s.starttime.strftime("%I:%M %p").downcase
   til
-  = s.endtime
+  = s.endtime.strftime("%I:%M %p").downcase
   %br
