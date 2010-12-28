@@ -11,7 +11,7 @@ class TeamsController < ApplicationController
 	end
 	def create
 		@team = Team.new(params[:team])
-		@team.tournamentid = Tournament.get_current()
+		@team.tournament = Tournament.get_current()
 		if @team.save
 			flash[:message] = "Done!"
 		else

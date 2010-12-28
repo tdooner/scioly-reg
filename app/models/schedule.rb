@@ -1,6 +1,8 @@
 class Schedule < ActiveRecord::Base
 	validates_uniqueness_of :event, :scope => [:tournament, :division], :message => "This event already exists at this Tournament and Division"
 	validates_presence_of :event, :tournament, :division
+
+	has_many :sign_ups
 	# TODO: Validate start, end, and timeslots.
 	
 

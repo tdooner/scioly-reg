@@ -1,9 +1,11 @@
 class SignUp < ActiveRecord::Base
-	belongs_to :teamid
-	validates_uniqueness_of :teamid, :scope => [:scheduleid, :time]
+	belongs_to :team
+    belongs_to :schedule
+
+	validates_uniqueness_of :team_id, :scope => [:schedule_id, :time]
 
 	def self.getSignUps(scheduleid)
-		signups = SignUp.find(:all, :conditions => ["scheduleid = ?", scheduleid])
+		signups = Schedule.find(scheduleid).sign_ups
 		signarray = {}
 		signups.each do |s|
 			signarray[s.time] = s

@@ -10,11 +10,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101228015340) do
+ActiveRecord::Schema.define(:version => 20101228051458) do
 
   create_table "schedules", :force => true do |t|
     t.string   "event"
-    t.integer  "tournament"
+    t.integer  "tournament_id"
     t.string   "division"
     t.time     "starttime"
     t.time     "endtime"
@@ -24,8 +24,8 @@ ActiveRecord::Schema.define(:version => 20101228015340) do
   end
 
   create_table "sign_ups", :force => true do |t|
-    t.integer  "scheduleid"
-    t.integer  "teamid"
+    t.integer  "schedule_id"
+    t.integer  "team_id"
     t.time     "time"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20101228015340) do
     t.string   "hashed_password"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "tournamentid"
+    t.integer  "tournament_id"
   end
 
   create_table "tournaments", :force => true do |t|

@@ -3,9 +3,9 @@ require 'digest/sha1'
 class Team < ActiveRecord::Base
 	validates_presence_of :password # Validate this further???
 	validates_presence_of :number
-	validates_presence_of :tournamentid
+	validates_presence_of :tournament_id
 	validates_presence_of :division
-	validates_uniqueness_of :number, :scope => :tournamentid
+	validates_uniqueness_of :number, :scope => :tournament_id
 #	validates_confirmation_of :password # if we want to confirm a password with a password_confirmation method
 
 	belongs_to :tournament
