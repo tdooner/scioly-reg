@@ -29,6 +29,7 @@ class TeamsController < ApplicationController
 		if request.post?
 			if session[:team] = Team.authenticate(params[:team][:id], params[:password])
 				flash[:message] = "Logged in!"
+				redirect_to :root
 			else
 				flash[:message] = "Not Logged In!"
 			end

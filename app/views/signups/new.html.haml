@@ -1,0 +1,19 @@
+Are you sure you want to make the following reservation?
+%b Your registration is not saved until you click on "Yes" below!
+%br
+Team Name:
+%b
+  = @signup.team.name
+%br
+Event Name:
+%b
+  = @signup.schedule.event
+%br
+Time:
+%b
+  = @signup.time.strftime("%I:%M %p")
+%br
+%br
+= link_to("Yes, I am serious about this.",confirmsignup_url(@signup.schedule, @signup.time.to_i))
+%br
+= link_to("No, I'm still on the fence.", schedule_url(@signup.schedule))

@@ -1,3 +1,6 @@
+- if not flash[:message].nil?
+  = flash[:message]
+  %br
 Schedule for 
 %b
   = @schedule.event
@@ -17,5 +20,5 @@ Schedule for
       - if not signup.nil?
         Taken
       - else
-        Available!
-  %br
+        =link_to("Available!",newsignup_url(@schedule, ts.to_i))
+    %br

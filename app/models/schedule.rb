@@ -30,7 +30,9 @@ class Schedule < ActiveRecord::Base
 		end
 		return timeslots
 	end
-
+	def self.isValidTimeSlot(schedule, time)
+		return schedule.getTimeSlots().include?(time)
+	end
 # 	I'm not sure what I was thinking while making this hash function for TimeSlot IDs.
 #
 #	def self.getTimeSlotID(tournamentid, scheduleid, time)
