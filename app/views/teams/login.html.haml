@@ -1,10 +1,17 @@
 = flash[:message]
-Login Page For Division
-= @division
-Teams
-= form_tag login_url(@division)
-= select(:team, :id, @teams.map { |x| [x[:name], x[:id]] })
-%br
-= password_field_tag :password
-%br
-= submit_tag "Login"
+%div
+  = ["Division ", @division, " Login"].join " "
+%div.bluebox
+  =form_tag login_url(@division)
+  %table{:width => 400}
+    %tr
+      %td
+        %b Select A Team
+      %td
+        =select(:team, :id, @teams.map { |x| [x[:name], x[:id]] })
+    %tr
+      %td 
+        %b Password
+      %td
+        =password_field_tag :password, "",:size => 10
+  =submit_tag "Login"

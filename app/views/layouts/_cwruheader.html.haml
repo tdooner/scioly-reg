@@ -1,0 +1,21 @@
+#cwruHeader
+  #cwruHeaderContent
+    .logo
+      %a{:href => "http://case.edu/", :target => "_parent"}
+        %img{:alt => "cwru logo", :border => "0", :height => "50", :src => "http://case.edu/umc/stage/images/cwru-logo.png", :width => "235"}/
+    #cwruMainNav
+      %ul
+        %li
+          %a{:href => "http://case.edu", :target => "_parent"} Home
+        %li
+          %a{:href => "http://www.case.edu/apply.html", :target => "_parent"} Apply
+        %li
+          %a{:href => "http://giving.case.edu", :target => "_parent"} Give
+        %li
+          %a{:href => "http://www.case.edu/visit/?nw_view=1271447065&", :target => "_parent"} Visit
+        %li
+          %a{:href => "https://www.case.edu/directory/", :target => "_parent"} Find
+    .cwruSearch
+      %form{:action => "http://www.google.com/u/cw", :method => "get", :name => "searchForm", :target => "_parent"}
+        %input{:name => "q", :onfocus => "if(!this._haschanged){this.value=''};this._haschanged=true;", :type => "text", :value => "search cwru..."}/
+        %input.btn{:name => "sa", :src => "http://case.edu/webdev/umc_test/images/searchIcon.jpg", :type => "image"}/

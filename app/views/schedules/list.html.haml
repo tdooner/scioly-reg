@@ -1,7 +1,30 @@
-- @schedules.each do |s|
-  = link_to(s.event, url_for(s))
-  @
-  = s.starttime.strftime("%I:%M %p").downcase
-  til
-  = s.endtime.strftime("%I:%M %p").downcase
-  %br
+%p 
+  Below is a list of all events for the tournament scheduled for
+  =[@current_tournament.humanize, "."].join
+  Please check to ensure you register for all events before registration closes.
+
+%div.bluebox.smalllinks
+  %table#timeslots
+    %tr
+      %td
+        %b Event Name
+      %td
+        %b Begin Time
+      %td
+        %b End Time
+      - if not session[:team].nil? 
+        %td
+          %b Registered?
+    - @schedules.each do |s|
+      %tr
+        - if not session[:team].nil?
+          %td= link_to(s.event, url_for(s))
+        - else
+          %td= s.event
+        %td= s.starttime.strftime("%I:%M %p").downcase
+        %td= s.endtime.strftime("%I:%M %p").downcase
+        -if not session[:team].nil?
+          -if @sign_ups.include?(s.id)
+            %td= image_tag("ok.png")
+          - else
+            %td= image_tag("error.png")

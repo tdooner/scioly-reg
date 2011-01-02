@@ -1,0 +1,26 @@
+=render :partial => "/layouts/header"
+%body#home
+  = render :partial => "/layouts/cwruheader"
+  = render :partial => "/layouts/headerbelowbar"
+  = render :partial => "/layouts/navigation"
+  .breadcrumb
+    .breadcrumbHome
+      .breadcrumbC
+        %h2
+          %strong
+            =breadcrumbs.render(:format => :inline)
+      .sideLink
+        &raquo;
+        = link_to 'Extra link goes here', '#'
+  #contentWrapper
+    #contentContainer
+      #leftCol
+        .blankH
+          = image_tag 'blank.jpg', :width => 10, :height => 180, :alt => "frame image"
+        .blankH
+          = image_tag 'blank.jpg', :width => 180, :height => 10, :alt => "frame image"
+        = yield
+      #rightCol
+        - if not session[:team].nil?
+          =render :partial => "/layouts/rightreminder"
+  = render :partial => "/layouts/footer"

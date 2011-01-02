@@ -5,20 +5,31 @@ Schedule for
 %b
   = @schedule.event
   %br
-
-%table
-  %tr
-    %td
-      Timeslot
-    %td
-      Availability
-- @allslots.each do |ts,signup|
-  %tr
-    %td
-      = ts.strftime("%I:%M %p")
-    %td
-      - if not signup.nil?
-        Taken
+%div{:class => ["bluebox", "smalllinks"]}
+  %table#timeslot{:width => "100%", :style=>"padding:0;margin:0;"}
+    %tr
+      %td
+        %b Timeslot
+      %td
+        %b Availability
+    - @allslots.each do |ts,signup|
+      - tr_id = ""
+      - if not signup.nil? and signup.team_id == session[:team].id
+        - display = session[:team].name
+        - giveoptions = true
+        - tr_id = "current"
       - else
-        =link_to("Available!",newsignup_url(@schedule, ts.to_i))
-    %br
+        // Perhaps add in an option to allow the system to show
+        //  the other team names instead of "taken", optionally.
+        - display = "Taken!"
+        - giveoptions = false
+      %tr{:id => tr_id}
+        %td{:width => "25%"}
+          = ts.strftime("%I:%M %p")
+        %td{:width => "75%"}
+          - if not signup.nil?
+            =display
+            - if giveoptions == true
+              =link_to("(Unregister)",destroysignup_url(@schedule, ts.to_i))
+          - else
+            =link_to("Available!",newsignup_url(@schedule, ts.to_i))

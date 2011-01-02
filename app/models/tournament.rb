@@ -6,4 +6,7 @@ class Tournament < ActiveRecord::Base
 		return @t if not @t.nil?
 		nil
 	end
+	def humanize()
+		return date.strftime("%B %d, %Y")
+	end
 end

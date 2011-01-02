@@ -14,6 +14,21 @@ class SignUp < ActiveRecord::Base
 		return signarray
 	end
 
+	# Returns list of all schedules that given team still needs to register for.
+	def self.getTeamUnregistered(team)
+		# Get the list of all schedules...
+		schedules = Schedule.find(:all, :conditions => ["tournament_id = ?", Tournament.get_current().id])
+		# ...and run it against that team's registrations.
+		# TODO: Figure out the appropriate join for this query to avoid this loop.
+		unregistered = []
+		schedules.each do |s|
+			if not SignUp.find(:first, :conditions => ["schedule_id = ? AND team_id = ?", s.id, team.id])
+				unregistered.push(s)
+			end
+		end
+		return unregistered
+	end
+
 	# Called whenever a new SignUp is saved
 	def validate
 		if not isEmpty(self.time)

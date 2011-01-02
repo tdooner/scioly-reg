@@ -18,9 +18,20 @@ class SignupsController < ApplicationController
 		  flash[:message] = @signup.errors.full_messages().first
 		  redirect_to(schedule_url(@signup.schedule))
 	  end
+
+	  breadcrumbs.add(@signup.schedule.event, url_for(@signup.schedule))
+	  breadcrumbs.add("Register")
   end
 
   def list
+  end
+
+  def destroy
+	  @signup = SignUp.find(:first, :conditions => ["schedule_id = ? AND time = ?", params[:id], Time.at(params[:time].to_i).utc])
+	  if not @signup.nil? and @signup.team_id == session[:team].id
+		  @signup.delete()
+	  end
+	  redirect_to(schedule_url(Schedule.find(params[:id])))
   end
 
   def create

@@ -1,0 +1,16 @@
+#umcNav
+  #topNavWrapper
+    %ul#topnav
+      %li= link_to 'Home', root_path
+      %li
+        = link_to 'Event Information', "#" 
+        %ul
+          %li= link_to "Event Schedule", "#"
+          %li= link_to "Documents and Forms", "#"
+          %li= link_to "Rule Clarifications", "#"
+          %li= link_to "Participating Teams and Team Numbers", "#"
+      %li
+        = link_to 'Team Log In', "#"
+        %ul
+          %li= link_to "Division B Teams", login_url("B")
+          %li= link_to "Division C Teams", login_url("C")

@@ -1,0 +1,26 @@
+@charset "UTF-8";
+/* Print Stylesheet for UMC */
+
+body {
+	margin:0;
+	padding:0;
+	font-family: Helvetica, sans-serif;
+	color:black;
+	
+}
+h1, h2, h3, h4, h5  {
+	color:#000;
+	text-decoration:underline;
+}
+p {
+	font-size: 10pt;
+	line-height: 14pt;
+	width: 6in;
+	margin-left: .25in;
+}
+blockquote {
+	font-size: 14pt;
+	font-style: italic;
+	width: 4in;
+	margin-left: .25in;
+}
