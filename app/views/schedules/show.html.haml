@@ -16,7 +16,7 @@ Schedule for
       - tr_id = "unavailable"
       - if signup.nil?
         - tr_id = ""
-      - if not signup.nil? and signup.team_id == session[:team].id
+      - if not signup.nil? and not session[:team].nil? and signup.team_id == session[:team].id
         - display = session[:team].name
         - giveoptions = true
         - tr_id = "current"
