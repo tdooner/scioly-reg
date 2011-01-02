@@ -5,7 +5,7 @@ class SchedulesController < ApplicationController
 	# is what a team registers to.
 	###
   def list
-	  breadcrumbs.add('All Events')
+	  breadcrumbs.add('Register For Events')
 	  @schedules = Schedule.find(:all)
 	  if not session[:team].nil?
 		  @sign_ups = session[:team].sign_ups.map{|x| x.schedule_id}
@@ -28,7 +28,7 @@ class SchedulesController < ApplicationController
 
   def index
 	@schedules = Schedule.find(:all)
-	breadcrumbs.add('All Events')
+	breadcrumbs.add('Register For Events')
     if not session[:team].nil?
   	    @sign_ups = Team.find(session[:team].id).sign_ups.map{|x| x.schedule_id}
     end

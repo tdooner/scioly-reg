@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
 	breadcrumbs.add 'Home', root_path
 
 	@current_tournament = Tournament.get_current()
+	@all_schedules = Schedule.find(:all, :order => "event ASC")
+
 	if not session[:team].nil?
 		@dont_forget = SignUp.getTeamUnregistered(session[:team])
 	end

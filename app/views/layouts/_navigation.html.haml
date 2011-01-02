@@ -9,8 +9,17 @@
           %li= link_to "Documents and Forms", "#"
           %li= link_to "Rule Clarifications", "#"
           %li= link_to "Participating Teams and Team Numbers", "#"
-      %li
-        = link_to 'Team Log In', "#"
-        %ul
-          %li= link_to "Division B Teams", login_url("B")
-          %li= link_to "Division C Teams", login_url("C")
+      - if session[:team].nil?
+        %li
+          = link_to 'Team Log In', "#"
+          %ul
+            %li= link_to "Division B Teams", login_url("B")
+            %li= link_to "Division C Teams", login_url("C")
+      - else
+        %li
+          = link_to 'Register For Events', schedules_url
+          %ul
+            - @all_schedules.each do |s| 
+              %li=link_to(s.event,s)
+        %li
+          = link_to "Logout", "#"

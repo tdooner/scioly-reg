@@ -7,13 +7,15 @@ Schedule for
   %br
 %div{:class => ["bluebox", "smalllinks"]}
   %table#timeslot{:width => "100%", :style=>"padding:0;margin:0;"}
-    %tr
+    %tr{:style => "background-color:#FFF;"}
       %td
         %b Timeslot
       %td
         %b Availability
     - @allslots.each do |ts,signup|
-      - tr_id = ""
+      - tr_id = "unavailable"
+      - if signup.nil?
+        - tr_id = ""
       - if not signup.nil? and signup.team_id == session[:team].id
         - display = session[:team].name
         - giveoptions = true

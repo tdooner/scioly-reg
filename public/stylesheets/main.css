@@ -30,6 +30,11 @@ table#timeslot tr#current {
 	background-color:#0A304E;
 	color:#FFF;
 }
+table#timeslot tr#unavailable { 
+	/* Timeslot reserved by the team that is logged in */
+	background-color:#FFF;
+	color:#999;
+}
 table#timeslot tr#current a {
 	color:#BBB;
 	text-decoration:underline;
