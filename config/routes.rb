@@ -23,6 +23,7 @@ Scioly::Application.routes.draw do
 
   match '/login' => "teams#login"
   match '/login/:division' => "teams#login", :as => :login
+  match '/logout' => "teams#logout"
   # Keep in mind you can assign values other than :controller and :action
 
   # Sample of named route:
