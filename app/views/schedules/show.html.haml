@@ -30,6 +30,6 @@
           - if not signup.nil?
             =display
             - if giveoptions == true
-              =link_to("(Unregister)",destroysignup_url(@schedule, ts.to_i))
+              =link_to("(Unregister)",destroysignup_url(@schedule, ts.to_i),:class=>"action")
           - else
             =link_to("Available!",newsignup_url(@schedule, ts.to_i))

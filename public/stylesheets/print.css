@@ -1,4 +1,15 @@
 @charset "UTF-8";
+/* Science Olympiad Customizations */
+  /* These look awful and waste paper when printed.
+   * Clearly, not acceptable. */
+#cwruHeader {display:none;} 
+#feature {display:none;}
+#umcNav {display:none;}
+#footer {display:none;}
+div.sideLink{display:none;}
+div.blankH{display:none;}
+
+.action {display:none;}
 /* Print Stylesheet for UMC */
 
 body {
