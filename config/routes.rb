@@ -12,7 +12,8 @@ Scioly::Application.routes.draw do
   #   match 'products/:id' => 'catalog#view'
   resources :teams
 
-  # Rails and I disagree about schedules. Rails thinks they have all the methods
+  # Rails and I disagree about "schedules" vs "schedule". 
+  # Rails thinks they have all the methods
   #   of resources (they do), but I think that it seems better to view the schedule for an
   #   event at the singular:
   #      example.com/schedule/event_name/
@@ -20,6 +21,7 @@ Scioly::Application.routes.draw do
   match '/schedule/:id/register/:time' => "signups#new", :as => :newsignup
   match '/schedule/:id/confirm/:time' => "signups#create", :as => :confirmsignup
   match '/schedule/:id/delete/:time' => "signups#destroy", :as => :destroysignup
+  match '/signups' => "signups#list", :as => :signups
 
   match '/login' => "teams#login"
   match '/login/:division' => "teams#login", :as => :login

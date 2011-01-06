@@ -1,2 +1,21 @@
-<h1>Signups#list</h1>
-<p>Find me in app/views/signups/list.html.erb</p>
+%p
+  Your team is currently registered for the following time slots. Please ensure that your team members know these times.
+%div
+  %table#timeslot
+    %tr{:style => "background-color:#fff"}
+      %td
+        %b Event
+      %td
+        %b Room Number
+      %td
+        %b Registered Time
+    - @sign_ups.each do |s|
+      %tr
+        %td
+          =link_to(s.schedule.event,s.schedule)
+        %td
+          \[Not Implemented Yet]
+        %td
+          =s.time.strftime("%I:%M %p")
+
+

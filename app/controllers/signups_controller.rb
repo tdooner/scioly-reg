@@ -24,6 +24,8 @@ class SignupsController < ApplicationController
   end
 
   def list
+	  @sign_ups = session[:team].sign_ups.reload
+	  breadcrumbs.add("Team " + session[:team].getNumber() + " Registrations")
   end
 
   def destroy

@@ -4,7 +4,7 @@
   Please check to ensure you register for all events before registration closes.
 
 %div.bluebox.smalllinks
-  %table#timeslots
+  %table#timeslot
     %tr
       %td
         %b Event Name
@@ -28,3 +28,7 @@
             %td= image_tag("ok.png")
           - else
             %td= image_tag("error.png")
+    %tr#current
+      %td{:colspan => 4}
+        = link_to("View All Registrations", signups_url)
+
