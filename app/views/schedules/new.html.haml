@@ -5,7 +5,7 @@
   = f.text_field :event
   %br
   Tournament:
-  = select(:schedule, :tournament, Tournament.find(:all).map { |x| [x.date, x.id]})
+  = select(:schedule, :tournament_id, Tournament.find(:all).map { |x| [x.date, x.id]})
   %br
   Division:
   = select(:schedule, :division, Team.divisions)

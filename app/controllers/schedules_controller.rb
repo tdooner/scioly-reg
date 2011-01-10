@@ -4,6 +4,9 @@ class SchedulesController < ApplicationController
 	# tournament and division. In other words, a "schedule"
 	# is what a team registers to.
 	###
+	
+  before_filter CASClient::Frameworks::Rails::Filter, :only => :new
+
   def list
 	  breadcrumbs.add('Register For Events')
 	  @schedules = Schedule.find(:all)
