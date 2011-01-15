@@ -39,6 +39,7 @@ class SchedulesController < ApplicationController
   end
 
   def show
+	breadcrumbs.add('Register For Events', schedules_url)
 	@schedule = Schedule.find(params[:id])
 	breadcrumbs.add(@schedule.event) 
 	if @schedule.nil?

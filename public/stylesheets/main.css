@@ -1,9 +1,12 @@
 @charset "UTF-8";
 /* Customizations for CWRU-SCIOLY */
 .bluebox {
-	width:400px;
-	margin:auto;
+	/*width:400px;
 	background-color:#D4F0FF;
+	*/
+	border:4px dashed #0A304E;
+	padding:20px;
+	margin:auto;
 	text-align:center;
 }
 .bluebox a {
@@ -14,6 +17,15 @@
 }
 .bluebox table {
 	margin:auto;
+}
+p.errorbox {
+	border: 2px dashed #FCC;
+	color:#A00000;
+	padding:8px;
+	text-align:center;
+}
+table#login td {
+	padding:5px 0px;
 }
 table#timeslot {
 	width:100%;
@@ -32,11 +44,10 @@ table#timeslot tr#current {
 }
 table#timeslot tr#unavailable { 
 	/* Timeslot reserved by the team that is logged in */
-	background-color:#FFF;
 	color:#999;
 }
 table#timeslot tr#current a {
-	color:#BBB;
+	color:#FFF;
 	text-decoration:underline;
 }
 div#leftCol {

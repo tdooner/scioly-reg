@@ -1,19 +1,29 @@
-= flash[:message]
-%div
-  = ["Division ", @division, " Login"].join " "
+- if not flash[:error].nil?
+  %p.errorbox
+    =flash[:error]
+%p
+  To register for event timeslots, you must login as a competiting team. Passwords have been sent to the coach of each team.
+  %b
+    Each team
+  has a unique password, even in the case of multiple teams from the same school.
+%p
+  If you have forgotten or misplaced your password, please contact 
+  %a{:href => "https://www.case.edu/cgi-bin/directory/moreinfo/ldap_moreinfo.cgi?moreinfo=james.bader@case.edu&category=faculty"}
+    Jim Bader
+  to receive a new one.
 %div.bluebox
   =form_tag login_url(@division)
-  %table{:width => 400}
+  %table#login{:width => 400}
     %tr
       %td
-        %b Select A Team
+        %b Select A Team:
       %td
         =select(:team, :id, @teams.map { |x| [x[:name], x[:id]] })
     %tr
       %td 
-        %b Password
+        %b Password:
       %td
-        =password_field_tag :password, "",:size => 10
+        =password_field_tag :password, "",:size => 20
     -if @captcha == true
       %tr
         %td{:colspan => 2}

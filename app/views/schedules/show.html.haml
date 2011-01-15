@@ -1,11 +1,11 @@
-- if not flash[:message].nil?
-  = flash[:message]
-  %br
+- if not flash[:error].nil?
+  %p.errorbox
+    = flash[:error]
 %p
   Below are the designated timeslots for this event. Timeslots that have been reserved by another team are greyed out. To sign up for a timeslot, click the word "Available!" next to the desired time.
 %div{:class => ["bluebox", "smalllinks"]}
   %table#timeslot{:width => "100%", :style=>"padding:0;margin:0;"}
-    %tr{:style => "background-color:#FFF;"}
+    %tr
       %td
         %b Timeslot
       %td

@@ -1,7 +1,8 @@
 =render :partial => "/layouts/header"
 %body#home
   = render :partial => "/layouts/cwruheader"
-  = render :partial => "/layouts/headerbelowbar"
+  - if breadcrumbs.items.length == 1
+    = render :partial => "/layouts/headerbelowbar"
   = render :partial => "/layouts/navigation"
   .breadcrumb
     .breadcrumbHome

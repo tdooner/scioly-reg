@@ -22,6 +22,7 @@ class TeamsController < ApplicationController
 	end
 	def login
 		@division = params[:division] == "B"?"B":"C"
+		breadcrumbs.add "Division " + @division + " Login"
 		if session[:loginattempts].nil?
 			session[:loginattempts] = 0
 			session[:showedcaptcha] = false
@@ -33,12 +34,12 @@ class TeamsController < ApplicationController
 		
 		@teams = Team.find(:all, :conditions => ["division = ?", @division])
 		if not session[:team].nil?
-			flash[:message] = "Already logged in!"
+			flash[:error] = "Already logged in!"
 		end
 		if request.post?
 			if @captcha == true and session[:showedcaptcha] == true
 				if not verify_recaptcha()
-					flash[:message] = "Incorrect reCAPTCHA"
+					flash[:error] = "Incorrect Image Verification"
 					return
 				end
 			end
@@ -48,7 +49,7 @@ class TeamsController < ApplicationController
 				session[:loginattempts] = nil
 				redirect_to :root
 			else
-				flash[:message] = "Not Logged In!"
+				flash[:error] = "Incorrect Password For Selected Team"
 			end
 		end
 
