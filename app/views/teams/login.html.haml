@@ -14,4 +14,8 @@
         %b Password
       %td
         =password_field_tag :password, "",:size => 10
+    -if @captcha == true
+      %tr
+        %td{:colspan => 2}
+          =recaptcha_tags :display => ["white"]
   =submit_tag "Login"
