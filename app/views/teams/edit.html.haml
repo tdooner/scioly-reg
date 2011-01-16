@@ -1,0 +1,56 @@
+-if not flash[:error].nil?
+  %p.errorbox
+    =flash[:error]
+%p 
+  To change any information about this team, update the form below and click the submit button. Note that changes will overwrite previous settings and cannot be undone. 
+%div.bluebox
+  -form_for(@team) do |f|
+    %table
+      - if not session[:user].nil? and session[:user].is_admin()
+        %tr
+          %td
+            %b Team Name:
+          %td
+            =f.text_field :name, :size => 30
+        %tr
+          %td
+            %b Team Number:
+          %td
+            =f.text_field :number, :size => 4
+        %tr
+          %td
+            %b Coach:
+          %td
+            =f.text_field :coach, :size =>20
+      - else
+        %tr
+          %td
+            %b Team Name:
+          %td
+            = @team.name
+        %tr
+          %td
+            %b Team Number:
+          %td
+            = @team.getNumber()
+        %tr
+          %td
+            %b Coach:
+          %td
+            = @team.coach
+        %tr
+          %td
+            %b Existing Password:
+          %td
+            =f.password_field :password_existing, :size=>10
+      %tr
+        %td
+          %b Change Password:
+        %td
+          =f.password_field :password, :size => 10
+      %tr
+        %td
+          %b Change Password (confirm):
+        %td
+          =f.password_field :password_confirm, :size => 10
+    =f.submit

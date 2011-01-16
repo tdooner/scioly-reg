@@ -10,7 +10,7 @@ class Team < ActiveRecord::Base
 
 	belongs_to :tournament
 	has_many :sign_ups
-	attr_accessor :password
+	attr_accessor :password, :password_confirm, :password_existing
 
 
 	@@divisions = {"B" => "B", "C" => "C"}

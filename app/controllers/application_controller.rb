@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
 	  end
 	  if not User.is_admin(session[:user])
 			  redirect_to :root
+			  return
 	  else
 			  breadcrumbs.add("Admin", admin_index_url)
 	  end

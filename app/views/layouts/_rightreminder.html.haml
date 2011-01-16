@@ -17,6 +17,7 @@
       %br
       %b Coach:
       =session[:team].coach
+      %br
     %p If any of this information is incorrect, contact Jim Bader.
 
 // If the team has an event to register for...
@@ -48,7 +49,7 @@
       = link_to "View all your registrations", signups_url
 %div.action
   %h4
-    Logout
+    Team Actions
 %div.sideContent.action
-  %p
-    =link_to "Logout", logout_url
+  %p=link_to "Change Password", edit_team_url(session[:team])
+  %p=link_to "Logout", logout_url
