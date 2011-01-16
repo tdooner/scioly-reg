@@ -30,6 +30,7 @@ Scioly::Application.routes.draw do
   match '/signups' => "signups#list", :as => :signups
 
   resources :tournaments
+  post 'tournament/activate' => "tournaments#set_active"
 
   match '/login' => "teams#login"
   match '/login/:division' => "teams#login", :as => :login

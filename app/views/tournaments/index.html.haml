@@ -1,19 +1,26 @@
 %p
   Please select a Tournament to edit:
 %div.bluebox.smalllinks
-  %table
-    %tr
-      %td Active
-      %td Edit Link
-    -@tournaments.each do |t|
+  =form_tag(tournament_activate_url) do
+    %table
       %tr
+        %td 
+          %b Edit Link
         %td
-          =radio_button_tag(:current, t.id, t.isCurrent==true)
-        %td
-          =link_to t.humanize(), edit_tournament_url(t)
+          %b Active
+        %td 
+          %b Delete?
+      -@tournaments.each do |t|
+        %tr
+          %td{:width => 300}
+            =link_to t.humanize(), edit_tournament_url(t)
+          %td
+            =radio_button_tag(:current, t.id, t.isCurrent==true)
+          %td
+            =link_to "Delete", tournament_url(t), :method => :delete, :confirm => "Are you sure you wish to delete this Tournament? If you delete this, all the corresponding teams, events, and signups will be deleted! Click 'OK' to delete."
     %tr
-      %td
-        =submit_tag "Activate!"
       %td
 
+      %td
+        =submit_tag "Set Active"
   =link_to "New Tournament", new_tournament_url

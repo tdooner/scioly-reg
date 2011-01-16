@@ -1,10 +1,15 @@
 class TournamentsController < ApplicationController
   before_filter :is_admin
-
+  protect_from_forgery :except => :destroy
   def create
+	  @tournament = Tournament.new(params[:tournament])
+	  @tournament.save()
+	  redirect_to :tournaments
   end
 
   def new
+	  @tournament = Tournament.new()
+	  breadcrumbs.add("New Tournament")
   end
 
   def edit
@@ -29,6 +34,15 @@ class TournamentsController < ApplicationController
   end
 
   def destroy
+	  #TODO: Delete all corresponding events, teams, and signups
+	  @t = Tournament.find(params[:id])
+	  @t.destroy()
+	  redirect_to :tournaments
   end
 
+  def set_active
+	  @active = Tournament.find(params[:current])
+	  @active.set_current()
+	  redirect_to :tournaments
+  end
 end
