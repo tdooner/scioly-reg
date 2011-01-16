@@ -10,6 +10,9 @@
   Division:
   = select(:schedule, :division, Team.divisions)
   %br
+  Room:
+  = f.text_field :room
+  %br
   Event Start Time:
   = f.time_select :starttime, :minute_step => 10
   %br
