@@ -1,4 +1,5 @@
 class TeamsController < ApplicationController
+	before_filter :is_admin, :only => [:new, :create]
 	def index
 		@teams = Team.find(:all)
 		render :list

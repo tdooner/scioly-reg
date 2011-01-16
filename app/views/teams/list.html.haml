@@ -1,3 +1,17 @@
-= flash[:message]
-- @teams.each do |t|
-  %p= t.name
+%p
+  Below are all the teams registered for the Tournament occurring on
+  = @current_tournament.humanize() + "."
+
+%table
+  %tr
+    %td
+      %b Team Name
+    %td
+      %b Division
+    - @teams.each do |t|
+      %tr
+        %td=t.name
+        %td=t.division
+  %tr
+    %td{:colspan=>2}
+      =link_to "Add New Team", new_team_url
