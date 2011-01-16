@@ -1,5 +1,7 @@
 Scioly::Application.routes.draw do
 
+  get "admin/index"
+
   get "signups/new"
   get "signups/list"
 
@@ -10,6 +12,8 @@ Scioly::Application.routes.draw do
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
+  resource :user
+  get "user/login", :as => :adminlogin
   resources :teams
 
   # Rails and I disagree about "schedules" vs "schedule". 
@@ -22,6 +26,8 @@ Scioly::Application.routes.draw do
   match '/schedule/:id/confirm/:time' => "signups#create", :as => :confirmsignup
   match '/schedule/:id/delete/:time' => "signups#destroy", :as => :destroysignup
   match '/signups' => "signups#list", :as => :signups
+
+  resource :tournament
 
   match '/login' => "teams#login"
   match '/login/:division' => "teams#login", :as => :login

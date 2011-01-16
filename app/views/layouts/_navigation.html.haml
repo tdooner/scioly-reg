@@ -23,3 +23,8 @@
               %li=link_to(s.event,s)
         %li
           = link_to "Logout", logout_url
+      - if not session[:user].nil? and session[:user].role == 1
+        %li
+          =link_to "Admin Panel", admin_index_url
+          %ul
+            %li=link_to "Logout", "#"

@@ -435,7 +435,6 @@ border:none;
 }
 .footerMiddleCol, .footerRightCol {
 	float: left;
-	width:150px;
 	margin: 25px 0 0 10px;
 	padding:0;
 
