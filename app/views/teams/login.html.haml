@@ -19,13 +19,20 @@
         %b Select A Team:
       %td
         =select(:team, :id, @teams.map { |x| [x[:name], x[:id]] })
-    %tr
-      %td 
-        %b Password:
-      %td
-        =password_field_tag :password, "",:size => 20
-    -if @captcha == true
+    - if not session[:user].nil? and session[:user].is_admin
       %tr
-        %td{:colspan => 2}
-          =recaptcha_tags :display => ["white"]
+        %td{:colspan=>2}
+          %p 
+            %b You are an admin. 
+            Click Login to log in as this team. You can change this team's password once logged in.
+    - else
+      %tr
+        %td 
+          %b Password:
+        %td
+          =password_field_tag :password, "",:size => 20
+      -if @captcha == true
+        %tr
+          %td{:colspan => 2}
+            =recaptcha_tags :display => ["white"]
   =submit_tag "Login"

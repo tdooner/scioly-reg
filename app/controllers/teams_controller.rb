@@ -45,11 +45,20 @@ class TeamsController < ApplicationController
 				end
 			end
 			session[:loginattempts] += 1
+			if params[:password].nil?
+				params[:password] = ""
+			end
 			if session[:team] = Team.authenticate(params[:team][:id], params[:password])
 				flash[:message] = "Logged in!"
 				session[:loginattempts] = nil
 				redirect_to :root
 			else
+				# If the user is logged in as an admin
+				if not session[:user].nil? and session[:user].is_admin()
+					session[:team] = Team.find(params[:team][:id])
+					session[:loginattempts] = nil
+					redirect_to :root
+				end
 				flash[:error] = "Incorrect Password For Selected Team"
 			end
 		end
