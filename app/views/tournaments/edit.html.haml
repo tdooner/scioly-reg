@@ -1,0 +1,22 @@
+%p
+  You are now editing the tournament scheduled for
+  =@tournament.humanize() + "."
+%div.bluebox
+  =form_for(@tournament) do |f|
+    %table
+      %tr
+        %td 
+          %b Date:
+        %td=f.date_select :date
+      %tr
+        %td 
+          %b Registration Begins:
+        %td=f.datetime_select :registrationBegins
+      %tr
+        %td 
+          %b Registration Ends:
+        %td=f.datetime_select :registrationEnds
+    %p
+      =f.submit "Submit Changes"
+%p
+  =link_to "< All Tournaments", tournaments_url

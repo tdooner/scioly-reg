@@ -1,0 +1,19 @@
+%p
+  Please select a Tournament to edit:
+%div.bluebox.smalllinks
+  %table
+    %tr
+      %td Active
+      %td Edit Link
+    -@tournaments.each do |t|
+      %tr
+        %td
+          =radio_button_tag(:current, t.id, t.isCurrent==true)
+        %td
+          =link_to t.humanize(), edit_tournament_url(t)
+    %tr
+      %td
+        =submit_tag "Activate!"
+      %td
+
+  =link_to "New Tournament", new_tournament_url

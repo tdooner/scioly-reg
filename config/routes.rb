@@ -1,5 +1,6 @@
 Scioly::Application.routes.draw do
 
+
   get "admin/index"
 
   get "signups/new"
@@ -27,7 +28,7 @@ Scioly::Application.routes.draw do
   match '/schedule/:id/delete/:time' => "signups#destroy", :as => :destroysignup
   match '/signups' => "signups#list", :as => :signups
 
-  resource :tournament
+  resources :tournaments
 
   match '/login' => "teams#login"
   match '/login/:division' => "teams#login", :as => :login
