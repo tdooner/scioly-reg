@@ -15,6 +15,7 @@ Scioly::Application.routes.draw do
   #   match 'products/:id' => 'catalog#view'
   resource :user
   get "user/login", :as => :adminlogin
+  get "user/logout", :as => :adminlogout
   resources :teams
 
   # Rails and I disagree about "schedules" vs "schedule". 

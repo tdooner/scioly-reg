@@ -12,4 +12,16 @@ class ApplicationController < ActionController::Base
 		@dont_forget = SignUp.getTeamUnregistered(session[:team])
 	end
   end
+
+  def is_admin
+	  if session[:user].nil?
+		  redirect_to :root
+		  return
+	  end
+	  if not User.is_admin(session[:user])
+			  redirect_to :root
+	  else
+			  breadcrumbs.add("Admin", admin_index_url)
+	  end
+  end
 end

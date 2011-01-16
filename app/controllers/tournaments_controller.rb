@@ -31,11 +31,4 @@ class TournamentsController < ApplicationController
   def destroy
   end
 
-  def is_admin
-	  if not User.is_admin(session[:user])
-		  redirect_to :root
-	  else
-		  breadcrumbs.add("Admin", admin_index_url)
-	  end
-  end
 end

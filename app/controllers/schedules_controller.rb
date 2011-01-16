@@ -5,7 +5,7 @@ class SchedulesController < ApplicationController
 	# is what a team registers to.
 	###
 
-  before_filter CASClient::Frameworks::Rails::Filter, :only => :new
+  before_filter :is_admin, :only => :new
 
   def list
 	  breadcrumbs.add('Register For Events')
@@ -16,13 +16,14 @@ class SchedulesController < ApplicationController
   end
 
   def new
+	  breadcrumbs.add("New Event")
 	  @schedule = Schedule.new()
   end
 
   def create
 	@schedule = Schedule.new(params[:schedule])
 	if @schedule.save()
-		redirect_to :list
+		redirect_to :schedules
 	else
 		flash[:message] = "Error creating the event schedule"
 		render :new

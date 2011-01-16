@@ -22,6 +22,9 @@
         // Perhaps add in an option to allow the system to show
         //  the other team names instead of "taken", optionally.
         - display = "Taken!"
+        - if not session[:user].nil? and session[:user].is_admin and not signup.nil?
+          - display = signup.team.name
+          - tr_id = ""
         - giveoptions = false
       %tr{:id => tr_id}
         %td{:width => "25%"}

@@ -17,7 +17,7 @@
           %b Registered?
     - @schedules.each do |s|
       %tr
-        - if not session[:team].nil?
+        - if not session[:team].nil? or not session[:user].nil?
           %td= link_to(s.event, url_for(s))
         - else
           %td= s.event
@@ -28,7 +28,12 @@
             %td= image_tag("ok.png")
           - else
             %td= image_tag("error.png")
-    %tr#current
-      %td{:colspan => 4}
-        = link_to("View All Registrations", signups_url)
+    - if not session[:user].nil? and session[:user].is_admin
+      %tr
+        %td{:colspan => 4}
+          =link_to("New Event", new_schedule_url)
+    - if not session[:team].nil?
+      %tr#current
+        %td{:colspan => 4}
+          = link_to("View All Registrations", signups_url)
 
