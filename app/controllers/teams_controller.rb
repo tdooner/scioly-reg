@@ -11,6 +11,7 @@ class TeamsController < ApplicationController
 	end
 	def edit
 		@team = Team.find(params[:id])
+		breadcrumbs.add("Edit Team #" + @team.getNumber())
 	end
 	def update
 		@team = Team.find(params[:id])

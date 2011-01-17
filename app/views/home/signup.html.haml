@@ -1,5 +1,11 @@
-= flash[:error]
-Welcome,
-= session[:team].name
-%br
-=link_to("View Events That You Can Register For",schedules_url)
+%p
+  Welcome,
+  = session[:team].name + "."
+  On this site, you will find all you need to complete registration for the upcoming Science Olympiad tournament.
+%h3 
+  %b Things To Do
+%ul
+  %li=link_to("View Events That You Can Register For",schedules_url)
+  %li=link_to("View All Your Registrations", signups_url)
+  %li=link_to "Change Password", edit_team_url(session[:team][:id])
+  %li=link_to "Logout", logout_url
