@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110116211422) do
+ActiveRecord::Schema.define(:version => 20110117040525) do
 
   create_table "schedules", :force => true do |t|
     t.string   "event"
@@ -55,9 +55,9 @@ ActiveRecord::Schema.define(:version => 20110116211422) do
 
   create_table "tournaments", :force => true do |t|
     t.date     "date"
-    t.boolean  "isCurrent"
-    t.datetime "registrationBegins"
-    t.datetime "registrationEnds"
+    t.boolean  "is_current"
+    t.datetime "registration_begins"
+    t.datetime "registration_ends"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

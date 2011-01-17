@@ -15,7 +15,7 @@
           %td{:width => 300}
             =link_to t.humanize(), edit_tournament_url(t)
           %td
-            =radio_button_tag(:current, t.id, t.isCurrent==true)
+            =radio_button_tag(:current, t.id, t.is_current==true)
           %td
             =link_to "Delete", tournament_url(t), :method => :delete, :confirm => "Are you sure you wish to delete this Tournament? If you delete this, all the corresponding teams, events, and signups will be deleted! Click 'OK' to delete."
     %tr
