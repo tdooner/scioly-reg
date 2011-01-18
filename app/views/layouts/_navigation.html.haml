@@ -3,12 +3,12 @@
     %ul#topnav
       %li= link_to 'Home', root_path
       %li
-        = link_to 'Event Information', "#" 
+        = link_to 'Event Information', info_index_url() 
         %ul
-          %li= link_to "Event Schedule", "#"
-          %li= link_to "Documents and Forms", "#"
-          %li= link_to "Rule Clarifications", "#"
-          %li= link_to "Participating Teams and Team Numbers", "#"
+          %li= link_to "Event Schedule", info_url(Info.get_id("schedule"))
+          %li= link_to "Documents and Forms", info_url(Info.get_id("documents"))
+          %li= link_to "Rule Clarifications", info_url(Info.get_id("clarifications"))
+          %li= link_to "Participating Teams and Team Numbers", info_url(Info.get_id("teams"))
       - if session[:team].nil?
         %li
           = link_to 'Team Log In', "#"

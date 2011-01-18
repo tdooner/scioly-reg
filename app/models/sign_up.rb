@@ -17,7 +17,7 @@ class SignUp < ActiveRecord::Base
 	# Returns list of all schedules that given team still needs to register for.
 	def self.getTeamUnregistered(team)
 		# Get the list of all schedules...
-		schedules = Schedule.find(:all, :conditions => ["tournament_id = ?", Tournament.get_current().id])
+		schedules = Schedule.find(:all, :conditions => ["tournament_id = ? and division = ?", Tournament.get_current().id, team.division])
 		# ...and run it against that team's registrations.
 		# TODO: Figure out the appropriate join for this query to avoid this loop.
 		unregistered = []

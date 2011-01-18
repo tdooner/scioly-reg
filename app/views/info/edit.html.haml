@@ -1,0 +1,28 @@
+%p
+  Edit the information page below. In the "Page Text" field, you can use 
+  =link_to("Markdown", "http://en.wikipedia.org/wiki/Markdown") + " to style your text."
+%div.bluebox
+  - form_for(@info) do |f|
+    %table
+      %tr 
+        %td
+          %b Long Name:
+        %td
+          =f.text_field :human_name
+      %tr 
+        %td
+          %b Short Name:
+        %td
+          =f.text_field :name
+      %tr
+        %td
+          %b Page Text:
+        %td
+          =f.text_area :page_text
+      %tr
+        %td
+          %b Include File:
+        %td
+          =f.file_field :contents
+    =f.submit
+

@@ -10,7 +10,7 @@
       %b Division
     - @teams.each do |t|
       %tr
-        %td=t.name
+        %td=link_to t.name, edit_team_url(t)
         %td=t.division
   %tr
     %td{:colspan=>2}

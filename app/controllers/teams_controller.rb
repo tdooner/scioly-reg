@@ -14,13 +14,16 @@ class TeamsController < ApplicationController
 		breadcrumbs.add("Edit Team #" + @team.getNumber())
 	end
 	def update
+		### Ensure 
 		@team = Team.find(params[:id])
 		if params[:team][:password] != params[:team][:password_confirm]
 			flash[:error] = "Passwords do not match!"
 			redirect_to edit_team_url(params[:id])
 			return
 		end
+		# If the user is not admin, ensure the existing password is correct...
 		if session[:user].nil? or not session[:user].is_admin
+			@team.password_existing = params[:team][:password_existing]
 			if Team.encrypt(params[:team][:password_existing]) != @team.hashed_password
 				flash[:error] = "Current password is incorrect!"
 				redirect_to edit_team_url(params[:id])
@@ -29,13 +32,19 @@ class TeamsController < ApplicationController
 		end
 
 		if not session[:user].nil? and session[:user].is_admin
-			@team.update_attributes(params[:team])
+			if not @team.update_attributes(params[:team])
+				flash[:error] = "A save error occurred: " + @team.errors.full_messages.first + "."
+			end
 			redirect_to edit_team_url(params[:id])
 		else
-			@team.update_attributes({:password => params[:team][:password], :password_confirm => params[:team][:password_confirm]})
-			@div = session[:team].division
-			session[:team] = nil
-			redirect_to login_url(@div)
+			if @team.update_attributes({:password => params[:team][:password], :password_confirm => params[:team][:password_confirm]})
+				@div = session[:team].division
+				session[:team] = nil
+				redirect_to login_url(@div)
+			else
+				flash[:error] = "A save error occurred: " + @team.errors.full_messages.first + "."
+				redirect_to edit_team_url(params[:id])
+			end
 		end
 	end
 	def new

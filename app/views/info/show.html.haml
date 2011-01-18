@@ -1,0 +1,4 @@
+!=RDiscount.new(@info.page_text).to_html
+
+- if not session[:user].nil? and session[:user].is_admin
+  = link_to "(Admin) Edit", edit_info_url(@info)

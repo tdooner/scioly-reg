@@ -7,13 +7,15 @@ class SchedulesController < ApplicationController
 
   before_filter :is_admin, :only => :new
 
-  def list
-	  breadcrumbs.add('Register For Events')
-	  @schedules = Schedule.find(:all)
-	  if not session[:team].nil?
-		  @sign_ups = session[:team].sign_ups.map{|x| x.schedule_id}
-	  end
-  end
+# def list
+#	  breadcrumbs.add('Register For Events')
+#	  if not session[:team].nil?
+#		  @sign_ups = session[:team].sign_ups.map{|x| x.schedule_id}
+#	      @schedules = Schedule.find(:all, :conditions => ["division = ?", session[:team].division])
+#	  else
+#	      @schedules = Schedule.find(:all)
+#	  end
+# end
 
   def new
 	  breadcrumbs.add("New Event")
@@ -31,10 +33,12 @@ class SchedulesController < ApplicationController
   end
 
   def index
-	@schedules = Schedule.find(:all)
 	breadcrumbs.add('Register For Events')
     if not session[:team].nil?
   	    @sign_ups = Team.find(session[:team].id).sign_ups.map{|x| x.schedule_id}
+	    @schedules = Schedule.find(:all, :conditions => ["division = ?", session[:team].division])
+	else
+		@schedules = Schedule.find(:all)
     end
 	render :list
   end

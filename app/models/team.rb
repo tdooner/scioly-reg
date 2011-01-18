@@ -1,7 +1,7 @@
 require 'digest/sha1'
 
 class Team < ActiveRecord::Base
-	validates_presence_of :password # Validate this further???
+	validates_length_of :password,:minimum => 5, :if => :password_validation_required? # Validate this further???
 	validates_presence_of :number
 	validates_presence_of :tournament_id
 	validates_presence_of :division
@@ -35,6 +35,9 @@ class Team < ActiveRecord::Base
 	def password=(pass) #Rails magic -- gets called whenever a password is assigned (u.password = "secret")
 		@password = pass
 		self.hashed_password = Team.encrypt(@password)
+	end
+	def password_validation_required?
+		return self.hashed_password.blank? || !self.password.blank? || !self.password_existing.blank?
 	end
 
 	def self.divisions

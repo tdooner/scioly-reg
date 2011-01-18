@@ -18,7 +18,7 @@
     - @schedules.each do |s|
       %tr
         - if not session[:team].nil? or not session[:user].nil?
-          %td= link_to(s.event, url_for(s))
+          %td= link_to(s.event + " (" + s.division + ")", url_for(s))
         - else
           %td= s.event
         %td= s.starttime.strftime("%I:%M %p").downcase
