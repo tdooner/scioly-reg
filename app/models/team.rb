@@ -43,4 +43,8 @@ class Team < ActiveRecord::Base
 	def self.divisions
 		return @@divisions
 	end
+
+	def <=>(team) #When this is compared to another team
+		self.name <=> team.name
+	end
 end

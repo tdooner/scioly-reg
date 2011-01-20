@@ -73,7 +73,7 @@ class TeamsController < ApplicationController
 			@captcha = true
 		end
 		
-		@teams = Team.find(:all, :conditions => ["division = ?", @division])
+		@teams = Team.find(:all, :conditions => ["division = ?", @division]).sort
 		if not session[:team].nil?
 			flash[:error] = "Already logged in!"
 		end
