@@ -8,14 +8,14 @@
       %td
         %b Room Number
       %td
-        %b Registered Time
+        %b Reserved Timeslot
     - @sign_ups.each do |s|
       %tr
         %td
-          =link_to(s.schedule.event,s.schedule)
+          =link_to(s.timeslot.schedule.event,s.timeslot.schedule)
         %td
-          =s.schedule.room
+          =s.timeslot.schedule.room
         %td
-          =s.time.strftime("%I:%M %p")
+          =s.timeslot.begins.strftime("%I:%M %p")
 
 

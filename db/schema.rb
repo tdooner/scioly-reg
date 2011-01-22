@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110117232956) do
+ActiveRecord::Schema.define(:version => 20110122055942) do
 
   create_table "infos", :force => true do |t|
     t.string   "name"
@@ -27,10 +27,11 @@ ActiveRecord::Schema.define(:version => 20110117232956) do
     t.string   "division"
     t.time     "starttime"
     t.time     "endtime"
-    t.integer  "timeslots"
+    t.integer  "num_timeslots"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "room"
+    t.integer  "teams_per_slot", :default => 1
   end
 
   create_table "sessions", :force => true do |t|
@@ -44,9 +45,8 @@ ActiveRecord::Schema.define(:version => 20110117232956) do
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "sign_ups", :force => true do |t|
-    t.integer  "schedule_id"
+    t.integer  "timeslot_id"
     t.integer  "team_id"
-    t.time     "time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -60,6 +60,15 @@ ActiveRecord::Schema.define(:version => 20110117232956) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "tournament_id"
+  end
+
+  create_table "timeslots", :force => true do |t|
+    t.integer  "schedule_id"
+    t.datetime "begins"
+    t.datetime "ends"
+    t.integer  "team_capacity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "tournaments", :force => true do |t|

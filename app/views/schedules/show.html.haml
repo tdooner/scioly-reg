@@ -10,29 +10,41 @@
         %b Timeslot
       %td
         %b Availability
-    - @allslots.each do |ts,signup|
-      - tr_id = "unavailable"
-      - if signup.nil?
-        - tr_id = ""
-      - if not signup.nil? and not session[:team].nil? and signup.team_id == session[:team].id
+    // Iterate over each timeslot
+    - @allslots.each do |ts|
+      - tr_id = ""
+      - slots_remaining = ts.team_capacity - ts.sign_ups.length
+      // First, check if the timeslot is full. If it is, but the team is registered there,
+      //  they will still see their name in the table (as is desirable).
+      - if slots_remaining == 0 and not (not session[:user].nil? and session[:user].is_admin)
+        - tr_id = "unavailable"
+      // If the team has registered for the event, show them their name.
+      - if not @currentreg.nil? and ts.id == @currentreg.timeslot_id
         - display = session[:team].name
         - giveoptions = true
         - tr_id = "current"
       - else
-        // Perhaps add in an option to allow the system to show
-        //  the other team names instead of "taken", optionally.
-        - display = "Taken!"
-        - if not session[:user].nil? and session[:user].is_admin and not signup.nil?
-          - display = signup.team.name
-          - tr_id = ""
+        // If there are openings and this is not the currently registered one
+        - display = "Available: " + slots_remaining.to_s + " Slot(s)"
         - giveoptions = false
       %tr{:id => tr_id}
         %td{:width => "25%"}
-          = ts.strftime("%I:%M %p")
+          = ts.begins.strftime("%I:%M %p")
         %td{:width => "75%"}
-          - if not signup.nil?
-            =display
-            - if giveoptions == true
-              =link_to("(Unregister)",destroysignup_url(@schedule, ts.to_i),:class=>"action")
+          - if (not session[:user].nil? and session[:user].is_admin)
+            - ts.occupants.each do |team|
+              = team.name
+              %br
+          - if @currentreg.nil?
+            - if slots_remaining != 0
+              =link_to(display, newsignup_url(ts))
+            - else 
+              - if not (not session[:user].nil? and session[:user].is_admin)
+                Timeslot Full!
           - else
-            =link_to("Available!",newsignup_url(@schedule, ts.to_i))
+            - if tr_id != "current" and slots_remaining == 0
+              Timeslot Full!
+            - else
+              = display
+          - if giveoptions == true
+            =link_to("(Unregister)",destroysignup_url(@currentreg),:class=>"action")

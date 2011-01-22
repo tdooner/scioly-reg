@@ -35,8 +35,9 @@ class SchedulesController < ApplicationController
   def index
 	breadcrumbs.add('Register For Events')
     if not session[:team].nil?
-  	    @sign_ups = Team.find(session[:team].id).sign_ups.map{|x| x.schedule_id}
 	    @schedules = Schedule.find(:all, :conditions => ["division = ?", session[:team].division])
+		@has_registered = Hash.new()
+		@schedules.map{ |x| @has_registered[x.id] = x.hasTeamRegistered(session[:team])}
 	else
 		@schedules = Schedule.find(:all)
     end
@@ -51,17 +52,11 @@ class SchedulesController < ApplicationController
 		flash[:message] = "Event not found!"
 		# render :somethingelse
 	end
-	# Generate a hash (@timeslots) of all time slots
-	#   11:00:00 => nil
-	#   11:15:00 => nil
-	#      ...   => nil
-	#   12:45:00 => nil
-	# And then merge that hash with the current
-	#  sign-ups so the view needs only worry
-	#  about one hash, @taken.
-		
-	@timeslots = Hash[@schedule.getTimeSlots().map{|x| [x, nil]}]
-	@taken = SignUp.getSignUps(@schedule.id)
-	@allslots = @timeslots.merge(@taken)
+
+	@allslots = @schedule.timeslots
+	@currentreg = nil
+	if not session[:team].nil?
+		@currentreg = session[:team].sign_ups.find(:first, :conditions => ["timeslot_id in (select id from timeslots where schedule_id = ?)", @schedule])
+	end
   end
 end

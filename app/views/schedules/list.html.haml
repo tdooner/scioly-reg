@@ -24,7 +24,7 @@
         %td= s.starttime.strftime("%I:%M %p").downcase
         %td= s.endtime.strftime("%I:%M %p").downcase
         -if not session[:team].nil?
-          -if @sign_ups.include?(s.id)
+          -if @has_registered[s.id]
             %td= image_tag("ok.png")
           - else
             %td= image_tag("error.png")

@@ -24,9 +24,9 @@ Scioly::Application.routes.draw do
   #   event at the singular:
   #      example.com/schedule/event_name/
   resources :schedules, :path => "/schedule"
-  match '/schedule/:id/register/:time' => "signups#new", :as => :newsignup
-  match '/schedule/:id/confirm/:time' => "signups#create", :as => :confirmsignup
-  match '/schedule/:id/delete/:time' => "signups#destroy", :as => :destroysignup
+  match '/schedule/:id/register/' => "signups#new", :as => :newsignup
+  match '/schedule/:id/confirm/' => "signups#create", :as => :confirmsignup
+  match '/schedule/:id/delete/' => "signups#destroy", :as => :destroysignup
   match '/signups' => "signups#list", :as => :signups
 
   resources :tournaments
