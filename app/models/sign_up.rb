@@ -23,6 +23,14 @@ class SignUp < ActiveRecord::Base
 		if self.timeslot.schedule.hasTeamRegistered(team_id)
 			errors.add(:team_id, "is already registered for this event!")
 		end
+		other_teams = self.timeslot.occupants
+		# If there is not an empty spot and the current team does not already
+		#  possess a spot in this event. (SignUps could potentially be edited
+		#  and then validation should not fail simply because the timeslot has
+		#  since filled up)
+		if not other_teams.length < self.timeslot.team_capacity and not other_teams.include?(self.team)
+			errors.add(:timeslot_id, "is full!")
+		end
 	end
 
 	def isEmpty(time)
