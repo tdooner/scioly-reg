@@ -15,7 +15,7 @@ class SignUp < ActiveRecord::Base
 
 	# Returns list of all schedules that given team still needs to register for.
 	def self.getTeamUnregistered(team)
-		Schedule.find(:all, :conditions => ["id not in (SELECT schedule_id FROM timeslots WHERE id in (SELECT timeslot_id from sign_ups WHERE team_id=?))", team.id])
+		Schedule.find(:all, :conditions => ["division = ? and id not in (SELECT schedule_id FROM timeslots WHERE id in (SELECT timeslot_id from sign_ups WHERE team_id=?))", team.division ,team.id])
 	end
 
 	# Called whenever a new SignUp is saved

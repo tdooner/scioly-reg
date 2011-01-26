@@ -18,6 +18,10 @@
 .bluebox table {
 	margin:auto;
 }
+div.featureContent a {
+	color:#DDD;
+	text-decoration:underline;
+}
 p.errorbox {
 	border: 2px dashed #FCC;
 	color:#A00000;

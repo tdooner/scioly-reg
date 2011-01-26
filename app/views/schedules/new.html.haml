@@ -20,6 +20,9 @@
   = f.time_select :endtime, :minute_step => 10
   %br
   Number Of Timeslots:
-  = f.text_field :timeslots
+  = f.text_field :num_timeslots
+  %br
+  Teams Per Timeslot:
+  = f.text_field :teams_per_slot
   %br
   = f.submit "Add Event To Schedule"

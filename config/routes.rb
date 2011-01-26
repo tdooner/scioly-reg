@@ -26,7 +26,7 @@ Scioly::Application.routes.draw do
   resources :schedules, :path => "/schedule"
   match '/schedule/:id/register/' => "signups#new", :as => :newsignup
   match '/schedule/:id/confirm/' => "signups#create", :as => :confirmsignup
-  match '/schedule/:id/delete/' => "signups#destroy", :as => :destroysignup
+  match '/signups/:id/delete/' => "signups#destroy", :as => :destroysignup
   match '/signups' => "signups#list", :as => :signups
 
   resources :tournaments

@@ -5,7 +5,8 @@ class SchedulesController < ApplicationController
 	# is what a team registers to.
 	###
 
-  before_filter :is_admin, :only => :new
+  before_filter :is_admin, :only => [:new, :destroy]
+  protect_from_forgery :except => :destroy
 
 # def list
 #	  breadcrumbs.add('Register For Events')
@@ -24,7 +25,7 @@ class SchedulesController < ApplicationController
 
   def create
 	@schedule = Schedule.new(params[:schedule])
-	if @schedule.save()
+	if @schedule.save() and @schedule.updateTimeSlots()
 		redirect_to :schedules
 	else
 		flash[:message] = "Error creating the event schedule"
@@ -58,5 +59,15 @@ class SchedulesController < ApplicationController
 	if not session[:team].nil?
 		@currentreg = session[:team].sign_ups.find(:first, :conditions => ["timeslot_id in (select id from timeslots where schedule_id = ?)", @schedule])
 	end
+  end
+
+  def destroy
+	@schedule = Schedule.find(params[:id])
+	@schedule.timeslots do |e|
+		e.sign_ups.delete_all()
+		e.delete()
+	end
+	@schedule.delete()
+	redirect_to :schedules
   end
 end
