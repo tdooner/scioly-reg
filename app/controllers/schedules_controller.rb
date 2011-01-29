@@ -36,11 +36,11 @@ class SchedulesController < ApplicationController
   def index
 	breadcrumbs.add('Register For Events')
     if not session[:team].nil?
-	    @schedules = Schedule.find(:all, :conditions => ["division = ?", session[:team].division])
+	    @schedules = Schedule.find(:all, :conditions => ["division = ?", session[:team].division], :order => ["event ASC"])
 		@has_registered = Hash.new()
 		@schedules.map{ |x| @has_registered[x.id] = x.hasTeamRegistered(session[:team])}
 	else
-		@schedules = Schedule.find(:all)
+		@schedules = Schedule.find(:all, :order => ["event ASC"])
     end
 	render :list
   end
