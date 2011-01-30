@@ -2,6 +2,10 @@
   Welcome,
   = session[:team].name + "."
   On this site, you will find all you need to complete registration for the upcoming Science Olympiad tournament.
+- if not @current_tournament.has_registration_begun()
+  %p.errorbox
+    Note: Registration begins
+    = @current_tournament.registration_begins.strftime("%B %d, %Y %I:%M %p")
 %div.bluebox.smalllinks
   %h3 
     %b Things To Do

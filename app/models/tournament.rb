@@ -13,4 +13,13 @@ class Tournament < ActiveRecord::Base
 	def humanize()
 		return date.strftime("%B %d, %Y")
 	end
+	def has_registration_begun()
+		return self.registration_begins < Time.now
+	end
+	def has_registration_ended()
+		return self.registration_ends < Time.now
+	end
+	def can_register()
+		return (self.has_registration_begun() and not self.has_registration_ended())
+	end
 end
