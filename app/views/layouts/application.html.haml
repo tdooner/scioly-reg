@@ -24,4 +24,6 @@
       #rightCol
         - if not session[:team].nil?
           =render :partial => "/layouts/rightreminder"
+        - else
+          =render :partial => "/layouts/rightinformation"
   = render :partial => "/layouts/footer"
