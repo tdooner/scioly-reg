@@ -48,3 +48,6 @@
               = display
           - if giveoptions == true
             =link_to("(Unregister)",destroysignup_url(@currentreg),:class=>"action")
+%p{:align=>"center"}
+  For Event Organizers And Administrators:
+  = link_to("View as PDF", schedule_url(@schedule) + ".pdf")
