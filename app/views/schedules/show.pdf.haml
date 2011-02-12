@@ -39,7 +39,7 @@
         %td{:width => "75%"}
           - if (not session[:user].nil? and session[:user].is_admin)
             - ts.occupants.each do |team|
-              %b=team.name.encode("ASCII", :invalid => :replace, :undef => :replace, :replace => "-")
+              %b=team.name.gsub(/[^[:print:]]/, " ")
               = "(#" + team.number + team.division + ")"
               %br
           - if @currentreg.nil?
