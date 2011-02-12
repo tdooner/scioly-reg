@@ -59,6 +59,15 @@ class SchedulesController < ApplicationController
 	if not session[:team].nil?
 		@currentreg = session[:team].sign_ups.find(:first, :conditions => ["timeslot_id in (select id from timeslots where schedule_id = ?)", @schedule])
 	end
+
+	respond_to do |format|
+		format.pdf do
+			render :pdf => "filename.pdf"
+		end
+		format.html do
+			render :show
+		end
+	end
   end
 
   def destroy
