@@ -57,3 +57,9 @@
               = display
           - if giveoptions == true
             =link_to("(Unregister)",destroysignup_url(@currentreg),:class=>"action")
+%h3 Unregistered Teams:
+%ul
+- @teams_remaining.each do |t|
+  %li
+    %b=t.name.gsub(/[^[:print:]]/, " ")
+    ="(#" + t.number + t.division + ")"
