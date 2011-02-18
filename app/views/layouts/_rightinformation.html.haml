@@ -2,11 +2,11 @@
   2011 Regional Science Olympiad
 =image_tag("sciolylogo.jpg")
 %p
-  %b Events Begin:
-  February 26th, 2011 @ 9:30am
+  %b Date Of Tournament:
+  = @current_tournament.humanize
 %p
   %b Registration Begins:
-  February 1st, 2011 @ 4:00pm
+  = @current_tournament.human_times[:registration_begins]
 %p
   %b Registration Ends:
-  February 17th, 2011 @ 11:59pm
+  = @current_tournament.human_times[:registration_ends]
