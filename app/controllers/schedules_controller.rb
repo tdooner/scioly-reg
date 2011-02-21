@@ -54,7 +54,7 @@ class SchedulesController < ApplicationController
 		# render :somethingelse
 	end
 
-	@allslots = @schedule.timeslots
+	@allslots = @schedule.timeslots.sort { |x,y| x.begins <=> y.begins }
 	@currentreg = nil
 	if not session[:team].nil?
 		@currentreg = session[:team].sign_ups.find(:first, :conditions => ["timeslot_id in (select id from timeslots where schedule_id = ?)", @schedule])
