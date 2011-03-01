@@ -1,11 +1,11 @@
 = flash[:error]
 %p
   Welcome to the website for Case Western Reserve University's Science Olympiad Tournament. 
-%div{:align=>"center"}
-  %h2 This year's Science Olympiad tournament is over. 
-  Check back later for the official scores. Congratulations to all participants!
-  %br
-  %br
+%div.bluebox
+  %h2 This year's Science Olympiad tournament is over.
+  %a{:href=>"/scores.pdf"} Official Scores
+%br
+%br
 %div.bluebox.smalllinks
   Comments or Concerns? Please fill out our
   =link_to("short questionaire", "https://filer.case.edu/survey/entry.jsp?id=1298763175536") + "."
