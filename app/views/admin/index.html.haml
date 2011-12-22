@@ -1,13 +1,8 @@
-=link_to "Manage Tournaments", tournaments_url
-%br
-=link_to "Manage Events (schedules)", schedules_url
-%br
-=link_to "Manage Teams", teams_url
-%br
-=link_to "Manage Information", info_index_url
-%br
-%br
-%h3 Teams That Have Signed Up For An Event:
-%ul
-  - @team_signups.each do |t|
-    %li=t
+%div
+  %h2 
+    Tournament:
+    %b= @current_tournament.humanize
+%h3
+  =link_to "#{@all_schedules.length} Events", schedules_url
+%h3
+  =link_to "#{@teams.length} Teams", teams_url

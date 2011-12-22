@@ -9,9 +9,9 @@ class ApplicationController < ActionController::Base
 	
 	if not session[:team].nil?
 		@dont_forget = SignUp.getTeamUnregistered(session[:team])
-		@all_schedules = Schedule.find(:all, :conditions => ["division = ?", session[:team].division], :order => "event ASC")
+		@all_schedules = @current_tournament.schedules.find(:all, :conditions => ["division = ?", session[:team].division], :order => "event ASC")
 	else
-		@all_schedules = Schedule.find(:all, :order => "event ASC")
+		@all_schedules = @current_tournament.schedules.find(:all, :order => "event ASC")
 	end
   end
 

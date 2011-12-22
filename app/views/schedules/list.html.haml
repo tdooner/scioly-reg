@@ -8,9 +8,6 @@
     %tr
       %td
         %b Event Name
-      - if not session[:user].nil? and session[:user].is_admin
-        %td
-          %b Delete?
       %td
         %b Begin Time
       %td
@@ -18,7 +15,10 @@
       - if not session[:team].nil? 
         %td
           %b Registered?
-    - @schedules.each do |s|
+      - if not session[:user].nil? and session[:user].is_admin
+        %td
+          %b Delete?
+    - @all_schedules.each do |s|
       %tr
         - if not session[:team].nil? or not session[:user].nil?
           %td= link_to(s.event + " (" + s.division + ")", url_for(s))
