@@ -7,10 +7,9 @@ gem 'rubycas-client'
 gem 'rdiscount'
 gem 'recaptcha', :require => "recaptcha/rails"
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 gem 'sqlite3-ruby', :require => 'sqlite3'
+gem 'sass'
+
 
 # Use unicorn as the web server
 # gem 'unicorn'

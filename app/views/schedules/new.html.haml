@@ -1,18 +1,23 @@
 = flash[:message]
 
-- form_for(@schedule) do |f|
-  Event Name:
-  = f.text_field :event
-  %br
+%h2
   Tournament:
-  = select(:schedule, :tournament_id, Tournament.find(:all).map { |x| [x.date, x.id]})
-  %br
-  Division:
-  = select(:schedule, :division, Team.divisions)
-  %br
-  Room:
-  = f.text_field :room
-  %br
+  %b=@current_tournament.humanize
+
+- form_for(@schedule) do |f|
+  %div.input
+    = f.label :event, "Event Name:"
+    = f.text_field :event
+  %div.input
+    = label :schedule, :division_b, "Division B:"
+    = radio_button :schedule, :division, "B"
+    %br
+    = label :schedule, :division_c, "Division C:"
+    = radio_button :schedule, :division, "C"
+  %div.input
+    = f.label :room, "Room:"
+    = f.text_field :room
+  %div.input
   Event Start Time:
   = f.time_select :starttime, :minute_step => 10
   %br
