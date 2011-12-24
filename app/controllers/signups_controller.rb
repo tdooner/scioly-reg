@@ -28,11 +28,15 @@ class SignupsController < ApplicationController
 
   def destroy
 	  @signup = SignUp.find(params[:id])
+
 	  schedule = Schedule.first
 	  if not @signup.nil? and @signup.team_id == session[:team].id
 		  schedule = @signup.delete().timeslot.schedule
 	  end
-	  redirect_to(schedule_url(schedule))
+
+	  flash[:message] = "Registration deleted."
+
+	  return redirect_to(schedule_url(schedule))
   end
 
   def create

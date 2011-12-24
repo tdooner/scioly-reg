@@ -3,6 +3,7 @@
     Tournament:
     %b= @current_tournament.humanize
 %h3
-  =link_to "#{@all_schedules.length} Events", schedules_url
+  =link_to "#{@all_schedules.length} Events", admin_events_url
 %h3
   =link_to "#{@teams.length} Teams", teams_url
+=link_to "Change Tournament", tournaments_path

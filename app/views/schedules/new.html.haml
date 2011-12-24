@@ -1,33 +1,94 @@
+:javascript
+  $(function() {
+    $("#schedule_event").focus();
+    $("#schedule_event").bind("blur", function() {
+      
+    });
+
+    $("#schedule_online_false").click(function(){
+      $("div#schedule_online_details").hide();
+    });
+    $("#schedule_online_true").click(function(){
+      $("div#schedule_online_details").show();
+    });
+    $("div#schedule_online_details").hide();
+  });
 = flash[:message]
 
-%h2
-  Tournament:
-  %b=@current_tournament.humanize
-
 - form_for(@schedule) do |f|
-  %div.input
-    = f.label :event, "Event Name:"
-    = f.text_field :event
-  %div.input
-    = label :schedule, :division_b, "Division B:"
-    = radio_button :schedule, :division, "B"
-    %br
-    = label :schedule, :division_c, "Division C:"
-    = radio_button :schedule, :division, "C"
-  %div.input
-    = f.label :room, "Room:"
-    = f.text_field :room
-  %div.input
-  Event Start Time:
-  = f.time_select :starttime, :minute_step => 10
-  %br
-  Event End Time:
-  = f.time_select :endtime, :minute_step => 10
-  %br
-  Number Of Timeslots:
-  = f.text_field :num_timeslots
-  %br
-  Teams Per Timeslot:
-  = f.text_field :teams_per_slot
-  %br
-  = f.submit "Add Event To Schedule"
+  %fieldset
+    %div.clearfix
+      %label
+        Tournament:
+      %div.input
+        %input{:type=>"text",:disabled=>"disabled",:value=>"#{@current_tournament.humanize}"}
+    %div.clearfix
+      %label{:for=>'schedule[event]'}
+        %b Event Name:
+      %div.input
+        = f.autocomplete_field :event, autocomplete_event_schedule_path, :id_element => '#schedule_event_id'
+        = hidden_field_tag :schedule_event_id, "-1"
+    %div.clearfix
+      %label{:for=>"schedule_division_b"} 
+        %b Division:
+      %div.input
+        %ul.inputs-list
+          %li
+            %label
+              = radio_button :schedule, :division, "B"
+              Division B
+          %li
+            %label
+              = radio_button :schedule, :division, "C"
+              Division C
+    %div.clearfix
+      %label{:for=>"room"}
+        %b Room:
+      %div.input
+        = f.text_field :room
+    %div.clearfix
+      %label{:for=>"schedule_starttime"}
+        %b Event Start Time:
+      %div.input
+        = f.time_select :starttime, {:minute_step => 10}, :class=>"small"
+    %div.clearfix
+      %label{:for=>"schedule_endtime"}
+        %b Event End Time:
+      %div.input
+        = f.time_select :endtime, {:minute_step => 10}, :class=>"small"
+    %div.clearfix
+      %label{:for=>"schedule_online"}
+        %b Schedule Online?
+      %div.input
+        %ul.inputs-list
+          %li
+            %label
+              = radio_button_tag :schedule_online, "false", :selected=>:true
+              Fixed Schedule
+            %span.help-block
+              A schedule where the event has a fixed timeslot.
+          %li
+            %label
+              = radio_button_tag :schedule_online, "true"
+              Schedule Online
+            %span.help-block
+              Allow teams to register for timeslots.
+              %b online.
+    %div#schedule_online_details
+      %div.clearfix
+        %label{:for=>"schedule_num_timeslots"}
+          %b Number Of Timeslots:
+        %div.input
+          = f.text_field :num_timeslots
+          %span.help-block
+            %b Note:
+            There are 
+            %b=@current_tournament.teams.length
+            teams competiting in this tournament.
+      %div.clearfix
+        %label{:for=>"schedule_teams_per_slot"}
+          %b Teams Per Timeslot:
+        %div.input
+          = f.text_field :teams_per_slot
+  %div.actions
+    = f.submit "Add Event To Schedule", :class=>"btn primary"

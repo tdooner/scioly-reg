@@ -12,9 +12,6 @@
       - if not session[:team].nil? 
         %th
           %b Registered?
-      - if not session[:user].nil? and session[:user].is_admin
-        %th
-          %b Delete?
     %tbody
       - @all_schedules.each do |s|
         %tr
@@ -25,13 +22,10 @@
           %td= s.starttime.strftime("%I:%M %p").downcase
           %td= s.endtime.strftime("%I:%M %p").downcase
           -if not session[:team].nil?
-            -if @has_registered[s.id]
+            -if @has_registered[s.id] || !s.is_scheduled_online?
               %td= image_tag("ok.png")
             - else
               %td= image_tag("error.png")
-          - if not session[:user].nil? and session[:user].is_admin
-            %td
-              %b=link_to("Delete!", schedule_url(s),:confirm => "Are you sure you wish to delete this event? All corresponding Timeslots and Registrations will be deleted!", :method => :delete)
     - if not session[:user].nil? and session[:user].is_admin
       %tr
         %td{:colspan => 4}

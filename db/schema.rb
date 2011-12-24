@@ -10,15 +10,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110122055942) do
+ActiveRecord::Schema.define(:version => 20111223232248) do
 
   create_table "infos", :force => true do |t|
-    t.string   "name"
-    t.text     "page_text"
-    t.binary   "contents"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "human_name"
+    t.string    "name"
+    t.text      "page_text"
+    t.binary    "contents"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.string    "human_name"
   end
 
   create_table "schedules", :force => true do |t|
@@ -27,57 +27,55 @@ ActiveRecord::Schema.define(:version => 20110122055942) do
     t.string   "division"
     t.time     "starttime"
     t.time     "endtime"
-    t.integer  "num_timeslots"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "room"
-    t.integer  "teams_per_slot", :default => 1
   end
 
   create_table "sessions", :force => true do |t|
-    t.string   "session_id", :null => false
-    t.text     "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string    "session_id", :null => false
+    t.text      "data"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "sign_ups", :force => true do |t|
-    t.integer  "timeslot_id"
-    t.integer  "team_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "timeslot_id"
+    t.integer   "team_id"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   create_table "teams", :force => true do |t|
-    t.string   "name"
-    t.string   "number"
-    t.string   "division"
-    t.string   "coach"
-    t.string   "hashed_password"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "tournament_id"
+    t.string    "name"
+    t.string    "number"
+    t.string    "division"
+    t.string    "coach"
+    t.string    "hashed_password"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.integer   "tournament_id"
   end
 
   create_table "timeslots", :force => true do |t|
-    t.integer  "schedule_id"
-    t.datetime "begins"
-    t.datetime "ends"
-    t.integer  "team_capacity"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "schedule_id"
+    t.timestamp "begins"
+    t.timestamp "ends"
+    t.integer   "team_capacity"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   create_table "tournaments", :force => true do |t|
-    t.date     "date"
-    t.boolean  "is_current"
-    t.datetime "registration_begins"
-    t.datetime "registration_ends"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.date      "date"
+    t.boolean   "is_current"
+    t.timestamp "registration_begins"
+    t.timestamp "registration_ends"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   create_table "users", :force => true do |t|

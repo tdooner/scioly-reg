@@ -7,16 +7,7 @@ class SchedulesController < ApplicationController
 
   before_filter :is_admin, :only => [:new, :destroy]
   protect_from_forgery :except => :destroy
-
-# def list
-#	  breadcrumbs.add('Register For Events')
-#	  if not session[:team].nil?
-#		  @sign_ups = session[:team].sign_ups.map{|x| x.schedule_id}
-#	      @schedules = Schedule.find(:all, :conditions => ["division = ?", session[:team].division])
-#	  else
-#	      @schedules = Schedule.find(:all)
-#	  end
-# end
+  autocomplete :schedule, :event, :display_value => :humanize, :extra_data => [:division]
 
   def new
 	  breadcrumbs.add("New Event")
@@ -24,12 +15,16 @@ class SchedulesController < ApplicationController
   end
 
   def create
-	@schedule = Schedule.new(params[:schedule])
-	if @schedule.save() and @schedule.updateTimeSlots()
-		redirect_to :schedules
+	@schedule = @current_tournament.schedules.new(params[:schedule])
+	if @schedule.save()
+      if params[:schedule_online] == "true"
+        @schedule.updateTimeSlots()
+      end
+      redirect_to :schedules
 	else
-		flash[:message] = "Error creating the event schedule"
-		render :new
+      flash[:message] = "Error creating the event schedule. "
+      flash[:error] = @schedule.errors.full_messages.first
+      render :new
 	end
   end
 
@@ -54,7 +49,7 @@ class SchedulesController < ApplicationController
 	@allslots = @schedule.timeslots.sort { |x,y| x.begins <=> y.begins }
 	@currentreg = nil
 	if not session[:team].nil?
-		@currentreg = session[:team].sign_ups.find(:first, :conditions => ["timeslot_id in (select id from timeslots where schedule_id = ?)", @schedule])
+		@currentreg = SignUp.find_by_team_id_and_timeslot_id(session[:team], @allslots.map{|x| x.id})
 	end
 
 	respond_to do |format|

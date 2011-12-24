@@ -1,12 +1,14 @@
 Scioly::Application.routes.draw do
 
-
-  get "admin/index"
-
   get "signups/new"
   get "signups/list"
 
   get "home/index"
+
+  namespace :admin do
+    get 'index'
+    get 'events', :as => :events
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -23,7 +25,9 @@ Scioly::Application.routes.draw do
   #   of resources (they do), but I think that it seems better to view the schedule for an
   #   event at the singular:
   #      example.com/schedule/event_name/
+  match 'schedule/autocomplete_event' => "schedules#autocomplete_schedule_event", :as => :autocomplete_event_schedule
   resources :schedules, :path => "/schedule"
+
   match '/schedule/:id/register/' => "signups#new", :as => :newsignup
   match '/schedule/:id/confirm/' => "signups#create", :as => :confirmsignup
   match '/signups/:id/delete/' => "signups#destroy", :as => :destroysignup

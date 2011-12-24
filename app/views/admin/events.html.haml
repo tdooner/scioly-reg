@@ -1,0 +1,34 @@
+%table.zebra-striped
+  %thead
+    %th
+      %b Division
+    %th
+      %b Event Name
+    %th
+      %b Teams Scheduled
+    %th
+      %b Free Slots
+    %th
+      %b Edit
+    %th
+      %b Delete
+  %tbody
+    -@events.each do |e|
+      %tr
+        %td=e.division
+        %td=link_to "#{e.event} (#{e.division})", schedule_url(e.id) 
+        %td
+          - if e.is_scheduled_online?
+            %b>="#{@event_signups[e.id]}"
+            ="/#{@teams_by_division[e.division]}"
+          -else
+            \-
+
+        %td
+          - if e.is_scheduled_online?
+            =@event_capacity[e.id]
+          -else
+            \-
+        %td=link_to "Edit", edit_schedule_url(e.id)
+        %td=link_to("Delete!", schedule_url(e),:confirm => "Are you sure you wish to delete this event? All corresponding Timeslots and Registrations will be deleted!", :method => :delete)
+=link_to "New Event", new_schedule_url
