@@ -9,6 +9,8 @@ gem 'recaptcha', :require => "recaptcha/rails"
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'sass'
+gem 'jquery-rails'
+gem 'rails3-jquery-autocomplete'
 
 
 # Use unicorn as the web server
