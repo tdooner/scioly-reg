@@ -14,7 +14,7 @@
     - else
       %td
         .help-block="#{pluralize(spots_remaining, "spot")} available."
-  - if not session[:team].nil?
+  - if @team
     - if spots_remaining > 0
       %td
         - if @currentreg.nil?

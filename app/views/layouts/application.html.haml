@@ -26,7 +26,7 @@
           %div.alert-message.info=flash[:message]
         = yield
       #rightCol
-        - if not session[:team].nil?
+        - if @team
           =render :partial => "/layouts/rightreminder"
         - else
           =render :partial => "/layouts/rightinformation"

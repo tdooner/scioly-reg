@@ -9,19 +9,19 @@
       %th Event Name
       %th Begin Time
       %th End Time
-      - if not session[:team].nil? 
+      - if @team
         %th
           %b Registered?
     %tbody
       - @all_schedules.each do |s|
         %tr
-          - if not session[:team].nil? or not session[:user].nil?
+          - if @team or not session[:user].nil?
             %td= link_to(s.event + " (" + s.division + ")", url_for(s))
           - else
             %td= s.event
           %td= s.starttime.strftime("%I:%M %p").downcase
           %td= s.endtime.strftime("%I:%M %p").downcase
-          -if not session[:team].nil?
+          -if @team
             -if @has_registered[s.id] || !s.is_scheduled_online?
               %td= image_tag("ok.png")
             - else
@@ -30,7 +30,7 @@
       %tr
         %td{:colspan => 4}
           =link_to("New Event", new_schedule_url)
-    - if not session[:team].nil?
+    - if @team
       %tr#current
         %td{:colspan => 4}
           = link_to("View All Registrations", signups_url)

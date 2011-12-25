@@ -2,7 +2,7 @@
   #topNavWrapper
     %ul#topnav
       %li= link_to 'Home', root_path
-      - if session[:team].nil?
+      - if not @team
         %li
           = link_to 'View Event Schedules', schedules_url
           %ul

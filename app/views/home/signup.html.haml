@@ -1,6 +1,6 @@
 %p
   Welcome,
-  = session[:team].name + "."
+  = @team.name + "."
   On this site, you will find all you need to complete registration for the upcoming Science Olympiad tournament.
 - if not @current_tournament.has_registration_begun()
   %p.errorbox
@@ -12,5 +12,5 @@
   %ul{:style => "text-align:left"}
     %li=link_to("View Events That You Can Register For",schedules_url)
     %li=link_to("View All Your Registrations", signups_url)
-    %li=link_to "Change Password", edit_team_url(session[:team][:id])
+    %li=link_to "Change Password", edit_team_url(@team.id)
     %li=link_to "Logout", logout_url

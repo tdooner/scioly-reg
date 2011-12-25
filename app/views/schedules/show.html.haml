@@ -8,7 +8,7 @@
     %thead
       %th Timeslot
       %th Availability
-      - if not session[:team].nil?
+      - if @team
         %th Sign Up
     - @allslots.each do |ts|
       = render :partial=>"schedules/timeslot", :locals => {:ts => ts}
@@ -18,7 +18,7 @@
         - if slots_remaining == 0 and not (not session[:user].nil? and session[:user].is_admin)
           - tr_id = "unavailable"
         - if not @currentreg.nil? and ts.id == @currentreg.timeslot_id
-          - display = session[:team].name
+          - display = @team.name
           - giveoptions = true
           - tr_id = "current"
         - else

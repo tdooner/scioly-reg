@@ -26,7 +26,7 @@
         - tr_id = "unavailable"
       // If the team has registered for the event, show them their name.
       - if not @currentreg.nil? and ts.id == @currentreg.timeslot_id
-        - display = session[:team].name
+        - display = @team.name
         - giveoptions = true
         - tr_id = "current"
       - else

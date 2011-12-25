@@ -30,9 +30,9 @@ class SchedulesController < ApplicationController
 
   def index
 	breadcrumbs.add('Register For Events')
-    if not session[:team].nil?
+    if not @team.nil?
 		@has_registered = Hash.new()
-		@all_schedules.map{ |x| @has_registered[x.id] = x.hasTeamRegistered(session[:team])}
+		@all_schedules.map{ |x| @has_registered[x.id] = x.hasTeamRegistered(@team)}
     end
 	render :list
   end
@@ -48,8 +48,8 @@ class SchedulesController < ApplicationController
 
 	@allslots = @schedule.timeslots.sort { |x,y| x.begins <=> y.begins }
 	@currentreg = nil
-	if not session[:team].nil?
-		@currentreg = SignUp.find_by_team_id_and_timeslot_id(session[:team], @allslots.map{|x| x.id})
+	if not @team 
+		@currentreg = SignUp.find_by_team_id_and_timeslot_id(@team, @allslots.map{|x| x.id})
 	end
 
 	respond_to do |format|

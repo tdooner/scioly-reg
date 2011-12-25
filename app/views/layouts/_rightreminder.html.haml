@@ -4,19 +4,19 @@
 %div.sideContent
   %p
     You are currently logged in as
-    = [session[:team].name, "."].join
+    ="#{@team.name}."
     At the tournement scheduled for 
-    = [@current_tournament.humanize, ","].join
+    ="#{@current_tournament.humanize},"
     your team is registered with the following details:
     %p{:style=>"margin-left:20px"}
       %b School:
-      =session[:team].name
+      =@team.name
       %br
       %b Team Number:
-      =session[:team].getNumber()
+      =@team.getNumber()
       %br
       %b Coach:
-      =session[:team].coach
+      =@team.coach
       %br
     %p If any of this information is incorrect, contact Jim Bader.
 

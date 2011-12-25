@@ -5,12 +5,12 @@ class SignupsController < ApplicationController
 	  
 	  # If the user has somehow arrived here without
 	  # logging in.
-	  if session[:team].nil?
+	  if not @team
 		  flash[:error] = "You must log in to sign up for events!"
 		  redirect_to login_url(@signup.timeslot.schedule.division)
 	  end
 	  
-	  @signup.team = session[:team]
+	  @signup.team = @team
 	  
 	  if not @signup.valid?
 		  flash[:error] = @signup.errors.full_messages().first
@@ -22,15 +22,15 @@ class SignupsController < ApplicationController
   end
 
   def list
-	  @sign_ups = session[:team].sign_ups.reload
-	  breadcrumbs.add("Team #" + session[:team].getNumber() + " Registrations")
+	  @sign_ups = @team.sign_ups.reload
+	  breadcrumbs.add("Team #" + @team.getNumber() + " Registrations")
   end
 
   def destroy
 	  @signup = SignUp.find(params[:id])
 
 	  schedule = Schedule.first
-	  if not @signup.nil? and @signup.team_id == session[:team].id
+	  if not @signup.nil? and @signup.team_id == @team.id
 		  schedule = @signup.delete().timeslot.schedule
 	  end
 
@@ -44,12 +44,12 @@ class SignupsController < ApplicationController
 	  
 	  # If the user has somehow arrived here without
 	  # logging in.
-	  if session[:team].nil?
+	  if not @team
 		  flash[:message] = "You must log in to sign up for events!"
 		  redirect_to login_url(@signup.timeslot.schedule.division)
 	  end
 	  
-	  @signup.team = session[:team]
+	  @signup.team = @team
 	  
 	  if not @signup.valid?
 		  flash[:message] = @signup.errors.full_messages().first
