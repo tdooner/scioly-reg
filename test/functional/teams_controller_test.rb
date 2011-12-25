@@ -10,8 +10,7 @@ class TeamsControllerTest < ActionController::TestCase
       fill_in "password", :with=>team.password
       find_button("Login").click
     end
-    puts page.html
-    page.has_content?("Welcome")
+    assert page.has_content?("Welcome")
     assert !page.has_content?("Incorrect Password")
     assert (current_path == "" || current_path == "/"), "Path is wrong (#{current_path})."
   end
