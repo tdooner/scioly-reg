@@ -12,6 +12,8 @@ gem 'sass'
 gem 'jquery-rails'
 gem 'rails3-jquery-autocomplete'
 
+gem 'factory_girl_rails'
+gem 'capybara'
 
 # Use unicorn as the web server
 # gem 'unicorn'
