@@ -2,7 +2,7 @@ require 'casclient'
 require 'casclient/frameworks/rails/filter'
 
 class UserController < ApplicationController
-  before_filter CASClient::Frameworks::Rails::Filter
+  before_filter RubyCAS::Filter 
 
   def login
 	  @u = User.find(:first, :conditions => ["case_id = ?",session[:cas_user]])

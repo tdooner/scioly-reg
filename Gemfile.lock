@@ -90,8 +90,11 @@ GEM
     rdoc (3.12)
       json (~> 1.4)
     recaptcha (0.3.4)
-    rubycas-client (2.3.8)
+    rubycas-client (2.2.1)
       activesupport
+    rubycas-client-rails (0.1.0)
+      rails (>= 3.0.0)
+      rubycas-client (>= 2.2.0)
     rubyzip (0.9.5)
     sass (3.1.12)
     selenium-webdriver (2.15.0)
@@ -123,6 +126,7 @@ DEPENDENCIES
   rails3-jquery-autocomplete
   rdiscount
   recaptcha
-  rubycas-client
+  rubycas-client (= 2.2.1)
+  rubycas-client-rails
   sass
   sqlite3-ruby
