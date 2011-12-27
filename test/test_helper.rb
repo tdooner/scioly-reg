@@ -6,12 +6,24 @@ require 'capybara/rails'
 class ActiveSupport::TestCase
   include Capybara::DSL
 
+  def setup
+    @current_tournament = FactoryGirl.create(:current_tournament)
+    @other_tournament = FactoryGirl.create(:tournament)
+  end
+
   FactoryGirl.define do
     factory :tournament do
-      date "2012-02-26"
-      is_current true
-      registration_begins Time.now - 2.days
-      registration_ends Time.now + 2.days
+      sequence(:date){|x| Time.now + x.years}
+      registration_begins (Time.now - 2.days)
+      registration_ends (Time.now + 2.days)
+      is_current "false"
+
+      trait :current do
+        is_current "true"
+      end
+
+      factory :current_tournament, :traits => [:current]
+
     end
     factory :team do
       name "Nordonia High School - Team 1"
@@ -22,5 +34,28 @@ class ActiveSupport::TestCase
       hashed_password Digest::SHA1.hexdigest('password')
       tournament
     end
+    factory :user do
+      case_id "ted27"
+      role 1
+    end
+    factory :schedule do
+      event Faker::Name.name
+      division "B"
+      room "Crawford 111"
+      tournament
+      starttime (Time.now + 7.hours)
+      endtime (Time.now + 7.hours + 50.minutes)
+
+      trait :division_c do
+        division "C"
+      end
+
+      factory :schedule_c, :traits => [:division_c]
+    end
+  end
+
+  def assume_admin_login
+    RubyCAS::Filter.fake( FactoryGirl.create(:user).case_id )
+    visit '/user/login'
   end
 end
