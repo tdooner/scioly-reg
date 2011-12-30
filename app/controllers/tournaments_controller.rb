@@ -1,6 +1,7 @@
 class TournamentsController < ApplicationController
   before_filter :is_admin
   protect_from_forgery :except => :destroy
+
   def create
 	  @tournament = Tournament.new(params[:tournament])
 	  @tournament.save()

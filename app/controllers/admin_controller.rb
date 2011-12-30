@@ -13,7 +13,7 @@ class AdminController < ApplicationController
 
   def events
     breadcrumbs.add("Events")
-    @events = Schedule.find_all_by_tournament_id(@current_tournament, :include=>[:timeslots, {:timeslots=>:sign_ups}])
+    @events = @current_tournament.schedules
     @teams_by_division = Team.divisions.inject({}) {|a,i| 
       a.merge(i[0] => Team.count(:conditions=>["division = ?", i[0]]))
     }
