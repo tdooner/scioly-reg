@@ -1,3 +1,7 @@
+== Scioly-Reg Notes:
+To enable tracking, register for Mixpanel and update the code in config/initializers/mixpanel.rb.
+If running on Heroku, run `heroku config:add MIXPANEL_TOKEN=your_code_here`
+
 == Welcome to Rails
 
 Rails is a web-application framework that includes everything needed to create

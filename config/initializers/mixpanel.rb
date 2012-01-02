@@ -1,0 +1,1 @@
+ENV['MIXPANEL_TOKEN'] = "Your Token" unless ENV['MIXPANEL_TOKEN']
