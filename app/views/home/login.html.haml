@@ -3,13 +3,27 @@
   Welcome to the website for Case Western Reserve University's Science Olympiad Tournament. 
 %div.bluebox
   %h2 Information for the 2012 Science Olympiad Tournament will be posted shortly.
-  %a{:href=>"/scores.pdf"} Official Scores From 2011
+  %a#scores{:href=>"/scores.pdf"} Official Scores From 2011
 %br
 %br
 %div.bluebox.smalllinks
   Comments or Concerns from last year? Please fill out our
-  =link_to("short questionaire", "https://filer.case.edu/survey/entry.jsp?id=1298763175536") + "."
+  =link_to("short questionaire", "https://filer.case.edu/survey/entry.jsp?id=1298763175536", :id=>"questionaire") + "."
   %br We value your input and want to address any concerns.
 %p
   Case Western Reserve's Science Olympiad tournament is hosted by the 
-  =link_to "Center for Science and Mathematics Education.", "http://case.edu/artsci/csm/"
+  =link_to "Center for Science and Mathematics Education.", "http://case.edu/artsci/csm/", :id=>"csm"
+/ Track the things on this page
+:javascript
+  var trackIt = function(link, page) {
+    mpq.track("Link: " + page, {}, function() {
+      window.location = link.attr("href");
+    });
+  }
+  $(function() {
+    $("a#scores").click(function(ev) { ev.preventDefault(); trackIt($(this), "Homepage Scores")});
+    $("a#questionaire").click(function(ev) { ev.preventDefault(); trackIt($(this), "Homepage Questionaire")});
+    $("a#csm").click(function(ev) { ev.preventDefault(); trackIt($(this), "Homepage CSM")});
+    mpq.track("View Homepage");
+  });
+

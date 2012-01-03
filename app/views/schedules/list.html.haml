@@ -34,4 +34,5 @@
       %tr#current
         %td{:colspan => 4}
           = link_to("View All Registrations", signups_url)
-
+:javascript
+  $(function(){ mpq.track("View All Schedules"); });

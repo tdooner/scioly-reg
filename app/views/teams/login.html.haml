@@ -36,3 +36,5 @@
           %td{:colspan => 2}
             =recaptcha_tags :display => ["white"]
   =submit_tag "Login"
+:javascript
+  $(function(){ mpq.track("View Login Page"); });
