@@ -20,11 +20,11 @@ class SignUp < ActiveRecord::Base
 
 	# Called whenever a new SignUp is saved
 	def validate
-		if not self.timeslot.schedule.tournament.has_registration_begun()
-			errors.add_to_base("Registration for this tournament begins at " + self.timeslot.schedule.tournament.registration_begins.strftime("%B %d, %Y at %I:%M %p"))
+		if not Tournament.get_current.has_registration_begun()
+			errors.add_to_base("Registration for this tournament begins at " + Tournament.get_current.registration_begins.strftime("%B %d, %Y at %I:%M %p"))
 		end
-		if self.timeslot.schedule.tournament.has_registration_ended()
-			errors.add_to_base("Registration for this tournament ended at " + self.timeslot.schedule.tournament.registration_ends.to_s)
+		if Tournament.get_current.has_registration_ended()
+			errors.add_to_base("Registration for this tournament ended at " + Tournament.get_current.registration_ends.to_s)
 		end
 		if self.timeslot.schedule.hasTeamRegistered(team_id)
 			errors.add(:team_id, "is already registered for this event!")

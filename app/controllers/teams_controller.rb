@@ -3,11 +3,11 @@ class TeamsController < ApplicationController
 	before_filter :is_correct_team, :only => [:edit, :update]
 
 	def index
-		@teams = Team.find(:all)
+		@teams = @current_tournament.teams
 		render :list
 	end
 	def list
-		@teams = Team.find(:all)
+		@teams = @current_tournament.teams
 	end
 	def edit
 		@this_team = Team.find(params[:id])
@@ -48,7 +48,7 @@ class TeamsController < ApplicationController
 		end
 	end
 	def new
-		@this_team = Team.new()
+		@this_team = Team.new
 	end
 	def create
 		@this_team = Team.new(params[:team])
@@ -73,7 +73,7 @@ class TeamsController < ApplicationController
 			@captcha = true
 		end
 		
-		@teams = Team.find(:all, :conditions => ["division = ?", @division]).sort
+		@teams = Team.find_all_by_tournament_id_and_division(@current_tournament, params[:division]).sort
 		if @team
 			flash[:error] = "Already logged in!"
 		end
@@ -91,13 +91,13 @@ class TeamsController < ApplicationController
 			if session[:team] = Team.authenticate(params[:team][:id], params[:password])
 				flash[:message] = "Logged in!"
 				session[:loginattempts] = nil
-				redirect_to :root
+				return redirect_to :root
 			else
 				# If the user is logged in as an admin
 				if not session[:user].nil? and session[:user].is_admin()
-					session[:team] = Team.find(params[:team][:id])
+					session[:team] = Team.find(params[:team][:id]).id
 					session[:loginattempts] = nil
-					redirect_to :root
+					return redirect_to :root
 				end
 				flash[:error] = "Incorrect Password For Selected Team"
 			end
