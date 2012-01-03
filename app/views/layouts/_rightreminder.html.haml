@@ -32,10 +32,9 @@
     %p{:style => "margin-bottom:5px"} 
       %b Register For Event:
     %ul
-      - if not @dont_forget.nil?
-        - @dont_forget.each do |i|
-          %li
-            = link_to(i.event,url_for(i))
+      - @dont_forget.each do |i|
+        %li
+          = link_to(i.event,url_for(i))
     %p
       = link_to "View Current Reservations", signups_url
   // If the team has registered for all events:

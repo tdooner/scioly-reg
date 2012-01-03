@@ -116,9 +116,11 @@ class TeamsController < ApplicationController
 		if not session[:user].nil? and session[:user].is_admin
 			return
 		end
+        if not @team
+          return redirect_to :root
+        end
 		if @team.id != params[:id].to_i
-			redirect_to edit_team_url(session[:team])
-			return
+			return redirect_to edit_team_url(session[:team])
 		end		
 	end
 end

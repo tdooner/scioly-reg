@@ -15,16 +15,20 @@ class SignUp < ActiveRecord::Base
 
 	# Returns list of all schedules that given team still needs to register for.
 	def self.getTeamUnregistered(team)
-		Schedule.find(:all, :conditions => ["division = ? and id not in (SELECT schedule_id FROM timeslots WHERE id in (SELECT timeslot_id from sign_ups WHERE team_id=?))", team.division ,team.id])
+		Tournament.get_current.schedules.find(:all, :conditions => ["division = ? and id not in (SELECT schedule_id FROM timeslots WHERE id in (SELECT timeslot_id from sign_ups WHERE team_id=?))", team.division ,team.id])
 	end
 
 	# Called whenever a new SignUp is saved
 	def validate
-		if not Tournament.get_current.has_registration_begun()
-			errors.add_to_base("Registration for this tournament begins at " + Tournament.get_current.registration_begins.strftime("%B %d, %Y at %I:%M %p"))
+      t = Tournament.get_current
+      if not self.timeslot.schedule.tournaments.include?(t)
+        errors.add_to_base("This event is not available in the current tournament.")
+      end
+		if not t.has_registration_begun()
+			errors.add_to_base("Registration for this tournament begins at " + t.registration_begins.strftime("%B %d, %Y at %I:%M %p"))
 		end
-		if Tournament.get_current.has_registration_ended()
-			errors.add_to_base("Registration for this tournament ended at " + Tournament.get_current.registration_ends.to_s)
+		if t.has_registration_ended()
+			errors.add_to_base("Registration for this tournament ended at " + t.registration_ends.to_s)
 		end
 		if self.timeslot.schedule.hasTeamRegistered(team_id)
 			errors.add(:team_id, "is already registered for this event!")
