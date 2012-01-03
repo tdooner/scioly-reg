@@ -7,6 +7,7 @@ gem 'rubycas-client', '2.2.1'
 gem 'rubycas-client-rails'
 gem 'rdiscount'
 gem 'recaptcha', :require => "recaptcha/rails"
+gem 'mixpanel'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'sass'

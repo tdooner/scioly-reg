@@ -43,6 +43,7 @@ GEM
       ffi (~> 1.0.6)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    escape (0.0.4)
     factory_girl (2.3.2)
       activesupport
     factory_girl_rails (1.4.0)
@@ -63,6 +64,10 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.17.2)
+    mixpanel (1.1.1)
+      escape
+      json
+      rack
     multi_json (1.0.4)
     nokogiri (1.5.0)
     polyglot (0.3.3)
@@ -125,6 +130,7 @@ DEPENDENCIES
   faker
   haml
   jquery-rails
+  mixpanel
   rails (= 3.0.11)
   rails3-jquery-autocomplete
   rdiscount

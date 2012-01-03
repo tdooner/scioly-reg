@@ -24,7 +24,7 @@ class Team < ActiveRecord::Base
 	def self.authenticate(id, password)
 		u = find(:first, :conditions=>["id = ?", id])
 		return nil if u.nil?
-		return u.id if encrypt(password)==u.hashed_password
+		return u if encrypt(password)==u.hashed_password
 		nil
 	end
 

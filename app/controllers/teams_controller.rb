@@ -35,14 +35,17 @@ class TeamsController < ApplicationController
 			if not @this_team.update_attributes(params[:team])
 				flash[:error] = "A save error occurred: " + @this_team.errors.full_messages.first + "."
 			end
+            @mixpanel.track_event("Team Update", {:team => @this_team.name, :admin=>true, :failed => false})
 			redirect_to edit_team_url(params[:id])
 		else
 			if @this_team.update_attributes({:password => params[:team][:password], :password_confirm => params[:team][:password_confirm]})
+                @mixpanel.track_event("Team Update", {:team => @this_team.name, :admin=>false, :failed => false})
 				@div = @team.division
 				@team = nil
 				redirect_to login_url(@div)
 			else
 				flash[:error] = "A save error occurred: " + @this_team.errors.full_messages.first + "."
+                @mixpanel.track_event("Team Update", {:team => @this_team.name, :admin=>false, :failed => true})
 				redirect_to edit_team_url(params[:id])
 			end
 		end
@@ -88,17 +91,22 @@ class TeamsController < ApplicationController
 			if params[:password].nil?
 				params[:password] = ""
 			end
-			if session[:team] = Team.authenticate(params[:team][:id], params[:password])
+			if team = Team.authenticate(params[:team][:id], params[:password])
+                @mixpanel.track_event("Login", {:team => team.name, :admin=>"false", :failed => "false"})
+                session[:team] = team.id
 				flash[:message] = "Logged in!"
 				session[:loginattempts] = nil
 				return redirect_to :root
 			else
 				# If the user is logged in as an admin
 				if not session[:user].nil? and session[:user].is_admin()
-					session[:team] = Team.find(params[:team][:id]).id
+					team = Team.find(params[:team][:id])
+                    @mixpanel.track_event("Login", {:team => team.name, :admin=>"true", :failed => "false"})
+                    session[:team] = team.id
 					session[:loginattempts] = nil
 					return redirect_to :root
 				end
+                @mixpanel.track_event("Login", {:team => Team.find_by_id(params[:team][:id]).name, :admin => "false", :failed => "true"})
 				flash[:error] = "Incorrect Password For Selected Team"
 			end
 		end
@@ -109,6 +117,7 @@ class TeamsController < ApplicationController
 	end
 	def logout
 		session[:team] = nil
+        @mixpanel.track_event("Logout", {:team => @team.name, :admin=>!!session[:user]}) if @team
 		redirect_to root_url
 	end
 	def is_correct_team

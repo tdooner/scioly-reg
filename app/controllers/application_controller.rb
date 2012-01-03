@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
 
   def setup
 	breadcrumbs.add 'Home', root_path
+    
+    @mixpanel = Mixpanel::Tracker.new(ENV["MIXPANEL_TOKEN"], request.env, true)
 
 	@current_tournament = Tournament.get_current()
     @team = Team.find_by_id_and_tournament_id(session[:team], @current_tournament)

@@ -31,13 +31,15 @@
     "track_forms","register","register_once","identify","name_tag","set_config"];for(c=0;c<
     d.length;c++){mpq[d[c]]=e(d[c])}})();
   - if @team
+    - admin = " as Admin" if !session[:user].nil?
+    - admin ||= ""
     :javascript
       $(function() {
-        mpq.register_once({"team": "#{@team.name}"}, "all", 31);
-        mpq.name_tag("#{@team.name}");
+        mpq.register({"team": "#{@team.name}"}, "all", 31);
+        mpq.name_tag("#{@team.name}#{admin}");
       });
   - if session[:user]
     :javascript
       $(function() {
-        mpq.register_once({"admin": true}, "all", 31);
+        mpq.register({"admin": true}, "all", 31);
       }

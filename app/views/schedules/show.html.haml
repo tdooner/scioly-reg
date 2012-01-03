@@ -27,3 +27,5 @@
 %p{:align=>"center"}
   For Event Organizers And Administrators:
   = link_to("View as PDF", schedule_url(@schedule) + ".pdf")
+:javascript
+  $(function() { mpq.track("View Event", {event: "#{@schedule.event}"}); });

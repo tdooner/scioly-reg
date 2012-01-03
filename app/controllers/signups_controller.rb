@@ -36,6 +36,7 @@ class SignupsController < ApplicationController
 
 	  flash[:message] = "Registration deleted."
 
+      @mixpanel.track_event("SignUp Destroy", {:team => @team.name, :event=>@signup.timeslot.schedule.event})
 	  return redirect_to(schedule_url(schedule))
   end
 
@@ -56,9 +57,11 @@ class SignupsController < ApplicationController
 		  redirect_to(schedule_url(@signup.timeslot.schedule))
 	  end
 	  if @signup.save()
-		  redirect_to(schedule_url(@signup.timeslot.schedule))
+        @mixpanel.track_event("SignUp Create", {:team => @team.name, :event=>@signup.timeslot.schedule.event, :success => true})
+		redirect_to(schedule_url(@signup.timeslot.schedule))
 	  else
-		  flash[:message] = "Error in registering! Your registration did not save."
+        @mixpanel.track_event("SignUp Create", {:team => @team.name, :event=>@signup.timeslot.schedule.event, :success => false})
+		flash[:message] = "Error in registering! Your registration did not save."
 	  end
 
   end

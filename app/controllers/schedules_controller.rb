@@ -48,7 +48,7 @@ class SchedulesController < ApplicationController
 
 	@allslots = @schedule.timeslots.sort { |x,y| x.begins <=> y.begins }
 	@currentreg = nil
-	if not @team 
+	if @team 
 		@currentreg = SignUp.find_by_team_id_and_timeslot_id(@team, @allslots.map{|x| x.id})
 	end
 

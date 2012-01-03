@@ -19,8 +19,6 @@
       %td
         - if @currentreg.nil?
           =link_to "Register", newsignup_path(ts), :class=>"btn"
-        - else
-          =link_to "Swap", newsignup_path(ts), :class=>"btn"
     - else
       %td
 - if ts.sign_ups.include?(@currentreg)
