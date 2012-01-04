@@ -14,7 +14,9 @@
     $("div#schedule_online_details").hide();
   });
 = flash[:message]
-
+%p 
+  Want to create multiple events at a time? Try 
+  =link_to("Batch Mode", "/schedule/batchnew")+"."
 - form_for(@schedule) do |f|
   %fieldset
     %div.clearfix

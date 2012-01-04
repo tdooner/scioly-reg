@@ -1,0 +1,30 @@
+%p
+  To create a bunch of events in the 
+  %b=@current_tournament.humanize
+  tournament, paste in the following text area a series of rows with the following
+  %b tab separated columns:
+%dl
+  %dt Event Name
+  %dd The name of the event.
+  %dt Division
+  %dd Currently, divisions "B" and "C" are supported.
+  %dt Room
+  %dt Event Start Time
+  %dd Beginning of the event; formatted like "9:00:00" for 9:00am or "13:30:00" for 1:30pm.
+  %dt Event End Time
+  %dd End of the event; formatted like "9:50:00" for 9:50am or "14:20:00" for 2:20pm.
+  %dt Number of Timeslots
+  %dd 
+    Number of timeslots to space evenly between the start time and the end time. If the number of timeslots for 
+    an event is 0, then online registration is disabled for that event.
+  %dt Teams per Timeslot
+  %dd If number of timeslots is 0, then this setting has no effect.
+%p 
+  If you are about to make a spreadsheet with these values, here is a template you can use and then copy-paste.
+  %a{:href=>"https://docs.google.com/spreadsheet/ccc?key=0AgQhM9vFx8X8dG9OVVBjS0stXzBZWTJWN21Md0c3QXc"}
+    Batch Event Input Template.
+%form{:method=>"POST", :action=>new_schedule_url()}
+  %textarea{:style=>"width:650px; height:200px;"}
+  .actions
+    %input.btn.primary{:type=>"submit", :value=>"Submit Batch Events"}
+

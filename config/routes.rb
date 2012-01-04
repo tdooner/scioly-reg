@@ -26,6 +26,7 @@ Scioly::Application.routes.draw do
   #   event at the singular:
   #      example.com/schedule/event_name/
   match 'schedule/autocomplete_event' => "schedules#autocomplete_schedule_event", :as => :autocomplete_event_schedule
+  match 'schedule/batchnew' => "schedules#batchnew"
   resources :schedules, :path => "/schedule"
 
   match '/schedule/:id/register/' => "signups#new", :as => :newsignup

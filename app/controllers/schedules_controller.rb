@@ -5,13 +5,19 @@ class SchedulesController < ApplicationController
 	# is what a team registers to.
 	###
 
-  before_filter :is_admin, :only => [:new, :destroy]
+  before_filter :is_admin, :only => [:new, :destroy, :batchnew, :create]
   protect_from_forgery :except => :destroy
   autocomplete :schedule, :event, :display_value => :humanize, :extra_data => [:division]
 
   def new
 	  breadcrumbs.add("New Event")
 	  @schedule = Schedule.new()
+  end
+
+  def batchnew
+    breadcrumbs.add("New Event", new_schedule_url())
+    breadcrumbs.add("Batch Mode")
+
   end
 
   def create
