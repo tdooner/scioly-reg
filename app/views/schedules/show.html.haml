@@ -1,31 +1,79 @@
-%p
-  Below are the designated timeslots for this event. Timeslots that have been reserved by another team are greyed out. To sign up for a timeslot, click the word "Available!" next to the desired time.
-
-- if not @currentreg.nil?
-  %div.alert-message.info="Your team is registered in the #{@currentreg.timeslot.begins.strftime("%I:%M %p")} timeslot."
-%div.smalllinks
-  %table#timeslot{:width => "100%", :style=>"padding:0;margin:0;"}
-    %thead
-      %th Timeslot
-      %th Availability
-      - if @team
-        %th Sign Up
-    - @allslots.each do |ts|
-      = render :partial=>"schedules/timeslot", :locals => {:ts => ts}
-      /
-        - tr_id = ""
-        - slots_remaining = ts.team_capacity - ts.sign_ups.length
-        - if slots_remaining == 0 and not (not session[:user].nil? and session[:user].is_admin)
-          - tr_id = "unavailable"
-        - if not @currentreg.nil? and ts.id == @currentreg.timeslot_id
-          - display = @team.name
-          - giveoptions = true
-          - tr_id = "current"
-        - else
-          - display = "Available: " + slots_remaining.to_s + " Slot(s)"
-          - giveoptions = false
-%p{:align=>"center"}
-  For Event Organizers And Administrators:
-  = link_to("View as PDF", schedule_url(@schedule) + ".pdf")
+%ul.tabs{:"data-tabs"=>"tabs"}
+  %li.active
+    %a{:href=>"#information"} Information
+  - if @allslots.length > 0
+    %li
+      %a{:href=>"#registration"} Registration
+  %li
+    %a{:href=>"#scores"} Scores
+%div.tab-content
+  %div.tab-pane.active#information
+    - if not @currentreg.nil?
+      %div.alert-message.info="Your team is registered in the #{@currentreg.timeslot.begins.strftime("%I:%M %p")} timeslot."
+    - if @allslots.length == 0
+      This event is not selected for online sign-up. Information pertaining to this event is listed below, however no action is required. After the awards ceremony, scores for this event will be posted to this page.
+    - else
+      This event is scheduled for online sign-up. When registration is open, you may register for timeslots or change your timeslot. On the day of the tournament, teams that did not complete online registration may choose from the remaining slots. 
+    %h3 Event Name
+    %p="#{@schedule.event} (#{@schedule.division})"
+    %h3 Time 
+    %p="#{@schedule.starttime.strftime("%l:%M %P")} to #{@schedule.endtime.strftime("%l:%M %P")}"
+    %h3 Room
+    %p="#{@schedule.room}"
+    %p.help-block 
+      %b Quick Link: 
+      %a{:href=>"http://www.case.edu/maps/",:target=>"_new"} Campus Map
+  %div.tab-pane#registration
+    %p
+      Below are the designated timeslots for this event. Timeslots that have been reserved by another team are greyed out. To sign up for a timeslot, click the word "Available!" next to the desired time.
+    %div.smalllinks
+      %table#timeslot{:width => "100%", :style=>"padding:0;margin:0;"}
+        %thead
+          %th Timeslot
+          %th Availability
+          - if @team
+            %th Sign Up
+        - @allslots.each do |ts|
+          = render :partial=>"schedules/timeslot", :locals => {:ts => ts}
+    %p{:align=>"center"}
+      For Event Organizers And Administrators:
+      = link_to("View as PDF", schedule_url(@schedule) + ".pdf")
+  %div.tab-pane#scores
+    - if false
+      Scores will be posted 
+      %b after the awards ceremony, 
+      or at 8pm EST, whichever comes first.
+    - else
+      %div{:style=>"width:600px; margin:auto;"}
+        %table.zebra-striped.bordered-table.condensed-table
+          %thead
+            %th{:width=>"100px"} Placement
+            %th{:width=>"100px"} Team Number
+            %th Team Name
+          %tbody
+            %tr
+              %td 1
+              %td 11C
+              %td Any High School
+            %tr
+              %td 1
+              %td 11C
+              %td Any High School
+            %tr
+              %td 1
+              %td 11C
+              %td Any High School
+            %tr
+              %td 1
+              %td 11C
+              %td Any High School
+            %tr
+              %td 1
+              %td 11C
+              %td Any High School
+            %tr
+              %td 1
+              %td 11C
+              %td Any High School
 :javascript
   $(function() { mpq.track("View Event", {event: "#{@schedule.event}"}); });

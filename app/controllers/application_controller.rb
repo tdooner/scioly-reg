@@ -34,3 +34,21 @@ class ApplicationController < ActionController::Base
   end
 end
 
+class Breadcrumbs::Render::Bootstrap < Breadcrumbs::Render::Base
+  def render
+    str = ""
+    breadcrumbs.items.each_with_index do |item, i| 
+      str << render_item(item, i)
+    end
+    return "<ul class='breadcrumb'>#{str}</ul>"
+  end
+
+  def render_item(item, i)
+    if item[1] != nil
+      return "<li><a href='#{item[1]}'>#{item[0]}</a><span class='divider'>/</span></li>"
+    else
+      return "<li>#{item[0]}</li>"
+    end
+  end
+end
+

@@ -4,30 +4,23 @@
   - if breadcrumbs.items.length == 1
     = render :partial => "/layouts/headerbelowbar"
   = render :partial => "/layouts/navigation"
-  .breadcrumbnav
-    .breadcrumbHome
-      .breadcrumbC
-        %h2
-          %strong
-            =breadcrumbs.render(:format => :inline)
-      .sideLink
-        &raquo;
-        = link_to 'Center For Science and Mathematics Education', 'http://case.edu/artsci/csm/'
   #contentWrapper
-    #contentContainer
-      #leftCol
-        .blankH
-          = image_tag 'blank.jpg', :width => 10, :height => 180, :alt => "frame image"
-        .blankH
-          = image_tag 'blank.jpg', :width => 180, :height => 10, :alt => "frame image"
+    - if !current_page?("/")
+      .row
+        .span16
+          %h3
+            =breadcrumbs.render(:format => :bootstrap)
+    .row
+      .span11
         - if flash[:error]
           %div.alert-message.error=flash[:error]
         - if flash[:message]
           %div.alert-message.info=flash[:message]
         = yield
-      #rightCol
-        - if @team
-          =render :partial => "/layouts/rightreminder"
-        - else
-          =render :partial => "/layouts/rightinformation"
+      .span4.offset1
+        .well
+          - if @team
+            =render :partial => "/layouts/rightreminder"
+          - else
+            =render :partial => "/layouts/rightinformation"
   = render :partial => "/layouts/footer"

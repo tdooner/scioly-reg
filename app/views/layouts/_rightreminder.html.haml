@@ -1,54 +1,47 @@
-%div
-  %h4
-    Welcome
-%div.sideContent
+%p
+  You are currently logged in as
+  %b="#{@team.name}."
+  At the tournament scheduled for 
+  ="#{@current_tournament.humanize},"
+  your team is registered with the following details:
   %p
-    You are currently logged in as
-    ="#{@team.name}."
-    At the tournement scheduled for 
-    ="#{@current_tournament.humanize},"
-    your team is registered with the following details:
-    %p{:style=>"margin-left:20px"}
-      %b School:
-      =@team.name
-      %br
-      %b Team Number:
-      =@team.getNumber()
-      %br
-      %b Coach:
-      =@team.coach
-      %br
-    %p If any of this information is incorrect, contact Jim Bader.
+    %b School:
+    %br
+    =@team.name
+    %br
+    %b Team Number:
+    %br
+    =@team.getNumber()
+    %br
+    %b Coach:
+    %br
+    =@team.coach
+    %br
+  %p If any of this information is incorrect, contact Jim Bader.
 
 // If the team has an event to register for...
 - if not @dont_forget.empty?
-  %div
-    %h4
-      Don't Forget!
-  %div.sideContent
-    %p 
-      Our records show you haven't yet registered for the following events! Please make sure to do this before registration ends, at 
-      =@current_tournament.registration_ends.strftime("%m/%d/%Y %I:%M %p")
-    %p{:style => "margin-bottom:5px"} 
-      %b Register For Event:
-    %ul
-      - @dont_forget.each do |i|
-        %li
-          = link_to(i.event,url_for(i))
-    %p
-      = link_to "View Current Reservations", signups_url
+  %h4
+    Don't Forget!
+  %p 
+    Our records show you haven't yet registered for the following events! Please make sure to do this before registration ends, at 
+    =@current_tournament.registration_ends.strftime("%m/%d/%Y %I:%M %p")
+  %p{:style => "margin-bottom:5px"} 
+    %b Register For Event:
+  %ul
+    - @dont_forget.each do |i|
+      %li
+        = link_to(i.event,url_for(i))
+  %p
+    = link_to "View Current Reservations", signups_url
   // If the team has registered for all events:
 - else
-  %div
-    %h4
-      Your Event Schedule
-  %div.sideContent
-    %p
-      You have registered for all events.
-      = link_to "View all your registrations", signups_url
-%div.action
   %h4
-    Team Actions
-%div.sideContent.action
-  %p=link_to "Change Password", edit_team_url(session[:team])
-  %p=link_to "Logout", logout_url
+    Your Event Schedule
+  %p
+    You have registered for all events.
+    = link_to "View all your registrations.", signups_url
+%h4
+  Team Actions
+%p=link_to "Change Password", edit_team_url(session[:team])
+%p=link_to "Logout", logout_url
