@@ -27,4 +27,8 @@ class Tournament < ActiveRecord::Base
 	def can_register()
 		return (self.has_registration_begun() and not self.has_registration_ended())
 	end
+    def show_scores?
+      return true if self.schedules.select{|x| x.scores_withheld}.empty?
+      return false
+    end
 end

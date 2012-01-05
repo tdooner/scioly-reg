@@ -1,9 +1,13 @@
-%div
+.page-header
   %h2 
-    Tournament:
-    %b= @current_tournament.humanize
-%h3
-  =link_to "#{@all_schedules.length} Events", admin_events_url
-%h3
-  =link_to "#{@teams.length} Teams", teams_url
-=link_to "Change Tournament", tournaments_path
+    ="#{@current_tournament.humanize} Tournament"
+    %small=link_to "Change Tournament", tournaments_path
+.row
+  .span4
+    %h3
+      =link_to "#{@all_schedules.length} Events", admin_events_url
+    %h3
+      =link_to "#{@teams.length} Teams", teams_url
+  .span4
+    %h3
+      =link_to "Scoring", admin_scores_url

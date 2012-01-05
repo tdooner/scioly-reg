@@ -3,6 +3,7 @@ class Schedule < ActiveRecord::Base
     attr_accessor :num_timeslots, :teams_per_slot
 
 	has_many :timeslots
+    has_many :scores
     has_and_belongs_to_many :tournaments
 	# TODO: Validate start, end, and timeslots.
 	

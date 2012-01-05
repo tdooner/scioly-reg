@@ -5,7 +5,7 @@ class SchedulesController < ApplicationController
 	# is what a team registers to.
 	###
 
-  before_filter :is_admin, :only => [:new, :destroy, :batchnew, :create]
+  before_filter :is_admin, :only => [:new, :destroy, :batchnew, :create, :scores, :savescores]
   protect_from_forgery :except => :destroy
   autocomplete :schedule, :event, :display_value => :humanize, :extra_data => [:division]
 
@@ -46,6 +46,7 @@ class SchedulesController < ApplicationController
   def show
 	breadcrumbs.add('Register For Events', schedules_url)
 	@schedule = Schedule.find(params[:id])
+    @scores = @schedule.scores.includes(:team)
 	breadcrumbs.add(@schedule.event) 
 	if @schedule.nil?
 		flash[:message] = "Event not found!"
@@ -78,5 +79,38 @@ class SchedulesController < ApplicationController
 	end
 	@schedule.delete()
 	redirect_to :schedules
+  end
+
+  def scores
+    @schedule = Schedule.find(params[:schedule_id], :include => :scores)
+    @teams = @current_tournament.teams.where(["division = ?", @schedule.division])
+    @placements = @teams.inject({}) { |a,i| 
+      s = @schedule.scores.select{|x| x.team_id == i.id}.first
+      if s
+        a.merge(i.id => s.placement) 
+      else
+        a.merge(i.id => "") 
+      end
+    }
+    breadcrumbs.add("Scoring", "/admin/scores")
+    breadcrumbs.add(@schedule.event)
+  end
+
+  def savescores
+    @schedule = Schedule.find(params[:schedule_id])
+    @teams = @current_tournament.teams.where(["division = ?", @schedule.division])
+
+    @schedule.scores.delete_all
+    params[:placings].each do |k,v|
+      @schedule.scores.create({:team_id => k, :placement => v})
+    end
+
+    if params[:scores_withheld] == "true"
+      @schedule.update_attribute(:scores_withheld, true)
+    else
+      @schedule.update_attribute(:scores_withheld, false)
+    end
+
+    redirect_to admin_scores_url()
   end
 end

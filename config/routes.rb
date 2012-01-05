@@ -8,6 +8,7 @@ Scioly::Application.routes.draw do
   namespace :admin do
     get 'index'
     get 'events', :as => :events
+    get 'scores'
   end
 
   # The priority is based upon order of creation:
@@ -27,8 +28,10 @@ Scioly::Application.routes.draw do
   #      example.com/schedule/event_name/
   match 'schedule/autocomplete_event' => "schedules#autocomplete_schedule_event", :as => :autocomplete_event_schedule
   match 'schedule/batchnew' => "schedules#batchnew"
-  resources :schedules, :path => "/schedule"
-
+  resources :schedules, :path => "/schedule" do
+    get 'scores'
+    post 'scores', :action => "savescores"
+  end
   match '/schedule/:id/register/' => "signups#new", :as => :newsignup
   match '/schedule/:id/confirm/' => "signups#create", :as => :confirmsignup
   match '/signups/:id/delete/' => "signups#destroy", :as => :destroysignup

@@ -1,0 +1,59 @@
+:javascript
+  $(function() {
+    $("table#admin-score-table").tablesorter({
+      sortList: [[2,0]],
+      textExtraction: function(node) {
+        if (1 in node.childNodes) {
+          return node.childNodes[1].value
+        } else {
+          return node.innerHTML;
+        }
+      }
+    });
+    $("table#admin-score-table input").bind("change", function() {
+      $(this).trigger("update");
+    });
+  });
+
+%h1 Score Entry
+%p
+  Note: There are
+  %b=@teams.length.to_s + " teams"
+  teams registered in this division. Therefore, by 
+  %a{:href=>"http://soinc.org/scoring_guidelines"} Science Olympiad Scoring Guidelines,
+  %ul
+    %li 
+      No-Show teams should be ranked
+      %b=(@teams.length+1)
+    %li
+      Disqualified teams should be ranked
+      %b=(@teams.length+2)
+%form{:method=>"POST", :action=>schedule_scores_url(@schedule)}
+  %input{:type=>"hidden", :name=>"authenticity_token", :value=>"#{form_authenticity_token}"}
+  %table.zebra-striped#admin-score-table
+    %thead
+      %th.span2 Ranking
+      %th{:width=>"100px"} Team Number
+      %th Team Name
+    %tbody
+      - @teams.each do |t|
+        %tr
+          %td
+            %input.span1{:type=>"text", :name=>"placings[#{t.id}]", :value=>"#{@placements[t.id]}"}
+          %td=t.getNumber
+          %td=t.name
+  %p Scores will be posted online at the conclusion of the awards ceremony (or at 8pm on the night of the tournament) by default. Since every event has an impact on the official scores for the entire tournament, holding back scores for an event will stop the official scores for the tournament from being released.
+  %p This feature is intended to be used while there is an unresolved scoring dispute for an event.
+  .clearfix
+    .input
+      %ul.inputs-list
+        %li
+          - if @schedule.scores_withheld
+            %input{:type=>"checkbox", :value=>"true", :name=>"scores_withheld", :id=>"scores_withheld", :checked=>"checked"}
+          -else
+            %input{:type=>"checkbox", :value=>"true", :name=>"scores_withheld", :id=>"scores_withheld"}
+          %label{:for=>"scores_withheld"}
+            %b Don't Automatically Publish Scores
+  .actions
+    %input.btn{:type=>"reset", :value=>"Reset Scores"}
+    %input.btn.primary{:type=>"submit", :value=>"Submit Scores"}

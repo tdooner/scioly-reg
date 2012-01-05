@@ -39,10 +39,13 @@
       For Event Organizers And Administrators:
       = link_to("View as PDF", schedule_url(@schedule) + ".pdf")
   %div.tab-pane#scores
-    - if false
-      Scores will be posted 
-      %b after the awards ceremony, 
-      or at 8pm EST, whichever comes first.
+    - if !@current_tournament.show_scores?
+      %p 
+        Scores will be posted 
+        %b after the awards ceremony, 
+        or at 8pm EST, whichever comes first.
+      %p
+        Scores may be withheld past that time in the event of a dispute.
     - else
       %div{:style=>"width:600px; margin:auto;"}
         %table.zebra-striped.bordered-table.condensed-table
@@ -51,29 +54,10 @@
             %th{:width=>"100px"} Team Number
             %th Team Name
           %tbody
-            %tr
-              %td 1
-              %td 11C
-              %td Any High School
-            %tr
-              %td 1
-              %td 11C
-              %td Any High School
-            %tr
-              %td 1
-              %td 11C
-              %td Any High School
-            %tr
-              %td 1
-              %td 11C
-              %td Any High School
-            %tr
-              %td 1
-              %td 11C
-              %td Any High School
-            %tr
-              %td 1
-              %td 11C
-              %td Any High School
+            - @scores.each do |s|
+              %tr
+                %td=s.placement
+                %td=s.team.getNumber
+                %td=s.team.name
 :javascript
   $(function() { mpq.track("View Event", {event: "#{@schedule.event}"}); });

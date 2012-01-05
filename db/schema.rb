@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111228004907) do
+ActiveRecord::Schema.define(:version => 20120105001913) do
 
   create_table "infos", :force => true do |t|
     t.string    "name"
@@ -30,11 +30,20 @@ ActiveRecord::Schema.define(:version => 20111228004907) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "room"
+    t.boolean  "scores_withheld", :default => false
   end
 
   create_table "schedules_tournaments", :id => false, :force => true do |t|
     t.integer "tournament_id"
     t.integer "schedule_id"
+  end
+
+  create_table "scores", :force => true do |t|
+    t.integer  "schedule_id"
+    t.integer  "team_id"
+    t.integer  "placement"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sessions", :force => true do |t|
@@ -81,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20111228004907) do
     t.timestamp "registration_ends"
     t.timestamp "created_at"
     t.timestamp "updated_at"
+    t.boolean   "scores_revealed",     :default => false
   end
 
   create_table "users", :force => true do |t|

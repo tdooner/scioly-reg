@@ -24,4 +24,10 @@ class AdminController < ApplicationController
       a.merge(i.id => i.timeslots.map{|x| x.team_capacity - x.sign_ups.length}.sum)
     }
   end
+
+  def scores
+    breadcrumbs.add("Scoring")
+
+    @events = @current_tournament.schedules.includes(:scores)
+  end
 end
