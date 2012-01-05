@@ -19,6 +19,8 @@ Scioly::Application.routes.draw do
   resource :user
   get "user/login", :as => :adminlogin
   get "user/logout", :as => :adminlogout
+  match 'teams/batchnew' => "teams#batchnew", :via=>[:get]
+  match 'teams/batchnew' => "teams#batchcreate", :via=>[:post]
   resources :teams
 
   # Rails and I disagree about "schedules" vs "schedule". 

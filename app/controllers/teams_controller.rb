@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-	before_filter :is_admin, :only => [:new, :create]
+	before_filter :is_admin, :only => [:new, :create, :batchnew]
 	before_filter :is_correct_team, :only => [:edit, :update]
 
 	def index
@@ -51,8 +51,35 @@ class TeamsController < ApplicationController
 		end
 	end
 	def new
+        breadcrumbs.add("Create Team")
 		@this_team = Team.new
 	end
+    def batchnew
+        breadcrumbs.add("Create Team", new_team_url)
+        breadcrumbs.add("Batch Mode")      
+    end
+    def batchcreate
+      @teams = params[:batch].split("\n")
+      @errors = []
+      @teams.each do |t|
+        a = t.split("\t")
+        if a.length < 6
+          @errors << "Short record found: #{a[0]}!"
+          next
+        end
+        team = @current_tournament.teams.new({:name => a[0], :number => a[1], :coach => a[2], :division => a[3], :homeroom => a[4], :password => a[5].strip})
+        if not team.save()
+          @errors << "Error with #{a[0]}: #{team.errors.full_messages.first}"
+        end
+      end
+      flash[:error] = @errors.join("<br />") unless @errors.empty?
+
+      if not flash[:error]
+        redirect_to teams_url
+      else
+        render :batchnew
+      end
+    end
 	def create
 		@this_team = Team.new(params[:team])
 		@this_team.tournament = Tournament.get_current()
