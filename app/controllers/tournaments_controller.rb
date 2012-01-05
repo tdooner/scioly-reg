@@ -46,4 +46,9 @@ class TournamentsController < ApplicationController
 	  @active.set_current()
 	  redirect_to :tournaments
   end
+
+  def scoreslideshow
+    
+    render :text=>"", :layout=>"scoreslideshow"
+  end
 end

@@ -1,0 +1,68 @@
+This page will customize a slideshow of results to be shown at the awards ceremony.
+
+%form{:method=>"POST", :action=>tournament_scoreslideshow_url(@current_tournament)}
+  %input{:type=>"hidden", :value=>form_authenticity_token, :name=>"authenticity_token"}
+  %fieldset
+    .clearfix
+      %label 
+        %b Divisions
+      .input
+        %select{:multiple=>"multiple", :size=>"2"}
+          %option B
+          %option C
+        .help-block Note: Hold CTRL to select multiple divisions.
+    .clearfix
+      %label
+        %b Show Top
+      .input
+        %select.small
+          %option 1
+          %option 2
+          %option 3
+          %option 4
+          %option 5
+          %option 6
+        places for each event.
+        .help-block More teams may be displayed in the result of a tie.
+    .clearfix
+      %label
+        %b Show Top
+      .input
+        %select.small
+          %option 1
+          %option 2
+          %option 3
+          %option 4
+          %option 5
+          %option 6
+          %option 7
+          %option 8
+        teams, overall.
+        .help-block More teams may be displayed in the result of a tie.
+  - if !@withheldevents.empty?
+    .alert-message.block-message.warning
+      %p
+        %b Warning: 
+        The following events have scores withheld. Should they be included in the slideshow?
+        %ul
+          - @withheldevents.each do |e|
+            %li=e.humanize
+        %fieldset
+          %ul.inputs-list
+            %li
+              %label
+                %input{:type=>"radio",:name=>"skip_withheld", :value=>"false", :checked=>"checked"}
+                Yes, include these events in the slideshow.
+            %li
+              %label
+                %input{:type=>"radio", :name=>"skip_withheld", :value=>"true"}
+                No, skip these events in the slideshow.
+  - if !@unfinishedevents.empty?
+    .alert-message.block-message.error
+      %b Error: 
+      The following events have no scores reported. They will be omitted from the awards slideshow.
+      %ul
+        - @unfinishedevents.each do |e|
+          %li=e.humanize 
+  .actions
+    %input.primary.btn{:type=>"submit", :value=>"Create Slideshow!"}

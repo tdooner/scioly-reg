@@ -9,6 +9,7 @@ Scioly::Application.routes.draw do
     get 'index'
     get 'events', :as => :events
     get 'scores'
+    get 'scoreslideshow'
   end
 
   # The priority is based upon order of creation:
@@ -39,7 +40,10 @@ Scioly::Application.routes.draw do
   match '/signups/:id/delete/' => "signups#destroy", :as => :destroysignup
   match '/signups' => "signups#list", :as => :signups
 
-  resources :tournaments
+  resources :tournaments do
+    get 'scoreslideshow'
+    post 'scoreslideshow'
+  end
   post 'tournament/activate' => "tournaments#set_active"
 
   match '/login' => "teams#login"
