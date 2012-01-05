@@ -33,6 +33,37 @@ class SchedulesController < ApplicationController
 	end
   end
 
+  def batchcreate
+    schedules = params[:batch].split("\n")
+    @errors = []
+
+    schedules.each do |s|
+      a = s.strip.split("\t")
+      if a.length < 7
+        @errors << "Schedule #{a[0]} does not have enough fields."
+        next
+      end
+      schedule = @current_tournament.schedules.new({:event=>a[0], :division=>a[1], :room=>a[2], :starttime=>DateTime.parse(a[3]).to_time, :endtime => DateTime.parse(a[4]).to_time, :num_timeslots => a[5].to_i, :teams_per_slot => a[6].to_i})
+      if schedule.save()
+        if schedule.num_timeslots != 0
+          res = schedule.updateTimeSlots
+          if !res.is_a?(Array)
+            @errors << "#{res} with #{a[0]}. No timeslots have been created for this event."
+          end
+        end
+      else
+        @errors << schedule.errors.full_messages.first 
+      end
+    end
+    flash[:error] = @errors.join("<br />") unless @errors.empty?
+
+    if not flash[:error]
+      redirect_to admin_events_url
+    else
+      render :batchnew
+    end
+  end
+
   def index
 	breadcrumbs.add('Register For Events')
     if not @team.nil?
@@ -77,7 +108,7 @@ class SchedulesController < ApplicationController
 		e.delete()
 	end
 	@schedule.delete()
-	redirect_to :schedules
+	redirect_to :admin_events
   end
 
   def scores

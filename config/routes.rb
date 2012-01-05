@@ -30,7 +30,8 @@ Scioly::Application.routes.draw do
   #   event at the singular:
   #      example.com/schedule/event_name/
   match 'schedule/autocomplete_event' => "schedules#autocomplete_schedule_event", :as => :autocomplete_event_schedule
-  match 'schedule/batchnew' => "schedules#batchnew"
+  match 'schedule/batchnew' => "schedules#batchnew", :via => [:get]
+  match 'schedule/batchnew' => "schedules#batchcreate", :via => [:post]
   resources :schedules, :path => "/schedule" do
     get 'scores'
     post 'scores', :action => "savescores"
