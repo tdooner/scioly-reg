@@ -123,7 +123,7 @@ class SchedulesController < ApplicationController
       end
     }
     breadcrumbs.add("Scoring", "/admin/scores")
-    breadcrumbs.add(@schedule.event)
+    breadcrumbs.add(@schedule.humanize)
   end
 
   def savescores

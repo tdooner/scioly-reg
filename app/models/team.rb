@@ -5,8 +5,8 @@ class Team < ActiveRecord::Base
 	validates_presence_of :number
 	validates_presence_of :tournament_id
 	validates_presence_of :division
-	validates_uniqueness_of :number, :scope => :tournament_id
-	validates_uniqueness_of :name, :scope => :tournament_id
+	validates_uniqueness_of :number, :scope => [:tournament_id, :division]
+	validates_uniqueness_of :name, :scope => [:tournament_id, :division]
 #	validates_confirmation_of :password # if we want to confirm a password with a password_confirmation method
 
 	belongs_to :tournament

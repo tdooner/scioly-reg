@@ -1,13 +1,13 @@
 This page will customize a slideshow of results to be shown at the awards ceremony.
 
-%form{:method=>"POST", :action=>tournament_scoreslideshow_url(@current_tournament)}
+%form{:method=>"POST", :action=>tournament_scoreslideshow_url(@current_tournament), :target=>"_new"}
   %input{:type=>"hidden", :value=>form_authenticity_token, :name=>"authenticity_token"}
   %fieldset
     .clearfix
       %label 
         %b Divisions
       .input
-        %select{:multiple=>"multiple", :size=>"2"}
+        %select{:multiple=>"multiple", :size=>"2", :name=>"slideshow[division][]"}
           %option B
           %option C
         .help-block Note: Hold CTRL to select multiple divisions.
@@ -15,7 +15,7 @@ This page will customize a slideshow of results to be shown at the awards ceremo
       %label
         %b Show Top
       .input
-        %select.small
+        %select.small{:name=>"slideshow[top_places]"}
           %option 1
           %option 2
           %option 3
@@ -28,7 +28,7 @@ This page will customize a slideshow of results to be shown at the awards ceremo
       %label
         %b Show Top
       .input
-        %select.small
+        %select.small{:name=>"slideshow[top_teams]"}
           %option 1
           %option 2
           %option 3
@@ -51,11 +51,11 @@ This page will customize a slideshow of results to be shown at the awards ceremo
           %ul.inputs-list
             %li
               %label
-                %input{:type=>"radio",:name=>"skip_withheld", :value=>"false", :checked=>"checked"}
+                %input{:type=>"radio",:name=>"slideshow[skip_withheld]", :value=>"false", :checked=>"checked"}
                 Yes, include these events in the slideshow.
             %li
               %label
-                %input{:type=>"radio", :name=>"skip_withheld", :value=>"true"}
+                %input{:type=>"radio", :name=>"slideshow[skip_withheld]", :value=>"true"}
                 No, skip these events in the slideshow.
   - if !@unfinishedevents.empty?
     .alert-message.block-message.error

@@ -3,9 +3,14 @@
     %ul#topnav
       %li= link_to 'Home', root_path
       %li
-        = link_to 'Events', schedules_url
+        = link_to 'Division B Events', schedules_url
         %ul
-          - @all_schedules.each do |e| 
+          - @all_schedules["B"].each do |e| 
+            %li=link_to("#{e.event} (#{e.division})",e)
+      %li
+        = link_to 'Division C Events', schedules_url
+        %ul
+          - @all_schedules["C"].each do |e| 
             %li=link_to("#{e.event} (#{e.division})",e)
       - if not @team
         %li

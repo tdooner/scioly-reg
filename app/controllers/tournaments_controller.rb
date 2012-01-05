@@ -48,7 +48,16 @@ class TournamentsController < ApplicationController
   end
 
   def scoreslideshow
-    
-    render :text=>"", :layout=>"scoreslideshow"
+    logger.debug params.inspect
+    @events = @current_tournament.schedules.includes({:scores => :team})
+    @teams = @current_tournament.teams.includes(:scores)
+
+    @events.keep_if{|x| params[:slideshow][:division].include?(x.division) }
+    @events.keep_if{|x| !x.scores.empty?}
+    @events.keep_if{|x| !x.scores_withheld || params[:slideshow][:skip_withheld] == "false"}
+
+    @teams = @teams.sort_by{|x| x.scores.map(&:placement).sum }.group_by(&:division)
+    @places = ["First Place", "Second Place", "Third Place", "Fourth Place", "Fifth Place", "Sixth Place", "Seventh Place", "Eigth Place"]
+    render :slideshow, :layout=>"scoreslideshow"
   end
 end

@@ -1,7 +1,7 @@
 :javascript
   $(function() {
     $("table#admin-score-table").tablesorter({
-      sortList: [[2,0]],
+      sortList: [[1,0]],
       textExtraction: function(node) {
         if (1 in node.childNodes) {
           return node.childNodes[1].value
@@ -15,7 +15,6 @@
     });
   });
 
-%h1 Score Entry
 %p
   Note: There are
   %b=@teams.length.to_s + " teams"
@@ -40,8 +39,10 @@
         %tr
           %td
             %input.span1{:type=>"text", :name=>"placings[#{t.id}]", :value=>"#{@placements[t.id]}"}
-          %td=t.getNumber
-          %td=t.name
+          %td{:style=>"vertical-align:middle"}
+            %input{:type=>"hidden",:value=>t.number}
+            =t.getNumber
+          %td{:style=>"vertical-align:middle"}=t.name
   %p Scores will be posted online at the conclusion of the awards ceremony (or at 8pm on the night of the tournament) by default. Since every event has an impact on the official scores for the entire tournament, holding back scores for an event will stop the official scores for the tournament from being released.
   %p This feature is intended to be used while there is an unresolved scoring dispute for an event.
   .clearfix
