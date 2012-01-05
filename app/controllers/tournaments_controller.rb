@@ -48,7 +48,9 @@ class TournamentsController < ApplicationController
   end
 
   def scoreslideshow
-    logger.debug params.inspect
+    if not params[:slideshow]
+      return redirect_to admin_scoreslideshow_url
+    end
     @events = @current_tournament.schedules.includes({:scores => :team})
     @teams = @current_tournament.teams.includes(:scores)
 
