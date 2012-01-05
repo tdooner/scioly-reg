@@ -30,12 +30,8 @@ ActiveRecord::Schema.define(:version => 20120105005433) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "room"
+    t.integer  "tournament_id"
     t.boolean  "scores_withheld", :default => false
-  end
-
-  create_table "schedules_tournaments", :id => false, :force => true do |t|
-    t.integer "tournament_id"
-    t.integer "schedule_id"
   end
 
   create_table "scores", :force => true do |t|
@@ -64,15 +60,15 @@ ActiveRecord::Schema.define(:version => 20120105005433) do
   end
 
   create_table "teams", :force => true do |t|
-    t.string    "name"
-    t.string    "number"
-    t.string    "division"
-    t.string    "coach"
-    t.string    "hashed_password"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-    t.integer   "tournament_id"
-    t.string    "homeroom"
+    t.string   "name"
+    t.string   "number"
+    t.string   "division"
+    t.string   "coach"
+    t.string   "hashed_password"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "tournament_id"
+    t.string   "homeroom"
   end
 
   create_table "timeslots", :force => true do |t|
@@ -85,13 +81,13 @@ ActiveRecord::Schema.define(:version => 20120105005433) do
   end
 
   create_table "tournaments", :force => true do |t|
-    t.date      "date"
-    t.boolean   "is_current"
-    t.timestamp "registration_begins"
-    t.timestamp "registration_ends"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-    t.boolean   "scores_revealed",     :default => false
+    t.date     "date"
+    t.boolean  "is_current"
+    t.datetime "registration_begins"
+    t.datetime "registration_ends"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "scores_revealed",     :default => false
   end
 
   create_table "users", :force => true do |t|
