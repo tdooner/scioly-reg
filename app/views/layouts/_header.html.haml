@@ -14,7 +14,7 @@
   = javascript_include_tag "jquery.tablesorter.min"
   :javascript
     var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-28081083-1']);
+    _gaq.push(['_setAccount', '#{ENV['GA_ID']}']);
     _gaq.push(['_trackPageview']);
 
     (function() {

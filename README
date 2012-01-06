@@ -1,6 +1,6 @@
 == Scioly-Reg Notes:
-To enable tracking, register for Mixpanel and update the code in config/initializers/mixpanel.rb.
-If running on Heroku, run `heroku config:add MIXPANEL_TOKEN=your_code_here`
+To enable analytics, register for Mixpanel and/or Google Analytics and update the codes in config/initializers/analytics.rb.
+Or, if on Heroku, run `heroku config:add MIXPANEL_TOKEN=your_mixpanel_token_here`, followed by `heroku config:add GA_ID=your_ga_id_here`
 
 == Welcome to Rails
 
