@@ -13,7 +13,7 @@
         %th
           %b Registered?
     %tbody
-      - @all_schedules.each do |s|
+      - @all_schedules["C"].each do |s|
         %tr
           - if @team or not session[:user].nil?
             %td= link_to(s.event + " (" + s.division + ")", url_for(s))
@@ -22,10 +22,13 @@
           %td= s.starttime.strftime("%I:%M %p").downcase
           %td= s.endtime.strftime("%I:%M %p").downcase
           -if @team
-            -if @has_registered[s.id] || !s.is_scheduled_online?
-              %td= image_tag("ok.png")
+            -if s.is_scheduled_online?
+              -if @has_registered[s.id]
+                %td= image_tag("ok.png")
+              - else
+                %td= image_tag("error.png")
             - else
-              %td= image_tag("error.png")
+              %td - 
     - if not session[:user].nil? and session[:user].is_admin
       %tr
         %td{:colspan => 4}

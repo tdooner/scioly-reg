@@ -1,5 +1,5 @@
 class TournamentsController < ApplicationController
-  before_filter :is_admin
+  before_filter :is_admin, :except => :scores
   protect_from_forgery :except => :destroy
 
   def create
@@ -45,6 +45,15 @@ class TournamentsController < ApplicationController
 	  @active = Tournament.find(params[:current])
 	  @active.set_current()
 	  redirect_to :tournaments
+  end
+
+  def scores
+    @active = Tournament.find(params[:tournament_id])
+    breadcrumbs.add(@active.humanize + " Scores")
+    @events = @current_tournament.schedules.includes({:scores => :team}).sort_by(&:event).group_by{|x| x.division}
+    @teams = @current_tournament.teams.group_by{|x| x.division}
+
+    @layout_expanded = true
   end
 
   def scoreslideshow

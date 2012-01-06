@@ -2,28 +2,12 @@
   #topNavWrapper
     %ul#topnav
       %li= link_to 'Home', root_path
-      %li
-        = link_to 'Division B Events', schedules_url
-        %ul
-          - @all_schedules["B"].each do |e| 
-            %li=link_to("#{e.event} (#{e.division})",e)
-      %li
-        = link_to 'Division C Events', schedules_url
-        %ul
-          - @all_schedules["C"].each do |e| 
-            %li=link_to("#{e.event} (#{e.division})",e)
-      - if not @team
+      - Team.divisions.values.each do |d|
         %li
-          = link_to 'Team Log In', "#"
+          = link_to "Division #{d} Events", schedules_url
           %ul
-            %li= link_to "Division B Teams", login_url("B")
-            %li= link_to "Division C Teams", login_url("C")
-      - else
-        %li
-          = link_to 'Register For Events', schedules_url
-          %ul
-            - @all_schedules.each do |e| 
-              - if e.is_scheduled_online? && e.division == @team.division
+            - @all_schedules[d].each do |e| 
+              - if @team && e.is_scheduled_online? && e.division == @team.division
                 %li
                   %a{:href=>schedule_url(e)}
                     - if e.hasTeamRegistered(@team)
@@ -31,6 +15,16 @@
                     - else
                       =image_tag("error.png", :width=>16)
                     ="#{e.event} (#{e.division})"
+              - else
+                %li
+                  %a{:href=>schedule_url(e)}=e.event
+      - if not @team
+        %li
+          = link_to 'Team Log In', "#"
+          %ul
+            %li= link_to "Division B Teams", login_url("B")
+            %li= link_to "Division C Teams", login_url("C")
+      - else
         %li
           = link_to "Logout", logout_url
       - if not session[:user].nil? and session[:user].role == 1

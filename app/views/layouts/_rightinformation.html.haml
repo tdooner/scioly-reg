@@ -11,3 +11,6 @@
   %b Registration Ends:
   %br
   = @current_tournament.human_times[:registration_ends]
+- if @current_tournament.show_scores?
+  %h2
+    =link_to "Official Scores", tournament_scores_url(@current_tournament)

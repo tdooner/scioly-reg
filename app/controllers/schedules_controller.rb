@@ -68,14 +68,14 @@ class SchedulesController < ApplicationController
 	breadcrumbs.add('Register For Events')
     if not @team.nil?
 		@has_registered = Hash.new()
-		@all_schedules.map{ |x| @has_registered[x.id] = x.hasTeamRegistered(@team)}
+		@all_schedules[@team.division].map{ |x| @has_registered[x.id] = x.hasTeamRegistered(@team)}
     end
 	render :list
   end
 
   def show
-	breadcrumbs.add('Register For Events', schedules_url)
 	@schedule = Schedule.find(params[:id])
+	breadcrumbs.add("Division #{@schedule.division} Events", schedules_url)
     @scores = @schedule.scores.includes(:team)
 	breadcrumbs.add(@schedule.event) 
 	if @schedule.nil?

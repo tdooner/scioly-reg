@@ -9,6 +9,7 @@ Scioly::Application.routes.draw do
     get 'index'
     get 'events', :as => :events
     get 'scores'
+    get 'scorespublish', :as => :scorespublish
     get 'scoreslideshow'
   end
 
@@ -42,6 +43,7 @@ Scioly::Application.routes.draw do
   match '/signups' => "signups#list", :as => :signups
 
   resources :tournaments do
+    get 'scores'
     get 'scoreslideshow'
     post 'scoreslideshow'
   end

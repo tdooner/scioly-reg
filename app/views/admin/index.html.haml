@@ -5,9 +5,11 @@
 .row
   .span4
     %h3
-      =link_to "#{@all_schedules.length} Events", admin_events_url
+      =link_to "#{@all_schedules.values.flatten.length} Events", admin_events_url
     %h3
       =link_to "#{@teams.length} Teams", teams_url
   .span4
     %h3
       =link_to "Scoring", admin_scores_url
+.actions
+  %a.btn{:href=>admin_scorespublish_url} Publish Scores

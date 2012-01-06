@@ -1,10 +1,11 @@
 =render :partial => "/layouts/header"
+- @layout_expanded ||= false
 %body#home
   = render :partial => "/layouts/cwruheader"
   - if breadcrumbs.items.length == 1
     = render :partial => "/layouts/headerbelowbar"
   = render :partial => "/layouts/navigation"
-  #contentWrapper
+  #contentWrapper{:class=>"expanded-#{@layout_expanded}"}
     - if !current_page?("/")
       .row
         .span16
@@ -17,10 +18,11 @@
         - if flash[:message]
           %div.alert-message.info=flash[:message]
         = yield
-      .span4.offset1
-        .well
-          - if @team
-            =render :partial => "/layouts/rightreminder"
-          - else
-            =render :partial => "/layouts/rightinformation"
+      - if @layout_expanded == false
+        .span4.offset1
+          .well
+            - if @team
+              =render :partial => "/layouts/rightreminder"
+            - else
+              =render :partial => "/layouts/rightinformation"
   = render :partial => "/layouts/footer"

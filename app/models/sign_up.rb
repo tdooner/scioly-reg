@@ -15,13 +15,14 @@ class SignUp < ActiveRecord::Base
 
 	# Returns list of all schedules that given team still needs to register for.
 	def self.getTeamUnregistered(team)
-		Tournament.get_current.schedules.find(:all, :conditions => ["division = ? and id not in (SELECT schedule_id FROM timeslots WHERE id in (SELECT timeslot_id from sign_ups WHERE team_id=?))", team.division ,team.id])
+      Tournament.get_current.schedules.where(["schedules.division=?", team.division]).keep_if(&:is_scheduled_online?) - 
+      team.sign_ups.includes({:timeslot => :schedule}).map{|x| x.timeslot.schedule}
 	end
 
 	# Called whenever a new SignUp is saved
 	def validate
       t = Tournament.get_current
-      if not self.timeslot.schedule.tournaments.include?(t)
+      if not self.timeslot.schedule.tournament == t
         errors.add_to_base("This event is not available in the current tournament.")
       end
 		if not t.has_registration_begun()

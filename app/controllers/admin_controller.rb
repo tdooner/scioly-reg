@@ -38,4 +38,11 @@ class AdminController < ApplicationController
     @unfinishedevents = @events.select{|x| x.scores.empty?}
     @withheldevents = @events.select{|x| x.scores_withheld?}
   end
+
+  def scorespublish
+    @events = @current_tournament.schedules.includes(:scores)
+    @unfinishedevents = @events.select{|x| x.scores.empty?}
+    @withheldevents = @events.select{|x| x.scores_withheld?}
+
+  end
 end
