@@ -49,9 +49,13 @@ class TournamentsController < ApplicationController
 
   def scores
     @active = Tournament.find(params[:tournament_id])
+    if not @active.show_scores?
+      flash[:error] = "Scores for this tournament are not available yet."
+      return redirect_to root_url
+    end
     breadcrumbs.add(@active.humanize + " Scores")
-    @events = @current_tournament.schedules.includes({:scores => :team}).sort_by(&:event).group_by{|x| x.division}
-    @teams = @current_tournament.teams.group_by{|x| x.division}
+    @events = @active.schedules.includes({:scores => :team}).sort_by(&:event).group_by{|x| x.division}
+    @teams = @active.teams.group_by{|x| x.division}
 
     @layout_expanded = true
   end
