@@ -25,6 +25,9 @@ class SignUp < ActiveRecord::Base
       if not self.timeslot.schedule.tournament == t
         errors.add_to_base("This event is not available in the current tournament.")
       end
+      if not self.team.division == self.timeslot.schedule.division
+        errors.add_to_base("This event is not your current division.")
+      end
 		if not t.has_registration_begun()
 			errors.add_to_base("Registration for this tournament begins at " + t.registration_begins.strftime("%B %d, %Y at %I:%M %p"))
 		end
