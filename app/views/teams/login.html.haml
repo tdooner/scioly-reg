@@ -32,6 +32,7 @@
       =recaptcha_tags :display => ["white"]
 .clearfix
   .actions
+    %input{:type=>"hidden", :name=>"is_admin", :value=>"false"}
     =submit_tag "Login", :class=>"btn primary"
 :javascript
   $(function(){ mpq.track("View Login Page"); });

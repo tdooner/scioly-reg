@@ -16,7 +16,7 @@
         - if flash[:error]
           %div.alert-message.error=flash[:error]
         - if flash[:message]
-          %div.alert-message.info=flash[:message]
+          %div.alert-message.info!=flash[:message]
         = yield
       - if @layout_expanded == false
         .span4.offset1

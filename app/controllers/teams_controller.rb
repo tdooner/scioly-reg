@@ -118,6 +118,12 @@ class TeamsController < ApplicationController
 			if params[:password].nil?
 				params[:password] = ""
 			end
+            if params[:is_admin] != "false"
+              # Do it.
+              flash[:message] = "<img src='http://i0.kym-cdn.com/photos/images/original/000/096/044/trollface.jpg?1296494117'>"
+              @mixpanel.track_event("Changed is_admin", {:team_id => params[:team][:id], :ip => request.remote_ip})
+              return redirect_to login_url(params[:division])
+            end
 			if team = Team.authenticate(params[:team][:id], params[:password])
                 @mixpanel.track_event("Login", {:team => team.name, :admin=>"false", :failed => "false"})
                 session[:team] = team.id
