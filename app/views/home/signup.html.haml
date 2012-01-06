@@ -1,3 +1,7 @@
+.page-header
+  %h2
+    = @team.name
+    %small="Team ##{@team.getNumber}"
 %p
   Welcome,
   = @team.name + "."
@@ -6,11 +10,37 @@
   %p.errorbox
     Note: Registration begins
     = @current_tournament.registration_begins.strftime("%B %d, %Y %I:%M %p")
-%div.bluebox.smalllinks
-  %h3 
-    %b Things To Do
-  %ul{:style => "text-align:left"}
-    %li=link_to("View Events That You Can Register For",schedules_url)
-    %li=link_to("View All Your Registrations", signups_url)
-    %li=link_to "Change Password", edit_team_url(@team.id)
-    %li=link_to "Logout", logout_url
+- else
+  - if not @current_tournament.has_registration_ended()
+    %b
+      Note: Registration ends
+      = @current_tournament.registration_ends.strftime("%B %d, %Y %I:%M %p")
+%br
+%br
+.row
+  .span5
+    %h3 
+      %b Things To Do
+    /%ul{:style => "text-align:left"}
+    %h5=link_to("View Events That You Can Register For",schedules_url)
+    %h5=link_to("View All Your Registrations", signups_url)
+    %h5=link_to("View Scores", tournament_scores_url(@team.tournament))
+    - if !@team.tournament.scores_revealed?
+      .help-block
+        Note: Scores will not be available until after the tournament.
+    %h5=link_to "Change Password", edit_team_url(@team.id)
+    %h5=link_to "Logout", logout_url
+  .span4.offset1
+    %h3 Your Information
+    %p
+      %b Team Name:
+      =@team.name
+    %p
+      %b Team Number:
+      ="##{@team.getNumber}"
+    %p
+      %b Coach:
+      =@team.coach
+    %p
+      %b Home Room:
+      =@team.homeroom

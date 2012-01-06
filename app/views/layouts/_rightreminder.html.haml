@@ -1,25 +1,9 @@
 %p
   You are currently logged in as
   %b="#{@team.name}."
-  At the tournament scheduled for 
-  ="#{@current_tournament.humanize},"
-  your team is registered with the following details:
-  %p
-    %b School:
-    %br
-    =@team.name
-    %br
-    %b Team Number:
-    %br
-    =@team.getNumber()
-    %br
-    %b Coach:
-    %br
-    =@team.coach
-    %br
-  %p If any of this information is incorrect, contact Jim Bader.
-
-// If the team has an event to register for...
+  You are currently registering for events at the tournament on
+  ="#{@current_tournament.humanize}."
+/ If the team has an event to register for...
 - if not @dont_forget.empty?
   %h4
     Don't Forget!

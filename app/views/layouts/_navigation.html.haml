@@ -26,7 +26,12 @@
             %li= link_to "Division C Teams", login_url("C")
       - else
         %li
-          = link_to "Logout", logout_url
+          = link_to @team.name, root_path
+          %ul
+            %li=link_to "Register For Events", schedules_url
+            %li=link_to "View Registrations", signups_url
+            %li=link_to "Change Password", edit_team_url(@team)
+            %li=link_to "Logout", logout_url
       - if not session[:user].nil? and session[:user].role == 1
         %li
           =link_to "Admin Panel", admin_index_url

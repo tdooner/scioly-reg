@@ -22,6 +22,11 @@
             %b Coach:
           %td
             =f.text_field :coach, :size =>20
+        %tr
+          %td
+            %b Coach:
+          %td
+            =f.text_field :homeroom, :size =>20
       - else
         %tr
           %td
@@ -40,6 +45,11 @@
             = @team.coach
         %tr
           %td
+            %b Home Room:
+          %td
+            = @team.homeroom
+        %tr
+          %td
             %b Existing Password:
           %td
             =f.password_field :password_existing, :size=>10
@@ -53,6 +63,7 @@
           %b Change Password (confirm):
         %td
           =f.password_field :password_confirm, :size => 10
-    =f.submit
+    .actions
+      =f.submit :class=>"btn primary"
 :javascript
   $(function(){ mpq.track("View Team Edit Page"); });
