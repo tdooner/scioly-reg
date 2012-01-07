@@ -85,7 +85,9 @@ class TournamentsController < ApplicationController
       @events = @events.group_by(&:division).values.map(&:shuffle).flatten
     end
 
-    @teams = @teams.sort_by{|x| x.scores.map(&:placement).sum }.group_by(&:division)
+    @teams_by_rank = @teams.reduce({}){|a,i| a.merge({i => i.rank_matrix})}.invert.sort
+    @teams_by_rank = @teams_by_rank.group_by{|x| x[1].division}
+      
     @places = ["First Place", "Second Place", "Third Place", "Fourth Place", "Fifth Place", "Sixth Place", "Seventh Place", "Eigth Place"]
     render :slideshow, :layout=>"scoreslideshow"
   end
