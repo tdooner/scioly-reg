@@ -29,7 +29,7 @@
       %b=(@teams.length+2)
 %form{:method=>"POST", :action=>schedule_scores_url(@schedule)}
   %input{:type=>"hidden", :name=>"authenticity_token", :value=>"#{form_authenticity_token}"}
-  %table.zebra-striped#admin-score-table
+  %table.zebra-striped.condensed-table#admin-score-table
     %thead
       %th.span2 Ranking
       %th{:width=>"100px"} Team Number
