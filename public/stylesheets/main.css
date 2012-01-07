@@ -111,6 +111,8 @@ div.expanded-true {
         div.expanded-true table#scores-table th div.outer div.inner {
           -moz-transform: rotate(270deg);
           -webkit-transform: rotate(270deg);
+          -ms-transform: rotate(270deg);
+          -o-transform: rotate(270deg);
           width: 240px;
           position: relative;
           right: 110px; }
