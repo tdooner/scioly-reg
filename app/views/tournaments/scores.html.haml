@@ -1,0 +1,56 @@
+%ul.tabs{:"data-tabs"=>"tabs"}
+  %li.active
+    %a{:href=>"#download"}
+      Download PDF
+  %li
+    %a{:href=>"#division_B"}
+      Division B
+  %li
+    %a{:href=>"#division_C"}
+      Division C
+%div.tab-content
+  %div.tab-pane.active#download
+    Download
+    %b all
+    the things, but not quite yet.
+  - Team.divisions.values.each do |d|
+    %div.tab-pane{:id=>"division_#{d}"}
+      %table.scores-table.condensed-table.zebra-striped{:id=>"scores_table_#{d}"}
+        %thead
+          %th{:width=>"300px"}
+            Team Name
+          - @events[d].each do |e|
+            %th
+              %div.outer
+                %div.inner=e.event
+          %th 
+            %div.outer
+              %div.inner Total
+          %th
+            %div.outer
+              %div.inner Placement
+        %tbody
+          - ranking = 0
+          - num_at_place = 1
+          - lastval = []
+          - @teams_by_rank[d].each do |rank_matrix, t|
+            %tr
+              %td=t.name
+              - @events[d].each do |e|
+                - res = e.scores.select{|x| x.team==t}.first
+                - if res
+                  %td=res.placement
+                - else
+                  %td 
+              %td=t.scores.map(&:placement).sum
+              - if rank_matrix == lastval
+                - num_at_place += 1
+                %td=ranking
+              - else
+                - ranking += num_at_place
+                - num_at_place = 1
+                %td=ranking
+    :javascript
+      $(function(){
+        $("table#scores_table_#{d}").tablesorter({sortList:[[#{@events[d].length+2},0]]})
+      });
