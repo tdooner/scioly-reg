@@ -39,6 +39,15 @@ This page will customize a slideshow of results to be shown at the awards ceremo
           %option 8
         teams, overall.
         .help-block More teams may be displayed in the result of a tie.
+    .clearfix
+      %label
+        %b Order Events
+      .input
+        %select{:name=>"slideshow[order]"}
+          %option{:value=>"alpha"} Alphabetically
+          %option{:value=>"alphadiv"} Alphabetically by Division
+          %option{:value=>"random"} Randomly
+          %option{:value=>"randomdiv"} Randomly by Division
   - if !@withheldevents.empty?
     .alert-message.block-message.warning
       %p

@@ -70,6 +70,16 @@ class TournamentsController < ApplicationController
     @events.keep_if{|x| params[:slideshow][:division].include?(x.division) }
     @events.keep_if{|x| !x.scores.empty?}
     @events.keep_if{|x| !x.scores_withheld || params[:slideshow][:skip_withheld] == "false"}
+    case params[:slideshow][:order]
+    when "alpha"
+      @events = @events.sort_by(&:event)
+    when "alphadiv"
+      @events = @events.sort_by(&:event).group_by(&:division).values.flatten
+    when "random"
+      @events = @events.shuffle
+    when "randomdiv"
+      @events = @events.group_by(&:division).values.map(&:shuffle).flatten
+    end
 
     @teams = @teams.sort_by{|x| x.scores.map(&:placement).sum }.group_by(&:division)
     @places = ["First Place", "Second Place", "Third Place", "Fourth Place", "Fifth Place", "Sixth Place", "Seventh Place", "Eigth Place"]
