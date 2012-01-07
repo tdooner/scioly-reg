@@ -101,14 +101,14 @@ img {
 
 div.expanded-true {
   width: 1200px !important; }
-  div.expanded-true table#scores-table {
+  div.expanded-true table.scores-table {
     width: 1150px; }
-    div.expanded-true table#scores-table th {
+    div.expanded-true table.scores-table th {
       font-size: 0.8em; }
-      div.expanded-true table#scores-table th div.outer {
+      div.expanded-true table.scores-table th div.outer {
         width: 2em;
         height: 125px; }
-        div.expanded-true table#scores-table th div.outer div.inner {
+        div.expanded-true table.scores-table th div.outer div.inner {
           -moz-transform: rotate(270deg);
           -webkit-transform: rotate(270deg);
           -ms-transform: rotate(270deg);

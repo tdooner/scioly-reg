@@ -55,7 +55,11 @@ class TournamentsController < ApplicationController
     end
     breadcrumbs.add(@active.humanize + " Scores")
     @events = @active.schedules.includes({:scores => :team}).sort_by(&:event).group_by{|x| x.division}
-    @teams = @active.teams.group_by{|x| x.division}
+    @teams = @active.teams
+
+    # @team_ranks is an array of sorted [team.rank_matrix, #<Team Object>] tuples
+    @teams_by_rank = @teams.reduce({}){|a,i| a.merge({i => i.rank_matrix})}.invert.sort
+    @teams_by_rank = @teams_by_rank.group_by{|x| x[1].division}
 
     @layout_expanded = true
   end

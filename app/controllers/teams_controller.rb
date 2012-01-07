@@ -103,7 +103,7 @@ class TeamsController < ApplicationController
 			@captcha = true
 		end
 		
-		@teams = Team.find_all_by_tournament_id_and_division(@current_tournament, params[:division]).sort
+		@teams = Team.find_all_by_tournament_id_and_division(@current_tournament, params[:division]).sort_by(&:name)
 		if @team
 			flash[:error] = "Already logged in!"
 		end
