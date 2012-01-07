@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
 	@current_tournament = Tournament.get_current()
     @team = Team.find_by_id_and_tournament_id(session[:team], @current_tournament)
 	@all_schedules = @current_tournament.schedules.find(:all, :order => "event ASC").group_by(&:division)
+    @all_schedules["B"] ||= []
+    @all_schedules["C"] ||= []
 	
 	if @team 
 		@dont_forget = SignUp.getTeamUnregistered(@team)
