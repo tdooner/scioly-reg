@@ -97,18 +97,18 @@ ActiveRecord::Schema.define(:version => 20120114075817) do
   end
 
   create_table "tournaments", :force => true do |t|
-    t.date      "date"
-    t.boolean   "is_current"
-    t.timestamp "registration_begins"
-    t.timestamp "registration_ends"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-    t.boolean   "scores_revealed",             :default => false
-    t.integer   "school_id"
-    t.string    "homepage_photo_file_name"
-    t.string    "homepage_photo_content_type"
-    t.integer   "homepage_photo_file_size"
-    t.datetime  "homepage_photo_updated_at"
+    t.date     "date"
+    t.boolean  "is_current"
+    t.datetime "registration_begins"
+    t.datetime "registration_ends"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "scores_revealed",             :default => false
+    t.integer  "school_id"
+    t.string   "homepage_photo_file_name"
+    t.string   "homepage_photo_content_type"
+    t.integer  "homepage_photo_file_size"
+    t.datetime "homepage_photo_updated_at"
   end
 
   create_table "users", :force => true do |t|
