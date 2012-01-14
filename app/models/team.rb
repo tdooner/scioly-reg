@@ -56,4 +56,11 @@ class Team < ActiveRecord::Base
 
       [total_points.abs] + (num_teams+1).times.map{|x| places[x+1] || 0}
     end
+
+  	# Returns list of all schedules that this team still needs to register for using set subtraction.
+	def unregistered_events
+      self.tournament.schedules.where(["schedules.division=?", self.division]).keep_if(&:is_scheduled_online?) -
+      self.sign_ups.includes({:timeslot => :schedule}).map{|x| x.timeslot.schedule}
+	end
+
 end

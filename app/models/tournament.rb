@@ -10,7 +10,7 @@ class Tournament < ActiveRecord::Base
 		nil
 	end
 	def set_current()
-		Tournament.update_all("is_current='f'")
+		self.school.tournaments.update_all("is_current='f'")
 		self.update_attribute("is_current", true)
 	end
 	def humanize()
