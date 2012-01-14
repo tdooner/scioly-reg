@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120114075817) do
+ActiveRecord::Schema.define(:version => 20120114212805) do
 
   create_table "infos", :force => true do |t|
     t.string    "name"
@@ -109,6 +109,9 @@ ActiveRecord::Schema.define(:version => 20120114075817) do
     t.string   "homepage_photo_content_type"
     t.integer  "homepage_photo_file_size"
     t.datetime "homepage_photo_updated_at"
+    t.text     "hosted_by_markdown"
+    t.text     "homepage_markdown"
+    t.string   "title"
   end
 
   create_table "users", :force => true do |t|

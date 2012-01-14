@@ -117,6 +117,10 @@ img{border:none; }
     display:table-cell;
     vertical-align:middle;
     text-align:center;
+  } 
+  span.host p {
+    color:#BBB;
+    a { color:#BBB; }
   }
 }
 #contentWrapper {
@@ -126,6 +130,13 @@ img{border:none; }
     padding-top:20px;
     .row {margin-left:auto;}
     min-height:500px;
+}
+#homepage {
+  h2 {
+    border-bottom: 1px solid #DDDDDD;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    margin-bottom: 17px;
+  }
 }
 div.expanded-true {
   width:1200px !important;
