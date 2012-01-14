@@ -4,7 +4,7 @@
 body, html { margin: 0;}
 #cwruHeader {
 	width:100%;
-	height: 55px;
+	height: 80px;
 	position: relative;
 	background-color: #0a304e;
 	margin:0;
@@ -18,7 +18,7 @@ body, html { margin: 0;}
 	margin:auto;
 }
 .logo {
-	height: 55px;
+	height: 75px;
 	width: 205px;
 	position: absolute;
 	left: 1px;
@@ -26,7 +26,7 @@ body, html { margin: 0;}
 }
 /*// navigation*/
 #cwruMainNav {
-	height: 55px;
+	height: 80px;
 	position: absolute;
 	right: 183px;
 	width: 319px;
