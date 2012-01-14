@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120114044742) do
+ActiveRecord::Schema.define(:version => 20120114075817) do
 
   create_table "infos", :force => true do |t|
     t.string    "name"
@@ -37,15 +37,15 @@ ActiveRecord::Schema.define(:version => 20120114044742) do
   create_table "schools", :force => true do |t|
     t.string   "name"
     t.string   "subdomain"
-    t.string   "homepage_photo_file_name"
-    t.string   "homepage_photo_content_type"
-    t.integer  "homepage_photo_file_size"
-    t.datetime "homepage_photo_updated_at"
     t.string   "admin_name"
     t.string   "admin_email"
     t.string   "admin_password"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
   end
 
   add_index "schools", ["subdomain"], :name => "index_schools_on_subdomain"
@@ -103,8 +103,12 @@ ActiveRecord::Schema.define(:version => 20120114044742) do
     t.timestamp "registration_ends"
     t.timestamp "created_at"
     t.timestamp "updated_at"
-    t.boolean   "scores_revealed",     :default => false
+    t.boolean   "scores_revealed",             :default => false
     t.integer   "school_id"
+    t.string    "homepage_photo_file_name"
+    t.string    "homepage_photo_content_type"
+    t.integer   "homepage_photo_file_size"
+    t.datetime  "homepage_photo_updated_at"
   end
 
   create_table "users", :force => true do |t|

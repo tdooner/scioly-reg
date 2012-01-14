@@ -11,6 +11,8 @@ Scioly::Application.routes.draw do
     get 'scores'
     get 'scorespublish', :as => :scorespublish
     get 'scoreslideshow'
+    get "school/edit"
+    put "school/update"
   end
 
   # The priority is based upon order of creation:

@@ -1,5 +1,9 @@
 .page-header
   %h2 
+    ="#{@current_school.name} Admin Panel"
+    %small=link_to "Edit Information", admin_school_edit_url
+.page-header
+  %h3 
     ="#{@current_tournament.humanize} Tournament"
     %small=link_to "Change Tournament", tournaments_path
 .row
