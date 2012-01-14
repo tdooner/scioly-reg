@@ -1,6 +1,8 @@
 class Tournament < ActiveRecord::Base
 	has_many :teams
     has_many :schedules
+    
+    belongs_to :school
 
 	def self.get_current()
 		@t = find(:first, :conditions => ["is_current = ?", true])

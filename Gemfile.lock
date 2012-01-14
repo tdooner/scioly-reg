@@ -1,3 +1,13 @@
+GIT
+  remote: git://github.com/thoughtbot/paperclip.git
+  revision: 071c93871465db9daad1718945b9ef1b4bf6291d
+  specs:
+    paperclip (2.5.0)
+      activerecord (>= 2.3.0)
+      activesupport (>= 2.3.2)
+      cocaine (>= 0.0.2)
+      mime-types
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -41,6 +51,7 @@ GEM
       xpath (~> 0.1.4)
     childprocess (0.2.3)
       ffi (~> 1.0.6)
+    cocaine (0.2.1)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     escape (0.0.4)
@@ -131,6 +142,7 @@ DEPENDENCIES
   haml
   jquery-rails
   mixpanel
+  paperclip!
   rails (= 3.0.11)
   rails3-jquery-autocomplete
   rdiscount

@@ -8,6 +8,7 @@ gem 'rubycas-client-rails'
 gem 'rdiscount'
 gem 'recaptcha', :require => "recaptcha/rails"
 gem 'mixpanel'
+gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'sass'

@@ -59,3 +59,13 @@ class ActiveSupport::TestCase
     visit '/user/login'
   end
 end
+
+class ActionController::TestCase
+  def setup 
+    @current_tournament = FactoryGirl.create(:current_tournament)
+    @other_tournament = FactoryGirl.create(:tournament)
+    10.times do |t|
+      FactoryGirl.create(:schedule, :tournament => @current_tournament)
+    end
+  end
+end

@@ -4,10 +4,12 @@ class ApplicationController < ActionController::Base
 
   def setup
 	breadcrumbs.add 'Home', root_path
-    
+
+    @subdomain = request.env["SERVER_NAME"].split(".").first
     @mixpanel = Mixpanel::Tracker.new(ENV["MIXPANEL_TOKEN"], request.env, true)
 
-	@current_tournament = Tournament.get_current()
+    @current_school = School.find_by_subdomain(@subdomain, :include=>:tournaments) or raise "School Not Found!"
+	@current_tournament = @current_school.tournaments.find(:first, ["is_current = ?", true])
     @team = Team.find_by_id_and_tournament_id(session[:team], @current_tournament)
 	@all_schedules = @current_tournament.schedules.find(:all, :order => "event ASC").group_by(&:division)
     @all_schedules["B"] ||= []

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120105005433) do
+ActiveRecord::Schema.define(:version => 20120114044742) do
 
   create_table "infos", :force => true do |t|
     t.string    "name"
@@ -24,15 +24,31 @@ ActiveRecord::Schema.define(:version => 20120105005433) do
 
   create_table "schedules", :force => true do |t|
     t.string   "event"
+    t.integer  "tournament_id"
     t.string   "division"
     t.time     "starttime"
     t.time     "endtime"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "room"
-    t.integer  "tournament_id"
     t.boolean  "scores_withheld", :default => false
   end
+
+  create_table "schools", :force => true do |t|
+    t.string   "name"
+    t.string   "subdomain"
+    t.string   "homepage_photo_file_name"
+    t.string   "homepage_photo_content_type"
+    t.integer  "homepage_photo_file_size"
+    t.datetime "homepage_photo_updated_at"
+    t.string   "admin_name"
+    t.string   "admin_email"
+    t.string   "admin_password"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "schools", ["subdomain"], :name => "index_schools_on_subdomain"
 
   create_table "scores", :force => true do |t|
     t.integer  "schedule_id"
@@ -60,15 +76,15 @@ ActiveRecord::Schema.define(:version => 20120105005433) do
   end
 
   create_table "teams", :force => true do |t|
-    t.string   "name"
-    t.string   "number"
-    t.string   "division"
-    t.string   "coach"
-    t.string   "hashed_password"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "tournament_id"
-    t.string   "homeroom"
+    t.string    "name"
+    t.string    "number"
+    t.string    "division"
+    t.string    "coach"
+    t.string    "hashed_password"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.integer   "tournament_id"
+    t.string    "homeroom"
   end
 
   create_table "timeslots", :force => true do |t|
@@ -81,13 +97,14 @@ ActiveRecord::Schema.define(:version => 20120105005433) do
   end
 
   create_table "tournaments", :force => true do |t|
-    t.date     "date"
-    t.boolean  "is_current"
-    t.datetime "registration_begins"
-    t.datetime "registration_ends"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "scores_revealed",     :default => false
+    t.date      "date"
+    t.boolean   "is_current"
+    t.timestamp "registration_begins"
+    t.timestamp "registration_ends"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.boolean   "scores_revealed",     :default => false
+    t.integer   "school_id"
   end
 
   create_table "users", :force => true do |t|

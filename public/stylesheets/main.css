@@ -597,6 +597,8 @@ border:none;
   width: 175px;
   float: left;
   position: relative; }
+  .simpleFooterSearch .btn {
+    width: 33px; }
 
 .simpleFooterSearch form .btn {
   width: 30px;
