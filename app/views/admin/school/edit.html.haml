@@ -14,6 +14,35 @@
       .input
         =f.file_field :logo
     .clearfix=image_tag @current_school.logo.url(:medium)
+    .clearfix
+      %label Administrators:
+      .input
+        %table
+          %thead
+            %th Email Address
+            %th Delete This User
+          %tbody
+            -@admins.each do |a|
+              %tr
+                %td=a.email
+                %td
+                  - if a.email != @current_school.admin_email
+                    =check_box_tag "delete[]", a.id
+                  - else
+                    =check_box_tag "cantdelete", a.id, false, :disabled => "true", :title=>"You cannot delete the primary contact!"
+      %label New Administrator:
+      .input
+        %table
+          %thead
+            %th E-mail Address
+            %th Password
+          %tbody
+            %tr
+              %td=text_field_tag :new_user
+              %td
+                =password_field_tag :new_user_password
+                .clearfix
+                =password_field_tag :new_user_password_confirmation
   %fieldset
     %p To make any changes, you must enter your password again:
     .clearfix

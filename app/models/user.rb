@@ -27,4 +27,10 @@ class User < ActiveRecord::Base
       end
 
     end
+
+    def can_delete?(u)
+      return false unless u.is_a?(User)
+      return false if self.school.admin_email == self.email
+      return self.is_admin_of(self.school) && u.school == self.school
+    end
 end
