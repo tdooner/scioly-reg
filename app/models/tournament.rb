@@ -1,7 +1,7 @@
 class Tournament < ActiveRecord::Base
 	has_many :teams
     has_many :schedules
-    has_attached_file :homepage_photo, :styles => {:medium => "181x200"}
+    has_attached_file :homepage_photo, :styles => {:medium => "181x200", :slideshow => "163x180" }
     
     belongs_to :school
 
