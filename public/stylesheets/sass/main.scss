@@ -587,8 +587,18 @@ border:none;
 	width: 1020px;
 	margin: auto;
 	border-top: 2px solid #C8CACB;
-
+	color: #AAA;
+	font-family: Arial, Helvetica, serif;
+    text-align:center;
+    padding-top:10px;
+    a:link, a:visited {
+      color: #999;
+    }
+    a:hover {
+      color:#999;
+    }
 }
+/*
 .simpleFooterLeftCol {
 	float: left;
 	position: relative;
@@ -617,9 +627,6 @@ border:none;
 #simpleFooter ul li a:link, #simpleFooter ul li a:visited {
 	display: block;
 	text-decoration: none;
-	color: #333333;
-	font-family: Arial, Helvetica, serif;
-	font-size: 0.75em;
 	padding-top: 0.13em;
 	padding-bottom: 0.13em;
 	font-weight: bold;
