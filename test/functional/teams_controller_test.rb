@@ -2,9 +2,12 @@ require 'test_helper'
 
 class TeamsControllerTest < ActionController::TestCase
   test "Teams can log in." do
-    team = FactoryGirl.create(:team)
+    team = FactoryGirl.create(:team, :tournament=>@current_tournament)
+    #puts Tournament.all.inspect
+    #puts @current_tournament.inspect
+    #puts @current_tournament.teams.inspect
     visit login_path(team.division)
-    within("div.bluebox") do
+    within("div#content") do
       assert current_path == login_path(team.division), "Current path is #{current_path}, not the login page #{login_path(team.division)}!"
       assert select(team.name, :from=>"team_id"), "Could not select team name on login page."
       fill_in "password", :with=>team.password

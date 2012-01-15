@@ -11,6 +11,6 @@ class TeamTest < ActiveSupport::TestCase
 
   test "A valid team can be authenticated." do
     team = FactoryGirl.create(:team)
-    assert team.id == Team.authenticate(team.id, team.password)
+    assert team == Team.authenticate(team.id, team.password)
   end
 end
