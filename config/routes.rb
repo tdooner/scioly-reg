@@ -22,6 +22,7 @@ Scioly::Application.routes.draw do
   #   match 'products/:id' => 'catalog#view'
   resource :user
   get "user/login", :as => :adminlogin
+  post "user/login"
   get "user/logout", :as => :adminlogout
   match 'teams/batchnew' => "teams#batchnew", :via=>[:get]
   match 'teams/batchnew' => "teams#batchcreate", :via=>[:post]

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120114212805) do
+ActiveRecord::Schema.define(:version => 20120115060632) do
 
   create_table "infos", :force => true do |t|
     t.string    "name"
@@ -115,10 +115,12 @@ ActiveRecord::Schema.define(:version => 20120114212805) do
   end
 
   create_table "users", :force => true do |t|
-    t.text    "case_id"
-    t.integer "role",       :default => 0
+    t.integer "role",            :default => 0
     t.text    "created_at"
     t.text    "updated_at"
+    t.integer "school_id"
+    t.string  "email"
+    t.string  "hashed_password"
   end
 
 end

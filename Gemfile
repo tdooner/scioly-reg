@@ -3,8 +3,6 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.11'
 gem 'haml'
 gem 'breadcrumbs'
-gem 'rubycas-client', '2.2.1'
-gem 'rubycas-client-rails'
 gem 'rdiscount'
 gem 'recaptcha', :require => "recaptcha/rails"
 gem 'mixpanel'

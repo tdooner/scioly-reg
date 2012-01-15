@@ -1,0 +1,16 @@
+%p If you are an administrator at #{@current_school.name}, you may access the Admin Panel by logging in with this form.
+
+.page-header
+  %h2 Admin Login Form
+%form{:method=>"POST", :action=>adminlogin_url}
+  %input{:type=>"hidden", :name=>"authenticity_token", :value=>form_authenticity_token}
+  .clearfix
+    %label E-mail Address:
+    .input
+      =text_field_tag :email
+  .clearfix
+    %label Password:
+    .input
+      =password_field_tag :password
+  .actions
+    =submit_tag "Log In!", :class=>"btn primary"

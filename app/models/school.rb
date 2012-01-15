@@ -9,6 +9,7 @@ class School < ActiveRecord::Base
   attr_accessor :password, :password_confirm, :existing_password
 
   has_many :tournaments
+  has_many :users
 
   def password=(v)
     self.admin_password = Digest::SHA1.hexdigest(v)
