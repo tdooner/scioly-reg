@@ -27,8 +27,9 @@ class ApplicationController < ActionController::Base
 		  redirect_to :root
 		  return
 	  end
-	  if not User.is_admin(session[:user])
+	  if not session[:user].is_admin_of(@current_school)
 			  redirect_to :root
+              session.delete(:user)
 			  return
 	  else
 			  breadcrumbs.add("Admin", admin_index_url)

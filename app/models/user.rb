@@ -5,15 +5,9 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email, :scope => [:school_id]
   attr_accessor :password, :password_confirmation
 
-	def self.is_admin(user)
-		if user.nil?
-			return false
-		end
-		return (user.role == 1)
-	end
-
-	def is_admin()
-		return self.role == 1
+	def is_admin_of(school)
+      return false if school.nil?
+      return (self.role == 1 && self.school_id == school.id)
 	end
 
     def password=(p)

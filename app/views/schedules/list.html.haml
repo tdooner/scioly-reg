@@ -29,7 +29,7 @@
                 %td= image_tag("error.png")
             - else
               %td - 
-    - if not session[:user].nil? and session[:user].is_admin
+    - if not session[:user].nil? and session[:user].is_admin_of(@current_school)
       %tr
         %td{:colspan => 4}
           =link_to("New Event", new_schedule_url)

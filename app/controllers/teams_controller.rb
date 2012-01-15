@@ -22,7 +22,7 @@ class TeamsController < ApplicationController
 			return
 		end
 		# If the user is not admin, ensure the existing password is correct...
-		if session[:user].nil? or not session[:user].is_admin
+		if session[:user].nil? or not session[:user].is_admin_of(@current_school)
 			@this_team.password_existing = params[:team][:password_existing]
 			if Team.encrypt(params[:team][:password_existing]) != @this_team.hashed_password
 				flash[:error] = "Current password is incorrect!"
@@ -31,7 +31,7 @@ class TeamsController < ApplicationController
 			end
 		end
 
-		if not session[:user].nil? and session[:user].is_admin
+		if not session[:user].nil? and session[:user].is_admin_of(@current_school)
 			if not @this_team.update_attributes(params[:team])
 				flash[:error] = "A save error occurred: " + @this_team.errors.full_messages.first + "."
 			end
@@ -132,7 +132,7 @@ class TeamsController < ApplicationController
 				return redirect_to :root
 			else
 				# If the user is logged in as an admin
-				if not session[:user].nil? and session[:user].is_admin()
+				if not session[:user].nil? and session[:user].is_admin_of(@current_school)
 					team = Team.find(params[:team][:id])
                     @mixpanel.track_event("Login", {:team => team.name, :admin=>"true", :failed => "false"})
                     session[:team] = team.id
@@ -155,7 +155,7 @@ class TeamsController < ApplicationController
 	end
 	def is_correct_team
 		# Checks if a team has the rights to perform this action.
-		if not session[:user].nil? and session[:user].is_admin
+		if not session[:user].nil? and session[:user].is_admin_of(@current_school)
 			return
 		end
         if not @team

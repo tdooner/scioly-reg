@@ -22,7 +22,7 @@
       - slots_remaining = ts.team_capacity - ts.sign_ups.length
       // First, check if the timeslot is full. If it is, but the team is registered there,
       //  they will still see their name in the table (as is desirable).
-      - if slots_remaining == 0 and not (not session[:user].nil? and session[:user].is_admin)
+      - if slots_remaining == 0 and not (not session[:user].nil? and session[:user].is_admin_of(@current_school))
         - tr_id = "unavailable"
       // If the team has registered for the event, show them their name.
       - if not @currentreg.nil? and ts.id == @currentreg.timeslot_id
@@ -37,7 +37,7 @@
         %td{:width => "25%"}
           = ts.begins.strftime("%I:%M %p")
         %td{:width => "75%"}
-          - if (not session[:user].nil? and session[:user].is_admin)
+          - if (not session[:user].nil? and session[:user].is_admin_of(@current_school))
             - ts.occupants.each do |team|
               %b=team.name.gsub(/[^[:print:]]/, " ")
               = "(#" + team.number + team.division + ")"
@@ -48,7 +48,7 @@
                 %div{:style=>"height:30px"}
                   _____________________________________
             - else 
-              - if not (not session[:user].nil? and session[:user].is_admin)
+              - if not (not session[:user].nil? and session[:user].is_admin_of(@current_school))
                 Timeslot Full!
           - else
             - if tr_id != "current" and slots_remaining == 0

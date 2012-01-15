@@ -32,7 +32,7 @@
             %li=link_to "View Registrations", signups_url
             %li=link_to "Change Password", edit_team_url(@team)
             %li=link_to "Logout", logout_url
-      - if not session[:user].nil? and session[:user].role == 1
+      - if not session[:user].nil? and session[:user].is_admin_of(@current_school)
         %li
           =link_to "Admin Panel", admin_index_url
           %ul

@@ -6,7 +6,7 @@
 %div.bluebox
   -form_for(@this_team) do |f|
     %table
-      - if not session[:user].nil? and session[:user].is_admin()
+      - if not session[:user].nil? and session[:user].is_admin_of(@current_school)
         %tr
           %td
             %b Team Name:
