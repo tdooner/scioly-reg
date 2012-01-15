@@ -13,9 +13,13 @@ gem 'sass'
 gem 'jquery-rails'
 gem 'rails3-jquery-autocomplete'
 
-gem 'factory_girl_rails'
-gem 'faker'
-gem 'capybara'
+group :test do 
+    gem 'factory_girl_rails'
+    gem 'faker'
+    gem 'capybara'
+    gem 'turn'
+    gem 'shoulda'
+end
 
 # Use unicorn as the web server
 # gem 'unicorn'

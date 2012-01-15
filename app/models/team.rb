@@ -13,6 +13,7 @@ class Team < ActiveRecord::Base
 	has_many :sign_ups
     has_many :scores
 	attr_accessor :password, :password_confirm, :password_existing
+    attr_protected :hashed_password
 
 
 	@@divisions = {"B" => "B", "C" => "C"}
