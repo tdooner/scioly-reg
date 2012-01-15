@@ -10,23 +10,15 @@
       .input
         =f.text_field :admin_email
     .clearfix
-      =f.label :password, "New Password:"
-      .input
-        =f.password_field :password
-    .clearfix
-      =f.label :password_confirm, "Password Confirm:"
-      .input
-        =f.password_field :password_confirm
-    .clearfix
       =f.label :logo, "School Logo:"
       .input
         =f.file_field :logo
     .clearfix=image_tag @current_school.logo.url(:medium)
   %fieldset
-    %p To make any changes, you must input the current password:
+    %p To make any changes, you must enter your password again:
     .clearfix
-      =f.label :existing_password, "Current Password:"
+      =label :current_password, "Current Password:"
       .input
-        =f.password_field :existing_password
+        =password_field_tag :current_password
   .actions
     =f.submit "Submit Changes", :class=>"btn primary"

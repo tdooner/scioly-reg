@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120115060632) do
+ActiveRecord::Schema.define(:version => 20120115180810) do
 
   create_table "infos", :force => true do |t|
     t.string    "name"
@@ -39,7 +39,6 @@ ActiveRecord::Schema.define(:version => 20120115060632) do
     t.string   "subdomain"
     t.string   "admin_name"
     t.string   "admin_email"
-    t.string   "admin_password"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "logo_file_name"
