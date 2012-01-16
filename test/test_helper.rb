@@ -75,9 +75,9 @@ end
 
 class ActionController::TestCase
   def setup 
-    @current_tournament = FactoryGirl.create(:current_tournament)
-    @other_tournament = FactoryGirl.create(:tournament)
-    @current_school = @current_tournament.school
+    @current_school = FactoryGirl.create(:school)
+    @current_tournament = FactoryGirl.create(:current_tournament, :school => @current_school)
+    @other_tournament = FactoryGirl.create(:tournament, :school => @current_school)
     10.times do |t|
       FactoryGirl.create(:schedule, :tournament => @current_tournament)
     end
