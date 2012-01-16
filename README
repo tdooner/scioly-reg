@@ -2,6 +2,8 @@
 To enable analytics, register for Mixpanel and/or Google Analytics and update the codes in config/initializers/analytics.rb.
 Or, if on Heroku, run `heroku config:add MIXPANEL_TOKEN=your_mixpanel_token_here`, followed by `heroku config:add GA_ID=your_ga_id_here`
 
+Also, for file uploads on Heroku, you must add AWS_ACCESS_KEY=[key] and AWS_SECRET_KEY=[key].
+
 == Welcome to Rails
 
 Rails is a web-application framework that includes everything needed to create

@@ -7,6 +7,8 @@ gem 'rdiscount'
 gem 'recaptcha', :require => "recaptcha/rails"
 gem 'mixpanel'
 gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
+gem "aws-sdk"
+gem 'aws-s3'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'sass'
