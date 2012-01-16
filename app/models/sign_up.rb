@@ -3,6 +3,7 @@ class SignUp < ActiveRecord::Base
     belongs_to :timeslot
 
 	validates_presence_of :team_id, :timeslot_id
+    validate :custom_validate
 
 	def self.getSignUps(scheduleid)
 		signups = Schedule.find(scheduleid).sign_ups
@@ -14,7 +15,7 @@ class SignUp < ActiveRecord::Base
 	end
 
 	# Called whenever a new SignUp is saved
-	def validate
+	def custom_validate
       t = self.team.tournament
       if not self.timeslot.schedule.tournament == t
         errors.add_to_base("This event is not available in the current tournament.")

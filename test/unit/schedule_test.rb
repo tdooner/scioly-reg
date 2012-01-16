@@ -41,6 +41,15 @@ class ScheduleTest < ActiveSupport::TestCase
     assert Timeslot.all.length == num_slots + 15
   end
 
+  test "updateTimeSlots creates timeslots that have correct team_capacity" do
+    @schedule.num_timeslots = 15
+    tps = 1 + Random.rand(10)
+    @schedule.teams_per_slot = tps
+    assert @schedule.updateTimeSlots.is_a?(Array)
+    assert @schedule.timeslots.length == 15
+    @schedule.timeslots.each{|s| assert s.team_capacity == tps}
+  end
+
   test "updateTimeSlots removes all previous timeslots on update" do
     num_slots = Timeslot.all.length
     (1..3).each do |n|

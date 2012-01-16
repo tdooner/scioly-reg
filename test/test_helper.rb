@@ -32,8 +32,8 @@ class ActiveSupport::TestCase
     # school factory is in test/factories/schools.rb
 
     factory :team do
-      name "Nordonia High School - Team 1"
-      number "33"
+      sequence(:name){|x| "Nordonia High School - Team #{x}"}
+      sequence(:number){|x| x.to_s}
       division "B"
       coach "Tom Dooner"
       password 'password'
