@@ -1,22 +1,46 @@
 %p
   You are now editing the tournament scheduled for
   =@tournament.humanize() + "."
-%div.bluebox
-  =form_for(@tournament) do |f|
-    %table
-      %tr
-        %td 
-          %b Date:
-        %td=f.date_select :date
-      %tr
-        %td 
-          %b Registration Begins:
-        %td=f.datetime_select :registration_begins
-      %tr
-        %td 
-          %b Registration Ends:
-        %td=f.datetime_select :registration_ends
-    %p
-      =f.submit "Submit Changes"
+=form_for(@tournament, :html=>{:multipart=>:true}) do |f|
+  .clearfix
+    =f.label :title, "Tournament Name:"
+    .input
+      =f.text_field :title
+  .clearfix
+    =f.label :date, "Date:"
+    .input.small
+      =f.date_select :date, {}, :class=>"small"
+  .clearfix
+    %label Registration Begins:
+    .input.small
+      =f.datetime_select :registration_begins, {}, :class=>"small"
+  .clearfix
+    %label Registration Ends:
+    .input
+      =f.datetime_select :registration_ends, {}, :class=>"small"
+  .clearfix
+    %label Homepage Photo:
+    .input
+      =f.file_field :homepage_photo
+      .help-block 
+        This image is shown on the homepage. Use this to upload a logo for the 
+        %b event.
+      =image_tag @tournament.homepage_photo.url(:medium)
+  .clearfix
+    %label Homepage Text:
+    .input
+      =f.text_area :homepage_markdown, :cols=>30, :rows=>10
+      .help-block
+        =link_to "Markdown Syntax", "http://en.wikipedia.org/wiki/Markdown"
+        is permitted here.
+  .clearfix
+    %label Hosted By Text:
+    .input
+      =f.text_area :hosted_by_markdown, :cols=>20, :rows=>5
+      .help-block
+        =link_to "Markdown Syntax", "http://en.wikipedia.org/wiki/Markdown"
+        is permitted here.
+  %p.actions
+    =f.submit "Submit Changes", :class=>"btn primary"
 %p
   =link_to "< All Tournaments", tournaments_url

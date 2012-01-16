@@ -1,6 +1,9 @@
 class Tournament < ActiveRecord::Base
 	has_many :teams
     has_many :schedules
+    has_attached_file :homepage_photo, :styles => {:medium => "181x200", :slideshow => "163x180" }
+    
+    belongs_to :school
 
 	def self.get_current()
 		@t = find(:first, :conditions => ["is_current = ?", true])
@@ -8,7 +11,7 @@ class Tournament < ActiveRecord::Base
 		nil
 	end
 	def set_current()
-		Tournament.update_all("is_current='f'")
+		self.school.tournaments.update_all("is_current='f'")
 		self.update_attribute("is_current", true)
 	end
 	def humanize()

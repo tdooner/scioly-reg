@@ -1,9 +1,16 @@
 =render :partial => "/layouts/header"
 - @layout_expanded ||= false
 %body#home
-  = render :partial => "/layouts/cwruheader"
-  - if breadcrumbs.items.length == 1
-    = render :partial => "/layouts/headerbelowbar"
+  #headerWrapper{:class=>"expanded-#{@layout_expanded}"}
+    .row
+      .span4
+        %span
+          =image_tag @current_school.logo.url(:logo)
+      .span9
+        %h2=@current_tournament.title
+      .span3
+        %span.host
+          !=RDiscount.new(@current_tournament.hosted_by_markdown||"").to_html
   = render :partial => "/layouts/navigation"
   #contentWrapper{:class=>"expanded-#{@layout_expanded}"}
     - if !current_page?("/")
@@ -12,7 +19,7 @@
           %h3
             =breadcrumbs.render(:format => :bootstrap)
     .row
-      .span11
+      .span11#content
         - if flash[:error]
           %div.alert-message.error=flash[:error]
         - if flash[:message]

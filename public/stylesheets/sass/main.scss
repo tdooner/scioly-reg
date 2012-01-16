@@ -76,6 +76,9 @@ body, html {
   height: 100%;
   background-color:#F3F3F3 !important;
 }
+.alert-message p {
+  color: #fff;
+}
 p {
 	color:#333;
 	font-family: Helvetica, Arial, sans-serif;
@@ -98,20 +101,45 @@ img{border:none; }
 
 
 /******************************************** Layout Elements **********************************/
+#contentWrapper, #headerWrapper {
+  background-color: #FFF;
+  box-shadow: 0px 0px 3px #CCC;
+  -moz-box-shadow: 0px 0px 3px #CCC;
+  -webkit-box-shadow: 0px 0px 3px #CCC;
+  width: 980px;
+  margin: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+#headerWrapper {
+  padding-top:10px;
+  padding-bottom:10px;
 
+  div > * {
+    height:75px;
+    display:table-cell;
+    vertical-align:middle;
+    text-align:center;
+  } 
+  span.host p {
+    color:#BBB;
+    a { color:#BBB; }
+  }
+}
 #contentWrapper {
-	margin: auto;
-	width: 980px;
-    padding:20px 20px 0px 20px;
 	position: relative;
 	overflow:hidden;
 	clear: both;
-    background-color:#FFF;
-    box-shadow: 0px 0px 3px #CCC;
-    -moz-box-shadow: 0px 0px 3px #CCC;
-    -webkit-box-shadow: 0px 0px 3px #CCC;
+    padding-top:20px;
     .row {margin-left:auto;}
     min-height:500px;
+}
+#homepage {
+  h2 {
+    border-bottom: 1px solid #DDDDDD;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    margin-bottom: 17px;
+  }
 }
 div.expanded-true {
   width:1200px !important;
@@ -193,10 +221,11 @@ div.expanded-true {
 	width:100%;
 	position: relative;
 	background-color: #E7E7E7;
-	margin-top: 4px;
 	margin-right: 0;
 	margin-left: 0;
 	z-index:1;
+    border-bottom:2px solid #CCC;
+    border-top:2px solid #CCC;
 
 }
 #topNavWrapper {
@@ -561,8 +590,19 @@ border:none;
 	width: 1020px;
 	margin: auto;
 	border-top: 2px solid #C8CACB;
-
+	color: #AAA;
+	font-family: Arial, Helvetica, serif;
+    text-align:center;
+    padding-top:10px;
+    a:link, a:visited {
+      font-weight:bold;
+      color: #888;
+    }
+    a:hover {
+      color:#999;
+    }
 }
+/*
 .simpleFooterLeftCol {
 	float: left;
 	position: relative;
@@ -591,9 +631,6 @@ border:none;
 #simpleFooter ul li a:link, #simpleFooter ul li a:visited {
 	display: block;
 	text-decoration: none;
-	color: #333333;
-	font-family: Arial, Helvetica, serif;
-	font-size: 0.75em;
 	padding-top: 0.13em;
 	padding-bottom: 0.13em;
 	font-weight: bold;
@@ -651,6 +688,7 @@ color:#999;
 	width: 175px;
 	float: left;
 	position: relative;
+    .btn { width:33px; }
 }
 .simpleFooterSearch form .btn {
 	width: 30px;

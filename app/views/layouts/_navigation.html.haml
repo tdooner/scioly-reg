@@ -4,7 +4,7 @@
       %li= link_to 'Home', root_path
       - Team.divisions.values.each do |d|
         %li
-          = link_to "Division #{d} Events", schedules_url
+          = link_to "Division #{d} Events", schedule_division_url(d)
           %ul
             - @all_schedules[d].each do |e| 
               - if @team && e.is_scheduled_online? && e.division == @team.division
@@ -32,11 +32,13 @@
             %li=link_to "View Registrations", signups_url
             %li=link_to "Change Password", edit_team_url(@team)
             %li=link_to "Logout", logout_url
-      - if not session[:user].nil? and session[:user].role == 1
+      - if not session[:user].nil? and session[:user].is_admin_of(@current_school)
         %li
           =link_to "Admin Panel", admin_index_url
           %ul
+            %li=link_to "Tournament Settings", edit_tournament_url(@current_tournament)
             %li=link_to "View All Events", admin_events_url
             %li=link_to "View All Teams", teams_url
             %li=link_to "Scoring", admin_scores_url
+            %li=link_to "School Settings", admin_school_edit_url
             %li=link_to "Logout", adminlogout_url

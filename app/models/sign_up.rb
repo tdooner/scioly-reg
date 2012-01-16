@@ -3,6 +3,7 @@ class SignUp < ActiveRecord::Base
     belongs_to :timeslot
 
 	validates_presence_of :team_id, :timeslot_id
+    validate :custom_validate
 
 	def self.getSignUps(scheduleid)
 		signups = Schedule.find(scheduleid).sign_ups
@@ -13,15 +14,9 @@ class SignUp < ActiveRecord::Base
 		return signarray
 	end
 
-	# Returns list of all schedules that given team still needs to register for.
-	def self.getTeamUnregistered(team)
-      Tournament.get_current.schedules.where(["schedules.division=?", team.division]).keep_if(&:is_scheduled_online?) - 
-      team.sign_ups.includes({:timeslot => :schedule}).map{|x| x.timeslot.schedule}
-	end
-
 	# Called whenever a new SignUp is saved
-	def validate
-      t = Tournament.get_current
+	def custom_validate
+      t = self.team.tournament
       if not self.timeslot.schedule.tournament == t
         errors.add_to_base("This event is not available in the current tournament.")
       end

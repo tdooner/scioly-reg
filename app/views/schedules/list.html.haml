@@ -2,8 +2,25 @@
   Below is a list of all events for the tournament scheduled for
   =[@current_tournament.humanize, "."].join
   Please check to ensure you register for all events before registration closes.
+- if not session[:user].nil? and session[:user].is_admin_of(@current_school)
+  .alert-message.block-message.info
+    You are logged in as an administrator. These pages may be useful.
+    .alert-actions
+      =link_to("View Registration Status", admin_events_url, :class=>"btn small")
+      =link_to("New Event", new_schedule_url, :class=>"btn small")
+- if @team
+  .alert-message.info
+    %p
+      You are logged in as #{@team.name}.
+      = link_to("Click here to view your registrations.", signups_url)
 
-%div.bluebox.smalllinks
+%ul.tabs
+  %li{:class=>(params[:division].nil?)?"active":""}
+    %a{:href=>schedules_url}="All Events"
+  - Team.divisions.values.each do |d|
+    %li{:class=>(d==params[:division])?"active":""}
+      %a{:href=>schedule_division_url(d)}="Division #{d} Events"
+%div.tab-content
   %table#timeslot
     %thead
       %th Event Name
@@ -13,7 +30,8 @@
         %th
           %b Registered?
     %tbody
-      - @all_schedules["C"].each do |s|
+      - @all_schedules.values.flatten.sort_by(&:event).each do |s|
+        - next if params[:division] && s.division != params[:division]
         %tr
           - if @team or not session[:user].nil?
             %td= link_to(s.event + " (" + s.division + ")", url_for(s))
@@ -22,20 +40,12 @@
           %td= s.starttime.strftime("%I:%M %p").downcase
           %td= s.endtime.strftime("%I:%M %p").downcase
           -if @team
-            -if s.is_scheduled_online?
+            -if s.is_scheduled_online? && @team.can_register_for_event?(s)
               -if @has_registered[s.id]
                 %td= image_tag("ok.png")
               - else
                 %td= image_tag("error.png")
             - else
               %td - 
-    - if not session[:user].nil? and session[:user].is_admin
-      %tr
-        %td{:colspan => 4}
-          =link_to("New Event", new_schedule_url)
-    - if @team
-      %tr#current
-        %td{:colspan => 4}
-          = link_to("View All Registrations", signups_url)
 :javascript
   $(function(){ mpq.track("View All Schedules"); });

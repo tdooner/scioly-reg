@@ -36,6 +36,7 @@
       }
       div.first-slide h2 {
         font-size:2em;
+        line-height:1.3em;
       }
       ul.scores {
         position:relative;
@@ -43,9 +44,11 @@
       }
   %body
     .slide.title.first-slide.cover
-      %h1 Science Olympiad
-      %h2 Regional Tournament
-      =image_tag "sciolylogo_transparent.png"
-      %h2 Case Western Reserve University
-      %h2 February 25th, 2012
+      %h2=@current_tournament.title
+      %h2=@current_school.name
+      %h2=@current_tournament.humanize
+      %div{:style=>"display:table-cell;vertical-align:middle;position:absolute;bottom:30px;left:6%;"}
+        =image_tag @current_school.logo.url(:slideshow), :style=>"float:left;margin-top:20px;"
+      %div{:style=>"display:table-cell;vertical-align:middle;position:absolute;bottom:30px;right:6%;"}
+        =image_tag @current_tournament.homepage_photo.url(:slideshow), :style=>"float:right;margin-top:20px;"
     =yield

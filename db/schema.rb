@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120105005433) do
+ActiveRecord::Schema.define(:version => 20120115180810) do
 
   create_table "infos", :force => true do |t|
     t.string    "name"
@@ -24,15 +24,30 @@ ActiveRecord::Schema.define(:version => 20120105005433) do
 
   create_table "schedules", :force => true do |t|
     t.string   "event"
+    t.integer  "tournament_id"
     t.string   "division"
     t.time     "starttime"
     t.time     "endtime"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "room"
-    t.integer  "tournament_id"
     t.boolean  "scores_withheld", :default => false
   end
+
+  create_table "schools", :force => true do |t|
+    t.string   "name"
+    t.string   "subdomain"
+    t.string   "admin_name"
+    t.string   "admin_email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
+  end
+
+  add_index "schools", ["subdomain"], :name => "index_schools_on_subdomain"
 
   create_table "scores", :force => true do |t|
     t.integer  "schedule_id"
@@ -60,15 +75,15 @@ ActiveRecord::Schema.define(:version => 20120105005433) do
   end
 
   create_table "teams", :force => true do |t|
-    t.string   "name"
-    t.string   "number"
-    t.string   "division"
-    t.string   "coach"
-    t.string   "hashed_password"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "tournament_id"
-    t.string   "homeroom"
+    t.string    "name"
+    t.string    "number"
+    t.string    "division"
+    t.string    "coach"
+    t.string    "hashed_password"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.integer   "tournament_id"
+    t.string    "homeroom"
   end
 
   create_table "timeslots", :force => true do |t|
@@ -87,14 +102,24 @@ ActiveRecord::Schema.define(:version => 20120105005433) do
     t.datetime "registration_ends"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "scores_revealed",     :default => false
+    t.boolean  "scores_revealed",             :default => false
+    t.integer  "school_id"
+    t.string   "homepage_photo_file_name"
+    t.string   "homepage_photo_content_type"
+    t.integer  "homepage_photo_file_size"
+    t.datetime "homepage_photo_updated_at"
+    t.text     "hosted_by_markdown"
+    t.text     "homepage_markdown"
+    t.string   "title"
   end
 
   create_table "users", :force => true do |t|
-    t.text    "case_id"
-    t.integer "role",       :default => 0
+    t.integer "role",            :default => 0
     t.text    "created_at"
     t.text    "updated_at"
+    t.integer "school_id"
+    t.string  "email"
+    t.string  "hashed_password"
   end
 
 end

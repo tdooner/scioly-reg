@@ -73,5 +73,18 @@ This page will customize a slideshow of results to be shown at the awards ceremo
       %ul
         - @unfinishedevents.each do |e|
           %li=e.humanize 
-  .actions
-    %input.primary.btn{:type=>"submit", :value=>"Create Slideshow!"}
+  - if @teams.empty?
+    .alert-message.block-message.error
+      %b Error
+      There are no teams in this tournament! 
+      .alert-actions
+        =link_to "Add some now.", new_team_url, :class=>"btn"
+  - if @events.empty?
+    .alert-message.block-message.error
+      %b Error
+      There are no events in this tournament! 
+      .alert-actions
+        =link_to "Add some now.", new_schedule_url, :class=>"btn"
+  - if !@teams.empty? && !@events.empty?
+    .actions
+      %input.primary.btn{:type=>"submit", :value=>"Create Slideshow!"}

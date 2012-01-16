@@ -9,7 +9,10 @@
             %td
               %b
                 %span.incremental="#{s.team.name} (#{s.team.getNumber})"
-    =image_tag "sciolylogo_transparent.png", :style=>"float:right;margin-top:20px;"
+      %div{:style=>"display:table-cell;vertical-align:middle;position:absolute;bottom:30px;left:6%;"}
+        =image_tag @current_school.logo.url(:slideshow), :style=>"float:left;margin-top:20px;"
+      %div{:style=>"display:table-cell;vertical-align:middle;position:absolute;bottom:30px;right:6%;"}
+        =image_tag @current_tournament.homepage_photo.url(:slideshow), :style=>"float:right;margin-top:20px;"
 - params[:slideshow][:division].each do |d|
   .slide
     %h1 Team Awards -- Division #{d}

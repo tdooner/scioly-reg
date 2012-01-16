@@ -1,27 +1,29 @@
 = flash[:error]
 .page-header
-  %h1 
-    Science Olympiad 
-    %small @ Case Western Reserve University
-%p
-  Welcome to the website for Case Western Reserve University's Science Olympiad Tournament. 
-%p
-  %b Information for the 2012 Science Olympiad Tournament will be posted shortly.
-%p
-  %a#scores{:href=>"/scores.pdf"} Official Scores From 2011
-.page-header
-  %h3 
-    Comments or Concerns from last year?
-%p 
-  Comments or Concerns from last year? Please fill out our
-  =link_to("short questionaire", "https://filer.case.edu/survey/entry.jsp?id=1298763175536", :id=>"questionaire") + "."
-  We value your input and want to address any concerns.
+  %h1
+    Science Olympiad
+    %small @ #{@current_school.name}
+#homepage!=RDiscount.new(@current_tournament.homepage_markdown||"").to_html
+/
+  %p
+    Welcome to the website for Case Western Reserve University's Science Olympiad Tournament. 
+  %p
+    %b Information for the 2012 Science Olympiad Tournament will be posted shortly.
+  %p
+    %a#scores{:href=>"/scores.pdf"} Official Scores From 2011
+  .page-header
+    %h3 
+      Comments or Concerns from last year?
+  %p 
+    Comments or Concerns from last year? Please fill out our
+    =link_to("short questionaire", "https://filer.case.edu/survey/entry.jsp?id=1298763175536", :id=>"questionaire") + "."
+    We value your input and want to address any concerns.
 
-.page-header
-  %h3 About Us
-%p
-  Case Western Reserve's Science Olympiad tournament is hosted by the 
-  =link_to "Center for Science and Mathematics Education.", "http://case.edu/artsci/csm/", :id=>"csm"
+  .page-header
+    %h3 About Us
+  %p
+    Case Western Reserve's Science Olympiad tournament is hosted by the 
+    =link_to "Center for Science and Mathematics Education.", "http://case.edu/artsci/csm/", :id=>"csm"
 / Track the things on this page
 :javascript
   var trackIt = function(link, page) {

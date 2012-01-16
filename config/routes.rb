@@ -11,6 +11,8 @@ Scioly::Application.routes.draw do
     get 'scores'
     get 'scorespublish', :as => :scorespublish
     get 'scoreslideshow'
+    get "school/edit"
+    put "school/update"
   end
 
   # The priority is based upon order of creation:
@@ -20,6 +22,7 @@ Scioly::Application.routes.draw do
   #   match 'products/:id' => 'catalog#view'
   resource :user
   get "user/login", :as => :adminlogin
+  post "user/login"
   get "user/logout", :as => :adminlogout
   match 'teams/batchnew' => "teams#batchnew", :via=>[:get]
   match 'teams/batchnew' => "teams#batchcreate", :via=>[:post]
@@ -33,6 +36,7 @@ Scioly::Application.routes.draw do
   match 'schedule/autocomplete_event' => "schedules#autocomplete_schedule_event", :as => :autocomplete_event_schedule
   match 'schedule/batchnew' => "schedules#batchnew", :via => [:get]
   match 'schedule/batchnew' => "schedules#batchcreate", :via => [:post]
+  match 'schedule/:division' => "schedules#index", :as=>:schedule_division, :constraints => { :division => /[A-Z]/ }
   resources :schedules, :path => "/schedule" do
     get 'scores'
     post 'scores', :action => "savescores"

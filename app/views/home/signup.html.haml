@@ -22,7 +22,7 @@
     %h3 
       %b Things To Do
     /%ul{:style => "text-align:left"}
-    %h5=link_to("View Events That You Can Register For",schedules_url)
+    %h5=link_to("View Events That You Can Register For",schedule_division_url(@team.division))
     %h5=link_to("View All Your Registrations", signups_url)
     %h5=link_to("View Scores", tournament_scores_url(@team.tournament))
     - if !@team.tournament.scores_revealed?

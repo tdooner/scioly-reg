@@ -6,8 +6,8 @@ class SchedulesControllerTest < ActionController::TestCase
     @current_tournament = FactoryGirl.create(:current_tournament)
     @other_tournament = FactoryGirl.create(:tournament)
     20.times do |i|
-      FactoryGirl.create(:schedule,{:event=>"event #{i}",:tournament=>@current_tournament})
-      FactoryGirl.create(:schedule,{:event=>"event #{i}", :tournament=>@other_tournament})
+      FactoryGirl.create(:schedule,{:event=>"event current #{i}",:tournament=>@current_tournament})
+      FactoryGirl.create(:schedule,{:event=>"event other #{i}", :tournament=>@other_tournament})
     end
   end
 

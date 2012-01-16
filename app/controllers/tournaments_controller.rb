@@ -4,6 +4,7 @@ class TournamentsController < ApplicationController
 
   def create
 	  @tournament = Tournament.new(params[:tournament])
+      @tournament.school = @current_school
 	  @tournament.save()
 	  redirect_to :tournaments
   end
@@ -19,7 +20,7 @@ class TournamentsController < ApplicationController
   end
 
   def index
-	  @tournaments = Tournament.find(:all)
+	  @tournaments = @current_school.tournaments
 	  breadcrumbs.add("Edit Tournaments")
   end
 

@@ -1,18 +1,16 @@
-require 'casclient'
-require 'casclient/frameworks/rails/filter'
-
 class UserController < ApplicationController
-  before_filter RubyCAS::Filter, :only=>[:login] 
 
   def login
-	  @u = User.find(:first, :conditions => ["case_id = ?",session[:cas_user]])
-	  if @u
-		  session[:user] = @u
-		  redirect_to :admin_index
-	  else
-		  flash[:error] = "Invalid Login!"
-		  redirect_to :root
-	  end
+    breadcrumbs.add("Admin Login")
+    if request.post?
+      u = User.authenticate(@current_school, params[:email], params[:password])
+      if u.nil?
+        flash[:error] = "Invalid Email or Password"
+      else
+        session[:user] = u
+        return redirect_to admin_index_url
+      end
+    end
   end
 
   def logout

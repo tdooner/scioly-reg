@@ -1,7 +1,7 @@
 - spots_remaining = ts.team_capacity - ts.occupants.length
 %tr
   %th=ts.begins.strftime("%I:%M %p")
-  - if (not session[:user].nil? and session[:user].is_admin)
+  - if (not session[:user].nil? and session[:user].is_admin_of(@current_school))
     %td
       - ts.occupants.each do |team|
         = team.name

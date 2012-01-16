@@ -3,20 +3,23 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.11'
 gem 'haml'
 gem 'breadcrumbs'
-gem 'rubycas-client', '2.2.1'
-gem 'rubycas-client-rails'
 gem 'rdiscount'
 gem 'recaptcha', :require => "recaptcha/rails"
 gem 'mixpanel'
+gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'sass'
 gem 'jquery-rails'
 gem 'rails3-jquery-autocomplete'
 
-gem 'factory_girl_rails'
-gem 'faker'
-gem 'capybara'
+group :test do 
+    gem 'factory_girl_rails'
+    gem 'faker'
+    gem 'capybara'
+    gem 'turn'
+    gem 'shoulda'
+end
 
 # Use unicorn as the web server
 # gem 'unicorn'

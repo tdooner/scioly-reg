@@ -13,6 +13,7 @@ class Team < ActiveRecord::Base
 	has_many :sign_ups
     has_many :scores
 	attr_accessor :password, :password_confirm, :password_existing
+    attr_protected :hashed_password
 
 
 	@@divisions = {"B" => "B", "C" => "C"}
@@ -55,5 +56,15 @@ class Team < ActiveRecord::Base
       total_points = places.map{|k,v| k*v}.sum
 
       [total_points.abs] + (num_teams+1).times.map{|x| places[x+1] || 0}
+    end
+
+  	# Returns list of all schedules that this team still needs to register for using set subtraction.
+	def unregistered_events
+      self.tournament.schedules.where(["schedules.division=?", self.division]).keep_if(&:is_scheduled_online?) -
+      self.sign_ups.includes({:timeslot => :schedule}).map{|x| x.timeslot.schedule}
+	end
+
+    def can_register_for_event?(s)
+      return s.division == self.division
     end
 end
