@@ -5,41 +5,37 @@
 
 %div.bluebox.smalllinks
   %table#timeslot
-    %tr
-      %td
-        %b Event Name
-      - if not session[:user].nil? and session[:user].is_admin
-        %td
-          %b Delete?
-      %td
-        %b Begin Time
-      %td
-        %b End Time
-      - if not session[:team].nil? 
-        %td
+    %thead
+      %th Event Name
+      %th Begin Time
+      %th End Time
+      - if @team
+        %th
           %b Registered?
-    - @schedules.each do |s|
-      %tr
-        - if not session[:team].nil? or not session[:user].nil?
-          %td= link_to(s.event + " (" + s.division + ")", url_for(s))
-        - else
-          %td= s.event
-        - if not session[:user].nil? and session[:user].is_admin
-          %td
-            %b=link_to("Delete!", schedule_url(s),:confirm => "Are you sure you wish to delete this event? All corresponding Timeslots and Registrations will be deleted!", :method => :delete)
-        %td= s.starttime.strftime("%I:%M %p").downcase
-        %td= s.endtime.strftime("%I:%M %p").downcase
-        -if not session[:team].nil?
-          -if @has_registered[s.id]
-            %td= image_tag("ok.png")
+    %tbody
+      - @all_schedules["C"].each do |s|
+        %tr
+          - if @team or not session[:user].nil?
+            %td= link_to(s.event + " (" + s.division + ")", url_for(s))
           - else
-            %td= image_tag("error.png")
+            %td= s.event
+          %td= s.starttime.strftime("%I:%M %p").downcase
+          %td= s.endtime.strftime("%I:%M %p").downcase
+          -if @team
+            -if s.is_scheduled_online?
+              -if @has_registered[s.id]
+                %td= image_tag("ok.png")
+              - else
+                %td= image_tag("error.png")
+            - else
+              %td - 
     - if not session[:user].nil? and session[:user].is_admin
       %tr
         %td{:colspan => 4}
           =link_to("New Event", new_schedule_url)
-    - if not session[:team].nil?
+    - if @team
       %tr#current
         %td{:colspan => 4}
           = link_to("View All Registrations", signups_url)
-
+:javascript
+  $(function(){ mpq.track("View All Schedules"); });

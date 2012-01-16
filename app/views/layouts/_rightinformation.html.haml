@@ -1,12 +1,16 @@
-%h4{:style => "margin-bottom:10px"}
-  2012 Regional Science Olympiad
-=image_tag("sciolylogo.jpg")
+=image_tag("sciolylogo_transparent.png", :width=>"181", :style=>"margin-bottom:20px")
 %p
   %b Date Of Tournament:
+  %br
   = @current_tournament.humanize
 %p
   %b Registration Begins:
+  %br
   = @current_tournament.human_times[:registration_begins]
 %p
   %b Registration Ends:
+  %br
   = @current_tournament.human_times[:registration_ends]
+- if @current_tournament.show_scores?
+  %h2
+    =link_to "Official Scores", tournament_scores_url(@current_tournament)

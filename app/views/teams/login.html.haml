@@ -11,28 +11,28 @@
   %a{:href => "https://www.case.edu/cgi-bin/directory/pb_lookup.cgi?search_text=james+bader&submit.x=0&submit.y=0&submit=Search&search_method=regular&page_num=1"}
     Jim Bader
   to receive a new one.
-%div.bluebox
-  =form_tag login_url(@division)
-  %table#login{:width => 400}
-    %tr
-      %td
-        %b Select A Team:
-      %td
-        =select(:team, :id, @teams.map { |x| [x[:name], x[:id]] })
-    - if not session[:user].nil? and session[:user].is_admin
-      %tr
-        %td{:colspan=>2}
-          %p 
-            %b You are an admin. 
-            Click Login to log in as this team. You can change this team's password once logged in.
-    - else
-      %tr
-        %td 
-          %b Password:
-        %td
-          =password_field_tag :password, "",:size => 20
-      -if @captcha == true
-        %tr
-          %td{:colspan => 2}
-            =recaptcha_tags :display => ["white"]
-  =submit_tag "Login"
+.page-header
+  %h2 Login Form
+=form_tag login_url(@division)
+.clearfix
+  %label{:for=>"team_id"}
+    %b Select A Team:
+  .input
+    =select(:team, :id, @teams.map { |x| [x[:name], x[:id]] })
+.clearfix
+  - if not session[:user].nil? and session[:user].is_admin
+    %b You are an admin. 
+    Click Login to log in as this team. You can change this team's password once logged in.
+  - else
+    %label{:for=>"password"} 
+      %b Password:
+    .input
+      =password_field_tag :password, "",:size => 20
+    -if @captcha == true
+      =recaptcha_tags :display => ["white"]
+.clearfix
+  .actions
+    %input{:type=>"hidden", :name=>"is_admin", :value=>"false"}
+    =submit_tag "Login", :class=>"btn primary"
+:javascript
+  $(function(){ mpq.track("View Login Page"); });

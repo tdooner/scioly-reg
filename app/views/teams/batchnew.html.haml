@@ -1,0 +1,24 @@
+%p
+  To create a bunch of teams in the 
+  %b=@current_tournament.humanize
+  tournament, paste in the following text area a series of rows with the following
+  %b tab separated columns:
+%dl
+  %dt Team Name
+  %dt Team Number
+  %dd For example, 12 or 13. Do not include letters.
+  %dt Coach Name
+  %dt Division
+  %dd Either "B" or "C".
+  %dt Homeroom
+  %dt Password
+%p 
+  If you are about to make a spreadsheet with these values, here is a template you can use and then copy-paste.
+  %a{:href=>"https://docs.google.com/spreadsheet/ccc?key=0AgQhM9vFx8X8dFhtODFxTGRwa0REV3JFaWpvVFJLTnc"}
+    Batch Team Input Template.
+%form{:method=>"POST", :action=>"/teams/batchnew"}
+  %input{:type=>"hidden",:name=>"authenticity_token",:value=>form_authenticity_token}
+  %textarea{:style=>"width:650px; height:200px;",:name=>"batch"}
+  .actions
+    %input.btn.primary{:type=>"submit", :value=>"Submit Batch Teams"}
+

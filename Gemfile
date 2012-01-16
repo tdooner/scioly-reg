@@ -1,16 +1,22 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.3'
+gem 'rails', '3.0.11'
 gem 'haml'
 gem 'breadcrumbs'
-gem 'rubycas-client'
+gem 'rubycas-client', '2.2.1'
+gem 'rubycas-client-rails'
 gem 'rdiscount'
 gem 'recaptcha', :require => "recaptcha/rails"
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
+gem 'mixpanel'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
+gem 'sass'
+gem 'jquery-rails'
+gem 'rails3-jquery-autocomplete'
+
+gem 'factory_girl_rails'
+gem 'faker'
+gem 'capybara'
 
 # Use unicorn as the web server
 # gem 'unicorn'

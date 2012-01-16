@@ -1,6 +1,7 @@
 class TournamentsController < ApplicationController
-  before_filter :is_admin
+  before_filter :is_admin, :except => :scores
   protect_from_forgery :except => :destroy
+
   def create
 	  @tournament = Tournament.new(params[:tournament])
 	  @tournament.save()
@@ -44,5 +45,50 @@ class TournamentsController < ApplicationController
 	  @active = Tournament.find(params[:current])
 	  @active.set_current()
 	  redirect_to :tournaments
+  end
+
+  def scores
+    @active = Tournament.find(params[:tournament_id])
+    if not @active.show_scores?
+      flash[:error] = "Scores for this tournament are not available yet."
+      return redirect_to root_url
+    end
+    breadcrumbs.add(@active.humanize + " Scores")
+    @events = @active.schedules.includes({:scores => :team}).sort_by(&:event).group_by{|x| x.division}
+    @teams = @active.teams
+
+    # @team_ranks is an array of sorted [team.rank_matrix, #<Team Object>] tuples
+    @teams_by_rank = @teams.reduce({}){|a,i| a.merge({i => i.rank_matrix})}.invert.sort
+    @teams_by_rank = @teams_by_rank.group_by{|x| x[1].division}
+
+    @layout_expanded = true
+  end
+
+  def scoreslideshow
+    if not params[:slideshow]
+      return redirect_to admin_scoreslideshow_url
+    end
+    @events = @current_tournament.schedules.includes({:scores => :team})
+    @teams = @current_tournament.teams.includes(:scores)
+
+    @events.keep_if{|x| params[:slideshow][:division].include?(x.division) }
+    @events.keep_if{|x| !x.scores.empty?}
+    @events.keep_if{|x| !x.scores_withheld || params[:slideshow][:skip_withheld] == "false"}
+    case params[:slideshow][:order]
+    when "alpha"
+      @events = @events.sort_by(&:event)
+    when "alphadiv"
+      @events = @events.sort_by(&:event).group_by(&:division).values.flatten
+    when "random"
+      @events = @events.shuffle
+    when "randomdiv"
+      @events = @events.group_by(&:division).values.map(&:shuffle).flatten
+    end
+
+    @teams_by_rank = @teams.reduce({}){|a,i| a.merge({i => i.rank_matrix})}.invert.sort
+    @teams_by_rank = @teams_by_rank.group_by{|x| x[1].division}
+      
+    @places = ["First Place", "Second Place", "Third Place", "Fourth Place", "Fifth Place", "Sixth Place", "Seventh Place", "Eigth Place"]
+    render :slideshow, :layout=>"scoreslideshow"
   end
 end

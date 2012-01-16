@@ -1,5 +1,5 @@
-%p Are you sure you want to make the following reservation?
-%div.bluebox
+%h4 Are you sure you want to make the following reservation?
+%div
   %table#timeslot
     %tr
       %td 
@@ -13,9 +13,8 @@
       %td
         %b Time:
       %td=@signup.timeslot.begins.strftime("%I:%M %p")
-%div{:align=>"center", :style => "padding-top:15px"}
-  %b Your registration is not saved until you click on "Yes" below!
-  %br
-  = link_to("Yes, I want to reserve this time.",confirmsignup_url(@signup.timeslot))
-  %br
-  = link_to("No, take me back to where I just was.", schedule_url(@signup.timeslot.schedule))
+%div.actions
+  = link_to("Reserve This Slot!",confirmsignup_url(@signup.timeslot), :class=>[:btn, :primary])
+  = link_to("Never Mind", schedule_url(@signup.timeslot.schedule),:class=>:btn)
+:javascript
+  $(function() { mpq.track("SignUp Confirmation", {event: "#{@signup.timeslot.schedule.event}", timeslot: #{@signup.timeslot.id}}); });

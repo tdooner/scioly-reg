@@ -4,15 +4,20 @@ class ApplicationController < ActionController::Base
 
   def setup
 	breadcrumbs.add 'Home', root_path
+    
+    @mixpanel = Mixpanel::Tracker.new(ENV["MIXPANEL_TOKEN"], request.env, true)
 
 	@current_tournament = Tournament.get_current()
+    @team = Team.find_by_id_and_tournament_id(session[:team], @current_tournament)
+	@all_schedules = @current_tournament.schedules.find(:all, :order => "event ASC").group_by(&:division)
+    @all_schedules["B"] ||= []
+    @all_schedules["C"] ||= []
 	
-	if not session[:team].nil?
-		@dont_forget = SignUp.getTeamUnregistered(session[:team])
-		@all_schedules = Schedule.find(:all, :conditions => ["division = ?", session[:team].division], :order => "event ASC")
-	else
-		@all_schedules = Schedule.find(:all, :order => "event ASC")
+	if @team 
+		@dont_forget = SignUp.getTeamUnregistered(@team)
 	end
+
+    @dont_forget ||= nil
   end
 
   def is_admin
@@ -28,3 +33,22 @@ class ApplicationController < ActionController::Base
 	  end
   end
 end
+
+class Breadcrumbs::Render::Bootstrap < Breadcrumbs::Render::Base
+  def render
+    str = ""
+    breadcrumbs.items.each_with_index do |item, i| 
+      str << render_item(item, i)
+    end
+    return "<ul class='breadcrumb'>#{str}</ul>"
+  end
+
+  def render_item(item, i)
+    if item[1] != nil
+      return "<li><a href='#{item[1]}'>#{item[0]}</a><span class='divider'>/</span></li>"
+    else
+      return "<li>#{item[0]}</li>"
+    end
+  end
+end
+

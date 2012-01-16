@@ -1,9 +1,10 @@
 class Schedule < ActiveRecord::Base
-	validates_uniqueness_of :event, :scope => [:tournament_id, :division], :message => "This event already exists at this Tournament and Division"
-	validates_presence_of :event, :tournament, :division
+    validates_presence_of :event, :division, :starttime, :endtime
+    attr_accessor :num_timeslots, :teams_per_slot
 
 	has_many :timeslots
-	belongs_to :tournament
+    has_many :scores
+    belongs_to :tournament
 	# TODO: Validate start, end, and timeslots.
 	
 
@@ -22,14 +23,15 @@ class Schedule < ActiveRecord::Base
 		if self.num_timeslots.nil?
 			return "Error: No defined amount of divisions"
 		end
+        teams_per_slot = 1 if teams_per_slot.nil?
 		minutes = (( self.endtime - self.starttime ) / 60 ).round
-		slotwidth = (minutes / self.num_timeslots).floor
-		if slotwidth == 0
+		slotwidth = (minutes / self.num_timeslots.to_i).floor
+		if slotwidth <= 0
 			return "Error: Timeslots too narrow"
 		end
 		existing_timeslots = self.timeslots
 		new_timeslots = []
-		self.num_timeslots.times do |i|
+		self.num_timeslots.to_i.times do |i|
 			begintime = self.starttime + slotwidth*60*i
 			# Warning: Long method name ahead!
 			exists = Timeslot.find_or_create_by_schedule_id_and_begins_and_ends_and_team_capacity(:schedule_id => self.id, :begins => begintime, :ends => begintime + slotwidth*60, :team_capacity => self.teams_per_slot)
@@ -52,4 +54,10 @@ class Schedule < ActiveRecord::Base
 		end
 		return true
 	end
+    def humanize
+      "#{self.event} (#{self.division})"
+    end
+    def is_scheduled_online?
+      not self.timeslots.empty?
+    end
 end

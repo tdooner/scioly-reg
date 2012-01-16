@@ -1,0 +1,22 @@
+-@events.each do |e|
+  .slide
+    %h1=e.humanize
+    %table
+      %tbody
+        - e.scores.sort_by(&:placement).keep_if{|x| x.placement <= params[:slideshow][:top_places].to_i }.reverse.each do |s|
+          %tr
+            %td="#{@places[s.placement-1]}:"
+            %td
+              %b
+                %span.incremental="#{s.team.name} (#{s.team.getNumber})"
+    =image_tag "sciolylogo_transparent.png", :style=>"float:right;margin-top:20px;"
+- params[:slideshow][:division].each do |d|
+  .slide
+    %h1 Team Awards -- Division #{d}
+  - place = params[:slideshow][:top_teams].to_i - 1
+  -@teams_by_rank[d].first(params[:slideshow][:top_teams].to_i).reverse.each do |rank_matrix,t|
+    .slide
+      %h2{:style=>"font-size:2em"} In #{@places[place]} With #{t.scores.map(&:placement).sum} Points...
+      %ul
+        %li.incremental{:style=>"font-size:3em; padding-top:10%;list-style:none;"}="#{t.name} (#{t.getNumber})"
+    - place -= 1

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,45 +11,52 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110122055942) do
+ActiveRecord::Schema.define(:version => 20120105005433) do
 
   create_table "infos", :force => true do |t|
-    t.string   "name"
-    t.text     "page_text"
-    t.binary   "contents"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "human_name"
+    t.string    "name"
+    t.text      "page_text"
+    t.binary    "contents"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.string    "human_name"
   end
 
   create_table "schedules", :force => true do |t|
     t.string   "event"
-    t.integer  "tournament_id"
     t.string   "division"
     t.time     "starttime"
     t.time     "endtime"
-    t.integer  "num_timeslots"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "room"
-    t.integer  "teams_per_slot", :default => 1
+    t.integer  "tournament_id"
+    t.boolean  "scores_withheld", :default => false
+  end
+
+  create_table "scores", :force => true do |t|
+    t.integer  "schedule_id"
+    t.integer  "team_id"
+    t.integer  "placement"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sessions", :force => true do |t|
-    t.string   "session_id", :null => false
-    t.text     "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string    "session_id", :null => false
+    t.text      "data"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "sign_ups", :force => true do |t|
-    t.integer  "timeslot_id"
-    t.integer  "team_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "timeslot_id"
+    t.integer   "team_id"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   create_table "teams", :force => true do |t|
@@ -60,15 +68,16 @@ ActiveRecord::Schema.define(:version => 20110122055942) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "tournament_id"
+    t.string   "homeroom"
   end
 
   create_table "timeslots", :force => true do |t|
-    t.integer  "schedule_id"
-    t.datetime "begins"
-    t.datetime "ends"
-    t.integer  "team_capacity"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "schedule_id"
+    t.timestamp "begins"
+    t.timestamp "ends"
+    t.integer   "team_capacity"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   create_table "tournaments", :force => true do |t|
@@ -78,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20110122055942) do
     t.datetime "registration_ends"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "scores_revealed",     :default => false
   end
 
   create_table "users", :force => true do |t|

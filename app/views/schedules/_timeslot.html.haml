@@ -1,0 +1,29 @@
+- spots_remaining = ts.team_capacity - ts.occupants.length
+%tr
+  %th=ts.begins.strftime("%I:%M %p")
+  - if (not session[:user].nil? and session[:user].is_admin)
+    %td
+      - ts.occupants.each do |team|
+        = team.name
+        %br
+      - if ts.occupants.length < ts.team_capacity
+        .help-block="#{pluralize(spots_remaining, "spot")} available."
+  - else
+    - if spots_remaining > 0
+      %td="#{pluralize(spots_remaining, "spot")} available."
+    - else
+      %td
+        .help-block="#{pluralize(spots_remaining, "spot")} available."
+  - if @team && @team.division == @schedule.division
+    - if spots_remaining > 0
+      %td
+        - if @currentreg.nil?
+          =link_to "Register", newsignup_path(ts), :class=>"btn"
+    - else
+      %td
+- if ts.sign_ups.include?(@currentreg)
+  %tr
+    %td{:colspan=>2} 
+      Your team is registered here, in the #{ts.begins.strftime("%I:%M %p")} timeslot.
+    %td
+      =link_to "Unregister", destroysignup_path(@currentreg), :class=>"btn"

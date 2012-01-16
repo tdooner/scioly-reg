@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   def index
-	  if not session[:team].nil? # If logged in...
+	  if not @team.nil? # If logged in...
 		  breadcrumbs.add("Welcome!")
 		  render :signup # Render app/views/home/signup.html.haml
 	  else

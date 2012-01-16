@@ -1,0 +1,25 @@
+:javascript
+  $(function() {
+    $("table#admin-score-table").tablesorter({sortList: [[1,0],[0,0]]});
+  });
+
+%table.zebra-striped.condensed-table#admin-score-table
+  %thead
+    %th Event Name
+    %th Division 
+    %th Scores Reported?
+  %tbody
+    - @events.each do |e|
+      %tr
+        %td=link_to(e.humanize, schedule_scores_url(e))
+        %td=e.division
+        %td 
+          - if e.scores.length == 0 || e.scores_withheld
+            =image_tag "error.png", :height=>"16px"
+            - if e.scores_withheld
+              (Withheld)
+          - else 
+            =image_tag "ok.png", :height=>"16px"
+%a{:href=>admin_scoreslideshow_url} Award Ceremory Slideshow
+|
+%a{:href=>admin_scorespublish_url} Publish Scores

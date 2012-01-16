@@ -48,10 +48,9 @@ body, html { margin: 0;}
 	display: block;
 	color: white;
 	font-family: Helvetica, Arial, sans-serif;
-	font-size: 0.8em;
 	font-weight: normal;
 	text-decoration: none;
-	padding-top: 1.7em;
+	padding-top: 1.5em;
 	padding-right: 0.85em;
 	padding-bottom: 0;
 	padding-left: 0.85em;
@@ -105,7 +104,7 @@ body, html { margin: 0;}
 	top: 0px;
 	right: 0px;
 }
-.cwruSearch form .btn {
+.cwruSearch form .searchbtn {
 	width: 30px;
 	position: absolute;
 	right: 0px;

@@ -1,53 +1,63 @@
-- if not flash[:error].nil?
-  %p.errorbox
-    = flash[:error]
-%p
-  Below are the designated timeslots for this event. Timeslots that have been reserved by another team are greyed out. To sign up for a timeslot, click the word "Available!" next to the desired time.
-%div{:class => ["bluebox", "smalllinks"]}
-  %table#timeslot{:width => "100%", :style=>"padding:0;margin:0;"}
-    %tr
-      %td
-        %b Timeslot
-      %td
-        %b Availability
-    // Iterate over each timeslot
-    - @allslots.each do |ts|
-      - tr_id = ""
-      - slots_remaining = ts.team_capacity - ts.sign_ups.length
-      // First, check if the timeslot is full. If it is, but the team is registered there,
-      //  they will still see their name in the table (as is desirable).
-      - if slots_remaining == 0 and not (not session[:user].nil? and session[:user].is_admin)
-        - tr_id = "unavailable"
-      // If the team has registered for the event, show them their name.
-      - if not @currentreg.nil? and ts.id == @currentreg.timeslot_id
-        - display = session[:team].name
-        - giveoptions = true
-        - tr_id = "current"
-      - else
-        // If there are openings and this is not the currently registered one
-        - display = "Available: " + slots_remaining.to_s + " Slot(s)"
-        - giveoptions = false
-      %tr{:id => tr_id}
-        %td{:width => "25%"}
-          = ts.begins.strftime("%I:%M %p")
-        %td{:width => "75%"}
-          - if (not session[:user].nil? and session[:user].is_admin)
-            - ts.occupants.each do |team|
-              = team.name
-              %br
-          - if @currentreg.nil?
-            - if slots_remaining != 0
-              =link_to(display, newsignup_url(ts))
-            - else 
-              - if not (not session[:user].nil? and session[:user].is_admin)
-                Timeslot Full!
-          - else
-            - if tr_id != "current" and slots_remaining == 0
-              Timeslot Full!
-            - else
-              = display
-          - if giveoptions == true
-            =link_to("(Unregister)",destroysignup_url(@currentreg),:class=>"action")
-%p{:align=>"center"}
-  For Event Organizers And Administrators:
-  = link_to("View as PDF", schedule_url(@schedule) + ".pdf")
+%ul.tabs{:"data-tabs"=>"tabs"}
+  %li.active
+    %a{:href=>"#information"} Information
+  - if @allslots.length > 0
+    %li
+      %a{:href=>"#registration"} Registration
+  %li
+    %a{:href=>"#scores"} Scores
+%div.tab-content
+  %div.tab-pane.active#information
+    - if not @currentreg.nil?
+      %div.alert-message.info="Your team is registered in the #{@currentreg.timeslot.begins.strftime("%I:%M %p")} timeslot."
+    - if @allslots.length == 0
+      This event is not selected for online sign-up. Information pertaining to this event is listed below, however no action is required. After the awards ceremony, scores for this event will be posted to this page.
+    - else
+      This event is scheduled for online sign-up. When registration is open, you may register for timeslots or change your timeslot. On the day of the tournament, teams that did not complete online registration may choose from the remaining slots. 
+    %h3 Event Name
+    %p="#{@schedule.event} (#{@schedule.division})"
+    %h3 Time 
+    %p="#{@schedule.starttime.strftime("%l:%M %P")} to #{@schedule.endtime.strftime("%l:%M %P")}"
+    %h3 Room
+    %p="#{@schedule.room}"
+    %p.help-block 
+      %b Quick Link: 
+      %a{:href=>"http://www.case.edu/maps/",:target=>"_new"} Campus Map
+  %div.tab-pane#registration
+    %p
+      Below are the designated timeslots for this event. Timeslots that have been reserved by another team are greyed out. To sign up for a timeslot, click the word "Available!" next to the desired time.
+    %div.smalllinks
+      %table#timeslot{:width => "100%", :style=>"padding:0;margin:0;"}
+        %thead
+          %th Timeslot
+          %th Availability
+          - if @team && @team.division == @schedule.division
+            %th Sign Up
+        - @allslots.each do |ts|
+          = render :partial=>"schedules/timeslot", :locals => {:ts => ts}
+    %p{:align=>"center"}
+      For Event Organizers And Administrators:
+      = link_to("View as PDF", schedule_url(@schedule) + ".pdf")
+  %div.tab-pane#scores
+    - if !@current_tournament.show_scores?
+      %p 
+        Scores will be posted 
+        %b after the awards ceremony, 
+        or at 8pm EST, whichever comes first.
+      %p
+        Scores may be withheld past that time in the event of a dispute.
+    - else
+      %div{:style=>"width:600px; margin:auto;"}
+        %table.zebra-striped.bordered-table.condensed-table
+          %thead
+            %th{:width=>"100px"} Placement
+            %th{:width=>"100px"} Team Number
+            %th Team Name
+          %tbody
+            - @scores.each do |s|
+              %tr
+                %td=s.placement
+                %td=s.team.getNumber
+                %td=s.team.name
+:javascript
+  $(function() { mpq.track("View Event", {event: "#{@schedule.event}"}); });

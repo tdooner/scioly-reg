@@ -1,0 +1,35 @@
+Publishing the scores will make event scores publicly available on each event page and the overall
+summary of events available on the homepage.
+
+%form{:method=>"POST", :action=>tournament_scoreslideshow_url(@current_tournament), :target=>"_new"}
+  %input{:type=>"hidden", :value=>form_authenticity_token, :name=>"authenticity_token"}
+  - if !@withheldevents.empty?
+    .alert-message.block-message.warning
+      %p
+        %b Warning: 
+        The following events have scores withheld.
+        %b Scores will not be published until no events have scores withheld.
+        %ul
+          - @withheldevents.each do |e|
+            %li=e.humanize
+        %fieldset
+          %ul.inputs-list
+            %li
+              %label
+                %input{:type=>"radio",:name=>"slideshow[skip_withheld]", :value=>"false", :checked=>"checked"}
+                Yes, include these events in the slideshow.
+            %li
+              %label
+                %input{:type=>"radio", :name=>"slideshow[skip_withheld]", :value=>"true"}
+                No, skip these events in the slideshow.
+  - if !@unfinishedevents.empty?
+    .alert-message.block-message.error
+      %p 
+        %b Error: 
+        The following events have no scores reported. You cannot publish scores when some events have no scores.
+      %ul
+        - @unfinishedevents.each do |e|
+          %li=e.humanize 
+  - else
+    .actions
+      %input.primary.btn{:type=>"submit", :value=>"Publish Scores!"}

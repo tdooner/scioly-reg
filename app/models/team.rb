@@ -5,11 +5,13 @@ class Team < ActiveRecord::Base
 	validates_presence_of :number
 	validates_presence_of :tournament_id
 	validates_presence_of :division
-	validates_uniqueness_of :number, :scope => :tournament_id
+	validates_uniqueness_of :number, :scope => [:tournament_id, :division]
+	validates_uniqueness_of :name, :scope => [:tournament_id, :division]
 #	validates_confirmation_of :password # if we want to confirm a password with a password_confirmation method
 
 	belongs_to :tournament
 	has_many :sign_ups
+    has_many :scores
 	attr_accessor :password, :password_confirm, :password_existing
 
 
@@ -44,7 +46,14 @@ class Team < ActiveRecord::Base
 		return @@divisions
 	end
 
-	def <=>(team) #When this is compared to another team
-		self.name <=> team.name
-	end
+    def rank_matrix
+      # Something like [98, -1, -3, -4, -2, 0, ... ] to sort teams on.
+      # 98 is total points
+      # 1 is number of first places, etc., negative because we're sorting in increasing order
+      places = self.scores.map(&:placement).group_by(&:abs).reduce({}){|a,i| a.merge({i[0] => -i[1].length})}
+      num_teams = self.tournament.teams.select{|x| x.division == self.division}.length
+      total_points = places.map{|k,v| k*v}.sum
+
+      [total_points.abs] + (num_teams+1).times.map{|x| places[x+1] || 0}
+    end
 end

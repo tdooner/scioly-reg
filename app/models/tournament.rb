@@ -1,5 +1,6 @@
 class Tournament < ActiveRecord::Base
 	has_many :teams
+    has_many :schedules
 
 	def self.get_current()
 		@t = find(:first, :conditions => ["is_current = ?", true])
@@ -26,4 +27,15 @@ class Tournament < ActiveRecord::Base
 	def can_register()
 		return (self.has_registration_begun() and not self.has_registration_ended())
 	end
+    def show_scores?
+      fake_time = Time.now + Time.now.gmt_offset
+      release_time = self.date + 20.hours
+      # If the time is before the default release and the admins haven't shown scores, don't display them.
+      return false if (!self.scores_revealed && fake_time < release_time)
+      # Otherwise, either the time has passed or the 'Reveal Scores' button has been pressed, so
+      #  don't release any scores if an event is being withheld.
+      return false unless self.schedules.select{|x| x.scores_withheld}.empty?
+      # Otherwise, things are looking good! 
+      return true
+    end
 end

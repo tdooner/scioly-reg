@@ -2,12 +2,23 @@
   #topNavWrapper
     %ul#topnav
       %li= link_to 'Home', root_path
-      - if session[:team].nil?
+      - Team.divisions.values.each do |d|
         %li
-          = link_to 'View Event Schedules', schedules_url
+          = link_to "Division #{d} Events", schedules_url
           %ul
-            - @all_schedules.each do |s| 
-              %li=link_to(s.event,s)
+            - @all_schedules[d].each do |e| 
+              - if @team && e.is_scheduled_online? && e.division == @team.division
+                %li
+                  %a{:href=>schedule_url(e)}
+                    - if e.hasTeamRegistered(@team)
+                      =image_tag("ok.png",:width=>16)
+                    - else
+                      =image_tag("error.png", :width=>16)
+                    ="#{e.event} (#{e.division})"
+              - else
+                %li
+                  %a{:href=>schedule_url(e)}=e.event
+      - if not @team
         %li
           = link_to 'Team Log In', "#"
           %ul
@@ -15,15 +26,17 @@
             %li= link_to "Division C Teams", login_url("C")
       - else
         %li
-          = link_to 'Register For Events', schedules_url
+          = link_to @team.name, root_path
           %ul
-            - @all_schedules.each do |s| 
-              %li=link_to(s.event,s)
-        %li
-          = link_to "Logout", logout_url
+            %li=link_to "Register For Events", schedules_url
+            %li=link_to "View Registrations", signups_url
+            %li=link_to "Change Password", edit_team_url(@team)
+            %li=link_to "Logout", logout_url
       - if not session[:user].nil? and session[:user].role == 1
         %li
           =link_to "Admin Panel", admin_index_url
           %ul
-            %li=link_to "View All Events", schedules_url
+            %li=link_to "View All Events", admin_events_url
+            %li=link_to "View All Teams", teams_url
+            %li=link_to "Scoring", admin_scores_url
             %li=link_to "Logout", adminlogout_url

@@ -1,17 +1,23 @@
+:javascript
+  $(function() {
+    $("table#teams-table").tablesorter({sortList: [[0,0]]});
+  });
 %p
   Below are all the teams registered for the Tournament occurring on
   = @current_tournament.humanize() + "."
 
-%table
-  %tr
-    %td
+%table.zebra-striped.condensed-table#teams-table
+  %thead
+    %th
       %b Team Name
-    %td
+    %th
       %b Division
+    %th
+      %b Team Number
+  %tbody
     - @teams.each do |t|
       %tr
         %td=link_to t.name, edit_team_url(t)
         %td=t.division
-  %tr
-    %td{:colspan=>2}
-      =link_to "Add New Team", new_team_url
+        %td=t.getNumber
+=link_to "Add New Team", new_team_url
