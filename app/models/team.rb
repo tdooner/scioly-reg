@@ -64,4 +64,7 @@ class Team < ActiveRecord::Base
       self.sign_ups.includes({:timeslot => :schedule}).map{|x| x.timeslot.schedule}
 	end
 
+    def can_register_for_event?(s)
+      return s.division == self.division
+    end
 end

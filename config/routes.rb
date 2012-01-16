@@ -36,6 +36,7 @@ Scioly::Application.routes.draw do
   match 'schedule/autocomplete_event' => "schedules#autocomplete_schedule_event", :as => :autocomplete_event_schedule
   match 'schedule/batchnew' => "schedules#batchnew", :via => [:get]
   match 'schedule/batchnew' => "schedules#batchcreate", :via => [:post]
+  match 'schedule/:division' => "schedules#index", :as=>:schedule_division, :constraints => { :division => /[A-Z]/ }
   resources :schedules, :path => "/schedule" do
     get 'scores'
     post 'scores', :action => "savescores"

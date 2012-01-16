@@ -31,7 +31,7 @@
         %thead
           %th Timeslot
           %th Availability
-          - if @team && @team.division == @schedule.division
+          - if @team && @team.can_register_for_event?(@schedule)
             %th Sign Up
         - @allslots.each do |ts|
           = render :partial=>"schedules/timeslot", :locals => {:ts => ts}
