@@ -62,7 +62,7 @@ div#recaptcha_area {
 body, html {
   margin: 0;
   height: 100%;
-  background-color: #F3F3F3 !important; }
+  background: url(/images/bright_squares.png); }
 
 .alert-message p {
   color: #fff; }
