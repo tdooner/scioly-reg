@@ -1,18 +1,18 @@
 require 'digest/sha1'
 
 class Team < ActiveRecord::Base
-	validates_length_of :password,:minimum => 5, :if => :password_validation_required? # Validate this further???
+	validates_length_of :password, :minimum => 5, :if => :password_validation_required? # Validate this further???
 	validates_presence_of :number
 	validates_presence_of :tournament_id
 	validates_presence_of :division
 	validates_uniqueness_of :number, :scope => [:tournament_id, :division]
 	validates_uniqueness_of :name, :scope => [:tournament_id, :division]
-#	validates_confirmation_of :password # if we want to confirm a password with a password_confirmation method
+    validates_confirmation_of :password
 
 	belongs_to :tournament
 	has_many :sign_ups
     has_many :scores
-	attr_accessor :password, :password_confirm, :password_existing
+	attr_accessor :password, :password_confirmation, :password_existing
     attr_protected :hashed_password
 
 

@@ -16,7 +16,7 @@ class TeamsController < ApplicationController
 	def update
 		### Ensure 
 		@this_team = Team.find(params[:id])
-		if params[:team][:password] != params[:team][:password_confirm]
+		if params[:team][:password] != params[:team][:password_confirmation]
 			flash[:error] = "Passwords do not match!"
 			redirect_to edit_team_url(params[:id])
 			return
@@ -38,7 +38,7 @@ class TeamsController < ApplicationController
             @mixpanel.track_event("Team Update", {:team => @this_team.name, :admin=>true, :failed => false})
 			redirect_to edit_team_url(params[:id])
 		else
-			if @this_team.update_attributes({:password => params[:team][:password], :password_confirm => params[:team][:password_confirm]})
+			if @this_team.update_attributes({:password => params[:team][:password], :password_confirmation => params[:team][:password_confirmation]})
                 @mixpanel.track_event("Team Update", {:team => @this_team.name, :admin=>false, :failed => false})
 				@div = @team.division
 				@team = nil

@@ -32,11 +32,12 @@ class ActiveSupport::TestCase
     # school factory is in test/factories/schools.rb
 
     factory :team do
-      sequence(:name){|x| "Nordonia High School - Team #{x}"}
+      sequence(:name){|x| Faker::Company.name + " - Team #{x}"}
       sequence(:number){|x| x.to_s}
       division "B"
       coach "Tom Dooner"
       password 'password'
+      password_confirmation 'password'
       hashed_password Digest::SHA1.hexdigest('password')
       tournament
     end
@@ -73,26 +74,31 @@ class ActiveSupport::TestCase
   end
 
   def assume_team_login(team)
-    team.password = Random.rand(1000000).to_s
-    team.password_confirm = team.password
+    new_pw = Random.rand(1000000).to_s
+    team.password = new_pw
+    team.password_confirmation = new_pw
     assert team.save
-    login_with_password(team, team.password)
+    assert login_with_password(team, new_pw)
     return team
   end
 
   def login_with_password(team, password)
     visit login_path(team.division)
     within("div#content") do
-      assert current_path == login_path(team.division), "Current path is #{current_path}, not the login page #{login_path(team.division)}!"
-      assert select(team.name, :from=>"team_id"), "Could not select team name on login page."
-      fill_in "password", :with=>team.password
+      return false unless current_path == login_path(team.division)
+      return false unless select(team.name, :from=>"team_id")
+      fill_in "password", :with=>password
       find_button("Login").click
     end
-    assert page.has_content?("Welcome")
-    assert page.has_content?("Things To Do")
-    assert page.has_content?("Your Information")
-    assert !page.has_content?("Incorrect Password")
-    assert (current_path == "" || current_path == "/"), "Path is wrong (#{current_path})."
+    return false if page.has_content?("Incorrect Password")
+
+    # Things that the default team login page has:
+    return false unless page.has_content?("Welcome")
+    return false unless page.has_content?("Things To Do")
+    return false unless page.has_content?("Your Information")
+    return false unless (current_path == "" || current_path == "/")
+
+    return true
   end
 end
 
