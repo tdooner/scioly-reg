@@ -26,6 +26,10 @@ class ActiveSupport::TestCase
         is_current "true"
       end
 
+      trait :occurred do
+        date { Time.now - 1.day }
+      end
+
       factory :current_tournament, :traits => [:current]
     end
 
