@@ -130,9 +130,13 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.find(params[:schedule_id])
     @teams = @current_tournament.teams.where(["division = ?", @schedule.division])
 
-    @schedule.scores.delete_all
+    @schedule.scores.each(&:destroy)
+    all_successful = true
+    errors = []
     params[:placings].each do |k,v|
-      @schedule.scores.create({:team_id => k, :placement => v})
+      placing = @schedule.scores.new({:team_id => k, :placement => v})
+      all_successful = placing.save && all_successful
+      errors << placing.errors.full_messages.first unless placing.errors.empty?
     end
 
     if params[:scores_withheld] == "true"
@@ -141,6 +145,11 @@ class SchedulesController < ApplicationController
       @schedule.update_attribute(:scores_withheld, false)
     end
 
-    redirect_to admin_scores_url()
+    if errors.empty?
+      redirect_to admin_scores_url()
+    else
+      flash[:error] = errors.join("<br>")
+      redirect_to schedule_scores_url(@schedule)
+    end
   end
 end

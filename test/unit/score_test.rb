@@ -13,8 +13,9 @@ class ScoreTest < ActiveSupport::TestCase
   test "Scores save for an event." do
     scores = (1..@current_tournament.teams.length).to_a.shuffle
     schedule = @current_tournament.schedules.first
-    scores.each_with_index do |i,s|
-      assert Score.new({:schedule => schedule, :team => @current_tournament.teams[i], :placement => s}).save
+    scores.each_with_index do |s,i|
+      s = Score.new({:schedule => schedule, :team => @current_tournament.teams[i], :placement => s})
+      assert s.save, "Error: #{s.errors.full_messages.first}"
     end
   end
 
@@ -53,14 +54,15 @@ class ScoreTest < ActiveSupport::TestCase
     # Add scores for all teams in one event
     scores = (1..@current_tournament.teams.length).to_a.shuffle
     schedule = @current_tournament.schedules.first
-    scores.each_with_index do |i,s|
-      assert Score.new({:schedule => schedule, :team => @current_tournament.teams[i], :placement => s}).save
+    scores.each_with_index do |s, i|
+      score = Score.new({:schedule => schedule, :team => @current_tournament.teams[i], :placement => s})
+      assert score.save, "Error creating schedule: #{score.errors.full_messages.first}"
     end
     num_before = Score.all.length
 
     # Delete them!
-    assert schedule.scores.delete_all
-    assert schedule.scores.empty?
-    assert (num_before - Score.all.length) == scores.length
+    assert schedule.scores.each(&:destroy)
+    assert schedule.scores.reload.empty?
+    assert (num_before - Score.all.length) == scores.length, "Expected there to be #{scores.length} fewer scores in the database, but there were #{num_before} before and #{Score.all.length} now."
   end
 end
