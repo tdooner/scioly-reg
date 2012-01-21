@@ -23,7 +23,10 @@ class Schedule < ActiveRecord::Base
 		if self.num_timeslots.nil?
 			return "Error: No defined amount of divisions"
 		end
-        teams_per_slot = 1 if teams_per_slot.nil?
+        if self.num_timeslots.to_i == 0
+          return "No timeslots? Okay then."
+        end
+        self.teams_per_slot = 1 if self.teams_per_slot.nil?
 		minutes = (( self.endtime - self.starttime ) / 60 ).round
 		slotwidth = (minutes / self.num_timeslots.to_i).floor
 		if slotwidth <= 0

@@ -1,4 +1,5 @@
 class Timeslot < ActiveRecord::Base
+  validates_presence_of :schedule_id, :begins, :ends, :team_capacity
 	belongs_to :schedule
 	has_many :sign_ups
 
