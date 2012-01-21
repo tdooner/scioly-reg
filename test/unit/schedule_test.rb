@@ -20,25 +20,25 @@ class ScheduleTest < ActiveSupport::TestCase
   test "updateTimeSlots does nothing with no input" do
     num_slots = Timeslot.all.length
     # num_timeslots and teams_per_slot are not initialized here:
-    assert @schedule.updateTimeSlots.is_a?(String)
-    assert Timeslot.all.length == num_slots 
-    assert @schedule.timeslots.empty?
+    assert @schedule.updateTimeSlots.is_a?(String), "UpdateTimeSlots didn't Error..?"
+    assert Timeslot.all.length == num_slots, "Timeslots created when it shouldn't have."
+    assert @schedule.timeslots.empty?, "Event has timeslots when it shouldn't."
 
     #initialze teams_per_slot, but not num_timeslots
     @schedule.teams_per_slot = 2
-    assert @schedule.updateTimeSlots.is_a?(String)
+    assert @schedule.updateTimeSlots.is_a?(String), "UpdateTimeSlots didn't error...?"
 
     # set num_timeslots == 0
     @schedule.num_timeslots = 0
-    assert @schedule.updateTimeSlots.is_a?(String) || @schedule.updateTimeSlots.length == 0
+    assert @schedule.updateTimeSlots.is_a?(String) || @schedule.updateTimeSlots.length == 0, "UpdateTimeSlots didn't error or created some timeslots."
   end
 
   test "updateTimeSlots creates correct number of timeslots" do
     num_slots = Timeslot.all.length
     @schedule.num_timeslots = 15
-    assert @schedule.updateTimeSlots.is_a?(Array)
-    assert @schedule.timeslots.length == 15
-    assert Timeslot.all.length == num_slots + 15
+    assert @schedule.updateTimeSlots.is_a?(Array), "UpdateTimeSlots error!"
+    assert @schedule.timeslots.length == 15, "UpdateTimeSlots should make #{@schedule.num_timeslots} but made #{@schedule.timeslots.length}."
+    assert Timeslot.all.length == num_slots + 15, "Timeslot was #{num_slots} before adding 15, and is now #{Timeslot.all.length}"
   end
 
   test "updateTimeSlots creates timeslots that have correct team_capacity" do
@@ -55,15 +55,15 @@ class ScheduleTest < ActiveSupport::TestCase
     (1..3).each do |n|
       @schedule.num_timeslots = n*5
       assert @schedule.updateTimeSlots.is_a?(Array), "Error in updateTimeSlots!"
-      assert @schedule.timeslots.length == n*5, "Old timeslots still associated"
+      assert @schedule.timeslots.reload.length == n*5, "Old timeslots still associated"
       assert Timeslot.all.length == (num_slots + n*5), "Old timeslots not deleted"
     end
   end
 
   test "updateTimeSlots produces slots only in the duration" do
     @schedule.num_timeslots = 20
-    assert @schedule.updateTimeSlots.is_a?(Array)
-    assert @schedule.timeslots.length == 20
+    assert @schedule.updateTimeSlots.is_a?(Array), "UpdateTimeSlots Error!"
+    assert @schedule.timeslots.length == 20, "Incorrect number of timeslots created."
     @schedule.timeslots.each do |t|
       assert t.begins >= @schedule.starttime && t.ends <= @schedule.endtime
     end
