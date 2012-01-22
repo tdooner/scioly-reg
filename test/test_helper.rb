@@ -14,6 +14,25 @@ class ActiveSupport::TestCase
     @other_tournament = FactoryGirl.create(:tournament)
   end
 
+  def populate_tournament(t)
+    10.times do |n|
+      FactoryGirl.create(:schedule, :tournament => t)
+      FactoryGirl.create(:team, :tournament => t)
+    end
+    return true
+  end
+
+  def populate_scores(t)
+    t.schedules.each_with_index do |schedule, i|
+      scores = (1..t.teams.length).to_a.shuffle
+      scores.each_with_index do |placement, d|
+        score = Score.new({:schedule => schedule, :team => t.teams[d], :placement => placement})
+        return false unless score.save
+      end
+    end
+    return true
+  end
+
   FactoryGirl.define do
     factory :tournament do
       sequence(:date){|x| Time.now + x.years}

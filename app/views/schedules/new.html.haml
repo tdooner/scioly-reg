@@ -59,6 +59,23 @@
       %div.input
         = f.time_select :endtime, {:minute_step => 10}, :class=>"small"
     %div.clearfix
+      %label
+        %b Include In Score:
+      %div.input
+        %ul.inputs-list
+          %li
+            %label 
+              = radio_button :schedule, :counts_for_score, "true", :selected=>:true
+              Yes
+            %span.help-block
+              This event counts towards a team's score and ranking. 
+          %li
+            %label
+              = radio_button :schedule, :counts_for_score, "false"
+              No
+            %span.help-block
+              For example, a trial event.
+    %div.clearfix
       %label{:for=>"schedule_online"}
         %b Schedule Online?
       %div.input

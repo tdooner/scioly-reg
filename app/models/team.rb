@@ -47,13 +47,16 @@ class Team < ActiveRecord::Base
 		return @@divisions
 	end
 
+    def total_points
+      total_points = self.scores.map{|x| x.schedule.counts_for_score ? x.placement : 0}.sum
+    end
+
     def rank_matrix
       # Something like [98, -1, -3, -4, -2, 0, ... ] to sort teams on.
       # 98 is total points
       # 1 is number of first places, etc., negative because we're sorting in increasing order
       places = self.scores.map(&:placement).group_by(&:abs).reduce({}){|a,i| a.merge({i[0] => -i[1].length})}
       num_teams = self.tournament.teams.select{|x| x.division == self.division}.length
-      total_points = places.map{|k,v| k*v}.sum
 
       [total_points.abs] + (num_teams+1).times.map{|x| places[x+1] || 0}
     end

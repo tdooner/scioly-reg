@@ -40,7 +40,7 @@
                   %td=res.placement
                 - else
                   %td 
-              %td=t.scores.map(&:placement).sum
+              %td=rank_matrix[0]
               - if rank_matrix == lastval
                 - num_at_place += 1
                 %td=ranking

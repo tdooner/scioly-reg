@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120115180810) do
+ActiveRecord::Schema.define(:version => 20120121234105) do
 
   create_table "infos", :force => true do |t|
     t.string    "name"
@@ -31,7 +31,8 @@ ActiveRecord::Schema.define(:version => 20120115180810) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "room"
-    t.boolean  "scores_withheld", :default => false
+    t.boolean  "scores_withheld",  :default => false
+    t.boolean  "counts_for_score", :default => true
   end
 
   create_table "schools", :force => true do |t|
