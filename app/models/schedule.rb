@@ -1,7 +1,5 @@
 class Schedule < ActiveRecord::Base
     validates_presence_of :event, :division, :starttime, :endtime
-    attr_accessor :num_timeslots, :teams_per_slot
-
 	has_many :timeslots
     has_many :scores
     belongs_to :tournament
@@ -62,5 +60,19 @@ class Schedule < ActiveRecord::Base
     end
     def is_scheduled_online?
       not self.timeslots.empty?
+    end
+    def num_timeslots
+      @num_timeslots || (@num_timeslots = self.timeslots.length)
+    end
+    def num_timeslots=(v)
+      @num_timeslots = v
+    end
+    def teams_per_slot
+      return @teams_per_slot if @teams_per_slot
+      values = self.timeslots.map(&:team_capacity).uniq
+      return values[0] if values.length == 1
+    end
+    def teams_per_slot=(v)
+      @teams_per_slot = v
     end
 end

@@ -1,3 +1,11 @@
+-if !session[:user].nil?
+  %div.alert-message.block-message.info
+    Hey, it looks like you're an admin. Here are some things you can do:
+    %div.alert-actions
+      - if session[:user].can_edit?(@schedule)
+        %a.btn{:href=>edit_schedule_url(@schedule)} Edit Event
+      - if session[:user].is_admin_of(@current_school)
+        %a.btn{:href=>schedule_scores_url(@schedule)} Submit Scores
 %ul.tabs{:"data-tabs"=>"tabs"}
   %li.active
     %a{:href=>"#information"} Information
@@ -47,6 +55,11 @@
       %p
         Scores may be withheld past that time in the event of a dispute.
     - else
+      - if !@schedule.counts_for_score
+        %div.alert-message.warning
+          %b
+            Note: 
+          This event's scores are not factored into a team's overall score.
       %div{:style=>"width:600px; margin:auto;"}
         %table.zebra-striped.bordered-table.condensed-table
           %thead

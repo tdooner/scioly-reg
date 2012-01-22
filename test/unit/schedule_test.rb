@@ -37,7 +37,7 @@ class ScheduleTest < ActiveSupport::TestCase
     num_slots = Timeslot.all.length
     @schedule.num_timeslots = 15
     assert @schedule.updateTimeSlots.is_a?(Array), "UpdateTimeSlots error!"
-    assert @schedule.timeslots.length == 15, "UpdateTimeSlots should make #{@schedule.num_timeslots} but made #{@schedule.timeslots.length}."
+    assert @schedule.timeslots.reload.length == 15, "UpdateTimeSlots should make #{@schedule.num_timeslots} but made #{@schedule.timeslots.reload.length}."
     assert Timeslot.all.length == num_slots + 15, "Timeslot was #{num_slots} before adding 15, and is now #{Timeslot.all.length}"
   end
 
@@ -63,7 +63,7 @@ class ScheduleTest < ActiveSupport::TestCase
   test "updateTimeSlots produces slots only in the duration" do
     @schedule.num_timeslots = 20
     assert @schedule.updateTimeSlots.is_a?(Array), "UpdateTimeSlots Error!"
-    assert @schedule.timeslots.length == 20, "Incorrect number of timeslots created."
+    assert @schedule.timeslots.reload.length == 20, "Incorrect number of timeslots created."
     @schedule.timeslots.each do |t|
       assert t.begins >= @schedule.starttime && t.ends <= @schedule.endtime
     end

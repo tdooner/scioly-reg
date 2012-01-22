@@ -95,6 +95,9 @@ GEM
     multi_json (1.0.4)
     multi_xml (0.4.1)
     nokogiri (1.5.0)
+    parallel (0.5.12)
+    parallel_tests (0.6.16)
+      parallel
     polyglot (0.3.3)
     rack (1.2.4)
     rack-mount (0.6.14)
@@ -159,6 +162,7 @@ DEPENDENCIES
   jquery-rails
   mixpanel
   paperclip!
+  parallel_tests
   rails (= 3.0.11)
   rails3-jquery-autocomplete
   rdiscount

@@ -5,7 +5,7 @@ class SchedulesController < ApplicationController
 	# is what a team registers to.
 	###
 
-  before_filter :is_admin, :only => [:new, :destroy, :batchnew, :create, :scores, :savescores, :batchcreate]
+  before_filter :is_admin, :only => [:new, :destroy, :batchnew, :edit, :create, :update, :scores, :savescores, :batchcreate]
   protect_from_forgery :except => :destroy
   autocomplete :schedule, :event, :display_value => :humanize, :extra_data => [:division]
 
@@ -17,6 +17,21 @@ class SchedulesController < ApplicationController
   def batchnew
     breadcrumbs.add("New Event", new_schedule_url())
     breadcrumbs.add("Batch Mode")
+  end
+
+  def edit
+    @schedule = Schedule.find(params[:id])
+	breadcrumbs.add("Events", admin_events_url())
+    breadcrumbs.add(@schedule.humanize, schedule_url(@schedule))
+    breadcrumbs.add("Edit")
+  end
+
+  def update
+    @schedule = Schedule.find(params[:id])
+    @schedule.update_attributes(params[:schedule])
+    @schedule.updateTimeSlots if params[:schedule_online] == "true"
+    @schedule.timeslots.map(&:delete) if params[:schedule_online] == "false"
+    redirect_to edit_schedule_url(@schedule)
   end
 
   def create

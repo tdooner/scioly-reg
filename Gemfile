@@ -22,6 +22,7 @@ group :test do
     gem 'turn'
     gem 'shoulda'
 end
+gem "parallel_tests"
 
 # Use unicorn as the web server
 # gem 'unicorn'

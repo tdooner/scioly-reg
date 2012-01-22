@@ -33,4 +33,10 @@ class User < ActiveRecord::Base
       return false if self.school.admin_email == self.email
       return self.is_admin_of(self.school) && u.school == self.school
     end
+
+    def can_edit?(obj)
+      if obj.is_a?(Schedule)
+        return (self.is_admin_of(self.school) && self.school == obj.tournament.school)
+      end
+    end
 end
