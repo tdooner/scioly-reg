@@ -4,20 +4,23 @@
   Each Tournament has a set of 
   %b Teams, Events, and Registrations.
   These will be have to be recreated for each tournament.
-%div.bluebox.smalllinks
-  -form_for(@tournament) do |f|
-    %table
-      %tr
-        %td
-          %b Tournament Date:
-        %td=f.date_select :date
-      %tr
-        %td
-          %b Registration Begins:
-        %td=f.datetime_select :registration_begins
-      %tr
-        %td
-          %b Registration Ends:
-        %td=f.datetime_select :registration_ends
-    %p=f.submit
-    
+-form_for(@tournament) do |f|
+  %fieldset
+    .clearfix
+      %label
+        %b Tournament Date:
+      .input
+        =f.date_select :date, {}, :class=>"small"
+    .clearfix
+      %label
+        %b Registration Begins
+      .input
+        =f.datetime_select :registration_begins, {}, :class=>"small"
+    .clearfix
+      %label
+        %b Registration Ends:
+      .input
+        =f.datetime_select :registration_ends, {}, :class=>"small"
+    .clearfix.actions
+      =submit_tag "Create Tournament", :class=>"btn primary"
+  

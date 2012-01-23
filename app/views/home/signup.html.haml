@@ -6,17 +6,17 @@
   Welcome,
   = @team.name + "."
   On this site, you will find all you need to complete registration for the upcoming Science Olympiad tournament.
-- if not @current_tournament.has_registration_begun()
-  %p.errorbox
-    Note: Registration begins
+.alert-message.alert
+  - if not @current_tournament.has_registration_begun()
+    %b Note: 
+    Registration begins
     = @current_tournament.registration_begins.strftime("%B %d, %Y %I:%M %p")
-- else
-  - if not @current_tournament.has_registration_ended()
-    %b
-      Note: Registration ends
+  - else
+    - if not @current_tournament.has_registration_ended()
+      %b
+        Note: 
+      Registration ends
       = @current_tournament.registration_ends.strftime("%B %d, %Y %I:%M %p")
-%br
-%br
 .row
   .span5
     %h3 

@@ -11,6 +11,7 @@ class TournamentsController < ApplicationController
 
   def new
 	  @tournament = Tournament.new()
+      breadcrumbs.add("Tournaments", tournaments_url)
 	  breadcrumbs.add("New Tournament")
   end
 
@@ -22,7 +23,7 @@ class TournamentsController < ApplicationController
 
   def index
 	  @tournaments = @current_school.tournaments
-	  breadcrumbs.add("Edit Tournaments")
+	  breadcrumbs.add("Tournaments")
   end
 
   def show
