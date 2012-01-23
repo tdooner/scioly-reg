@@ -16,6 +16,7 @@ class TournamentsController < ApplicationController
 
   def edit
 	  @tournament = Tournament.find(params[:id])
+      breadcrumbs.add("Tournaments", tournaments_url)
 	  breadcrumbs.add("Edit Tournament #" + @tournament.id.to_s)
   end
 
