@@ -1,4 +1,8 @@
-%table.zebra-striped
+:javascript
+  $(function() {
+    $("#events-table").tablesorter({ sortList: [[1,0]] });
+  });
+%table.zebra-striped#events-table
   %thead
     %th
       %b Division
