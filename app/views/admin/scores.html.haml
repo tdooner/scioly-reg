@@ -3,6 +3,11 @@
     $("table#admin-score-table").tablesorter({sortList: [[1,0],[0,0]]});
   });
 
+.alert-message.block-message.info
+  Click on an event below to submit scores for that event. After scoring is completed, here are some options of what to do with the scores.
+  .alert-actions
+    %a.btn{:href=>admin_scoreslideshow_url} Award Ceremory Slideshow
+    %a.btn{:href=>admin_scorespublish_url} Publish Scores
 %table.zebra-striped.condensed-table#admin-score-table
   %thead
     %th Event Name
@@ -20,6 +25,3 @@
               (Withheld)
           - else 
             =image_tag "ok.png", :height=>"16px"
-%a{:href=>admin_scoreslideshow_url} Award Ceremory Slideshow
-|
-%a{:href=>admin_scorespublish_url} Publish Scores
