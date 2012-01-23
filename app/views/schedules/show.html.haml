@@ -22,8 +22,9 @@
       This event is not selected for online sign-up. Information pertaining to this event is listed below, however no action is required. After the awards ceremony, scores for this event will be posted to this page.
     - else
       This event is scheduled for online sign-up. When registration is open, you may register for timeslots or change your timeslot. On the day of the tournament, teams that did not complete online registration may choose from the remaining slots. 
-    %h3 Event Name
-    %p="#{@schedule.event} (#{@schedule.division})"
+    %h3=@schedule.humanize
+    - if !@schedule.custom_info.empty?
+      !=RDiscount.new(@schedule.custom_info).to_html
     %h3 Time 
     %p="#{@schedule.starttime.strftime("%l:%M %P")} to #{@schedule.endtime.strftime("%l:%M %P")}"
     %h3 Room

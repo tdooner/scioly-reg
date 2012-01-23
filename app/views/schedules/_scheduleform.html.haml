@@ -59,6 +59,14 @@
       %div.input
         = f.time_select :endtime, {:minute_step => 10}, :class=>"small"
     %div.clearfix
+      %label{:for=>"schedule_custom_info"}
+        %b 
+          Custom Information
+          %a{:href=>"#"} (textile)
+      %div.input
+        = f.text_area :custom_info, :rows => 10
+  %fieldset
+    %div.clearfix
       %label
         %b Include In Score:
       %div.input
@@ -75,6 +83,7 @@
               No
             %span.help-block
               For example, a trial event.
+  %fieldset
     %div.clearfix
       %label{:for=>"schedule_online"}
         %b Schedule Online?
