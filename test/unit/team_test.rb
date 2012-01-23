@@ -86,4 +86,20 @@ class TeamTest < ActiveSupport::TestCase
       assert x.rank_matrix[0] == x.total_points
     end
   end
+
+  test "Deleting a team deletes all its sign_ups" do
+    assert populate_tournament(@current_tournament)
+    event = @current_tournament.schedules.first
+    event.num_timeslots = 10
+    event.teams_per_slot = 2
+    team = @current_tournament.teams.first
+    assert event.updateTimeSlots.is_a?(Array), "Couldn't create timeslots!?"
+    sign_up = SignUp.new({:timeslot => event.timeslots.first, :team => team})
+    assert sign_up.save
+    total_signups = SignUp.count
+    team.delete    
+    assert sign_up.destroyed?, "Sign Up not marked as destroyed!"
+    assert team.sign_ups.length == 0, "Team still has Sign Ups associated!"
+    assert SignUp.count == total_signups - 1, "Expected to see #{total_signups - 1} SignUps but found #{SignUp.count}"
+  end
 end
