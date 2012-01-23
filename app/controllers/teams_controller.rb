@@ -3,6 +3,7 @@ class TeamsController < ApplicationController
 	before_filter :is_correct_team, :only => [:edit, :update]
 
 	def index
+      breadcrumbs.add("Teams")
 		@teams = @current_tournament.teams
 		render :list
 	end
@@ -11,7 +12,8 @@ class TeamsController < ApplicationController
 	end
 	def edit
 		@this_team = Team.find(params[:id])
-		breadcrumbs.add("Edit Team #" + @this_team.getNumber())
+      breadcrumbs.add("Teams", teams_url)
+      breadcrumbs.add("Edit Team #" + @this_team.getNumber())
 	end
 	def update
 		### Ensure 

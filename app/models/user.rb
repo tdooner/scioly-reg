@@ -38,5 +38,11 @@ class User < ActiveRecord::Base
       if obj.is_a?(Schedule)
         return (self.is_admin_of(self.school) && self.school == obj.tournament.school)
       end
+      if obj.is_a?(Tournament)
+        return (self.is_admin_of(obj.school))
+      end
+      if obj.is_a?(Team)
+        return self.is_admin_of(obj.tournament.school)
+      end
     end
 end

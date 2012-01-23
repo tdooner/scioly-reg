@@ -2,6 +2,10 @@
   $(function() {
     $("table#teams-table").tablesorter({sortList: [[0,0]]});
   });
+.alert-message.block-message.info
+  These are the teams competing in this tournament. Click Edit next to a team to change its details.
+  .alert-actions
+    =link_to "Add New Team", new_team_url, :class=>"btn"
 %p
   Below are all the teams registered for the Tournament occurring on
   = @current_tournament.humanize() + "."
@@ -20,4 +24,3 @@
         %td=link_to t.name, edit_team_url(t)
         %td=t.division
         %td=t.getNumber
-=link_to "Add New Team", new_team_url
