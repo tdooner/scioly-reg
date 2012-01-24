@@ -26,7 +26,7 @@
             %li= link_to "Division C Teams", login_url("C")
       - else
         %li
-          = link_to @team.name, root_path
+          = link_to @team.name, team_home_url
           %ul
             %li=link_to "Register For Events", schedules_url
             %li=link_to "View Registrations", signups_url
