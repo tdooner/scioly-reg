@@ -11,10 +11,11 @@
       .span3
         %span.host
           !=RDiscount.new(@current_tournament.hosted_by_markdown||"").to_html
-  = render :partial => "/layouts/navigation"
+  .noprint
+    = render :partial => "/layouts/navigation"
   #contentWrapper{:class=>"expanded-#{@layout_expanded}"}
     - if !current_page?("/")
-      .row
+      .row.noprint
         .span16
           %h3
             =breadcrumbs.render(:format => :bootstrap)
@@ -24,9 +25,12 @@
           %div.alert-message.error=flash[:error]
         - if flash[:message]
           %div.alert-message.info!=flash[:message]
+        - if @team
+          .onlyprint
+            You are logged in as #{@team.name} (##{@team.getNumber}).
         = yield
       - if @layout_expanded == false
-        .span4.offset1
+        .span4.offset1.noprint
           .well
             - if @team
               =render :partial => "/layouts/rightreminder"

@@ -2,14 +2,9 @@
 /* Science Olympiad Customizations */
   /* These look awful and waste paper when printed.
    * Clearly, not acceptable. */
-#cwruHeader {display:none;} 
-#feature {display:none;}
-#umcNav {display:none;}
-#footer {display:none;}
-div.sideLink{display:none;}
-div.blankH{display:none;}
+.noprint{display:none;}
+.alert-message.block-message{ display:none; }
 
-.action {display:none;}
 /* Print Stylesheet for UMC */
 
 body {
@@ -21,6 +16,7 @@ body {
 }
 h1, h2, h3, h4, h5  {
 	color:#000;
+    margin-bottom:0.1em;
 	text-decoration:underline;
 }
 p {
@@ -35,3 +31,4 @@ blockquote {
 	width: 4in;
 	margin-left: .25in;
 }
+  */
