@@ -1,11 +1,37 @@
+:javascript
+  var toggleTimeslotEdit = function(id) {
+    $("#edit-timeslot-" + id).toggle();
+  }
+  var show_timeslot_form = function() {
+    $("form#new_timeslot").toggle();
+  }
+  $(function() {
+    $(".hidebtn").hide();
+    $("form#new_timeslot").hide();
+    $("table#timeslot tr").hover(function(){ $("a.hidebtn", this).fadeIn(150);}, function() { $("a.hidebtn", this).fadeOut(150);});
+  });
 -if !session[:user].nil?
   %div.alert-message.block-message.info
     Hey, it looks like you're an admin. Here are some things you can do:
     %div.alert-actions
       - if session[:user].can_edit?(@schedule)
+        %a.btn{:href=>"javascript:show_timeslot_form()"} Add Timeslot
         %a.btn{:href=>edit_schedule_url(@schedule)} Edit Event
       - if session[:user].is_admin_of(@current_school)
         %a.btn{:href=>schedule_scores_url(@schedule)} Submit Scores
+    =form_for(Timeslot.new) do |f|
+      =hidden_field :timeslot_extra, :schedule, {:value => @schedule.id}
+      %fieldset
+        .clearfix
+          =f.label :begins, "Begin Time:"
+          .input
+            =f.time_select :begins, {}, :class=>"span2"
+        .clearfix
+          =f.label :team_capacity, "Team Capacity:"
+          .input
+            =f.text_field :team_capacity, :class=>"span1"
+        .clearfix
+          =f.submit "Create!", :class=>"btn primary"
 %ul.tabs.noprint{:"data-tabs"=>"tabs"}
   %li.active
     %a{:href=>"#information"} Information
@@ -42,10 +68,13 @@
     %div.smalllinks
       %table#timeslot{:width => "100%", :style=>"padding:0;margin:0;"}
         %thead
-          %th Timeslot
-          %th Availability
+          %th{:style=>"width:25%"} Timeslot
+          %th{:style=>"width:49%"} Availability
           - if @team && @team.can_register_for_event?(@schedule)
             %th Sign Up
+          - if session[:user] && session[:user].can_edit?(@schedule)
+            %th{:width=>"16px"}
+            %th{:width=>"16px"}
         - @allslots.each do |ts|
           = render :partial=>"schedules/timeslot", :locals => {:ts => ts}
     %p{:align=>"center"}

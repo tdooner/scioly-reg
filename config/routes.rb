@@ -1,5 +1,7 @@
 Scioly::Application.routes.draw do
 
+  get "timeslots/update"
+
   get "signups/new"
   get "signups/list"
 
@@ -42,6 +44,7 @@ Scioly::Application.routes.draw do
     get 'scores'
     post 'scores', :action => "savescores"
   end
+  resources :timeslots
   match '/schedule/:id/register/' => "signups#new", :as => :newsignup
   match '/schedule/:id/confirm/' => "signups#create", :as => :confirmsignup
   match '/signups/:id/delete/' => "signups#destroy", :as => :destroysignup
