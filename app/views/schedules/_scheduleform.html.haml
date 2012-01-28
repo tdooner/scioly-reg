@@ -52,12 +52,12 @@
       %label{:for=>"schedule_starttime"}
         %b Event Start Time:
       %div.input
-        = f.time_select :starttime, {:minute_step => 10}, :class=>"small"
+        = f.time_select :starttime, {:minute_step => 5}, :class=>"small"
     %div.clearfix
       %label{:for=>"schedule_endtime"}
         %b Event End Time:
       %div.input
-        = f.time_select :endtime, {:minute_step => 10}, :class=>"small"
+        = f.time_select :endtime, {:minute_step => 5}, :class=>"small"
     %div.clearfix
       %label{:for=>"schedule_custom_info"}
         %b 
