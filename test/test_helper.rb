@@ -100,8 +100,8 @@ class ActiveSupport::TestCase
     new_pw = Random.rand(1000000).to_s
     team.password = new_pw
     team.password_confirmation = new_pw
-    assert team.save
-    assert login_with_password(team, new_pw)
+    assert team.save, "Team saving error occurred!"
+    assert login_with_password(team, new_pw), "Could not log in with team password!"
     return team
   end
 
@@ -115,11 +115,11 @@ class ActiveSupport::TestCase
     end
     return false if page.has_content?("Incorrect Password")
 
+    click_link(team.name)
     # Things that the default team login page has:
     return false unless page.has_content?("Welcome")
     return false unless page.has_content?("Things To Do")
     return false unless page.has_content?("Your Information")
-    return false unless (current_path == "" || current_path == "/")
 
     return true
   end
@@ -134,5 +134,9 @@ class ActionController::TestCase
       FactoryGirl.create(:schedule, :tournament => @current_tournament)
       FactoryGirl.create(:team, :tournament => @current_tournament)
     end
+  end
+
+  def teardown
+    Capybara.reset_sessions!
   end
 end

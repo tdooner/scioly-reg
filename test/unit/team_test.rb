@@ -97,9 +97,9 @@ class TeamTest < ActiveSupport::TestCase
     sign_up = SignUp.new({:timeslot => event.timeslots.first, :team => team})
     assert sign_up.save
     total_signups = SignUp.count
-    team.delete    
-    assert sign_up.destroyed?, "Sign Up not marked as destroyed!"
-    assert team.sign_ups.length == 0, "Team still has Sign Ups associated!"
+    team.destroy
+    assert !SignUp.find_by_id(sign_up.id), "Found old signup!"
+    assert team.sign_ups.reload.length == 0, "Team still has Sign Ups associated!"
     assert SignUp.count == total_signups - 1, "Expected to see #{total_signups - 1} SignUps but found #{SignUp.count}"
   end
 end

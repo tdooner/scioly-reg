@@ -4,6 +4,7 @@ class HomeController < ApplicationController
   end
 
   def team_home
+      return redirect_to root_url unless @team
       breadcrumbs.add("Welcome!")
       render :signup # Render app/views/home/signup.html.haml
   end

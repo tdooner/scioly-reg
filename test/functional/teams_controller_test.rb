@@ -27,9 +27,10 @@ class TeamsControllerTest < ActionController::TestCase
     click_link("Logout")
     assert !login_with_password(@team, pw_before), "Team can log in with old password!"
     assert login_with_password(@team, new_pw), "Team cannot log in with new password!"
+    click_link(@team.name)
+    assert !page.has_content?("Incorrect Password")
     assert page.has_content?("Things To Do"), "Page does not contain 'Things To Do'"
     assert page.has_content?("Your Information")
-    assert !page.has_content?("Incorrect Password")
     assert @team.reload.hashed_password != pw_hash_before, "Password not actually changed!"
   end
 end
