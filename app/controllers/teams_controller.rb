@@ -129,9 +129,8 @@ class TeamsController < ApplicationController
 			if team = Team.authenticate(params[:team][:id], params[:password])
                 @mixpanel.track_event("Login", {:team => team.name, :admin=>"false", :failed => "false"})
                 session[:team] = team.id
-				flash[:message] = "Logged in!"
 				session[:loginattempts] = nil
-				return redirect_to :root
+				return redirect_to team_home_url
 			else
 				# If the user is logged in as an admin
 				if not session[:user].nil? and session[:user].is_admin_of(@current_school)
@@ -139,7 +138,7 @@ class TeamsController < ApplicationController
                     @mixpanel.track_event("Login", {:team => team.name, :admin=>"true", :failed => "false"})
                     session[:team] = team.id
 					session[:loginattempts] = nil
-					return redirect_to :root
+					return redirect_to team_home_url
 				end
                 @mixpanel.track_event("Login", {:team => Team.find_by_id(params[:team][:id]).name, :admin => "false", :failed => "true"})
 				flash[:error] = "Incorrect Password For Selected Team"
