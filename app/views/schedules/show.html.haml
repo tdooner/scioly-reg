@@ -19,6 +19,7 @@
         %a.btn{:href=>edit_schedule_url(@schedule)} Edit Event
       - if session[:user].is_admin_of(@current_school)
         %a.btn{:href=>schedule_scores_url(@schedule)} Submit Scores
+      = link_to("Download PDF", schedule_url(@schedule, :format=>"pdf"), :class=>"btn")
     =form_for(Timeslot.new) do |f|
       =hidden_field :timeslot_extra, :schedule, {:value => @schedule.id}
       %fieldset
@@ -77,9 +78,6 @@
             %th{:width=>"16px"}
         - @allslots.each do |ts|
           = render :partial=>"schedules/timeslot", :locals => {:ts => ts}
-    %p{:align=>"center"}
-      For Event Organizers And Administrators:
-      = link_to("View as PDF", schedule_url(@schedule) + ".pdf")
   %div.tab-pane#scores
     .onlyprint
       %h2 Scores
