@@ -5,8 +5,8 @@
   has a unique password, even in the case of multiple teams from the same school.
 %p
   If you have forgotten or misplaced your password, please contact 
-  %a{:href => "https://www.case.edu/cgi-bin/directory/pb_lookup.cgi?search_text=james+bader&submit.x=0&submit.y=0&submit=Search&search_method=regular&page_num=1"}
-    Jim Bader
+  %a{:href => "mailto:#{@current_school.admin_email}"}
+    =@current_school.admin_name
   to receive a new one.
 .page-header
   %h2 Login Form
