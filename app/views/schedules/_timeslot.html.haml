@@ -18,7 +18,7 @@
     - if spots_remaining > 0
       %td
         - if @currentreg.nil?
-          =link_to "Register", newsignup_path(ts), :class=>"btn"
+          =link_to "Register!", newsignup_path(ts), :class=>"btn"
     - else
       %td
   - if session[:user] && session[:user].can_edit?(@schedule)
