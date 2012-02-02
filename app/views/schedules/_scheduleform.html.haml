@@ -8,11 +8,14 @@
     $("#schedule_online_false").click(function(){
       $("div#schedule_online_details").hide();
     });
+    $("#schedule_online_keep_existing").click(function(){
+      $("div#schedule_online_details").hide();
+    });
     $("#schedule_online_true").click(function(){
       $("div#schedule_online_details").show();
     });
   });
-- if !@schedule.is_scheduled_online?
+- if !@schedule.new_record?
   :javascript
     $(function(){
       $("div#schedule_online_details").hide();
@@ -89,19 +92,33 @@
         %b Schedule Online?
       %div.input
         %ul.inputs-list
+          - if !@schedule.new_record?
+            %li
+              %label
+                = radio_button_tag :schedule_online, "keep_existing", true
+                Do Not Change Schedule
+              %span.help-block
+                Do not touch existing timeslots when saving this event.
           %li
             %label
-              = radio_button_tag :schedule_online, "false", !@schedule.is_scheduled_online?
+              = radio_button_tag :schedule_online, "false"
               Fixed Schedule
             %span.help-block
               A schedule where the event has a fixed timeslot.
+            - if !@schedule.new_record?
+              %span.help-block
+                %b Note:
+                This will remove all existing timeslots.
           %li
             %label
-              = radio_button_tag :schedule_online, "true", @schedule.is_scheduled_online?
+              = radio_button_tag :schedule_online, "true", @schedule.new_record?
               Schedule Online
             %span.help-block
-              Allow teams to register for timeslots.
-              %b online.
+              Allow teams to register for timeslots online.
+            - if !@schedule.new_record?
+              %span.help-block
+                %b Note:
+                This will recreate all timeslots between the start and end times.
     %div#schedule_online_details
       %div.clearfix
         %label{:for=>"schedule_num_timeslots"}
@@ -119,4 +136,7 @@
         %div.input
           = f.text_field :teams_per_slot
   %div.actions
-    = f.submit "Add Event To Schedule", :class=>"btn primary"
+    - if @schedule.new_record?
+      = f.submit "Add Event To Schedule", :class=>"btn primary"
+    - else
+      = f.submit "Save Changes To Event", :class=>"btn primary"
