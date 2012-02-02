@@ -98,7 +98,7 @@ class SchedulesController < ApplicationController
 		# render :somethingelse
 	end
 
-	@allslots = @schedule.timeslots.sort { |x,y| x.begins <=> y.begins }
+	@allslots = @schedule.timeslots.sort_by { |x| x.begins.to_a[0..2].reverse }
 	@currentreg = nil
 	if @team 
 		@currentreg = SignUp.find_by_team_id_and_timeslot_id(@team, @allslots.map{|x| x.id})
