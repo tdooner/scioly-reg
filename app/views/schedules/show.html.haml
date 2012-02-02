@@ -58,9 +58,6 @@
     %p="#{@schedule.starttime.strftime("%l:%M %P")} to #{@schedule.endtime.strftime("%l:%M %P")}"
     %h3 Room
     %p="#{@schedule.room}"
-    %p.help-block 
-      %b Quick Link: 
-      %a{:href=>"http://www.case.edu/maps/",:target=>"_new"} Campus Map
   %div.tab-pane#registration
     .onlyprint
       %h2 Registration
