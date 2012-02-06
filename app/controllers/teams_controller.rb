@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-	before_filter :is_admin, :only => [:new, :create, :batchnew]
+	before_filter :is_admin, :only => [:new, :create, :batchnew, :qualify]
 	before_filter :is_correct_team, :only => [:edit, :update]
 
 	def index
@@ -154,6 +154,16 @@ class TeamsController < ApplicationController
         @mixpanel.track_event("Logout", {:team => @team.name, :admin=>!!session[:user]}) if @team
 		redirect_to root_url
 	end
+    def qualify
+      team = Team.find(params[:id])
+        if session[:user].can_edit?(team)
+          team.update_attribute(:qualified_for_states, !team.qualified_for_states)
+          return redirect_to teams_url
+        else
+          flash[:error] = "You cannot perform this action!"
+          return redirect_to :root
+        end
+    end
 	def is_correct_team
 		# Checks if a team has the rights to perform this action.
 		if not session[:user].nil? and session[:user].is_admin_of(@current_school)

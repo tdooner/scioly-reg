@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120206030529) do
+ActiveRecord::Schema.define(:version => 20120206065147) do
 
   create_table "infos", :force => true do |t|
     t.string    "name"
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(:version => 20120206030529) do
     t.timestamp "updated_at"
     t.integer   "tournament_id"
     t.string    "homeroom"
+    t.boolean   "qualified_for_states", :default => false
   end
 
   create_table "timeslots", :force => true do |t|

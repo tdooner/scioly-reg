@@ -28,6 +28,7 @@ Scioly::Application.routes.draw do
   get "user/logout", :as => :adminlogout
   match 'teams/batchnew' => "teams#batchnew", :via=>[:get]
   match 'teams/batchnew' => "teams#batchcreate", :via=>[:post]
+  match 'teams/:id/qualify' => "teams#qualify", :via=>[:get], :as=>"team_qualify"
   get 'team', :controller => :home, :action => :team_home, :as=>"team_home"
   resources :teams
 
