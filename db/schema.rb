@@ -26,14 +26,14 @@ ActiveRecord::Schema.define(:version => 20120206030529) do
     t.string   "event"
     t.integer  "tournament_id"
     t.string   "division"
-    t.datetime "starttime"
-    t.datetime "endtime"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "room"
     t.boolean  "scores_withheld",  :default => false
     t.boolean  "counts_for_score", :default => true
     t.text     "custom_info",      :default => ""
+    t.datetime "starttime"
+    t.datetime "endtime"
   end
 
   create_table "schools", :force => true do |t|
@@ -99,7 +99,6 @@ ActiveRecord::Schema.define(:version => 20120206030529) do
   end
 
   create_table "tournaments", :force => true do |t|
-    t.datetime "date"
     t.boolean  "is_current"
     t.datetime "registration_begins"
     t.datetime "registration_ends"
@@ -114,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20120206030529) do
     t.text     "hosted_by_markdown"
     t.text     "homepage_markdown"
     t.string   "title"
+    t.datetime "date"
   end
 
   create_table "users", :force => true do |t|
