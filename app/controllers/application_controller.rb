@@ -18,8 +18,9 @@ class ApplicationController < ActionController::Base
 	if @team 
 		@dont_forget = @team.unregistered_events
 	end
-
     @dont_forget ||= nil
+
+    Time.zone = @current_school.time_zone
   end
 
   def is_admin

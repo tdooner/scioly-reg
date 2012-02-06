@@ -28,7 +28,7 @@ class Admin::SchoolController < ApplicationController
       end
     end
 
-    allowed = [:admin_name, :admin_email, :logo]
+    allowed = [:admin_name, :admin_email, :logo, :time_zone]
     theattr = params[:school].keep_if{|k,v| allowed.include?(k.to_sym)}
     if !@current_school.update_attributes( theattr )
       flash[:error] = @current_school.errors.full_messages.first

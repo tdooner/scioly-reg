@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120123011415) do
+ActiveRecord::Schema.define(:version => 20120206030529) do
 
   create_table "infos", :force => true do |t|
     t.string    "name"
@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(:version => 20120123011415) do
     t.string   "event"
     t.integer  "tournament_id"
     t.string   "division"
-    t.time     "starttime"
-    t.time     "endtime"
+    t.datetime "starttime"
+    t.datetime "endtime"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "room"
@@ -37,26 +37,27 @@ ActiveRecord::Schema.define(:version => 20120123011415) do
   end
 
   create_table "schools", :force => true do |t|
-    t.string   "name"
-    t.string   "subdomain"
-    t.string   "admin_name"
-    t.string   "admin_email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "logo_file_name"
-    t.string   "logo_content_type"
-    t.integer  "logo_file_size"
-    t.datetime "logo_updated_at"
+    t.string    "name"
+    t.string    "subdomain"
+    t.string    "admin_name"
+    t.string    "admin_email"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.string    "logo_file_name"
+    t.string    "logo_content_type"
+    t.integer   "logo_file_size"
+    t.timestamp "logo_updated_at"
+    t.string    "time_zone",         :default => "Eastern Time (US & Canada)"
   end
 
   add_index "schools", ["subdomain"], :name => "index_schools_on_subdomain"
 
   create_table "scores", :force => true do |t|
-    t.integer  "schedule_id"
-    t.integer  "team_id"
-    t.integer  "placement"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "schedule_id"
+    t.integer   "team_id"
+    t.integer   "placement"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   create_table "sessions", :force => true do |t|
@@ -98,7 +99,7 @@ ActiveRecord::Schema.define(:version => 20120123011415) do
   end
 
   create_table "tournaments", :force => true do |t|
-    t.date     "date"
+    t.datetime "date"
     t.boolean  "is_current"
     t.datetime "registration_begins"
     t.datetime "registration_ends"

@@ -13,7 +13,13 @@
       =f.label :logo, "School Logo:"
       .input
         =f.file_field :logo
-    .clearfix=image_tag @current_school.logo.url(:medium)
+    .clearfix
+      =f.label :time_zone, "School Time Zone"
+      .input
+        =f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones
+    .clearfix
+      .input
+        =image_tag @current_school.logo.url(:medium)
     .clearfix
       %label Administrators:
       .input

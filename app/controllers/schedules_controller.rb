@@ -36,7 +36,7 @@ class SchedulesController < ApplicationController
 
   def create
 	@schedule = @current_tournament.schedules.create(params[:schedule])
-	if @schedule 
+	if @schedule
       if params[:schedule_online] == "true"
         @schedule.updateTimeSlots()
       end
