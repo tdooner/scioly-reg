@@ -106,8 +106,12 @@ class SchedulesController < ApplicationController
 
 	respond_to do |format|
 		format.pdf do
-			@signed_up_teams = @schedule.timeslots.map {|x| x.sign_ups.map{ |y| y.team } }.flatten.to_set
-			@teams_remaining = Team.find(:all, :conditions => ["division = ?", @schedule.division], :order => ["name ASC"]).to_set.difference(@signed_up_teams)
+          if !(!session[:user].nil? && session[:user].can_view?(@schedule))
+            flash[:error] = "You cannot view this PDF schedule."
+            return redirect_to root_url
+          end
+			@signed_up_teams = @schedule.timeslots.map {|x| x.sign_ups.map{ |y| y.team } }.flatten
+			@teams_remaining = @current_tournament.teams.where(:division => @schedule.division) - @signed_up_teams
 			render :pdf => @schedule.event.gsub(/[^a-zA-Z]/, '_') + "_" + @schedule.division
 		end
 		format.html do

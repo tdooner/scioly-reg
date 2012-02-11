@@ -45,4 +45,10 @@ class User < ActiveRecord::Base
         return self.is_admin_of(obj.tournament.school)
       end
     end
+
+    def can_view?(obj)
+      if obj.is_a?(Schedule)
+        return (self.is_admin_of(self.school) && self.school == obj.tournament.school)
+      end
+    end
 end

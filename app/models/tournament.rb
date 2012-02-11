@@ -1,7 +1,7 @@
 class Tournament < ActiveRecord::Base
 	has_many :teams
     has_many :schedules
-    has_attached_file :homepage_photo, :styles => {:medium => "181x200", :slideshow => "163x180" }, :s3_credentials => { :access_key_id => ENV['AWS_ACCESS_KEY'], :secret_access_key => ENV['AWS_SECRET_KEY'] }, :storage => :s3, :bucket => 'sciolyreg'   
+    has_attached_file :homepage_photo, :styles => {:medium => "181x200", :slideshow => "163x180", :pdf => "310x200" }, :s3_credentials => { :access_key_id => ENV['AWS_ACCESS_KEY'], :secret_access_key => ENV['AWS_SECRET_KEY'] }, :storage => :s3, :bucket => 'sciolyreg'   
 
     belongs_to :school
 

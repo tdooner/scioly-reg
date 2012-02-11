@@ -1,8 +1,12 @@
+:css
+  div.page-break {
+    page-break-before:always;
+  }
 %div{:align=>"center", :style=>"width:500px; margin:auto;"}
   %div{:style=>"float:left"}
-    = wicked_pdf_image_tag("cwru-formal-logo-black-no-tag.png",:size=>"310x50")
+    = image_tag(@current_school.logo.url(:pdf), :height=>"50")
   %div{:style=>"float:right"}
-    = wicked_pdf_image_tag("sciolylogo.jpg", :size=>"92x50")
+    = image_tag(@current_tournament.homepage_photo.url(:pdf), :height=>"50")
   %h1{:style=>"padding-top:20px; clear:both"}
     = @schedule.event + " (" + @schedule.division + ")"
   -if not @schedule.room.nil?
@@ -36,7 +40,7 @@
       %tr{:id => tr_id, :style=>"background-color:"+cycle("#FFF","#DDD")}
         %td{:width => "25%"}
           = ts.begins.strftime("%I:%M %p")
-        %td{:width => "75%"}
+        %td{:width => "75%", :style=>"padding:10px"}
           - if (not session[:user].nil? and session[:user].is_admin_of(@current_school))
             - ts.occupants.each do |team|
               %b=team.name.gsub(/[^[:print:]]/, " ")
@@ -45,8 +49,7 @@
           - if @currentreg.nil?
             - if slots_remaining != 0
               -slots_remaining.times do
-                %div{:style=>"height:30px"}
-                  _____________________________________
+                %div{:style=>"height:25px; width:300px; border-bottom:2px solid #000;"}
             - else 
               - if not (not session[:user].nil? and session[:user].is_admin_of(@current_school))
                 Timeslot Full!
@@ -57,9 +60,10 @@
               = display
           - if giveoptions == true
             =link_to("(Unregister)",destroysignup_url(@currentreg),:class=>"action")
-%h3 Unregistered Teams:
-%ul
-- @teams_remaining.each do |t|
-  %li
-    %b=t.name.gsub(/[^[:print:]]/, " ")
-    ="(#" + t.number + t.division + ")"
+%div.page-break
+  %h3 Unregistered Teams:
+  %ul{:style=>"column-count: 2;-moz-column-count:2; -webkit-column-count:2;"}
+    - @teams_remaining.each do |t|
+      %li
+        %b=t.name.gsub(/[^[:print:]]/, " ")
+        ="(#" + t.number + t.division + ")"
