@@ -51,4 +51,11 @@ class User < ActiveRecord::Base
         return (self.is_admin_of(self.school) && self.school == obj.tournament.school)
       end
     end
+
+    def can_register_team_for_event?(team, obj)
+      return false unless obj.is_a?(Schedule)
+      return false unless team.is_a?(Team)
+      return false unless team.division == obj.division
+      return (self.is_admin_of(obj.tournament.school))
+    end
 end

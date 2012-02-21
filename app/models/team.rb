@@ -68,6 +68,7 @@ class Team < ActiveRecord::Base
 	end
 
     def can_register_for_event?(s)
-      return s.division == self.division
+      return false unless s.division == self.division
+      return s.tournament.can_register()
     end
 end

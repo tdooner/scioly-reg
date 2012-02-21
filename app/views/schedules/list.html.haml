@@ -40,12 +40,12 @@
           %td= s.starttime.strftime("%I:%M %p").downcase
           %td= s.endtime.strftime("%I:%M %p").downcase
           -if @team
-            -if s.is_scheduled_online? && @team.can_register_for_event?(s)
-              -if @has_registered[s.id]
-                %td= image_tag("ok.png")
-              - else
-                %td= image_tag("error.png")
+            -if @has_registered[s.id]
+              %td= image_tag("ok.png")
             - else
-              %td - 
+              -if s.is_scheduled_online? && s.division == @team.division
+                %td= image_tag("error.png")
+              - else
+                %td - 
 :javascript
   $(function(){ mpq.track("View All Schedules"); });

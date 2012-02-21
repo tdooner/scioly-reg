@@ -23,12 +23,13 @@ class SignUp < ActiveRecord::Base
       if not self.team.division == self.timeslot.schedule.division
         errors.add_to_base("This event is not your current division.")
       end
-		if not t.has_registration_begun()
-			errors.add_to_base("Registration for this tournament begins at " + t.registration_begins.strftime("%B %d, %Y at %I:%M %p"))
-		end
-		if t.has_registration_ended()
-			errors.add_to_base("Registration for this tournament ended at " + t.registration_ends.to_s)
-		end
+      # These time-based validations are ensured in signups_controller#ensure_registration_open
+		#if not t.has_registration_begun()
+		#	errors.add_to_base("Registration for this tournament begins at " + t.registration_begins.strftime("%B %d, %Y at %I:%M %p"))
+		#end
+		#if t.has_registration_ended()
+	    #		errors.add_to_base("Registration for this tournament ended at " + t.registration_ends.to_s)
+		#end
 		if self.timeslot.schedule.hasTeamRegistered(team_id)
 			errors.add(:team_id, "is already registered for this event!")
 		end

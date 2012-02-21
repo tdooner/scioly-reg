@@ -1,8 +1,10 @@
 # This controller will mostly be a "behind the scenes" deal
 class SignupsController < ApplicationController
+  before_filter :load_signup_by_timeslot_id, :only => [:new, :create]
+  before_filter :load_signup_by_signup_id, :only   => [:destroy]
+  before_filter :ensure_registration_open, :only => [:new, :create, :destroy]
+
   def new
-	  @signup = SignUp.new(:timeslot_id => params[:id])
-	  
 	  # If the user has somehow arrived here without
 	  # logging in.
 	  if not @team
@@ -11,11 +13,12 @@ class SignupsController < ApplicationController
 	  end
 	  
 	  @signup.team = @team
-	  
 	  if not @signup.valid?
 		  flash[:error] = @signup.errors.full_messages().first
 		  redirect_to(schedule_url(@signup.timeslot.schedule))
 	  end
+
+      @is_admin_signup = (!@signup.timeslot.schedule.tournament.can_register() && session[:user] && session[:user].can_register_team_for_event?(@team, @signup.timeslot.schedule))
 
 	  breadcrumbs.add(@signup.timeslot.schedule.event, url_for(@signup.timeslot.schedule))
 	  breadcrumbs.add("Register")
@@ -27,8 +30,6 @@ class SignupsController < ApplicationController
   end
 
   def destroy
-	  @signup = SignUp.find(params[:id])
-
 	  schedule = Schedule.first
 	  if not @signup.nil? and @signup.team_id == @team.id
 		  schedule = @signup.delete().timeslot.schedule
@@ -41,8 +42,6 @@ class SignupsController < ApplicationController
   end
 
   def create
-	  @signup = SignUp.new(:timeslot_id => params[:id])
-	  
 	  # If the user has somehow arrived here without
 	  # logging in.
 	  if not @team
@@ -63,6 +62,23 @@ class SignupsController < ApplicationController
         @mixpanel.track_event("SignUp Create", {:team => @team.name, :event=>@signup.timeslot.schedule.event, :success => false})
 		flash[:message] = "Error in registering! Your registration did not save."
 	  end
+
+  end
+
+  def load_signup_by_timeslot_id
+    @signup = SignUp.new(:timeslot_id => params[:id])
+  end
+  def load_signup_by_signup_id
+    @signup = SignUp.find(params[:id])
+  end
+
+  def ensure_registration_open
+    return if session[:user] && @team && session[:user].can_register_team_for_event?(@team, @signup.timeslot.schedule)
+
+    unless @signup.timeslot.schedule.tournament.can_register()
+      flash[:error] = "Registration is not open for the current tournament!"
+      redirect_to(schedule_url(@signup.timeslot.schedule))
+    end
 
   end
 
