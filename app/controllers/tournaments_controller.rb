@@ -52,7 +52,7 @@ class TournamentsController < ApplicationController
 
   def scores
     @active = Tournament.find(params[:tournament_id])
-    if not @active.show_scores?
+    if !@active.show_scores? && !(session[:user] && session[:user].is_admin_of(@current_school))
       flash[:error] = "Scores for this tournament are not available yet."
       return redirect_to root_url
     end
