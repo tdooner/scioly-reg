@@ -1,18 +1,21 @@
 %ul.tabs{:"data-tabs"=>"tabs"}
   %li.active
-    %a{:href=>"#download"}
-      Download PDF
-  %li
     %a{:href=>"#division_B"}
       Division B
   %li
     %a{:href=>"#division_C"}
       Division C
+  %li
+    %a{:href=>"#download"}
+      Download Scores
 %div.tab-content
-  %div.tab-pane.active#download
-    Links to download the PDF of the score sheet will be posted here when they are available.
+  %div.tab-pane#download
+    %h3
+      =link_to "Download Scores as CSV", tournament_scores_url(@active, :format=>"csv")
+      (for Excel)
+    %h4 More download methods will be posted later...
   - Team.divisions.values.each do |d|
-    %div.tab-pane{:id=>"division_#{d}"}
+    %div.tab-pane.active{:id=>"division_#{d}"}
       %table.scores-table.condensed-table.zebra-striped{:id=>"scores_table_#{d}"}
         %thead
           %th{:width=>"300px"}

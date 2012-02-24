@@ -1,0 +1,28 @@
+<%=@active.title%>,,,,<%=@active.school.name%>,,,,<%=@active.date.strftime("%D")%>
+<% Team.divisions.values.each do |d| %>
+Division <%=d%>,,<%=@events[d].map{|x| x.humanize.gsub(","," ")}.join(",") %>,Total Points,Placement
+<% ranking = 0
+  num_at_place = 1
+  lastval = []
+  @teams_by_rank[d].each do |rank_matrix, t|
+    %><%=t.name.gsub(","," ")%>,#<%=t.getNumber%>,<% 
+    @events[d].each do |e|
+      res = e.scores.select{|x| x.team==t}.first
+      if res
+        %><%=res.placement.to_s%>,<% 
+      else %>,<% 
+      end 
+    end
+    %><%=rank_matrix[0].to_s%>,<% 
+    if rank_matrix == lastval
+      num_at_place += 1
+      %><%=ranking%>
+<% 
+    else
+      ranking += num_at_place
+      num_at_place = 1
+      %><%=ranking%>
+<% 
+    end
+  end
+end %>
