@@ -40,7 +40,7 @@
           - ranking = 0
           - num_at_place = 1
           - lastval = []
-          - @teams_by_rank[d].each do |rank_matrix, t|
+          - @teams_by_rank[d].each do |t, rank_matrix|
             %tr
               %td=t.name
               - @events[d].each do |e|

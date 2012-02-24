@@ -61,8 +61,8 @@ class TournamentsController < ApplicationController
     @teams = @active.teams
 
     # @team_ranks is an array of sorted [team.rank_matrix, #<Team Object>] tuples
-    @teams_by_rank = @teams.reduce({}){|a,i| a.merge({i => i.rank_matrix})}.invert.sort
-    @teams_by_rank = @teams_by_rank.group_by{|x| x[1].division}
+    @teams_by_rank = @teams.reduce({}){|a,i| a.merge({i => i.rank_matrix})}.sort_by{|k,v| v}
+    @teams_by_rank = @teams_by_rank.group_by{|x| x[0].division}
 
     @layout_expanded = true
   end

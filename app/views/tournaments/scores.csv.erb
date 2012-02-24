@@ -4,7 +4,7 @@ Division <%=d%>,,<%=@events[d].map{|x| x.humanize.gsub(","," ")}.join(",") %>,To
 <% ranking = 0
   num_at_place = 1
   lastval = []
-  @teams_by_rank[d].each do |rank_matrix, t|
+  @teams_by_rank[d].each do |t,rank_matrix|
     %><%=t.name.gsub(","," ")%>,#<%=t.getNumber%>,<% 
     @events[d].each do |e|
       res = e.scores.select{|x| x.team==t}.first

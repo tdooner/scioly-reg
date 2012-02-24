@@ -31,7 +31,7 @@ class Tournament < ActiveRecord::Base
 		return (self.has_registration_begun() and not self.has_registration_ended())
 	end
     def show_scores?
-      release_time = self.date + 20.hours
+      release_time = self.date + 25.hours
       # If the time is before the default release and the admins haven't shown scores, don't display them.
       return false if (!self.scores_revealed && Time.now < release_time)
       # Otherwise, either the time has passed or the 'Reveal Scores' button has been pressed, so
