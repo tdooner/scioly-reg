@@ -1,3 +1,9 @@
+- if !@active.show_scores?
+  .alert-message.warning
+    %b Note:
+    These scores have not been released yet. They will be released automatically at 8pm on the night of the tournament or when
+    =link_to "Publish Scores", admin_scorespublish_url
+    is pressed.
 %ul.tabs{:"data-tabs"=>"tabs"}
   %li.active
     %a{:href=>"#division_B"}
