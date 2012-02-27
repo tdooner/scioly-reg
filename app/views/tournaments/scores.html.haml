@@ -28,7 +28,7 @@
         %thead
           %th{:width=>"300px"}
             Team Name
-          - @events[d].each do |e|
+          - @events[d].select{|x| x.counts_for_score}.each do |e|
             %th
               %div.outer
                 %div.inner=e.event
@@ -38,6 +38,10 @@
           %th
             %div.outer
               %div.inner Placement
+          - @events[d].select{|x| !x.counts_for_score}.each do |e|
+            %th
+              %div.outer
+                %div.inner.trial="(Trial) #{e.event}"
         %tbody
           - ranking = 0
           - num_at_place = 1
@@ -45,12 +49,14 @@
           - @teams_by_rank[d].each do |t, rank_matrix|
             %tr
               %td=t.name
-              - @events[d].each do |e|
+              =# First display the events which are real events.
+              - @events[d].select{|x| x.counts_for_score}.each do |e|
                 - res = e.scores.select{|x| x.team==t}.first
                 - if res
                   %td=res.placement
                 - else
                   %td 
+              =# Then display the Total score and placement of the team
               %td=rank_matrix[0]
               - if rank_matrix == lastval
                 - num_at_place += 1
@@ -59,7 +65,14 @@
                 - ranking += num_at_place
                 - num_at_place = 1
                 %td=ranking
+              =# Then display all trial events.
+              - @events[d].select{|x| !x.counts_for_score}.each do |e|
+                - res = e.scores.select{|x| x.team==t}.first
+                - if res
+                  %td=res.placement
+                - else
+                  %td 
     :javascript
       $(function(){
-        $("table#scores_table_#{d}").tablesorter({sortList:[[#{@events[d].length+2},0]]})
+        $("table#scores_table_#{d}").tablesorter({sortList:[[#{@events[d].length+2-@events[d].select{|x| !x.counts_for_score}.length},0]]})
       });

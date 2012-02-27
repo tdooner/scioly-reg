@@ -144,6 +144,7 @@ img{border:none; }
     margin-bottom: 17px;
   }
 }
+/* Scoresheet styles */
 div.expanded-true {
   width:1200px !important;
 
@@ -163,6 +164,9 @@ div.expanded-true {
           width:240px;
           position:relative;
           right:110px;
+        }
+        div.trial {
+          color:#999;
         }
       }
     }

@@ -127,6 +127,7 @@ img {
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
   margin-bottom: 17px; }
 
+/* Scoresheet styles */
 div.expanded-true {
   width: 1200px !important; }
   div.expanded-true table.scores-table {
@@ -144,6 +145,8 @@ div.expanded-true {
           width: 240px;
           position: relative;
           right: 110px; }
+        div.expanded-true table.scores-table th div.outer div.trial {
+          color: #999; }
   div.expanded-true div.span11 {
     width: 1150px; }
   div.expanded-true div.span16 {
