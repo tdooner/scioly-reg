@@ -15,6 +15,10 @@ Scioly::Application.routes.draw do
     get 'scoreslideshow'
     get "school/edit"
     put "school/update"
+    get 'scorecenter', :controller => :scorecenter, :action => :index
+    get 'scorecenter/events'
+    match 'scorecenter/events/:id', :controller => :scorecenter, :action => :scores, :via => :get
+    match 'scorecenter/events/:id/placings/:team_id', :controller => :scorecenter, :action => :update_event, :via => [:post, :put]
   end
 
   # The priority is based upon order of creation:

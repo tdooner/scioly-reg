@@ -1,0 +1,59 @@
+-content_for :scripts do
+  =javascript_include_tag 'underscore-min'
+  =javascript_include_tag 'backbone-min'
+  =javascript_include_tag 'backbone.dualstorage'
+  =javascript_include_tag 'require', :'data-main' => '/javascripts/scorecenter/'
+  :javascript
+    $(function(){
+      require(['scorecenter'], function(ScoreCenter) {
+        localStorage.clear();
+        router = new ScoreCenter();
+        Backbone.history.start();
+      });
+    });
+:css
+  form .clearfix {
+    margin-bottom: 0px !important;
+  }
+
+%div#scorecenter-container
+  Stuff goes here!
+%script#scoreCenterHome{ :type => "text/template" }
+  %table.zebra-striped.condensed-table#admin-score-table
+    %thead
+      %th Event Name
+      %th Division
+      %th Scores Reported
+    %tbody#events-go-here
+%script#eventtemplate{ :type => "text/template" }
+  :plain
+    <tr>
+      <td><a href="#event/<%= id %>/scores"><%=event %></a></td>
+      <td><%=division %></td>
+      <td><span id="event-scores-reported-<%= id %>">Loading...</span></td>
+    </tr>
+%script#schedulehome{ :type => "text/template" }
+  %p
+    Note: There are
+    %b <%=teams.length %> teams
+    teams registered in this division. Therefore, by
+    %a{:href=>"http://soinc.org/scoring_guidelines"} Science Olympiad Scoring Guidelines,
+    %ul
+      %li 
+        No-Show teams should be ranked
+        %b <%=teams.length+1 %>
+      %li
+        Disqualified teams should be ranked
+        %b <%=teams.length+2 %>
+  %form
+    %table.zebra-striped.condensed-table#admin-score-table
+      %thead
+        %th.span2 Ranking
+        %th{:width => "100px"} Team Number
+        %th Team Name
+      %tbody#scores-go-here
+%script#rankingtemplate{ :type => "text/template" }
+  :plain
+    <td><div class="clearfix"><input class="span1 placement-input" type="text" name="placings[<%= team.id%>]" value="<%= ranking.placement || '' %>" /></div></td>
+    <td style="vertical-align:middle"><%= team.number %></td>
+    <td style="vertical-align:middle"><%= team.name %></td>

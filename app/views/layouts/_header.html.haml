@@ -12,6 +12,7 @@
   = javascript_include_tag "autocomplete-rails.js"
   = javascript_include_tag "bootstrap-tabs"
   = javascript_include_tag "jquery.tablesorter.min"
+  = yield :scripts
   :javascript
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', '#{ENV['GA_ID']}']);
