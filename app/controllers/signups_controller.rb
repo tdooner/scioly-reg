@@ -1,69 +1,67 @@
 # This controller will mostly be a "behind the scenes" deal
 class SignupsController < ApplicationController
   def new
-	  @signup = SignUp.new(:timeslot_id => params[:id])
-	  
-	  # If the user has somehow arrived here without
-	  # logging in.
-	  if not @team
-		  flash[:error] = "You must log in to sign up for events!"
-		  redirect_to login_url(@signup.timeslot.schedule.division)
-	  end
-	  
-	  @signup.team = @team
-	  
-	  if not @signup.valid?
-		  flash[:error] = @signup.errors.full_messages().first
-		  redirect_to(schedule_url(@signup.timeslot.schedule))
-	  end
+    @signup = SignUp.new(:timeslot_id => params[:id])
 
-	  breadcrumbs.add(@signup.timeslot.schedule.event, url_for(@signup.timeslot.schedule))
-	  breadcrumbs.add("Register")
+    # If the user has somehow arrived here without
+    # logging in.
+    if not @team
+        flash[:error] = "You must log in to sign up for events!"
+        redirect_to login_url(@signup.timeslot.schedule.division)
+    end
+
+    @signup.team = @team
+
+    if not @signup.valid?
+        flash[:error] = @signup.errors.full_messages().first
+        redirect_to(schedule_url(@signup.timeslot.schedule))
+    end
+
+    breadcrumbs.add(@signup.timeslot.schedule.event, url_for(@signup.timeslot.schedule))
+    breadcrumbs.add("Register")
   end
 
   def list
-	  @sign_ups = @team.sign_ups.reload
-	  breadcrumbs.add("Team #" + @team.getNumber() + " Registrations")
+    @sign_ups = @team.sign_ups.reload
+    breadcrumbs.add("Team #" + @team.getNumber() + " Registrations")
   end
 
   def destroy
-	  @signup = SignUp.find(params[:id])
+    @signup = SignUp.find(params[:id])
 
-	  schedule = Schedule.first
-	  if not @signup.nil? and @signup.team_id == @team.id
-		  schedule = @signup.delete().timeslot.schedule
-	  end
+    schedule = Schedule.first
+    if not @signup.nil? and @signup.team_id == @team.id
+        schedule = @signup.delete().timeslot.schedule
+    end
 
-	  flash[:message] = "Registration deleted."
+    flash[:message] = "Registration deleted."
 
-      @mixpanel.track_event("SignUp Destroy", {:team => @team.name, :event=>@signup.timeslot.schedule.event})
-	  return redirect_to(schedule_url(schedule))
+    @mixpanel.track_event("SignUp Destroy", {:team => @team.name, :event=>@signup.timeslot.schedule.event})
+    return redirect_to(schedule_url(schedule))
   end
 
   def create
-	  @signup = SignUp.new(:timeslot_id => params[:id])
-	  
-	  # If the user has somehow arrived here without
-	  # logging in.
-	  if not @team
-		  flash[:message] = "You must log in to sign up for events!"
-		  redirect_to login_url(@signup.timeslot.schedule.division)
-	  end
-	  
-	  @signup.team = @team
-	  
-	  if not @signup.valid?
-		  flash[:message] = @signup.errors.full_messages().first
-		  redirect_to(schedule_url(@signup.timeslot.schedule))
-	  end
-	  if @signup.save()
-        @mixpanel.track_event("SignUp Create", {:team => @team.name, :event=>@signup.timeslot.schedule.event, :success => true})
-		redirect_to(schedule_url(@signup.timeslot.schedule))
-	  else
-        @mixpanel.track_event("SignUp Create", {:team => @team.name, :event=>@signup.timeslot.schedule.event, :success => false})
-		flash[:message] = "Error in registering! Your registration did not save."
-	  end
+    @signup = SignUp.new(:timeslot_id => params[:id])
 
+    # If the user has somehow arrived here without
+    # logging in.
+    if not @team
+        flash[:message] = "You must log in to sign up for events!"
+        redirect_to login_url(@signup.timeslot.schedule.division)
+    end
+
+    @signup.team = @team
+
+    if not @signup.valid?
+        flash[:message] = @signup.errors.full_messages().first
+        redirect_to(schedule_url(@signup.timeslot.schedule))
+    end
+    if @signup.save()
+      @mixpanel.track_event("SignUp Create", {:team => @team.name, :event=>@signup.timeslot.schedule.event, :success => true})
+      redirect_to(schedule_url(@signup.timeslot.schedule))
+    else
+      @mixpanel.track_event("SignUp Create", {:team => @team.name, :event=>@signup.timeslot.schedule.event, :success => false})
+      flash[:message] = "Error in registering! Your registration did not save."
+    end
   end
-
 end

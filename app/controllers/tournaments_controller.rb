@@ -3,49 +3,49 @@ class TournamentsController < ApplicationController
   protect_from_forgery :except => :destroy
 
   def create
-	  @tournament = Tournament.new(params[:tournament])
-      @tournament.school = @current_school
-	  @tournament.save()
-	  redirect_to :tournaments
+    @tournament = Tournament.new(params[:tournament])
+    @tournament.school = @current_school
+    @tournament.save()
+    redirect_to :tournaments
   end
 
   def new
-	  @tournament = Tournament.new()
-	  breadcrumbs.add("New Tournament")
+    @tournament = Tournament.new()
+    breadcrumbs.add("New Tournament")
   end
 
   def edit
-	  @tournament = Tournament.find(params[:id])
-	  breadcrumbs.add("Edit Tournament #" + @tournament.id.to_s)
+    @tournament = Tournament.find(params[:id])
+    breadcrumbs.add("Edit Tournament #" + @tournament.id.to_s)
   end
 
   def index
-	  @tournaments = @current_school.tournaments
-	  breadcrumbs.add("Edit Tournaments")
+    @tournaments = @current_school.tournaments
+    breadcrumbs.add("Edit Tournaments")
   end
 
   def show
-	  @tournament = Tournament.find(params[:id])
-	  breadcrumbs.add(@tournament.humanize() + " Tournament")
+    @tournament = Tournament.find(params[:id])
+    breadcrumbs.add(@tournament.humanize() + " Tournament")
   end
 
   def update
-	  @t = Tournament.find(params[:id])
-	  @t.update_attributes(params[:tournament])
-	  redirect_to :tournaments
+    @t = Tournament.find(params[:id])
+    @t.update_attributes(params[:tournament])
+    redirect_to :tournaments
   end
 
   def destroy
-	  #TODO: Delete all corresponding events, teams, and signups
-	  @t = Tournament.find(params[:id])
-	  @t.destroy()
-	  redirect_to :tournaments
+    #TODO: Delete all corresponding events, teams, and signups
+    @t = Tournament.find(params[:id])
+    @t.destroy()
+    redirect_to :tournaments
   end
 
   def set_active
-	  @active = Tournament.find(params[:current])
-	  @active.set_current()
-	  redirect_to :tournaments
+    @active = Tournament.find(params[:current])
+    @active.set_current()
+    redirect_to :tournaments
   end
 
   def scores
