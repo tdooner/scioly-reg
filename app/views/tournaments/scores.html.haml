@@ -21,7 +21,7 @@
             %th
               %div.outer
                 %div.inner=e.event
-          %th 
+          %th
             %div.outer
               %div.inner Total
           %th
@@ -39,7 +39,7 @@
                 - if res
                   %td=res.placement
                 - else
-                  %td 
+                  %td
               %td=t.scores.map(&:placement).sum
               - if rank_matrix == lastval
                 - num_at_place += 1

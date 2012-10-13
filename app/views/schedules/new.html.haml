@@ -2,7 +2,7 @@
   $(function() {
     $("#schedule_event").focus();
     $("#schedule_event").bind("blur", function() {
-      
+
     });
 
     $("#schedule_online_false").click(function(){
@@ -14,8 +14,8 @@
     $("div#schedule_online_details").hide();
   });
 = flash[:message]
-%p 
-  Want to create multiple events at a time? Try 
+%p
+  Want to create multiple events at a time? Try
   =link_to("Batch Mode", "/schedule/batchnew")+"."
 - form_for(@schedule) do |f|
   %fieldset
@@ -31,7 +31,7 @@
         = f.autocomplete_field :event, autocomplete_event_schedule_path, :id_element => '#schedule_event_id'
         = hidden_field_tag :schedule_event_id, "-1"
     %div.clearfix
-      %label{:for=>"schedule_division_b"} 
+      %label{:for=>"schedule_division_b"}
         %b Division:
       %div.input
         %ul.inputs-list
@@ -84,7 +84,7 @@
           = f.text_field :num_timeslots
           %span.help-block
             %b Note:
-            There are 
+            There are
             %b=@current_tournament.teams.length
             teams competiting in this tournament.
       %div.clearfix

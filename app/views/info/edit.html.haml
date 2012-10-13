@@ -1,15 +1,15 @@
 %p
-  Edit the information page below. In the "Page Text" field, you can use 
+  Edit the information page below. In the "Page Text" field, you can use
   =link_to("Markdown", "http://en.wikipedia.org/wiki/Markdown") + " to style your text."
 %div.bluebox
   - form_for(@info) do |f|
     %table
-      %tr 
+      %tr
         %td
           %b Long Name:
         %td
           =f.text_field :human_name
-      %tr 
+      %tr
         %td
           %b Short Name:
         %td

@@ -21,7 +21,7 @@ class SchedulesController < ApplicationController
 
   def create
     @schedule = @current_tournament.schedules.create(params[:schedule])
-    if @schedule 
+    if @schedule
       if params[:schedule_online] == "true"
         @schedule.updateTimeSlots()
       end
@@ -52,7 +52,7 @@ class SchedulesController < ApplicationController
           end
         end
       else
-        @errors << schedule.errors.full_messages.first 
+        @errors << schedule.errors.full_messages.first
       end
     end
     flash[:error] = @errors.join("<br />") unless @errors.empty?
@@ -77,7 +77,7 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.find(params[:id])
     breadcrumbs.add("Division #{@schedule.division} Events", schedule_division_url(@schedule.division))
     @scores = @schedule.scores.includes(:team)
-    breadcrumbs.add(@schedule.event) 
+    breadcrumbs.add(@schedule.event)
     if @schedule.nil?
       flash[:message] = "Event not found!"
       # render :somethingelse
@@ -85,7 +85,7 @@ class SchedulesController < ApplicationController
 
     @allslots = @schedule.timeslots.sort { |x,y| x.begins <=> y.begins }
     @currentreg = nil
-    if @team 
+    if @team
       @currentreg = SignUp.find_by_team_id_and_timeslot_id(@team, @allslots.map{|x| x.id})
     end
 
@@ -114,12 +114,12 @@ class SchedulesController < ApplicationController
   def scores
     @schedule = Schedule.find(params[:schedule_id], :include => :scores)
     @teams = @current_tournament.teams.where(["division = ?", @schedule.division])
-    @placements = @teams.inject({}) { |a,i| 
+    @placements = @teams.inject({}) { |a,i|
       s = @schedule.scores.select{|x| x.team_id == i.id}.first
       if s
-        a.merge(i.id => s.placement) 
+        a.merge(i.id => s.placement)
       else
-        a.merge(i.id => "") 
+        a.merge(i.id => "")
       end
     }
     breadcrumbs.add("Scoring", "/admin/scores")

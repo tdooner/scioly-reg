@@ -4,7 +4,7 @@ This page will customize a slideshow of results to be shown at the awards ceremo
   %input{:type=>"hidden", :value=>form_authenticity_token, :name=>"authenticity_token"}
   %fieldset
     .clearfix
-      %label 
+      %label
         %b Divisions
       .input
         %select{:multiple=>"multiple", :size=>"2", :name=>"slideshow[division][]"}
@@ -51,7 +51,7 @@ This page will customize a slideshow of results to be shown at the awards ceremo
   - if !@withheldevents.empty?
     .alert-message.block-message.warning
       %p
-        %b Warning: 
+        %b Warning:
         The following events have scores withheld. Should they be included in the slideshow?
         %ul
           - @withheldevents.each do |e|
@@ -68,21 +68,21 @@ This page will customize a slideshow of results to be shown at the awards ceremo
                 No, skip these events in the slideshow.
   - if !@unfinishedevents.empty?
     .alert-message.block-message.error
-      %b Error: 
+      %b Error:
       The following events have no scores reported. They will be omitted from the awards slideshow.
       %ul
         - @unfinishedevents.each do |e|
-          %li=e.humanize 
+          %li=e.humanize
   - if @teams.empty?
     .alert-message.block-message.error
       %b Error
-      There are no teams in this tournament! 
+      There are no teams in this tournament!
       .alert-actions
         =link_to "Add some now.", new_team_url, :class=>"btn"
   - if @events.empty?
     .alert-message.block-message.error
       %b Error
-      There are no events in this tournament! 
+      There are no events in this tournament!
       .alert-actions
         =link_to "Add some now.", new_schedule_url, :class=>"btn"
   - if !@teams.empty? && !@events.empty?

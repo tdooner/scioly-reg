@@ -14,8 +14,8 @@ class ApplicationController < ActionController::Base
     @all_schedules = @current_tournament.schedules.find(:all, :order => "event ASC").group_by(&:division)
     @all_schedules["B"] ||= []
     @all_schedules["C"] ||= []
-    
-    if @team 
+
+    if @team
       @dont_forget = @team.unregistered_events
     end
 
@@ -40,7 +40,7 @@ end
 class Breadcrumbs::Render::Bootstrap < Breadcrumbs::Render::Base
   def render
     str = ""
-    breadcrumbs.items.each_with_index do |item, i| 
+    breadcrumbs.items.each_with_index do |item, i|
       str << render_item(item, i)
     end
     return "<ul class='breadcrumb'>#{str}</ul>"

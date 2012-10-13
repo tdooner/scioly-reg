@@ -6,7 +6,7 @@
         %li
           = link_to "Division #{d} Events", schedule_division_url(d)
           %ul
-            - @all_schedules[d].each do |e| 
+            - @all_schedules[d].each do |e|
               - if @team && e.is_scheduled_online? && e.division == @team.division
                 %li
                   %a{:href=>schedule_url(e)}

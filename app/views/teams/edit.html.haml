@@ -1,8 +1,8 @@
 -if not flash[:error].nil?
   %p.errorbox
     =flash[:error]
-%p 
-  To change any information about this team, update the form below and click the submit button. Note that changes will overwrite previous settings and cannot be undone. 
+%p
+  To change any information about this team, update the form below and click the submit button. Note that changes will overwrite previous settings and cannot be undone.
 %div.bluebox
   -form_for(@this_team) do |f|
     %table

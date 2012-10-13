@@ -23,7 +23,7 @@
       %td
 - if ts.sign_ups.include?(@currentreg)
   %tr
-    %td{:colspan=>2} 
+    %td{:colspan=>2}
       Your team is registered here, in the #{ts.begins.strftime("%I:%M %p")} timeslot.
     %td
       =link_to "Unregister", destroysignup_path(@currentreg), :class=>"btn"

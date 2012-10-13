@@ -13,15 +13,15 @@
     - if @allslots.length == 0
       This event is not selected for online sign-up. Information pertaining to this event is listed below, however no action is required. After the awards ceremony, scores for this event will be posted to this page.
     - else
-      This event is scheduled for online sign-up. When registration is open, you may register for timeslots or change your timeslot. On the day of the tournament, teams that did not complete online registration may choose from the remaining slots. 
+      This event is scheduled for online sign-up. When registration is open, you may register for timeslots or change your timeslot. On the day of the tournament, teams that did not complete online registration may choose from the remaining slots.
     %h3 Event Name
     %p="#{@schedule.event} (#{@schedule.division})"
-    %h3 Time 
+    %h3 Time
     %p="#{@schedule.starttime.strftime("%l:%M %P")} to #{@schedule.endtime.strftime("%l:%M %P")}"
     %h3 Room
     %p="#{@schedule.room}"
-    %p.help-block 
-      %b Quick Link: 
+    %p.help-block
+      %b Quick Link:
       %a{:href=>"http://www.case.edu/maps/",:target=>"_new"} Campus Map
   %div.tab-pane#registration
     %p
@@ -40,9 +40,9 @@
       = link_to("View as PDF", schedule_url(@schedule) + ".pdf")
   %div.tab-pane#scores
     - if !@current_tournament.show_scores?
-      %p 
-        Scores will be posted 
-        %b after the awards ceremony, 
+      %p
+        Scores will be posted
+        %b after the awards ceremony,
         or at 8pm EST, whichever comes first.
       %p
         Scores may be withheld past that time in the event of a dispute.

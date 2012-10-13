@@ -7,7 +7,7 @@
     Each team
   has a unique password, even in the case of multiple teams from the same school.
 %p
-  If you have forgotten or misplaced your password, please contact 
+  If you have forgotten or misplaced your password, please contact
   %a{:href => "https://www.case.edu/cgi-bin/directory/pb_lookup.cgi?search_text=james+bader&submit.x=0&submit.y=0&submit=Search&search_method=regular&page_num=1"}
     Jim Bader
   to receive a new one.
@@ -21,10 +21,10 @@
     =select(:team, :id, @teams.map { |x| [x[:name], x[:id]] })
 .clearfix
   - if not session[:user].nil? and session[:user].is_admin_of(@current_school)
-    %b You are an admin. 
+    %b You are an admin.
     Click Login to log in as this team. You can change this team's password once logged in.
   - else
-    %label{:for=>"password"} 
+    %label{:for=>"password"}
       %b Password:
     .input
       =password_field_tag :password, "",:size => 20

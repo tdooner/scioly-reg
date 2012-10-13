@@ -6,7 +6,7 @@ summary of events available on the homepage.
   - if !@withheldevents.empty?
     .alert-message.block-message.warning
       %p
-        %b Warning: 
+        %b Warning:
         The following events have scores withheld.
         %b Scores will not be published until no events have scores withheld.
         %ul
@@ -24,12 +24,12 @@ summary of events available on the homepage.
                 No, skip these events in the slideshow.
   - if !@unfinishedevents.empty?
     .alert-message.block-message.error
-      %p 
-        %b Error: 
+      %p
+        %b Error:
         The following events have no scores reported. You cannot publish scores when some events have no scores.
       %ul
         - @unfinishedevents.each do |e|
-          %li=e.humanize 
+          %li=e.humanize
   - else
     .actions
       %input.primary.btn{:type=>"submit", :value=>"Publish Scores!"}
