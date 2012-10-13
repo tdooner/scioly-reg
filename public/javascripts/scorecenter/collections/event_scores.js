@@ -1,11 +1,17 @@
 define(['models/ranking'], function(Ranking) {
   return Backbone.Collection.extend({
     model: Ranking,
-    initialize: function(eventId) {
-      this.eventId = eventId;
+    initialize: function() {
     },
-    url: function() {
-      return '/admin/scorecenter/events/' + this.eventId
+
+    hasScores: function() {
+      return this.length > 0;
     },
+    topfive: function() {
+      if (!this.hasScores()) {
+        return [];
+      }
+      return _.first(_.sortBy(this.models, function(e) { return e.get('ranking').placement }), 5);
+    }
   });
 });

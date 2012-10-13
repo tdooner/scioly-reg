@@ -1,7 +1,7 @@
 define([], function() {
-  return Backbone.Model.extend({
+  return Backbone.RelationalModel.extend({
     url: function() {
-      return "/admin/scorecenter/events/" + this.get('eventId') + "/placings/" + this.get('team').id
+      return "/admin/scorecenter/events/" + this.get('event').id + "/placings/" + this.get('team').id
     },
   });
 });

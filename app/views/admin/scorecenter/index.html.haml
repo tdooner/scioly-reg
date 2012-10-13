@@ -1,7 +1,11 @@
+=stylesheet_link_tag 'deck.core'
+=stylesheet_link_tag 'swiss'
 -content_for :scripts do
   =javascript_include_tag 'underscore-min'
   =javascript_include_tag 'backbone-min'
-  =javascript_include_tag 'backbone.dualstorage'
+  =#javascript_include_tag 'backbone.dualstorage'
+  =javascript_include_tag 'deck.core'
+  =javascript_include_tag 'backbone-relational'
   =javascript_include_tag 'require', :'data-main' => '/javascripts/scorecenter/'
   :javascript
     $(function(){
@@ -11,13 +15,20 @@
         Backbone.history.start();
       });
     });
+    var globalData = #{@data};
 :css
   form .clearfix {
     margin-bottom: 0px !important;
   }
+  .deck-container {
+    width: 100%; height: 100%;
+    position: absolute; top: 0; left: 0;
+    z-index: 10;
+    background-color: #fff;
+  }
 
 %div#scorecenter-container
-  Stuff goes here!
+  Loading Data...
 %script#scoreCenterHome{ :type => "text/template" }
   %table.zebra-striped.condensed-table#admin-score-table
     %thead
@@ -54,6 +65,17 @@
       %tbody#scores-go-here
 %script#rankingtemplate{ :type => "text/template" }
   :plain
-    <td><div class="clearfix"><input class="span1 placement-input" type="text" name="placings[<%= team.id%>]" value="<%= ranking.placement || '' %>" /></div></td>
+    <td><div class="clearfix"><input class="span1 placement-input" type="text" name="placings[<%= team.id%>]" value="<%= placement || '' %>" /></div></td>
     <td style="vertical-align:middle"><%= team.number %></td>
     <td style="vertical-align:middle"><%= team.name %></td>
+%script#slideshow{ :type => "text/template" }
+  :plain
+    <section class="slide">
+      <h2><%= eventId %></h2>
+      <ul id="scores-<%= eventId %>">
+      </ul>
+    </section>
+%script#slideshowitem{:type => "text/template" }
+  <% _.each(teams, function(team) { %>
+  %li <%= team.team.name %>
+  <% }); %>

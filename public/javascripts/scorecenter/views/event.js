@@ -4,23 +4,17 @@ define(['views/event_ranking'], function(EventRankingView) {
     tagName: "tr",
     template: _.template($("#schedulehome").html()),
 
-    initialize: function() { // Must pass in {model: EventScores}
-      this.model.bind('reset', this.reset, this);
-      this.model.fetch();
-    },
-
-    reset: function() {
-      $("#scorecenter-container").html(
-        this.template({
-          teams: this.model.toJSON()
-        })
-      );
-      $("#scores-go-here").html('');
-      this.model.each(this.addRanking.bind(this));
+    initialize: function() { // Must pass in {collection: EventScores}
     },
 
     render: function() {
-      this.$el.html(this.template(this.model.toJSON()));
+      $("#scorecenter-container").html(
+        this.template({
+          teams: this.model.get('scores') //TODO: This is the wrong number
+        })
+      );
+      $("#scores-go-here").html(''); // TODO: remove reliance on this element
+      this.model.get('scores').each(this.addRanking.bind(this));
       return this;
     },
 

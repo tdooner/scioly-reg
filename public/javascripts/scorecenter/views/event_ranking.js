@@ -10,14 +10,14 @@ define([], function() {
     updateScore: function() {
       var field = this.$el.find(".placement-input");
       field.attr('disabled', true).parent().addClass("warning").removeClass("error");
-      this.model.save({ ranking: { placement: field[0].value } }, {
+      this.model.save({ placement: field[0].value }, {
         success: function() {
           field.attr('disabled', false).parent().removeClass("warning");
           this.render();
         }.bind(this),
         error: function() {
-          field.attr('disabled', false).parent().removeClass("warning").addClass("error");
-        },
+          //field.attr('disabled', false).parent().removeClass("warning").addClass("error");
+        }.bind(this),
         wait: true
       });
     },
