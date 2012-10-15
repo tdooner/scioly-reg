@@ -3,12 +3,18 @@ class ApplicationController < ActionController::Base
   before_filter :setup
 
   def setup
-    breadcrumbs.add 'Home', root_path
-
-    @subdomain = request.env["SERVER_NAME"].split(".").first
+    @subdomain = request.subdomains.last
     @mixpanel = Mixpanel::Tracker.new(ENV["MIXPANEL_TOKEN"], request.env, true)
 
-    @current_school = School.find_by_subdomain(@subdomain) or raise "School (#{@subdomain}) Not Found!"
+    if @subdomain.present?
+      @current_school = School.where(:subdomain => @subdomain).first
+      setup_application if @current_school
+    end
+  end
+
+  def setup_application
+    breadcrumbs.add 'Home', root_path
+
     @current_tournament = @current_school.tournaments.find(:first, :conditions => ["school_id = ? AND is_current = ?", @current_school.id, true]) or raise "No Tournament Found!"
     @team = Team.find_by_id_and_tournament_id(session[:team], @current_tournament)
     @all_schedules = @current_tournament.schedules.find(:all, :order => "event ASC").group_by(&:division)
