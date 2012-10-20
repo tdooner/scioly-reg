@@ -1,7 +1,60 @@
-%h2  Welcome to the Science Olympiad Registration Platform
-
-.well
-  Perhaps you meant:
-  %ul
-    %li= link_to 'Case Western Science Olympiad', 'http://cwru.sciolyreg.org'
-    %li= link_to 'Akron Science Olympiad', 'http://akron.sciolyreg.org'
+= stylesheet_link_tag 'fonts.css'
+:css
+  body, html {
+    font-family: PTSansRegular, Helvetica;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: PTSansBold, Helvetica;
+    font-weight: normal;
+  }
+  .introduction {
+    font-size:24px;
+    font-family: PTSansBold, Helvetica;
+    color: #999;
+  }
+  .title {
+    line-height: 1.2em;
+    font-size: 96px;
+    margin-bottom: 0;
+  }
+  .subtitle {
+    font-size: 24px;
+    line-height: 1.2em;
+  }
+  .section {
+    margin: 40px 0;
+  }
+.row
+  .span12
+    .section
+      %p.introduction Introducing...
+      %h1.title Foundry
+      %h2.subtitle Tournament Management Platform
+    .section
+      %h3
+        Foundry is a
+        %em free, open-source
+        solution for managing a Science Olympiad Tournament.
+  .span4
+    .page-header
+      %h2 View Examples
+    %p Foundry has been used to host multiple Northeast Ohio tournaments.
+    %p
+      / TODO: Replace with CWRU logo
+      .btn View CWRU Site
+    %p
+      / TODO: Replace with Akron logo
+      .btn View Akron Site
+    .page-header
+      %h2 Sign Up
+    %p
+      Hosting your tournament with Foundry is quick, easy, and will always be
+      free.
+    .btn.primary Sign Up Now
+/
+  .row
+    .well
+      Perhaps you meant:
+      %ul
+        %li= link_to 'Case Western Science Olympiad', 'http://cwru.sciolyreg.org'
+        %li= link_to 'Akron Science Olympiad', 'http://akron.sciolyreg.org'
