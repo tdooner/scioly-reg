@@ -5,6 +5,8 @@ class Tournament < ActiveRecord::Base
 
   belongs_to :school
 
+  validates_presence_of :date, :school_id
+
   def self.get_current()
     @t = find(:first, :conditions => ["is_current = ?", true])
     return @t if not @t.nil?

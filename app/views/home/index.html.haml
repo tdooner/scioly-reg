@@ -40,21 +40,17 @@
       %h2 View Examples
     %p Foundry has been used to host multiple Northeast Ohio tournaments.
     %p
-      / TODO: Replace with CWRU logo
-      .btn View CWRU Site
+      =link_to 'Visit CWRU Site', 'http://cwru.sciolyreg.org', :class => 'btn'
     %p
-      / TODO: Replace with Akron logo
-      .btn View Akron Site
+      =link_to 'Visit Akron Site', 'http://akron.sciolyreg.org', :class => 'btn'
     .page-header
       %h2 Sign Up
     %p
       Hosting your tournament with Foundry is quick, easy, and will always be
       free.
-    .btn.primary Sign Up Now
+    =link_to 'Sign Up Now', new_school_url, :class => 'btn primary'
 /
   .row
     .well
       Perhaps you meant:
       %ul
-        %li= link_to 'Case Western Science Olympiad', 'http://cwru.sciolyreg.org'
-        %li= link_to 'Akron Science Olympiad', 'http://akron.sciolyreg.org'

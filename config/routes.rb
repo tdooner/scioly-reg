@@ -23,6 +23,9 @@ Scioly::Application.routes.draw do
   match 'teams/batchnew' => "teams#batchcreate", :via=>[:post]
   resources :teams
 
+  match '/schools/new' => 'home#newschool', :via => [ :get ], :as => :new_school
+  match '/schools/new' => 'home#createschool', :via => [ :post ]
+
   # Rails and I disagree about "schedules" vs "schedule". 
   # Rails thinks they have all the methods
   #   of resources (they do), but I think that it seems better to view the schedule for an

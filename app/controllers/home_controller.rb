@@ -10,6 +10,53 @@ class HomeController < ApplicationController
     render :about, :layout => 'static_page'
   end
 
+  def newschool
+    render :newschool, :layout => 'static_page'
+  end
+
+  def createschool
+    @school = School.new(params[:school])
+
+    @director = User.new(params[:tournament_director])
+    @director.email = params[:school][:admin_email]
+    @director.role = 1          # Role 1 = Admin
+
+    @tournament = Tournament.new(params[:tournament])
+
+    if @school.save
+      @director.school = @school
+      @tournament.school = @school
+
+      # Set some default values...
+      # TODO: Make these not happen here
+      @tournament.is_current          = true
+      @tournament.registration_begins = @tournament.date - 3.weeks
+      @tournament.registration_ends   = @tournament.date - 1.week
+
+      if @director.save
+        if @tournament.save
+          @school_url = (request.port == 80) ? "#{request.domain}" :
+            "#{@school.subdomain}.#{request.domain}:#{request.port}"
+          render :createdschool, :layout => 'static_page'
+        else
+          flash[:error] = "Error: Could not create tournament for
+            #{@school.name}. The following error occurred:
+            #{@tournament.errors.full_messages.first}. This is a site error."
+          render :newschool, :layout => 'static_page'
+        end
+      else
+        flash[:error] = "Error: Could not create administrator user for
+          #{@school.name}. The following error occurred:
+          #{@director.errors.full_messages.first}"
+        render :newschool, :layout => 'static_page'
+      end
+    else
+      flash[:error] = "Error: We could not register your school. The following
+        error occurred: #{@school.errors.full_messages.first}"
+      render :newschool, :layout => 'static_page'
+    end
+  end
+
   private
 
   def render_app_if_subdomain
