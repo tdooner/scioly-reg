@@ -35,8 +35,7 @@ class HomeController < ApplicationController
 
       if @director.save
         if @tournament.save
-          @school_url = (request.port == 80) ? "#{request.domain}" :
-            "#{@school.subdomain}.#{request.domain}:#{request.port}"
+          @school_url = "http://#{@school.subdomain}.#{request.domain}"
           render :createdschool, :layout => 'static_page'
         else
           flash[:error] = "Error: Could not create tournament for
