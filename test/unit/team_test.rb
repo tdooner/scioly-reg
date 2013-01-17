@@ -17,9 +17,9 @@ class TeamTest < ActiveSupport::TestCase
 
   test "A team is valid iff password_confirmation matches its password" do
     @team.password = "abcdef"
-    @team.password_confirm = "abcdef"
+    @team.password_confirmation = "abcdef"
     assert @team.valid?, "Team is invalid with identical passwords!"
-    @team.password_confirm = "ghijkl"
+    @team.password_confirmation = "ghijkl"
     assert !@team.valid?, "Team is valid with differing passwords!"
   end
 
@@ -28,7 +28,7 @@ class TeamTest < ActiveSupport::TestCase
   end
 
   test "A valid team can be authenticated." do
-    assert @team == Team.authenticate(@team.id, @team.password)
+    assert @team.id == Team.authenticate(@team.id, @team.password).id
   end
 
   test "Can update appropriate attributes." do
@@ -44,7 +44,7 @@ class TeamTest < ActiveSupport::TestCase
     # Change password!
     newpw = "testing_password"
     @team.password = newpw
-    @team.password_confirm = newpw
+    @team.password_confirmation = newpw
     assert @team.save
     assert @team.reload.hashed_password == Team.encrypt(newpw)
   end
