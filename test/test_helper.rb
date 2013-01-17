@@ -74,7 +74,7 @@ class ActiveSupport::TestCase
 
   def assume_team_login(team)
     team.password = Random.rand(1000000).to_s
-    team.password_confirm = team.password
+    team.password_confirmation = team.password
     assert team.save
     login_with_password(team, team.password)
     return team
@@ -88,16 +88,16 @@ class ActiveSupport::TestCase
       fill_in "password", :with=>team.password
       find_button("Login").click
     end
+    assert !page.has_content?("Incorrect Password"), "The page claims the password #{password} is incorrect."
     assert page.has_content?("Welcome")
     assert page.has_content?("Things To Do")
     assert page.has_content?("Your Information")
-    assert !page.has_content?("Incorrect Password")
     assert (current_path == "" || current_path == "/"), "Path is wrong (#{current_path})."
   end
 end
 
 class ActionController::TestCase
-  def setup 
+  def setup
     @current_school = FactoryGirl.create(:school)
     @current_tournament = FactoryGirl.create(:current_tournament, :school => @current_school)
     @other_tournament = FactoryGirl.create(:tournament, :school => @current_school)

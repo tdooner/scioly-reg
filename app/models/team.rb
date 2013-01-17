@@ -12,7 +12,7 @@ class Team < ActiveRecord::Base
   belongs_to :tournament
   has_many :sign_ups
   has_many :scores
-  attr_accessor :password, :password_confirmation
+  attr_accessor :password, :password_confirmation, :password_existing
   attr_protected :hashed_password
 
 
