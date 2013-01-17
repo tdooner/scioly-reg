@@ -2,12 +2,7 @@ require 'test_helper'
 
 class TeamTest < ActiveSupport::TestCase
   def setup
-    @team = FactoryGirl.build(:team)
-  end
-
-  test "A valid team can be saved to the database." do
-    assert @team.valid?, "Test case is not valid!"
-    assert @team.save(), "Team did not save."
+    @team = FactoryGirl.create(:team)
   end
 
   test "A team without a Division is invalid." do
@@ -28,7 +23,7 @@ class TeamTest < ActiveSupport::TestCase
   end
 
   test "A valid team can be authenticated." do
-    assert @team.id == Team.authenticate(@team.id, @team.password).id
+    assert @team == Team.authenticate(@team.id, @team.password)
   end
 
   test "Can update appropriate attributes." do
