@@ -8,7 +8,7 @@ class Schedule < ActiveRecord::Base
   # TODO: Validate start, end, and timeslots.
 
 
-  def updateTimeSlots()
+  def updateTimeSlots
     # Currently, the only supported schedule type is even divisions of time... e.g.
     #  StartTime = 9am, EndTime = 10am, timeslots = 4
     #  9:00am, 9:15am, 9:30am, 9:45am
@@ -31,17 +31,27 @@ class Schedule < ActiveRecord::Base
     end
     existing_timeslots = self.timeslots
     new_timeslots = []
+
+    # Find any timeslots that serendipitously remained the same if num_timeslots
+    # has been changed.
     self.num_timeslots.to_i.times do |i|
-      begintime = self.starttime + slotwidth*60*i
-      # Warning: Long method name ahead!
-      exists = Timeslot.find_or_create_by_schedule_id_and_begins_and_ends_and_team_capacity(:schedule_id => self.id, :begins => begintime, :ends => begintime + slotwidth*60, :team_capacity => self.teams_per_slot)
+      begintime = self.starttime + slotwidth * 60 * i
+      # TODO: Upgrade to ActiveRecord 3.2.1 and destroy this long method name:
+      exists = Timeslot.find_or_create_by_schedule_id_and_begins_and_ends_and_team_capacity(
+        :schedule_id => self.id,
+        :begins => begintime,
+        :ends => begintime + slotwidth * 60,
+        :team_capacity => self.teams_per_slot
+      )
       new_timeslots.push(exists)
     end
+
     existing_timeslots.each do |t|
       if not new_timeslots.include?(t)
         t.delete()
       end
     end
+
     return new_timeslots
   end
   def self.isValidTimeSlot(schedule, time)

@@ -53,9 +53,10 @@ class ScheduleTest < ActiveSupport::TestCase
   test "updateTimeSlots removes all previous timeslots on update" do
     num_slots = Timeslot.all.length
     (1..3).each do |n|
-      @schedule.num_timeslots = n*5
+      @schedule.num_timeslots = n * 5
       assert @schedule.updateTimeSlots.is_a?(Array), "Error in updateTimeSlots!"
-      assert @schedule.timeslots.length == n*5, "Old timeslots still associated"
+      assert @schedule.timeslots.reload.length == n * 5,
+        "Expected #{n * 5} timeslots, but there are #{@schedule.timeslots.length}"
       assert Timeslot.all.length == (num_slots + n*5), "Old timeslots not deleted"
     end
   end
