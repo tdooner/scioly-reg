@@ -21,7 +21,7 @@ class ScheduleTest < ActiveSupport::TestCase
     num_slots = Timeslot.all.length
     # num_timeslots and teams_per_slot are not initialized here:
     assert @schedule.updateTimeSlots.is_a?(String)
-    assert Timeslot.all.length == num_slots 
+    assert Timeslot.all.length == num_slots
     assert @schedule.timeslots.empty?
 
     #initialze teams_per_slot, but not num_timeslots

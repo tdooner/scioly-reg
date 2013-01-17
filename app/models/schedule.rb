@@ -20,7 +20,7 @@ class Schedule < ActiveRecord::Base
     if self.endtime.nil?
       return "Error: No scheduled end time"
     end
-    if self.num_timeslots.nil?
+    if self.num_timeslots.to_i <= 0
       return "Error: No defined amount of divisions"
     end
     teams_per_slot = 1 if teams_per_slot.nil?
