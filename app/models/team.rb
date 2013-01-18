@@ -1,29 +1,27 @@
 require 'digest/sha1'
 
 class Team < ActiveRecord::Base
-  validates_length_of :password,:minimum => 5, :if => :password_validation_required? # Validate this further???
+  validates_length_of :password, :minimum => 5, :if => :password_validation_required?
   validates_presence_of :number
   validates_presence_of :tournament_id
   validates_presence_of :division
   validates_uniqueness_of :number, :scope => [:tournament_id, :division]
   validates_uniqueness_of :name, :scope => [:tournament_id, :division]
-#   validates_confirmation_of :password # if we want to confirm a password with a password_confirmation method
+  validates_confirmation_of :password, :if => :password_validation_required?
 
   belongs_to :tournament
   has_many :sign_ups
   has_many :scores
-  attr_accessor :password, :password_confirm, :password_existing
+  attr_accessor :password, :password_confirmation, :password_existing
   attr_protected :hashed_password
 
 
   @@divisions = {"B" => "B", "C" => "C"}
 
-  # Returns
   def getNumber()
     return [number, division].join
   end
 
-  # Counterintuitively, self denotes a class (static) method.
   def self.authenticate(id, password)
     u = find(:first, :conditions=>["id = ?", id])
     return nil if u.nil?
@@ -35,12 +33,13 @@ class Team < ActiveRecord::Base
     return Digest::SHA1.hexdigest(pass)
   end
 
-  def password=(pass) #Rails magic -- gets called whenever a password is assigned (u.password = "secret")
+  def password=(pass)
     @password = pass
     self.hashed_password = Team.encrypt(@password)
   end
+
   def password_validation_required?
-    return self.hashed_password.blank? || !self.password.blank? || !self.password_existing.blank?
+    !!self.password
   end
 
   def self.divisions
@@ -65,6 +64,6 @@ class Team < ActiveRecord::Base
   end
 
   def can_register_for_event?(s)
-    return s.division == self.division
+    s.division == self.division && s.tournament == self.tournament
   end
 end
