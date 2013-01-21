@@ -1,12 +1,12 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.11'
+gem 'rails', '3.2.11'
 gem 'haml'
 gem 'breadcrumbs'
 gem 'rdiscount'
 gem 'recaptcha', :require => "recaptcha/rails"
 gem 'mixpanel'
-gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
+gem "paperclip"
 gem "aws-sdk"
 gem 'aws-s3'
 
@@ -15,12 +15,13 @@ gem 'sass'
 gem 'jquery-rails'
 gem 'rails3-jquery-autocomplete'
 
-group :test do 
+group :test do
     gem 'factory_girl_rails'
+    gem 'rspec-rails'
     gem 'faker'
     gem 'capybara'
-    gem 'turn'
-    gem 'shoulda'
+    gem 'time-warp'
+    gem 'mocha'
 end
 gem "parallel_tests"
 
@@ -29,10 +30,6 @@ gem "parallel_tests"
 
 # Deploy with Capistrano
 # gem 'capistrano'
-
-# To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
-# gem 'ruby-debug'
-# gem 'ruby-debug19'
 
 # Bundle the extra gems:
 # gem 'bj'
@@ -43,6 +40,7 @@ gem "parallel_tests"
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
-# group :development, :test do
-#   gem 'webrat'
-# end
+group :development, :test do
+  gem 'debugger'
+  #gem 'webrat'
+end

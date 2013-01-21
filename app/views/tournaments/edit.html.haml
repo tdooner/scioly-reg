@@ -22,8 +22,8 @@
     %label Homepage Photo:
     .input
       =f.file_field :homepage_photo
-      .help-block 
-        This image is shown on the homepage. Use this to upload a logo for the 
+      .help-block
+        This image is shown on the homepage. Use this to upload a logo for the
         %b event.
       =image_tag @tournament.homepage_photo.url(:medium)
   .clearfix

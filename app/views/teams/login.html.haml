@@ -18,10 +18,10 @@
     =select(:team, :id, @teams.map { |x| [x[:name], x[:id]] })
 .clearfix
   - if not session[:user].nil? and session[:user].is_admin_of(@current_school)
-    %b You are an admin. 
+    %b You are an admin.
     Click Login to log in as this team. You can change this team's password once logged in.
   - else
-    %label{:for=>"password"} 
+    %label{:for=>"password"}
       %b Password:
     .input
       =password_field_tag :password, "",:size => 20

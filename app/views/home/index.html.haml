@@ -1,0 +1,92 @@
+.row
+  .span12
+    .section
+      %p.introduction Introducing...
+      %h1.title Foundry
+      %h2.subtitle Tournament Management Platform
+    .section
+      %h3
+        Foundry is a
+        %em free, open-source
+        solution for managing a Science Olympiad Tournament.
+  .span4
+    .well
+      .page-header
+        %h2 Sign Up
+      %p
+        Hosting your tournament with Foundry is quick, easy, and will always be
+        free.
+      =link_to 'Sign Up Now', new_school_url, :class => 'btn primary'
+
+%section.features
+  .row
+    .span16
+      .page-header
+        %h2 Features:
+  .row.feature
+    .span7
+      %h3 Team Management
+      %p
+        Keep track of all participating teams online. Team management integrates
+        with online scoring and event registration to provide a seamless
+        experience for participating schools.
+    .span7.offset1
+      =image_tag 'feature_teams.png', :width => '100%', :style => 'box-shadow: 4px 4px 8px #999'
+  .row.feature
+    .span7
+      =image_tag 'feature_registration.png', :width => '100%', :style => 'box-shadow: 4px 4px 8px #999'
+    .span7.offset1
+      %h3 Online Event Registration
+      %p
+        Foundry features online registration for events, so competing teams can
+        resolve conflicts before arriving at the tournament. It's easier on
+        coaches and event supervisors, but, most importantly,
+        %b
+          online registration gives the best opportunity for competing students to
+          actually compete in the events they have prepared long and hard for!
+  .row.feature
+    .span7
+      %h3 Online Scoring
+      %p
+        Distribute scores the fastest way. No more custom Excel spreadsheets,
+        Foundry will rank teams automatically and according to Science Olympiad
+        tie-breaking rules.
+    .span7.offset1
+      =image_tag 'feature_scoresheet.png', :width => '100%', :style => 'box-shadow: 4px 4px 8px #999'
+  .row.feature
+    .span7
+      =image_tag 'feature_presentation.png', :width => '100%', :style => 'box-shadow: 4px 4px 8px #999'
+    .span7.offset1
+      %h3 Instant Scoring Presentation
+      %p
+        Instantly create a presentation for your awards ceremony. No downloads
+        required!
+%section
+  .row
+    .span12
+      .page-header
+        %h2 We're being used at...
+  .row.usedat
+    .span3
+      =link_to 'http://cwru.sciolyreg.org' do
+        =image_tag 'cwru_logo.png', :width => '100%'
+    .span8.offest1
+      %h3 Case Western Reserve University
+      Case Western Reserve University's tournament has used Foundry for three
+      years.
+      =link_to 'Click here to see the 2013 tournament.', 'http://cwru.sciolyreg.org'
+  .row.usedat
+    .span3
+      =link_to 'http://akron.sciolyreg.org' do
+        =image_tag 'akron_logo.jpg', :width => '100%'
+    .span8.offest1
+      %h3 The University Of Akron
+      The Akron Regional Science Olympiad uses Foundry!
+      =link_to 'Click here to see the 2013 tournament.', 'http://akron.sciolyreg.org'
+%section
+  .row
+    .span12
+      .page-header
+        %h2 Why Foundry?
+      Foundry was written by a Science Olympiad alum for tournaments to provide
+      logistical support for tournaments.

@@ -36,19 +36,16 @@
                     =check_box_tag "delete[]", a.id
                   - else
                     =check_box_tag "cantdelete", a.id, false, :disabled => "true", :title=>"You cannot delete the primary contact!"
-      %label New Administrator:
+      %label Add Administrator:
       .input
         %table
-          %thead
-            %th E-mail Address
-            %th Password
           %tbody
             %tr
-              %td=text_field_tag :new_user
+              %td=text_field_tag :new_user, '', :placeholder => 'Email'
               %td
-                =password_field_tag :new_user_password
+                =password_field_tag :new_user_password, '', :placeholder => 'Password'
                 .clearfix
-                =password_field_tag :new_user_password_confirmation
+                =password_field_tag :new_user_password_confirmation, '', :placeholder => 'Confirm Password'
   %fieldset
     %p To make any changes, you must enter your password again:
     .clearfix

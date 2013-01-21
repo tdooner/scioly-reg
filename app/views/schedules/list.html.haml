@@ -1,4 +1,4 @@
-%p 
+%p
   Below is a list of all events for the tournament scheduled for
   =[@current_tournament.humanize, "."].join
   Please check to ensure you register for all events before registration closes.
@@ -37,15 +37,12 @@
             %td= link_to(s.event + " (" + s.division + ")", url_for(s))
           - else
             %td= s.event
-          %td= s.starttime.strftime("%I:%M %p").downcase
-          %td= s.endtime.strftime("%I:%M %p").downcase
+          %td= s.times[:start]
+          %td= s.times[:end]
           -if @team
             -if @has_registered[s.id]
               %td= image_tag("ok.png")
             - else
-              -if s.is_scheduled_online? && s.division == @team.division
-                %td= image_tag("error.png")
-              - else
-                %td - 
+              %td -
 :javascript
   $(function(){ mpq.track("View All Schedules"); });

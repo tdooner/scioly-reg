@@ -1,0 +1,42 @@
+!!!
+%head
+  %title Science Olympiad Scoring System
+  =stylesheet_link_tag 'main'
+  =stylesheet_link_tag 'bootstrap.min.css'
+  =stylesheet_link_tag 'fonts.css'
+  :css
+    body, html {
+      font-family: PTSansRegular, Helvetica;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: PTSansBold, Helvetica;
+      font-weight: normal;
+    }
+    .introduction {
+      font-size:24px;
+      font-family: PTSansBold, Helvetica;
+      color: #999;
+    }
+    .title {
+      line-height: 1.2em;
+      font-size: 96px;
+      margin-bottom: 0;
+    }
+    .subtitle {
+      font-size: 24px;
+      line-height: 1.2em;
+    }
+    .section, section {
+      margin: 30px 0;
+    }
+    .features .feature {
+      margin-bottom: 30px;
+    }
+    .usedat {
+      margin-bottom: 30px;
+    }
+%body
+  #contentWrapper
+    =yield
+  =javascript_include_tag :defaults
+  =yield :javascripts

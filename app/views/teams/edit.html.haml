@@ -1,47 +1,5 @@
--if not flash[:error].nil?
-  %p.errorbox
-    =flash[:error]
-%p 
-  To change any information about this team, update the form below and click the submit button. Note that changes will overwrite previous settings and cannot be undone. 
-=form_for(@this_team) do |f|
-  %fieldset
-    .clearfix
-      %label{:for=>"team_name"}
-        %b Team Name
-      .input
-        =f.text_field :name, :size => 30, :disabled => !(session[:user] && session[:user].can_edit?(@this_team))
-    .clearfix
-      %label{:for=>"team_number"}
-        %b Team Number:
-      .input
-        =f.text_field :number, :size => 4, :disabled => !(session[:user] && session[:user].can_edit?(@this_team))
-    .clearfix
-      %label{:for=>"team_coach"}
-        %b Coach:
-      .input
-        =f.text_field :coach, :size =>20, :disabled => !(session[:user] && session[:user].can_edit?(@this_team))
-    .clearfix
-      %label{:for=>"team_homeroom"}
-        %b Homeroom:
-      .input
-        =f.text_field :homeroom, :size =>20, :disabled => !(session[:user] && session[:user].can_edit?(@this_team))
-    - if !(session[:user] && session[:user].can_edit?(@this_team))
-      .clearfix
-        %label{:for=>"team_password_existing"}
-          %b Existing Password:
-        .input
-          =f.password_field :password_existing, :size=>10
-    .clearfix
-      %label{:for=>"team_password"}
-        %b Change Password: 
-      .input
-        =f.password_field :password, :size => 10
-    .clearfix
-      %label{:for=>"team_password_confirmation"}
-        %b Confirm Password:
-      .input
-        =f.password_field :password_confirmation, :size => 10
-  .actions
-    =f.submit :class=>"btn primary"
+%p
+  To change any information about this team, update the form below and click the submit button. Note that changes will overwrite previous settings and cannot be undone.
+=render 'teamform', :team => @this_team
 :javascript
   $(function(){ mpq.track("View Team Edit Page"); });

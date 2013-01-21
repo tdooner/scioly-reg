@@ -1,9 +1,9 @@
 class CreateSignUps < ActiveRecord::Migration
   def self.up
     create_table :sign_ups do |t|
-	  t.integer :scheduleid
-	  t.integer :teamid
-	  t.time :time
+      t.integer :scheduleid
+      t.integer :teamid
+      t.time :time
       t.timestamps
     end
   end

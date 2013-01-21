@@ -49,8 +49,9 @@
           - if @currentreg.nil?
             - if slots_remaining != 0
               -slots_remaining.times do
-                %div{:style=>"height:25px; width:300px; border-bottom:2px solid #000;"}
-            - else 
+                %div{:style=>"height:30px"}
+                  _____________________________________
+            - else
               - if not (not session[:user].nil? and session[:user].is_admin_of(@current_school))
                 Timeslot Full!
           - else

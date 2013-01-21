@@ -38,7 +38,7 @@
         =f.submit "Save!", :class=>"btn success"
 - if ts.sign_ups.include?(@currentreg)
   %tr
-    %td{:colspan=>2} 
+    %td{:colspan=>2}
       Your team is registered here, in the #{ts.begins.strftime("%I:%M %p")} timeslot.
     - if (@team.can_register_for_event?(@schedule)) || (session[:user] && session[:user].can_register_team_for_event?(@team, @schedule))
       %td

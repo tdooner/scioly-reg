@@ -1,28 +1,4 @@
 %p
-  Want to import from an Excel spreadsheet? Use 
+  Want to import from an Excel spreadsheet? Use
   %a{:href=>"/teams/batchnew"} Batch Mode.
-
-- form_for @this_team do |f|
-  %fieldset
-    .clearfix
-      =f.label :name, "Team Name:"
-      .input
-        = f.text_field :name
-    .clearfix
-      =f.label :number, "Team Number:"
-      .input
-        = f.text_field :number
-    .clearfix
-      =f.label :coach, "Coach's Name:"
-      .input
-        = f.text_field :coach
-    .clearfix
-      =f.label :division, "Division:"
-      .input
-        = select(:team, :division, Team.divisions)
-    .clearfix
-      =f.label :password, "Password:"
-      .input
-        = f.password_field :password
-  .actions
-    %input.btn.primary{:type=>"submit", :value=>"Create Team!"}
+=render 'teamform', :team => @this_team

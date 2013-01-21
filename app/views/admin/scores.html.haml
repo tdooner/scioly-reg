@@ -12,17 +12,17 @@
 %table.zebra-striped.condensed-table#admin-score-table
   %thead
     %th Event Name
-    %th Division 
+    %th Division
     %th Scores Reported?
   %tbody
     - @events.each do |e|
       %tr
         %td=link_to(e.humanize, schedule_scores_url(e))
         %td=e.division
-        %td 
+        %td
           - if e.scores.length == 0 || e.scores_withheld
             =image_tag "error.png", :height=>"16px"
             - if e.scores_withheld
               (Withheld)
-          - else 
+          - else
             =image_tag "ok.png", :height=>"16px"

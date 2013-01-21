@@ -31,7 +31,7 @@
     -@events.each do |e|
       %tr
         %td=e.division
-        %td=link_to "#{e.event} (#{e.division})", schedule_url(e.id) 
+        %td=link_to "#{e.event} (#{e.division})", schedule_url(e.id)
         %td
           - if e.is_scheduled_online?
             %b>="#{@event_signups[e.id]}"

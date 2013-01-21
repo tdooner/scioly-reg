@@ -1,17 +1,17 @@
 class SchedulesController < ApplicationController
-	####
-	# A "schedule" means a "scheduled event" for a given
-	# tournament and division. In other words, a "schedule"
-	# is what a team registers to.
-	###
+  ####
+  # A "schedule" means a "scheduled event" for a given
+  # tournament and division. In other words, a "schedule"
+  # is what a team registers to.
+  ###
 
   before_filter :is_admin, :only => [:new, :destroy, :batchnew, :edit, :create, :update, :scores, :savescores, :batchcreate]
   protect_from_forgery :except => :destroy
   autocomplete :schedule, :event, :display_value => :humanize, :extra_data => [:division]
 
   def new
-	  breadcrumbs.add("New Event")
-	  @schedule = Schedule.new()
+    breadcrumbs.add("New Event")
+    @schedule = Schedule.new()
   end
 
   def batchnew
@@ -21,7 +21,7 @@ class SchedulesController < ApplicationController
 
   def edit
     @schedule = Schedule.find(params[:id])
-	breadcrumbs.add("Events", admin_events_url())
+    breadcrumbs.add("Events", admin_events_url())
     breadcrumbs.add(@schedule.humanize, schedule_url(@schedule))
     breadcrumbs.add("Edit")
   end
@@ -35,17 +35,17 @@ class SchedulesController < ApplicationController
   end
 
   def create
-	@schedule = @current_tournament.schedules.create(params[:schedule])
-	if @schedule
+    @schedule = @current_tournament.schedules.create(params[:schedule])
+    if @schedule
       if params[:schedule_online] == "true"
         @schedule.updateTimeSlots()
       end
       redirect_to :schedules
-	else
+    else
       flash[:message] = "Error creating the event schedule. "
       flash[:error] = @schedule.errors.full_messages.first
       render :new
-	end
+    end
   end
 
   def batchcreate
@@ -67,7 +67,7 @@ class SchedulesController < ApplicationController
           end
         end
       else
-        @errors << schedule.errors.full_messages.first 
+        @errors << schedule.errors.full_messages.first
       end
     end
     flash[:error] = @errors.join("<br />") unless @errors.empty?
@@ -80,65 +80,61 @@ class SchedulesController < ApplicationController
   end
 
   def index
-	breadcrumbs.add('Register For Events')
+    breadcrumbs.add('Register For Events')
     if not @team.nil?
-		@has_registered = Hash.new()
-		@all_schedules[@team.division].map{ |e| @has_registered[e.id] = e.hasTeamRegistered(@team)}
+      @has_registered = Hash.new()
+      @all_schedules[@team.division].map{ |e| @has_registered[e.id] = e.hasTeamRegistered(@team)}
     end
-	render :list
+    render :list
   end
 
   def show
-	@schedule = Schedule.find(params[:id])
-	breadcrumbs.add("Division #{@schedule.division} Events", schedule_division_url(@schedule.division))
+    @schedule = Schedule.find(params[:id])
+    breadcrumbs.add("Division #{@schedule.division} Events", schedule_division_url(@schedule.division))
     @scores = @schedule.scores.includes(:team)
-	breadcrumbs.add(@schedule.event) 
-	if @schedule.nil?
-		flash[:message] = "Event not found!"
-		# render :somethingelse
-	end
+    breadcrumbs.add(@schedule.event)
+    if @schedule.nil?
+      flash[:message] = "Event not found!"
+      # render :somethingelse
+    end
 
-	@allslots = @schedule.timeslots.sort_by { |x| x.begins.to_a[0..2].reverse }
-	@currentreg = nil
-	if @team 
-		@currentreg = SignUp.find_by_team_id_and_timeslot_id(@team, @allslots.map{|x| x.id})
-	end
+    @allslots = @schedule.timeslots.sort { |x,y| x.begins <=> y.begins }
+    @currentreg = nil
+    if @team
+      @currentreg = SignUp.find_by_team_id_and_timeslot_id(@team, @allslots.map{|x| x.id})
+    end
 
-	respond_to do |format|
-		format.pdf do
-          if !(!session[:user].nil? && session[:user].can_view?(@schedule))
-            flash[:error] = "You cannot view this PDF schedule."
-            return redirect_to root_url
-          end
-			@signed_up_teams = @schedule.timeslots.map {|x| x.sign_ups.map{ |y| y.team } }.flatten
-			@teams_remaining = @current_tournament.teams.where(:division => @schedule.division) - @signed_up_teams
-			render :pdf => @schedule.event.gsub(/[^a-zA-Z]/, '_') + "_" + @schedule.division
-		end
-		format.html do
-          render :show
-		end
-	end
+    respond_to do |format|
+      format.pdf do
+        @signed_up_teams = @schedule.timeslots.map {|x| x.sign_ups.map{ |y| y.team } }.flatten.to_set
+        @teams_remaining = Team.find(:all, :conditions => ["division = ?", @schedule.division], :order => ["name ASC"]).to_set.difference(@signed_up_teams)
+        render :pdf => @schedule.event.gsub(/[^a-zA-Z]/, '_') + "_" + @schedule.division
+      end
+      format.html do
+        render :show
+      end
+    end
   end
 
   def destroy
-	@schedule = Schedule.find(params[:id])
-	@schedule.timeslots do |e|
-		e.sign_ups.delete_all()
-		e.delete()
-	end
-	@schedule.delete()
-	redirect_to :admin_events
+    @schedule = Schedule.find(params[:id])
+    @schedule.timeslots do |e|
+      e.sign_ups.delete_all()
+      e.delete()
+    end
+    @schedule.delete()
+    redirect_to :admin_events
   end
 
   def scores
     @schedule = Schedule.find(params[:schedule_id], :include => :scores)
     @teams = @current_tournament.teams.where(["division = ?", @schedule.division])
-    @placements = @teams.inject({}) { |a,i| 
+    @placements = @teams.inject({}) { |a,i|
       s = @schedule.scores.select{|x| x.team_id == i.id}.first
       if s
-        a.merge(i.id => s.placement) 
+        a.merge(i.id => s.placement)
       else
-        a.merge(i.id => "") 
+        a.merge(i.id => "")
       end
     }
     breadcrumbs.add("Scoring", "/admin/scores")

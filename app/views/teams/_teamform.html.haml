@@ -1,0 +1,36 @@
+=form_for team do |f|
+  %fieldset
+    .clearfix
+      =f.label :name, "Team Name:"
+      .input
+        = f.text_field :name
+    .clearfix
+      =f.label :coach, "Coach's Name:"
+      .input
+        = f.text_field :coach
+    -if !@is_admin
+      .clearfix
+        =f.label :password, "Change Password:"
+        .input
+          = f.password_field :password
+      .clearfix
+        =f.label :password, "Change Password (confirm):"
+        .input
+          = f.password_field :password_confirmation
+  - if @is_admin
+    %fieldset
+      .clearfix
+        =f.label :number, "Team Number:"
+        .input
+          = f.text_field :number
+      .clearfix
+        =f.label :division, "Division:"
+        .input
+          = select(:team, :division, Team.divisions)
+      .clearfix
+        =f.label :password, "New Password:"
+        .input
+          = f.password_field :password
+
+  .actions
+    %input.btn.primary{:type=>"submit", :value=>"Create Team!"}
