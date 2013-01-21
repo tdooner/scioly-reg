@@ -21,8 +21,7 @@ group :test do
     gem 'faker'
     gem 'capybara'
     gem 'time-warp'
-    #gem 'turn'
-    #gem 'shoulda'
+    gem 'mocha'
 end
 
 # Use unicorn as the web server

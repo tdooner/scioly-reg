@@ -85,11 +85,14 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    metaclass (0.0.1)
     mime-types (1.19)
     mixpanel (1.1.1)
       escape
       json
       rack
+    mocha (0.12.1)
+      metaclass (~> 0.0.1)
     multi_json (1.0.4)
     multi_xml (0.4.1)
     nokogiri (1.5.0)
@@ -183,6 +186,7 @@ DEPENDENCIES
   haml
   jquery-rails
   mixpanel
+  mocha
   paperclip
   rails (= 3.2.11)
   rails3-jquery-autocomplete
