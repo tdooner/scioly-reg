@@ -19,13 +19,13 @@
           %h3
             =breadcrumbs.render(:format => :bootstrap)
     .row
-      .span11#content
+      %div{ :class => (@right_hidden ? 'span16' : 'span11'), :id => 'content' }
         - if flash[:error]
           %div.alert-message.error=flash[:error]
         - if flash[:message]
           %div.alert-message.info!=flash[:message]
         = yield
-      - if @layout_expanded == false
+      - if !@layout_expanded && !@right_hidden
         .span4.offset1
           .well
             - if @team
