@@ -44,4 +44,10 @@ class Tournament < ActiveRecord::Base
     # Otherwise, things are looking good!
     return true
   end
+
+  def load_default_events(year = date.year)
+    DefaultEvent.for_year(year).each do |e|
+      self.schedules.create(:event => e.name, :division => e.division, :room => 'TBD')
+    end
+  end
 end

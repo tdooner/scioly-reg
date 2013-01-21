@@ -1,11 +1,12 @@
 class Schedule < ActiveRecord::Base
-  validates_presence_of :event, :division, :starttime, :endtime
+  validates_presence_of :event, :division
+  validates_uniqueness_of :event, :scope => [:division, :tournament_id]
+
   attr_accessor :num_timeslots, :teams_per_slot
 
   has_many :timeslots
   has_many :scores
   belongs_to :tournament
-  # TODO: Validate start, end, and timeslots.
 
 
   def updateTimeSlots
@@ -54,9 +55,11 @@ class Schedule < ActiveRecord::Base
 
     return new_timeslots
   end
+
   def self.isValidTimeSlot(schedule, time)
     return schedule.getTimeSlots().include?(time)
   end
+
   def hasTeamRegistered(team_id)
     signups = SignUp.find(:first, :conditions => ["timeslot_id in (select id from timeslots where schedule_id = ?) and team_id = ?", self, team_id])
     if signups.nil?
@@ -64,9 +67,18 @@ class Schedule < ActiveRecord::Base
     end
     return true
   end
+
   def humanize
     "#{self.event} (#{self.division})"
   end
+
+  def times
+    @times ||= {
+      :start => (starttime && starttime.strftime("%l:%M %P")) || 'TBD',
+      :end => (endtime && endtime.strftime("%l:%M %P")) || 'TBD',
+    }
+  end
+
   def is_scheduled_online?
     not self.timeslots.empty?
   end

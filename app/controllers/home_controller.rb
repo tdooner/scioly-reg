@@ -35,6 +35,9 @@ class HomeController < ApplicationController
 
       if @director.save
         if @tournament.save
+          # Prepopulate the event list:
+          @tournament.load_default_events
+
           @school_url = "http://#{@school.subdomain}.#{request.domain}"
           HomeMailer.welcome(@director.email).deliver
           render :createdschool, :layout => 'static_page'

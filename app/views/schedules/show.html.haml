@@ -17,12 +17,9 @@
     %h3 Event Name
     %p="#{@schedule.event} (#{@schedule.division})"
     %h3 Time
-    %p="#{@schedule.starttime.strftime("%l:%M %P")} to #{@schedule.endtime.strftime("%l:%M %P")}"
+    %p="#{@schedule.times[:start]} to #{@schedule.times[:end]}"
     %h3 Room
     %p="#{@schedule.room}"
-    %p.help-block
-      %b Quick Link:
-      %a{:href=>"http://www.case.edu/maps/",:target=>"_new"} Campus Map
   %div.tab-pane#registration
     %p
       Below are the designated timeslots for this event. Timeslots that have been reserved by another team are greyed out. To sign up for a timeslot, click the word "Available!" next to the desired time.
