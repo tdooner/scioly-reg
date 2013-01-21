@@ -8,7 +8,6 @@ describe HomeController do
         "school" => {
           "name"        => "test",
           "time_zone"   => "Eastern Time (US & Canada)",
-          "logo"        => {"logo" => ""},
           "admin_name"  => "Testing",
           "admin_email" => "test@test.com",
           "subdomain"   => "test"

@@ -6,7 +6,7 @@ gem 'breadcrumbs'
 gem 'rdiscount'
 gem 'recaptcha', :require => "recaptcha/rails"
 gem 'mixpanel'
-gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"
+gem "paperclip"
 gem "aws-sdk"
 gem 'aws-s3'
 

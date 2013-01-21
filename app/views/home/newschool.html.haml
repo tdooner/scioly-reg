@@ -12,7 +12,7 @@
           label.parent().parent().removeClass("error");
         },
         rules: {
-          'tournament_director[confirm_password]': {
+          'tournament_director[password_confirmation]': {
             equalTo: "#tournament_director_password",
           }
         }
@@ -26,7 +26,7 @@
   .alert-message.error= flash[:error]
 
 %section
-  %form.form#register_school{ :method => "POST", :action => "/schools/new", :html => { :multipart => :true }}
+  =form_tag '/schools/new', :multipart => true, :id => 'register_school', :class => 'form' do
     %fieldset
       %legend First, tell us a little about your school
       .clearfix
@@ -40,7 +40,7 @@
       .clearfix
         =label_tag 'school[logo]', 'Logo (optional)'
         .input
-          =file_field 'school[logo]', :logo
+          =file_field 'school', :logo
 
     %fieldset
       %legend Next, tell us about your tournament
