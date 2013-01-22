@@ -102,4 +102,43 @@ describe Schedule do
       it { should be_false }
     end
   end
+
+  describe '#default_timeslots?' do
+    before do
+      @schedule.num_timeslots = 10
+      @schedule.updateTimeSlots
+    end
+
+    context 'when no customizations to timeslots have occurred' do
+      subject { @schedule.default_timeslots? }
+      it { should be_true }
+    end
+
+    context 'when one timeslot has a different team capacity' do
+      before do
+        @schedule.timeslots.sample.update_attribute(:team_capacity, 500)
+      end
+
+      subject { @schedule.default_timeslots? }
+      it { should be_false }
+    end
+
+    context 'when a timeslot has been removed' do
+      before do
+        @schedule.timeslots.sample.delete
+      end
+
+      subject { @schedule.default_timeslots? }
+      it { should be_false }
+    end
+
+    context 'when a timeslot has been added' do
+      before do
+        FactoryGirl.create(:timeslot, :schedule => @schedule)
+      end
+
+      subject { @schedule.default_timeslots? }
+      it { should be_false }
+    end
+  end
 end

@@ -8,6 +8,7 @@
   .alert-actions
     =link_to "New Event", new_schedule_url, :class=>"btn"
     =link_to "Import Events", schedule_batchnew_url, :class=>"btn"
+    =link_to "Export Events to Excel", admin_events_url(:format => 'csv'), :class => 'btn'
     =link_to "Download Registration PDFs", "javascript:void($('.hidden').toggle());", :class=>"btn"
   .hidden
     %ul

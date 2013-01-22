@@ -24,36 +24,24 @@ class Schedule < ActiveRecord::Base
     if self.num_timeslots.to_i <= 0
       return "Error: No defined amount of divisions"
     end
-    self.teams_per_slot = 1 if self.teams_per_slot.nil?
     minutes = (( self.endtime - self.starttime ) / 60 ).round
     slotwidth = (minutes / self.num_timeslots.to_i).floor
     if slotwidth <= 0
       return "Error: Timeslots too narrow"
     end
-    existing_timeslots = self.timeslots
-    new_timeslots = []
 
-    # Find any timeslots that serendipitously remained the same if num_timeslots
-    # has been changed.
-    self.num_timeslots.to_i.times do |i|
-      begintime = self.starttime + slotwidth * 60 * i
-      # TODO: Upgrade to ActiveRecord 3.2.1 and destroy this long method name:
-      exists = Timeslot.find_or_create_by_schedule_id_and_begins_and_ends_and_team_capacity(
-        :schedule_id => self.id,
-        :begins => begintime,
-        :ends => begintime + slotwidth * 60,
-        :team_capacity => self.teams_per_slot
-      )
-      new_timeslots.push(exists)
-    end
+    existing_timeslots = self.timeslots.reload
+    new_timeslots = _initialize_timeslots(self.num_timeslots.to_i, self.teams_per_slot)
 
     existing_timeslots.each do |t|
-      if not new_timeslots.include?(t)
-        t.delete()
+      if !new_timeslots.include?(t)
+        t.delete
       end
     end
 
-    return new_timeslots
+    new_timeslots.map(&:save)
+
+    return timeslots.reload
   end
 
   def self.isValidTimeSlot(schedule, time)
@@ -75,11 +63,54 @@ class Schedule < ActiveRecord::Base
   def times
     @times ||= {
       :start => (starttime && starttime.strftime("%l:%M %P")) || 'TBD',
+      :start_excel => (starttime && starttime.strftime("%T")) || 'TBD',
       :end => (endtime && endtime.strftime("%l:%M %P")) || 'TBD',
+      :end_excel => (endtime && endtime.strftime("%T")) || 'TBD',
     }
   end
 
   def is_scheduled_online?
     not self.timeslots.empty?
+  end
+
+  # False if the user has made any customizations to any of the timeslots
+  # else True
+  def default_timeslots?
+    true if self.timeslots.count == 0
+
+    _initialize_timeslots(self.timeslots.count, self.timeslots.first.team_capacity).all?(&:persisted?) &&
+    (!num_timeslots || self.timeslots.count == num_timeslots.to_i)
+  end
+
+  private
+
+  def _initialize_timeslots(num_timeslots, teams_per_slot)
+    return [] unless self.endtime && self.starttime
+    return [] unless num_timeslots > 0
+    teams_per_slot ||= 1
+
+    minutes = (( self.endtime - self.starttime ) / 60 ).round
+    slotwidth = (minutes / num_timeslots).floor
+
+    num_timeslots.times.map do |i|
+      timeslot_begins = self.starttime + slotwidth * 60 * i
+      timeslot_ends = timeslot_begins + slotwidth * 60
+      exists = Timeslot.where(
+        ['schedule_id = ?
+          AND TIME(begins) = TIME(?)
+          AND TIME(ends) = TIME(?)
+          AND team_capacity = ?',
+          self.id,
+          timeslot_begins,
+          timeslot_ends,
+          teams_per_slot
+      ]
+      ).first_or_initialize(
+        :schedule_id => self.id,
+        :begins => timeslot_begins,
+        :ends => timeslot_ends,
+        :team_capacity => teams_per_slot,
+      )
+    end
   end
 end

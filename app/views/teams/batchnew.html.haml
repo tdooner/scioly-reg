@@ -17,8 +17,17 @@
   %a{:href=>"https://docs.google.com/spreadsheet/ccc?key=0AgQhM9vFx8X8dFhtODFxTGRwa0REV3JFaWpvVFJLTnc"}
     Batch Team Input Template.
 %form{:method=>"POST", :action=>"/teams/batchnew"}
-  %input{:type=>"hidden",:name=>"authenticity_token",:value=>form_authenticity_token}
-  %textarea{:style=>"width:650px; height:200px;",:name=>"batch"}
+  %fieldset
+    %input{:type=>"hidden",:name=>"authenticity_token",:value=>form_authenticity_token}
+    %textarea{:style=>"width:650px; height:200px;",:name=>"batch"}
+  %fieldset
+    .clearfix
+      =label_tag 'send_email', 'Send Passwords via Email'
+      .input
+        =check_box_tag 'send_email', 'true', :checked => 'checked'
+        %span.help-block
+          %b Note:
+          This will send an email to all coaches containing their passwords.
   .actions
     %input.btn.primary{:type=>"submit", :value=>"Submit Batch Teams"}
 
