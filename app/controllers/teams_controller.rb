@@ -1,18 +1,16 @@
 class TeamsController < ApplicationController
-  before_filter :is_admin, :only => [:new, :create, :batchnew]
+  before_filter :is_admin, :only => [:new, :create, :batchnew, :index]
   before_filter :is_correct_team, :only => [:edit, :update]
 
   def index
     @teams = @current_tournament.teams
-    render :list
-  end
 
-  def list
-    @teams = @current_tournament.teams
+    breadcrumbs.add("Teams")
   end
 
   def edit
     @this_team = Team.find(params[:id])
+    breadcrumbs.add("Teams", teams_url)
     breadcrumbs.add("Edit Team #" + @this_team.getNumber())
   end
 
