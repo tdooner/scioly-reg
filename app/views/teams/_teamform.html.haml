@@ -3,12 +3,16 @@
     .clearfix
       =f.label :name, "Team Name:"
       .input
-        = f.text_field :name
+        = f.text_field :name, :disabled => !@is_admin
     .clearfix
       =f.label :coach, "Coach's Name:"
       .input
         = f.text_field :coach
     -if !@is_admin
+      .clearfix
+        =f.label :password, "Current Password:"
+        .input
+          = f.password_field :password_existing
       .clearfix
         =f.label :password, "Change Password:"
         .input

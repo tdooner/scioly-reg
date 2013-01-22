@@ -17,17 +17,17 @@ class SignUp < ActiveRecord::Base
   # Called whenever a new SignUp is saved
   def custom_validate
     t = self.team.tournament
-    if not self.timeslot.schedule.tournament == t
-      errors.add_to_base("This event is not available in the current tournament.")
+    if self.timeslot.schedule.tournament != t
+      errors[:base] << "This event is not available in the current tournament."
     end
-    if not self.team.division == self.timeslot.schedule.division
-      errors.add_to_base("This event is not your current division.")
+    if self.team.division != self.timeslot.schedule.division
+      errors[:base] << "This event is not your current division."
     end
-    if not t.has_registration_begun()
-      errors.add_to_base("Registration for this tournament begins at " + t.registration_begins.strftime("%B %d, %Y at %I:%M %p"))
+    if !t.has_registration_begun?
+      errors[:base] << "Registration for this tournament begins at " + t.human_times[:registration_begins]
     end
-    if t.has_registration_ended()
-      errors.add_to_base("Registration for this tournament ended at " + t.registration_ends.to_s)
+    if t.has_registration_ended?
+      errors[:base] << "Registration for this tournament ended at " + t.human_times[:registration_ends]
     end
     if self.timeslot.schedule.hasTeamRegistered(team_id)
       errors.add(:team_id, "is already registered for this event!")

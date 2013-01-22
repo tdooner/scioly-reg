@@ -18,41 +18,60 @@ class TeamsController < ApplicationController
 
   def update
     @this_team = Team.find(params[:id])
-    if params[:team][:password] != params[:team][:password_confirmation]
-      flash[:error] = "Passwords do not match!"
-      redirect_to edit_team_url(params[:id])
-      return
-    end
 
-    # If the user is not admin, ensure the existing password is correct...
+    user_attributes =
+      [:coach, :password_existing, :password, :password_confirmation]
+    admin_attributes =
+      [:name, :number, :division]
+
+    @valid_attributes = params[:team].select do |k,_|
+      user_attributes.include?(k.to_sym) ||
+      (@is_admin && admin_attributes.include?(k.to_sym))
+    end.with_indifferent_access
+
+    # First, verify the password entered if necessary...
     if !@is_admin
-      @this_team.password_existing = params[:team][:password_existing]
-      if Team.encrypt(params[:team][:password_existing]) != @this_team.hashed_password
+      if Team.encrypt(@valid_attributes[:password_existing]) != @this_team.hashed_password
         flash[:error] = "Current password is incorrect!"
-        redirect_to edit_team_url(params[:id])
-        return
+        return redirect_to(edit_team_url(params[:id]))
       end
     end
 
-    if @is_admin
-      if not @this_team.update_attributes(params[:team])
-        flash[:error] = "A save error occurred: " + @this_team.errors.full_messages.first + "."
-      end
-      @mixpanel.track_event("Team Update", {:team => @this_team.name, :admin=>true, :failed => false})
-      redirect_to edit_team_url(params[:id])
-    else
-      if @this_team.update_attributes({:password => params[:team][:password], :password_confirmation => params[:team][:password_confirmation]})
-        @mixpanel.track_event("Team Update", {:team => @this_team.name, :admin=>false, :failed => false})
-        @div = @team.division
-        @team = nil
-        redirect_to login_url(@div)
+    # Then handle changing the password if the user desires
+    if @valid_attributes[:password].present?
+      if @is_admin
+        @this_team.password = @valid_attributes[:password]
+      elsif @valid_attributes[:password] == @valid_attributes[:password_confirmation]
+        @this_team.password = @valid_attributes[:password]
       else
-        flash[:error] = "A save error occurred: " + @this_team.errors.full_messages.first + "."
-        @mixpanel.track_event("Team Update", {:team => @this_team.name, :admin=>false, :failed => true})
-        redirect_to edit_team_url(params[:id])
+        flash[:error] = "Passwords do not match!"
+        return redirect_to(edit_team_url(params[:id]))
       end
+    else
+      @valid_attributes.delete(:password)
+      @valid_attributes.delete(:password_confirmation)
+    end
+
+    # Commit!
+    if !@this_team.update_attributes(@valid_attributes)
+      flash[:error] = "A save error occurred: " + @this_team.errors.full_messages.first + "."
+      @mixpanel.track_event("Team Update", {
+        :team => @this_team.name,
+        :admin => @is_admin,
+        :failed => false
+      })
+      redirect_to edit_team_url(@this_team.id)
+    else
+      flash[:message] = "Saved!"
+      @mixpanel.track_event("Team Update", {
+        :team => @this_team.name,
+        :admin => @is_admin,
+        :failed => true
+      })
+      redirect_to edit_team_url(@this_team.id)
     end
   end
+
   def new
     breadcrumbs.add("Create Team")
     @this_team = Team.new
