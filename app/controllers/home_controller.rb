@@ -44,8 +44,8 @@ class HomeController < ApplicationController
           # Prepopulate the event list:
           @tournament.load_default_events
 
-          @school_url = "http://#{@school.subdomain}.#{request.domain}"
-          HomeMailer.welcome(@director.email).deliver
+          @school_url = @school.url(request.domain)
+          HomeMailer.welcome(@tournament).deliver
           render :createdschool, :layout => 'static_page'
         else
           flash[:error] = "Error: Could not create tournament for

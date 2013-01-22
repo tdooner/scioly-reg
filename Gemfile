@@ -9,6 +9,8 @@ gem 'mixpanel'
 gem "paperclip"
 gem "aws-sdk"
 gem 'aws-s3'
+gem 'premailer-rails3'
+gem 'nokogiri'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'sass'
@@ -33,7 +35,6 @@ gem "parallel_tests"
 
 # Bundle the extra gems:
 # gem 'bj'
-# gem 'nokogiri'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 # gem 'aws-s3', :require => 'aws/s3'
 

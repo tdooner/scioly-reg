@@ -32,6 +32,10 @@ class Team < ActiveRecord::Base
     return Digest::SHA1.hexdigest(pass)
   end
 
+  def email
+    'tomdooner@gmail.com'
+  end
+
   def password=(pass)
     @password = pass
     self.hashed_password = Team.encrypt(@password)

@@ -32,9 +32,16 @@
         .input
           = select(:team, :division, Team.divisions)
       .clearfix
-        =f.label :password, "New Password:"
+        =f.label :password, "Password:"
         .input
           = f.password_field :password
-
+      .clearfix
+        =label_tag 'send_email', 'Send Password via Email'
+        .input
+          =check_box_tag 'send_email', 'true', :checked => 'checked'
+          %span.help-block
+            %b Note:
+            This will send an email to the coach containing the password.
+            You can only send the password email if you change the password.
   .actions
-    %input.btn.primary{:type=>"submit", :value=>"Create Team!"}
+    %input.btn.primary{:type=>"submit", :value=>team.new_record? ? 'Create Team' : 'Save Changes'}

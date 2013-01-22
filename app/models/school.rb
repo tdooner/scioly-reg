@@ -11,4 +11,7 @@ class School < ActiveRecord::Base
   has_many :tournaments
   has_many :users
 
+  def url(domain = 'sciolyreg.org')
+    "http://#{subdomain}.#{domain}"
+  end
 end
