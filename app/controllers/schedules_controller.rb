@@ -54,12 +54,36 @@ class SchedulesController < ApplicationController
 
     schedules.each do |s|
       a = s.strip.split("\t")
+
       if a.length < 7
         @errors << "Schedule #{a[0]} does not have enough fields."
         next
       end
-      schedule = @current_tournament.schedules.new({:event=>a[0], :division=>a[1], :room=>a[2], :starttime=>DateTime.parse(a[3]).to_time, :endtime => DateTime.parse(a[4]).to_time, :num_timeslots => a[5].to_i, :teams_per_slot => a[6].to_i})
-      if schedule.save()
+
+      event, division, room, starttime, endtime, num_timeslots, teams_per_slot = [
+        a[0],
+        a[1],
+        a[2],
+        a[3] == 'TBD' ? nil : Time.zone.parse(a[3]).to_time,
+        a[4] == 'TBD' ? nil : Time.zone.parse(a[4]).to_time,
+        a[5].to_i,
+        a[6].to_i
+      ]
+
+      schedule = @current_tournament.schedules.where(
+        :event => event,
+        :division => division,
+      ).first_or_create
+
+      success = schedule.update_attributes(
+        :room => room,
+        :starttime => starttime,
+        :endtime => endtime,
+        :num_timeslots => num_timeslots,
+        :teams_per_slot => teams_per_slot
+      )
+
+      if success
         if schedule.num_timeslots != 0
           res = schedule.updateTimeSlots
           if !res.is_a?(Array)
@@ -70,6 +94,7 @@ class SchedulesController < ApplicationController
         @errors << schedule.errors.full_messages.first
       end
     end
+
     flash[:error] = @errors.join("<br />") unless @errors.empty?
 
     if not flash[:error]
