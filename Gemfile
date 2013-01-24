@@ -17,6 +17,10 @@ gem 'sass'
 gem 'jquery-rails'
 gem 'rails3-jquery-autocomplete'
 
+group :production do
+  gem 'pg'
+end
+
 group :test do
     gem 'factory_girl_rails'
     gem 'rspec-rails'

@@ -110,6 +110,7 @@ GEM
     parallel (0.6.1)
     parallel_tests (0.9.3)
       parallel
+    pg (0.14.1)
     polyglot (0.3.3)
     premailer (1.7.3)
       css_parser (>= 1.1.9)
@@ -204,6 +205,7 @@ DEPENDENCIES
   nokogiri
   paperclip
   parallel_tests
+  pg
   premailer-rails3
   rails (= 3.2.11)
   rails3-jquery-autocomplete
