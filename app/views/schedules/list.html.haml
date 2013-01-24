@@ -43,6 +43,9 @@
             -if @has_registered[s.id]
               %td= image_tag("ok.png")
             - else
-              %td -
+              - if s.is_scheduled_online?
+                %td= image_tag('error.png', :width => '16')
+              - else
+                %td -
 :javascript
   $(function(){ mpq.track("View All Schedules"); });

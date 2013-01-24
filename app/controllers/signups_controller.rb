@@ -80,7 +80,7 @@ class SignupsController < ApplicationController
   def ensure_registration_open
     return if session[:user] && @team && session[:user].can_register_team_for_event?(@team, @signup.timeslot.schedule)
 
-    unless @signup.timeslot.schedule.tournament.can_register()
+    if !@signup.timeslot.schedule.tournament.can_register?
       flash[:error] = "Registration is not open for the current tournament!"
       redirect_to(schedule_url(@signup.timeslot.schedule))
     end
