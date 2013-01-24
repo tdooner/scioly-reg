@@ -92,12 +92,20 @@ class TeamsController < ApplicationController
     @teams.each do |t|
       a = t.split("\t")
 
-      if a.length < 6
+      if a.length < 7
         @errors << "Short record found: #{a[0]}!"
         next
       end
 
-      team = @current_tournament.teams.new({:name => a[0], :number => a[1], :coach => a[2], :division => a[3], :homeroom => a[4], :password => a[5].strip})
+      team = @current_tournament.teams.new(
+        :name => a[0],
+        :number => a[1],
+        :coach => a[2],
+        :division => a[3],
+        :homeroom => a[4],
+        :password => a[5],
+        :email => a[6].strip,
+      )
 
       if team.save
         if params[:send_email].present? && team.email.present?
