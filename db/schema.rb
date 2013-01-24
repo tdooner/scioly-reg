@@ -107,22 +107,6 @@ ActiveRecord::Schema.define(:version => 20130124175618) do
     t.datetime "updated_at"
   end
 
-  create_table "tmp_schools", :force => true do |t|
-    t.string   "name"
-    t.string   "subdomain"
-    t.string   "admin_name"
-    t.string   "admin_email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "logo_file_name"
-    t.string   "logo_content_type"
-    t.integer  "logo_file_size"
-    t.datetime "logo_updated_at"
-    t.string   "time_zone",         :default => "Eastern Time (US & Canada)"
-  end
-
-  add_index "tmp_schools", ["subdomain"], :name => "index_schools_on_subdomain"
-
   create_table "tournaments", :force => true do |t|
     t.boolean  "is_current"
     t.datetime "registration_begins"
