@@ -41,8 +41,7 @@ describe HomeController do
       end
 
       it 'sends an email to welcome the coach' do
-        HomeMailer.expects(:welcome => stub(:deliver => '')).
-          with('test@test.com')
+        HomeMailer.expects(:welcome => stub(:deliver => ''))
         post :createschool, formdata
       end
     end
