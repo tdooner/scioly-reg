@@ -53,6 +53,7 @@ Scioly::Application.routes.draw do
     get 'scores'
     get 'scoreslideshow'
     post 'scoreslideshow'
+    get 'load_default_events'
   end
   post 'tournament/activate' => "tournaments#set_active"
 

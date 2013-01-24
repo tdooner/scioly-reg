@@ -1,3 +1,8 @@
+-if @is_admin && @can_load_default_events
+  %div.alert-message.block-message.info
+    Hey, it looks like you're an admin. Here are some things you can do:
+    %div.alert-actions
+      %a.btn{:href => tournament_load_default_events_path(@current_tournament) } Import #{@current_tournament.date.year} Events
 %p
   To create a bunch of events in the
   %b=@current_tournament.humanize

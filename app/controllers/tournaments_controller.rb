@@ -93,4 +93,12 @@ class TournamentsController < ApplicationController
     @places = ["First Place", "Second Place", "Third Place", "Fourth Place", "Fifth Place", "Sixth Place", "Seventh Place", "Eigth Place"]
     render :slideshow, :layout=>"scoreslideshow"
   end
+
+  def load_default_events
+    @tournament = Tournament.find(params[:tournament_id])
+
+    @tournament.load_default_events
+
+    redirect_to admin_events_url
+  end
 end

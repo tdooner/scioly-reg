@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Tournament do
   describe '#set_current' do
     let!(:school) { FactoryGirl.create(:school) }
@@ -81,6 +83,17 @@ describe Tournament do
     it 'returns false when registration has ended' do
       tournament.stubs(:has_registration_ended?).returns(true)
       tournament.can_register?.should be_false
+    end
+  end
+
+  describe '#load_default_events' do
+    let!(:tournament) { FactoryGirl.create(:current_tournament) }
+    let!(:default_event) { FactoryGirl.create(:default_event, :year => tournament.date.year) }
+    let!(:default_event_other_year) { FactoryGirl.create(:default_event, :year => tournament.date.year + 1) }
+
+    it 'loads default events for that year' do
+      tournament.load_default_events
+      tournament.schedules.reload.should == [ default_event ]
     end
   end
 end

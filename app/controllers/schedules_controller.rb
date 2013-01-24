@@ -16,6 +16,7 @@ class SchedulesController < ApplicationController
 
   def batchnew
     breadcrumbs.add("New Event", new_schedule_url())
+    @can_load_default_events = DefaultEvent.for_year(@current_tournament.date.year).present?
     breadcrumbs.add("Batch Mode")
   end
 
