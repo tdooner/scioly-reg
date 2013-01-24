@@ -100,4 +100,3 @@ describe TeamsController do
     end
   end
 end
-
