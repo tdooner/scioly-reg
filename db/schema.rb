@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130121063522) do
+ActiveRecord::Schema.define(:version => 20130124175618) do
 
   create_table "default_events", :force => true do |t|
     t.integer  "year"
@@ -22,12 +22,12 @@ ActiveRecord::Schema.define(:version => 20130121063522) do
   end
 
   create_table "infos", :force => true do |t|
-    t.string   "name"
-    t.text     "page_text"
-    t.binary   "contents"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "human_name"
+    t.string    "name"
+    t.text      "page_text"
+    t.binary    "contents"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.string    "human_name"
   end
 
   create_table "schedules", :force => true do |t|
@@ -40,8 +40,8 @@ ActiveRecord::Schema.define(:version => 20130121063522) do
     t.boolean  "scores_withheld",  :default => false
     t.boolean  "counts_for_score", :default => true
     t.text     "custom_info",      :default => ""
-    t.datetime "starttime"
-    t.datetime "endtime"
+    t.time     "starttime"
+    t.time     "endtime"
   end
 
   create_table "schools", :force => true do |t|
@@ -57,6 +57,8 @@ ActiveRecord::Schema.define(:version => 20130121063522) do
     t.datetime "logo_updated_at"
     t.string   "time_zone",         :default => "Eastern Time (US & Canada)"
   end
+
+  add_index "schools", ["subdomain"], :name => "index_schools_on_subdomain"
 
   create_table "scores", :force => true do |t|
     t.integer   "schedule_id"

@@ -61,6 +61,10 @@ class SchedulesController < ApplicationController
         next
       end
 
+      if a[0] == 'Event Name' || s[0] == '#'
+        next
+      end
+
       event, division, room, starttime, endtime, num_timeslots, teams_per_slot = [
         a[0],
         a[1],

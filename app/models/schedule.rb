@@ -96,21 +96,11 @@ class Schedule < ActiveRecord::Base
       timeslot_begins = self.starttime + slotwidth * 60 * i
       timeslot_ends = timeslot_begins + slotwidth * 60
       exists = Timeslot.where(
-        ['schedule_id = ?
-          AND TIME(begins) = TIME(?)
-          AND TIME(ends) = TIME(?)
-          AND team_capacity = ?',
-          self.id,
-          timeslot_begins,
-          timeslot_ends,
-          teams_per_slot
-      ]
-      ).first_or_initialize(
         :schedule_id => self.id,
         :begins => timeslot_begins,
         :ends => timeslot_ends,
         :team_capacity => teams_per_slot,
-      )
+      ).first_or_initialize
     end
   end
 end

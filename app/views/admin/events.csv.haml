@@ -13,4 +13,4 @@ Event Name,Division,Room,Event Start Time,Event End Time,Number of Timeslots,Tea
       - event_details.append([ 'custom', 'custom' ])
   - else
     - event_details.append([ 0, 0 ])
-  = event_details.flatten.join(',')
+  = event_details.flatten.join(',').html_safe
