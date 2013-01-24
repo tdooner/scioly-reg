@@ -1,0 +1,36 @@
+:css
+  table {
+    border-collapse: collapse;
+    border: 0px;
+  }
+  h1, h2, h3 {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  h2 {
+    font-size: 24px;
+    line-height: 36px;
+    color: #404040;
+    font-weight: bold;
+  }
+  .footer, .footer a {
+    color: #999;
+  }
+  .body {
+    padding-top: 20px;
+  }
+%table
+  %tr
+    %td{ :width => 230 }= image_tag @tournament.school.logo(:logo) 
+    %td
+      %h2= @tournament.title
+  %tr
+    %td{ :colspan => 2}
+      .body= yield
+  %tr
+    %td{ :colspan => 2}
+      %p.footer
+        This email was sent by
+        =link_to 'Foundry', 'http://sciolyreg.org'
+        -if @team
+          to #{link_to @team.coach, "mailto:#{@team.email}"}. If this email has reached you by
+          mistake, please inform #{link_to @tournament.school.admin_name, "mailto:#{@tournament.school.admin_email}"}.

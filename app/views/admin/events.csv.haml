@@ -1,0 +1,16 @@
+Event Name,Division,Room,Event Start Time,Event End Time,Number of Timeslots,Teams per Timeslot
+-@events.each do |e|
+  - event_details = [ e.event,
+      e.division,
+      e.room,
+      e.times[:start_excel],
+      e.times[:end_excel],
+    ]
+  - if e.timeslots.present?
+    - if e.default_timeslots?
+      - event_details.append([ e.timeslots.length, e.timeslots.first.team_capacity])
+    - else
+      - event_details.append([ 'custom', 'custom' ])
+  - else
+    - event_details.append([ 0, 0 ])
+  = event_details.flatten.join(',')
