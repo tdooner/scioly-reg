@@ -8,6 +8,10 @@
       =f.label :coach, "Coach's Name:"
       .input
         = f.text_field :coach
+    .clearfix
+      =f.label :email, "Email:"
+      .input
+        = f.text_field :email
     -if !@is_admin
       .clearfix
         =f.label :password, "Current Password:"

@@ -18,7 +18,7 @@ class TeamsController < ApplicationController
     @this_team = Team.find(params[:id])
 
     user_attributes =
-      [:coach, :password_existing, :password, :password_confirmation]
+      [:coach, :email, :password_existing, :password, :password_confirmation]
     admin_attributes =
       [:name, :number, :division]
 
@@ -36,10 +36,12 @@ class TeamsController < ApplicationController
     end
 
     # Then handle changing the password if the user desires
+    # TODO: Bug: Move this below update_attributes so if an admin changes both
+    # the password and the email, the password email is sent to the right place.
     if @valid_attributes[:password].present?
       if @is_admin
         @this_team.password = @valid_attributes[:password]
-        if params[:send_email].present?
+        if params[:send_email].present? && @this_team.email.present?
           TeamMailer.password_update(@this_team, params[:team][:password]).deliver
         end
       elsif @valid_attributes[:password] == @valid_attributes[:password_confirmation]
@@ -98,7 +100,7 @@ class TeamsController < ApplicationController
       team = @current_tournament.teams.new({:name => a[0], :number => a[1], :coach => a[2], :division => a[3], :homeroom => a[4], :password => a[5].strip})
 
       if team.save
-        if params[:send_email].present?
+        if params[:send_email].present? && team.email.present?
           TeamMailer.password_update(team, team.password).deliver
         end
       else

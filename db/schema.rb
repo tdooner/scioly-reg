@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130124175618) do
+ActiveRecord::Schema.define(:version => 20130124190555) do
 
   create_table "default_events", :force => true do |t|
     t.integer  "year"
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(:version => 20130124175618) do
     t.integer  "tournament_id"
     t.string   "homeroom"
     t.boolean  "qualified_for_states", :default => false
+    t.string   "email"
   end
 
   create_table "timeslots", :force => true do |t|

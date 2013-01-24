@@ -97,6 +97,24 @@ describe TeamsController do
         post :update, form_data
         team.reload.division.should == form_data['team']['division']
       end
+
+      context "when send_email is not present" do
+        it "doesn't send any email" do
+          TeamMailer.expects(:password_update).never
+          post :update, form_data
+        end
+      end
+
+      context "when send_email is true" do
+        it 'sends an email to the coach' do
+          new_password = 'the_new_password'
+          form_data['team']['password'] = new_password
+          form_data['send_email'] = 'true'
+
+          TeamMailer.expects(:password_update).with(team, new_password).returns(stub(:deliver => true))
+          post :update, form_data
+        end
+      end
     end
   end
 end

@@ -6,6 +6,7 @@ FactoryGirl.define do
     coach "Tom Dooner"
     password 'password'
     hashed_password Digest::SHA1.hexdigest('password')
+    email Faker::Internet.email
 
     tournament
   end
