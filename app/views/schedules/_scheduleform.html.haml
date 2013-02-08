@@ -34,7 +34,7 @@
         = f.autocomplete_field :event, autocomplete_event_schedule_path, :id_element => '#schedule_event_id'
         = hidden_field_tag :schedule_event_id, "-1"
     %div.clearfix
-      %label{:for=>"schedule_division_b"} 
+      %label{:for=>"schedule_division_b"}
         %b Division:
       %div.input
         %ul.inputs-list
@@ -55,15 +55,15 @@
       %label{:for=>"schedule_starttime"}
         %b Event Start Time:
       %div.input
-        = f.time_select :starttime, {:minute_step => 5}, :class=>"small"
+        =f.time_select :starttime, { :minute_step => 5 }, :class=>"small"
     %div.clearfix
       %label{:for=>"schedule_endtime"}
         %b Event End Time:
       %div.input
-        = f.time_select :endtime, {:minute_step => 5}, :class=>"small"
+        = f.time_select :endtime, { :minute_step => 5 }, :class=>"small"
     %div.clearfix
       %label{:for=>"schedule_custom_info"}
-        %b 
+        %b
           Custom Information
           %a{:href=>"#"} (textile)
       %div.input

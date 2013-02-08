@@ -62,10 +62,10 @@ class Schedule < ActiveRecord::Base
 
   def times
     @times ||= {
-      :start => (starttime && starttime.strftime("%l:%M %P")) || 'TBD',
-      :start_excel => (starttime && starttime.strftime("%T")) || 'TBD',
-      :end => (endtime && endtime.strftime("%l:%M %P")) || 'TBD',
-      :end_excel => (endtime && endtime.strftime("%T")) || 'TBD',
+      :start => (starttime && starttime.in_time_zone.strftime("%l:%M %P")) || 'TBD',
+      :start_excel => (starttime && starttime.in_time_zone.strftime("%T")) || 'TBD',
+      :end => (endtime && endtime.in_time_zone.strftime("%l:%M %P")) || 'TBD',
+      :end_excel => (endtime && endtime.in_time_zone.strftime("%T")) || 'TBD',
     }
   end
 
