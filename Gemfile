@@ -11,6 +11,7 @@ gem "aws-sdk"
 gem 'aws-s3'
 gem 'premailer-rails3'
 gem 'nokogiri'
+gem 'airbrake'
 
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'sass'
