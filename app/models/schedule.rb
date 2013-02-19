@@ -8,6 +8,18 @@ class Schedule < ActiveRecord::Base
   has_many :scores
   belongs_to :tournament
 
+  composed_of :starttime_in_time_zone,
+    :class_name => 'DateTime',
+    :mapping => %w(DateTime to_s),
+    :constructor => Proc.new { |item| item },
+    :converter => Proc.new { |item| item }
+
+  composed_of :endtime_in_time_zone,
+    :class_name => 'DateTime',
+    :mapping => %w(DateTime to_s),
+    :constructor => Proc.new { |item| item },
+    :converter => Proc.new { |item| item }
+
 
   def updateTimeSlots
     # Currently, the only supported schedule type is even divisions of time... e.g.
@@ -80,6 +92,24 @@ class Schedule < ActiveRecord::Base
 
     _initialize_timeslots(self.timeslots.count, self.timeslots.first.team_capacity).all?(&:persisted?) &&
     (!num_timeslots || self.timeslots.count == num_timeslots.to_i)
+  end
+
+  # These four methods provide backend glue for the rails form helpers to
+  # display and save the correct start and end times:
+  def starttime_in_time_zone
+    starttime.in_time_zone
+  end
+
+  def starttime_in_time_zone=(val)
+    self.starttime = Time.zone.local(val.year, val.month, val.day, val.hour, val.minute, val.second)
+  end
+
+  def endtime_in_time_zone
+    endtime.in_time_zone
+  end
+
+  def endtime_in_time_zone=(val)
+    self.endtime = Time.zone.local(val.year, val.month, val.day, val.hour, val.minute, val.second)
   end
 
   private
