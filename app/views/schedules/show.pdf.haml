@@ -4,9 +4,9 @@
   }
 %div{:align=>"center", :style=>"width:500px; margin:auto;"}
   %div{:style=>"float:left"}
-    = image_tag(@current_school.logo.url(:pdf), :height=>"50")
+    = image_tag(@current_school.logo.url(:logo), :height=>"50")
   %div{:style=>"float:right"}
-    = image_tag(@current_tournament.homepage_photo.url(:pdf), :height=>"50")
+    = image_tag(@current_tournament.homepage_photo.url(:medium), :height=>"50")
   %h1{:style=>"padding-top:20px; clear:both"}
     = @schedule.event + " (" + @schedule.division + ")"
   -if not @schedule.room.nil?
