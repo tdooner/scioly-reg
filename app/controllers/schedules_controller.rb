@@ -136,7 +136,10 @@ class SchedulesController < ApplicationController
 
     respond_to do |format|
       format.pdf do
-        redirect_to :show unless @is_admin
+        if !@is_admin
+          flash[:error] = 'You must be a tournament administrator to download event registration PDFs. Please contact the tournament director if you need a PDF for yourself.'
+          redirect_to schedule_url(@schedule)
+        end
 
         render :pdf => @schedule.event.gsub(/[^a-zA-Z]/, '_') + "_" + @schedule.division
       end
