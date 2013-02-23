@@ -1,0 +1,40 @@
+%div.page-break{:align=>"center", :style=>"width:500px; margin:auto;"}
+  %div{:style=>"float:left"}
+    = image_tag(@current_school.logo.url(:logo), :height=>"50")
+  %div{:style=>"float:right"}
+    = image_tag(@current_tournament.homepage_photo.url(:medium), :height=>"50")
+  %h1{:style=>"padding-top:20px; clear:both"}
+    = schedule.humanize
+  -if schedule.room.present?
+    %h2= schedule.room
+%p
+  Below are the designated timeslots for this event. Sign up for a timeslot by writing your team name and number on the appropriate line.
+%table#timeslot{:width => "100%", :style=>"padding:0;margin:0;border-collapse:collapse;"}
+  %tr
+    %td
+      %p{ :style => 'text-align: center' }
+        %b Timeslot
+    %td
+      %b Availability
+  // Iterate over each timeslot
+  - schedule.timeslots.sort { |x,y| x.begins <=> y.begins }.each do |ts|
+    %tr{ :style => "background-color: #{cycle('#FFF','#DDD')}" }
+      %td{:width => "25%"}
+        %p{ :style => 'text-align: center' }
+          = ts.begins.strftime("%I:%M %p")
+      %td{:width => "75%", :style=>"padding:10px"}
+        - ts.occupants.each do |team|
+          %b=team.name.gsub(/[^[:print:]]/, " ")
+          = "(#" + team.number + team.division + ")"
+          %br
+        -(ts.team_capacity - ts.sign_ups.length).times do
+          %div{:style=>"line-height:25px"}
+            _____________________________________
+%div.page-break
+  %h3 Unregistered Teams:
+  %ul
+    - signed_up_teams = schedule.timeslots.map(&:occupants).flatten.to_set
+    - (schedule.tournament.teams.where('division = ?', schedule.division).to_set - signed_up_teams).each do |t|
+      %li
+        %b=t.name.gsub(/[^[:print:]]/, " ")
+        ="(#" + t.number + t.division + ")"

@@ -5,4 +5,5 @@
   div.page-break:first-child {
     page-break-before:avoid;
   }
-= render 'showpdf', :schedule => @schedule
+- @schedules.each do |s|
+  = render 'showpdf', :schedule => s

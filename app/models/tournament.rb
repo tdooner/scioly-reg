@@ -22,7 +22,8 @@ class Tournament < ActiveRecord::Base
     format1 = "%B %e, %Y @ %I:%M %p %Z"
     {
       :registration_begins => self.registration_begins.strftime(format1),
-      :registration_ends => self.registration_ends.strftime(format1)
+      :registration_ends => self.registration_ends.strftime(format1),
+      :date_filename => date.strftime("%F"),
     }
   end
 

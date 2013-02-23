@@ -42,6 +42,10 @@ Scioly::Application.routes.draw do
   resources :schedules, :path => "/schedule" do
     get 'scores'
     post 'scores', :action => "savescores"
+
+    collection do
+      get 'all_pdfs'
+    end
   end
   resources :timeslots
   match '/schedule/:id/register/' => "signups#new", :as => :newsignup

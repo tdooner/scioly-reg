@@ -20,7 +20,6 @@ class Schedule < ActiveRecord::Base
     :constructor => Proc.new { |item| item },
     :converter => Proc.new { |item| item }
 
-
   def updateTimeSlots
     # Currently, the only supported schedule type is even divisions of time... e.g.
     #  StartTime = 9am, EndTime = 10am, timeslots = 4

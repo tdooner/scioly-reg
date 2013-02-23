@@ -1,7 +1,6 @@
 :javascript
   $(function() {
     $("#events-table").tablesorter({ sortList: [[0,0],[1,0]] });
-    $(".hidden").hide()
   });
 .alert-message.block-message.info
   Below are the event pages for this tournament. Click on "Edit" to edit the properties of an event.
@@ -9,11 +8,7 @@
     =link_to "New Event", new_schedule_url, :class=>"btn"
     =link_to "Import Events", schedule_batchnew_url, :class=>"btn"
     =link_to "Export Events to Excel", admin_events_url(:format => 'csv'), :class => 'btn'
-    =link_to "Download Registration PDFs", "javascript:void($('.hidden').toggle());", :class=>"btn"
-  .hidden
-    %ul
-      - @current_tournament.schedules.select(&:is_scheduled_online?).each do |e|
-        %li=link_to e.humanize, schedule_path(e, :only_path=>false, :format=>"pdf")
+    =link_to "Download Registration PDFs", all_pdfs_schedules_url(:format => :pdf), :class=>"btn"
 %table.zebra-striped#events-table
   %thead
     %th

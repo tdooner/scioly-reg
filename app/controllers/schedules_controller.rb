@@ -5,7 +5,7 @@ class SchedulesController < ApplicationController
   # is what a team registers to.
   ###
 
-  before_filter :is_admin, :only => [:new, :destroy, :batchnew, :edit, :create, :update, :scores, :savescores, :batchcreate]
+  before_filter :is_admin, :only => [:new, :destroy, :batchnew, :edit, :create, :update, :scores, :savescores, :batchcreate, :all_pdfs]
   protect_from_forgery :except => :destroy
   autocomplete :schedule, :event, :display_value => :humanize, :extra_data => [:division]
 
@@ -136,12 +136,21 @@ class SchedulesController < ApplicationController
 
     respond_to do |format|
       format.pdf do
-        @signed_up_teams = @schedule.timeslots.map {|x| x.sign_ups.map{ |y| y.team } }.flatten.to_set
-        @teams_remaining = @current_tournament.teams.where(["division = ?", @schedule.division]).order("name ASC").to_set.difference(@signed_up_teams)
+        redirect_to :show unless @is_admin
+
         render :pdf => @schedule.event.gsub(/[^a-zA-Z]/, '_') + "_" + @schedule.division
       end
       format.html do
         render :show
+      end
+    end
+  end
+
+  def all_pdfs
+    respond_to do |format|
+      format.pdf do
+        @schedules = @current_tournament.schedules.includes(:timeslots => :occupants).find_all { |e| e.is_scheduled_online? }
+        render :pdf => "ScienceOlympiadRegistration-#{@current_tournament.human_times[:date_filename]}"
       end
     end
   end
