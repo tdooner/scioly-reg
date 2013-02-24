@@ -45,6 +45,5 @@ class AdminController < ApplicationController
     @events = @current_tournament.schedules.includes(:scores)
     @unfinishedevents = @events.select{|x| x.scores.empty?}
     @withheldevents = @events.select{|x| x.scores_withheld?}
-
   end
 end

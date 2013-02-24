@@ -56,6 +56,7 @@ Scioly::Application.routes.draw do
   resources :tournaments do
     get 'scores'
     get 'scoreslideshow'
+    post 'publish_scores'
     post 'scoreslideshow'
     get 'load_default_events'
   end

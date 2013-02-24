@@ -101,4 +101,15 @@ class TournamentsController < ApplicationController
 
     redirect_to admin_events_url
   end
+
+  def publish_scores
+    @tournament = Tournament.find(params[:tournament_id])
+    if @tournament.update_attribute(:scores_revealed, true)
+      flash[:message] = "Scores published!"
+      redirect_to tournament_scores_url(@tournament)
+    else
+      flash[:error] = "Could not publish scores!"
+      redirect_to admin_scorespublish_url
+    end
+  end
 end
