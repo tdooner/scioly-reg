@@ -1,8 +1,28 @@
 %h3 Welcome to Foundry!
-
-Hello, welcome to Foundry! Your tournament is almost ready to go.
-You're going to have to do the following things:
+Hello, welcome to Foundry! Your tournament is almost ready to go. To speed things up, we set up some default dates and times. They are:
+%ul
+  %li
+    %b Registration Begins:
+    =@tournament.human_times[:registration_begins]
+  %li
+    %b Registration Ends:
+    =@tournament.human_times[:registration_ends]
+You can change these dates in the
+=link_to 'administrator control panel.', adminlogin_url(:host => @tournament.school.url)
+%p
+  In order to have a fully-functional tournament, there are only a couple things to do:
 %ol
-  %li Set up teams
-  %li Set up events
-  %li Pick dates for things
+  %li
+    %b Import the list of teams
+    %p
+      This will email the coaches their passwords so they can log in for
+      registration.
+  %li
+    %b Import the dates and times for events
+    %p
+      This will set up the timeslots for registration.
+
+If you have any questions, feel free to email the maintainer of Foundry, Tom
+Dooner, at tomdooner@gmail.com.
+%p
+  Best wishes for a great tournament!
