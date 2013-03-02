@@ -17,7 +17,7 @@
 %ul.tabs
   %li{:class=>(params[:division].nil?)?"active":""}
     %a{:href=>schedules_url}="All Events"
-  - Team.divisions.values.each do |d|
+  - @current_tournament.divisions.each do |d|
     %li{:class=>(d==params[:division])?"active":""}
       %a{:href=>schedule_division_url(d)}="Division #{d} Events"
 %div.tab-content

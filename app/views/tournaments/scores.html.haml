@@ -21,7 +21,7 @@
       (for Excel)
     %h4 More download methods will be posted later...
   - one_active = false
-  - Team.divisions.values.each do |d|
+  - @current_tournament.divisions.each do |d|
     %div.tab-pane{:id=>"division_#{d}",:class=>(one_active ? "":"active")}
       - one_active = true
       %table.scores-table.condensed-table.zebra-striped{:id=>"scores_table_#{d}"}

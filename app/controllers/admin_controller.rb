@@ -15,7 +15,7 @@ class AdminController < ApplicationController
     breadcrumbs.add("Events")
     @right_hidden = true
     @events = @current_tournament.schedules
-    @teams_by_division = Team.divisions.inject({}) {|a,i|
+    @teams_by_division = @current_tournament.divisions.inject({}) {|a,i|
       a.merge(i[0] => Team.count(:conditions=>["division = ? AND tournament_id = ?", i[0], @current_tournament]))
     }
     @event_signups = @events.inject({}){|a,i|

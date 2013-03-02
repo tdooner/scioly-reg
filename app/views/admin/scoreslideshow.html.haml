@@ -7,9 +7,9 @@ This page will customize a slideshow of results to be shown at the awards ceremo
       %label
         %b Divisions
       .input
-        %select{:multiple=>"multiple", :size=>"2", :name=>"slideshow[division][]"}
-          %option B
-          %option C
+        %select{:multiple=>"multiple", :size=>@current_tournament.divisions.length, :name=>"slideshow[division][]"}
+          - @current_tournament.divisions.each do |d|
+            %option #{d}
         .help-block Note: Hold CTRL to select multiple divisions.
     .clearfix
       %label

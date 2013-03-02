@@ -2,7 +2,7 @@
   #topNavWrapper
     %ul#topnav
       %li= link_to 'Home', root_path
-      - Team.divisions.values.each do |d|
+      - @current_tournament.divisions.each do |d|
         %li
           = link_to "Division #{d} Events", schedule_division_url(d)
           %ul
@@ -22,8 +22,8 @@
         %li
           = link_to 'Team Log In', "#"
           %ul
-            %li= link_to "Division B Teams", login_url("B")
-            %li= link_to "Division C Teams", login_url("C")
+            - @current_tournament.divisions.each do |d|
+              %li= link_to "Division #{d} Teams", login_url(d)
       - else
         %li
           = link_to @team.name, root_url

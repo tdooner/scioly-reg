@@ -34,7 +34,7 @@
       .clearfix
         =f.label :division, "Division:"
         .input
-          = select(:team, :division, Team.divisions)
+          = select(:team, :division, [['A', 'A'], ['B', 'B'], ['C', 'C']])
       .clearfix
         =f.label :password, "Password:"
         .input
