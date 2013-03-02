@@ -1,5 +1,6 @@
 <%=@active.title%>,,,,<%=@active.school.name%>,,,,<%=@active.date.strftime("%D")%>
-<% @current_tournament.divisions.each do |d| %>
+<% @current_tournament.divisions.each do |d| %><%
+next if @teams_by_rank[d].nil? || @events[d].nil? %>
 Division <%=d%>,,<%=@events[d].map{|x| x.humanize.gsub(","," ")}.join(",") %>,Total Points,Placement
 <% ranking = 0
   num_at_place = 1
