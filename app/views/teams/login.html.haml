@@ -15,7 +15,7 @@
   %label{:for=>"team_id"}
     %b Select A Team:
   .input
-    =select(:team, :id, @teams.map { |x| ["#{x[:name]} (##{x.getNumber})", x[:id]] })
+    =select(:team, :id, @teams.map { |x| ["#{x[:name]} (Team #{x.getNumber})", x[:id]] })
 .clearfix
   - if not session[:user].nil? and session[:user].is_admin_of(@current_school)
     %b You are an admin.

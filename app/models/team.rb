@@ -18,6 +18,7 @@ class Team < ActiveRecord::Base
   @@divisions = {"B" => "B", "C" => "C"}
 
   def getNumber()
+    return number if !tournament.append_division_to_team_number
     return [number, division].join
   end
 

@@ -3,7 +3,7 @@ class TeamsController < ApplicationController
   before_filter :is_correct_team, :only => [:edit, :update]
 
   def index
-    @teams = @current_tournament.teams
+    @teams = @current_tournament.teams.includes(:tournament)
 
     breadcrumbs.add("Teams")
   end
@@ -156,7 +156,7 @@ class TeamsController < ApplicationController
         @captcha = true
     end
 
-    @teams = Team.find_all_by_tournament_id_and_division(@current_tournament, params[:division]).sort_by(&:name)
+    @teams = @current_tournament.teams.where('division = ?', params[:division]).includes(:tournament).sort_by(&:name)
     if @team
       flash[:error] = "Already logged in!"
     end

@@ -121,7 +121,7 @@ class SchedulesController < ApplicationController
   def show
     @schedule = Schedule.find(params[:id])
     breadcrumbs.add("Division #{@schedule.division} Events", schedule_division_url(@schedule.division))
-    @scores = @schedule.scores.includes(:team)
+    @scores = @schedule.scores.includes(:team => :tournament)
     breadcrumbs.add(@schedule.event)
     if @schedule.nil?
       flash[:message] = "Event not found!"
@@ -170,7 +170,7 @@ class SchedulesController < ApplicationController
 
   def scores
     @schedule = Schedule.find(params[:schedule_id], :include => :scores)
-    @teams = @current_tournament.teams.where(["division = ?", @schedule.division])
+    @teams = @current_tournament.teams.where("division = ?", @schedule.division).includes(:tournament)
     @placements = @teams.inject({}) { |a,i|
       s = @schedule.scores.select{|x| x.team_id == i.id}.first
       if s
@@ -185,7 +185,7 @@ class SchedulesController < ApplicationController
 
   def savescores
     @schedule = Schedule.find(params[:schedule_id])
-    @teams = @current_tournament.teams.where(["division = ?", @schedule.division])
+    @teams = @current_tournament.teams.where("division = ?", @schedule.division).includes(:tournament)
 
     @schedule.scores.each(&:destroy)
     all_successful = true

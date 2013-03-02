@@ -70,8 +70,8 @@ class TournamentsController < ApplicationController
     if not params[:slideshow]
       return redirect_to admin_scoreslideshow_url
     end
-    @events = @current_tournament.schedules.includes({:scores => :team})
-    @teams = @current_tournament.teams.includes(:scores)
+    @events = @current_tournament.schedules.includes({:scores => { :team => :tournament } })
+    @teams = @current_tournament.teams.includes([:scores, :tournament])
 
     @events.keep_if{|x| params[:slideshow][:division].include?(x.division) }
     @events.keep_if{|x| !x.scores.empty?}
