@@ -5,12 +5,12 @@
     =link_to "Publish Scores", admin_scorespublish_url
     is pressed.
 %ul.tabs{:"data-tabs"=>"tabs"}
-  %li.active
-    %a{:href=>"#division_B"}
-      Division B
-  %li
-    %a{:href=>"#division_C"}
-      Division C
+  - first = true
+  - @active.divisions.each do |d|
+    %li{ :class => (first ? 'active' : '') }
+      - first = false
+      %a{ :href=>"#division_#{d}" }
+        Division #{d}
   %li
     %a{:href=>"#download"}
       Download Scores
@@ -21,57 +21,60 @@
       (for Excel)
     %h4 More download methods will be posted later...
   - one_active = false
-  - @current_tournament.divisions.each do |d|
+  - @active.divisions.each do |d|
     %div.tab-pane{:id=>"division_#{d}",:class=>(one_active ? "":"active")}
       - one_active = true
-      %table.scores-table.condensed-table.zebra-striped{:id=>"scores_table_#{d}"}
-        %thead
-          %th{:width=>"300px"}
-            Team Name
-          - @events[d].select{|x| x.counts_for_score}.each do |e|
+      - if @events[d].nil? || @teams_by_rank[d].nil?
+        %p No scores are available for Division #{d}.
+      - else
+        %table.scores-table.condensed-table.zebra-striped{:id=>"scores_table_#{d}"}
+          %thead
+            %th{:width=>"300px"}
+              Team Name
+            - @events[d].select{|x| x.counts_for_score}.each do |e|
+              %th
+                %div.outer
+                  %div.inner=e.event
             %th
               %div.outer
-                %div.inner=e.event
-          %th
-            %div.outer
-              %div.inner Total
-          %th
-            %div.outer
-              %div.inner Placement
-          - @events[d].select{|x| !x.counts_for_score}.each do |e|
+                %div.inner Total
             %th
               %div.outer
-                %div.inner.trial="(Trial) #{e.event}"
-        %tbody
-          - ranking = 0
-          - num_at_place = 1
-          - lastval = []
-          - @teams_by_rank[d].each do |t, rank_matrix|
-            %tr
-              %td=t.name
-              =# First display the events which are real events.
-              - @events[d].select{|x| x.counts_for_score}.each do |e|
-                - res = e.scores.select{|x| x.team==t}.first
-                - if res
-                  %td=res.placement
+                %div.inner Placement
+            - @events[d].select{|x| !x.counts_for_score}.each do |e|
+              %th
+                %div.outer
+                  %div.inner.trial="(Trial) #{e.event}"
+          %tbody
+            - ranking = 0
+            - num_at_place = 1
+            - lastval = []
+            - @teams_by_rank[d].each do |t, rank_matrix|
+              %tr
+                %td=t.name
+                =# First display the events which are real events.
+                - @events[d].select{|x| x.counts_for_score}.each do |e|
+                  - res = e.scores.select{|x| x.team==t}.first
+                  - if res
+                    %td=res.placement
+                  - else
+                    %td
+                =# Then display the Total score and placement of the team
+                %td=rank_matrix[0]
+                - if rank_matrix == lastval
+                  - num_at_place += 1
+                  %td=ranking
                 - else
-                  %td 
-              =# Then display the Total score and placement of the team
-              %td=rank_matrix[0]
-              - if rank_matrix == lastval
-                - num_at_place += 1
-                %td=ranking
-              - else
-                - ranking += num_at_place
-                - num_at_place = 1
-                %td=ranking
-              =# Then display all trial events.
-              - @events[d].select{|x| !x.counts_for_score}.each do |e|
-                - res = e.scores.select{|x| x.team==t}.first
-                - if res
-                  %td=res.placement
-                - else
-                  %td 
+                  - ranking += num_at_place
+                  - num_at_place = 1
+                  %td=ranking
+                =# Then display all trial events.
+                - @events[d].select{|x| !x.counts_for_score}.each do |e|
+                  - res = e.scores.select{|x| x.team==t}.first
+                  - if res
+                    %td=res.placement
+                  - else
+                    %td
     :javascript
       $(function(){
         $("table#scores_table_#{d}").tablesorter({sortList:[[#{@events[d].length+2-@events[d].select{|x| !x.counts_for_score}.length},0]]})

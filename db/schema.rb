@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130124190555) do
+ActiveRecord::Schema.define(:version => 20130302160231) do
 
   create_table "default_events", :force => true do |t|
     t.integer  "year"
@@ -69,61 +69,76 @@ ActiveRecord::Schema.define(:version => 20130124190555) do
   end
 
   create_table "sessions", :force => true do |t|
-    t.string   "session_id", :null => false
-    t.text     "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string    "session_id", :null => false
+    t.text      "data"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "sign_ups", :force => true do |t|
-    t.integer  "timeslot_id"
-    t.integer  "team_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer   "timeslot_id"
+    t.integer   "team_id"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
   end
 
   create_table "teams", :force => true do |t|
-    t.string   "name"
-    t.string   "number"
-    t.string   "division"
-    t.string   "coach"
-    t.string   "hashed_password"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "tournament_id"
-    t.string   "homeroom"
-    t.boolean  "qualified_for_states", :default => false
-    t.string   "email"
+    t.string    "name"
+    t.string    "number"
+    t.string    "division"
+    t.string    "coach"
+    t.string    "hashed_password"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.integer   "tournament_id"
+    t.string    "homeroom"
+    t.boolean   "qualified_for_states", :default => false
+    t.string    "email"
   end
 
   create_table "timeslots", :force => true do |t|
-    t.integer  "schedule_id"
-    t.datetime "begins"
-    t.datetime "ends"
-    t.integer  "team_capacity"
+    t.integer   "schedule_id"
+    t.timestamp "begins"
+    t.timestamp "ends"
+    t.integer   "team_capacity"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+  end
+
+  create_table "tmp_schools", :force => true do |t|
+    t.string   "name"
+    t.string   "subdomain"
+    t.string   "admin_name"
+    t.string   "admin_email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "logo_file_name"
+    t.string   "logo_content_type"
+    t.integer  "logo_file_size"
+    t.datetime "logo_updated_at"
+    t.string   "time_zone",         :default => "Eastern Time (US & Canada)"
   end
 
   create_table "tournaments", :force => true do |t|
-    t.boolean  "is_current"
-    t.datetime "registration_begins"
-    t.datetime "registration_ends"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "scores_revealed",             :default => false
-    t.integer  "school_id"
-    t.string   "homepage_photo_file_name"
-    t.string   "homepage_photo_content_type"
-    t.integer  "homepage_photo_file_size"
-    t.datetime "homepage_photo_updated_at"
-    t.text     "hosted_by_markdown"
-    t.text     "homepage_markdown"
-    t.string   "title"
-    t.datetime "date"
+    t.boolean   "is_current"
+    t.timestamp "registration_begins"
+    t.timestamp "registration_ends"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.boolean   "scores_revealed",                :default => false
+    t.integer   "school_id"
+    t.string    "homepage_photo_file_name"
+    t.string    "homepage_photo_content_type"
+    t.integer   "homepage_photo_file_size"
+    t.timestamp "homepage_photo_updated_at"
+    t.text      "hosted_by_markdown"
+    t.text      "homepage_markdown"
+    t.string    "title"
+    t.timestamp "date"
+    t.boolean   "append_division_to_team_number", :default => true
   end
 
   create_table "users", :force => true do |t|

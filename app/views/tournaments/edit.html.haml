@@ -40,5 +40,17 @@
       .help-block
         =link_to "Markdown Syntax", "http://en.wikipedia.org/wiki/Markdown"
         is permitted here.
+  .clearfix
+    %label Team Number Format:
+    .input
+      %ul.inputs-list
+        %li
+          %label
+            = radio_button 'tournament', :append_division_to_team_number, true
+            Team Number + Division (e.g. 13B)
+        %li
+          %label
+            = radio_button 'tournament', :append_division_to_team_number, false
+            Team Number (e.g. 13)
   %p.actions
     =f.submit "Submit Changes", :class=>"btn primary"
