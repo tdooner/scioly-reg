@@ -19,6 +19,7 @@ gem 'rails3-jquery-autocomplete'
 
 group :production do
   gem 'pg'
+  gem 'unicorn'
 end
 
 group :test do
