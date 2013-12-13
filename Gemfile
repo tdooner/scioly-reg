@@ -13,8 +13,6 @@ gem 'aws-s3'
 gem 'premailer-rails3'
 gem 'nokogiri'
 gem 'airbrake'
-
-gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'sass'
 gem 'jquery-rails'
 gem 'rails3-jquery-autocomplete'
@@ -49,4 +47,5 @@ gem "parallel_tests"
 # and rake tasks are available in development mode:
 group :development do
   gem 'debugger'
+  gem 'sqlite3-ruby', :require => 'sqlite3'
 end
