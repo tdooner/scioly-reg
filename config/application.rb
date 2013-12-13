@@ -42,3 +42,5 @@ module Scioly
     config.paperclip_defaults = { :s3_credentials => { :access_key_id => ENV['AWS_ACCESS_KEY'], :secret_access_key => ENV['AWS_SECRET_KEY'] }, :storage => :s3, :bucket => 'sciolyreg' }
   end
 end
+
+Rails.application.routes.default_url_options[:host] = 'sciolyreg.org'
