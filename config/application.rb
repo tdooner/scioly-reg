@@ -40,8 +40,6 @@ module Scioly
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
-
-    config.paperclip_defaults = { :s3_credentials => { :access_key_id => ENV['AWS_ACCESS_KEY'], :secret_access_key => ENV['AWS_SECRET_KEY'] }, :storage => :s3, :bucket => 'sciolyreg' }
   end
 end
 

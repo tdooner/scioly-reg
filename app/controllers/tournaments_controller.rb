@@ -37,9 +37,21 @@ class TournamentsController < ApplicationController
   end
 
   def destroy
-    #TODO: Delete all corresponding events, teams, and signups
-    @t = Tournament.find(params[:id])
-    @t.destroy()
+    tournament = Tournament.find(params[:id])
+
+    if tournament.school.tournaments.count > 1
+      tournament.destroy
+
+      # Make sure that the user can't accidentally delete the active tournament
+      if tournament.is_current
+        previous_tournament = tournament.school.tournaments.order('date DESC').first
+        previous_tournament.set_current
+        flash[:message] = "Automatically set current tournament to #{previous_tournament.humanize}"
+      end
+    else
+      flash[:error] = "You cannot delete your only tournament!"
+    end
+
     redirect_to :tournaments
   end
 
