@@ -93,7 +93,7 @@ describe Tournament do
 
     it 'loads default events for that year' do
       tournament.load_default_events
-      tournament.schedules.reload.should == [ default_event ]
+      tournament.schedules.reload.pluck(:event).should == [ default_event.name ]
     end
   end
 end
