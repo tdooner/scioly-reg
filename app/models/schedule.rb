@@ -96,7 +96,7 @@ class Schedule < ActiveRecord::Base
   # These four methods provide backend glue for the rails form helpers to
   # display and save the correct start and end times:
   def starttime_in_time_zone
-    starttime.in_time_zone
+    starttime.try(:in_time_zone)
   end
 
   def starttime_in_time_zone=(val)
@@ -104,7 +104,7 @@ class Schedule < ActiveRecord::Base
   end
 
   def endtime_in_time_zone
-    endtime.in_time_zone
+    endtime.try(:in_time_zone)
   end
 
   def endtime_in_time_zone=(val)
