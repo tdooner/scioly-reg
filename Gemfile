@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 ruby '2.0.0'
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.16'
 gem 'haml'
 gem 'breadcrumbs'
 gem 'rdiscount'
@@ -13,13 +13,17 @@ gem 'aws-s3'
 gem 'premailer-rails3'
 gem 'nokogiri'
 gem 'airbrake'
-gem 'sass'
 gem 'jquery-rails'
 gem 'rails3-jquery-autocomplete'
 
 group :production do
   gem 'pg'
   gem 'unicorn'
+end
+
+group :assets do
+  gem 'sass'
+  gem 'sass-rails'
 end
 
 group :test do

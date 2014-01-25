@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+@media (print) {
+  .noprint {
+    display: none;
+  }
+
+  .alert-message.block-message {
+    display: none;
+  }
+
+  body {
+    color: black;
+    font-family: Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  h1, h2, h3, h4, h5  {
+    color: #000;
+    margin-bottom: .1em;
+    text-decoration: underline;
+  }
+
+  p {
+    font-size: 10pt;
+    line-height: 14pt;
+    margin-left: .25in;
+    width: 6in;
+  }
+
+  blockquote {
+    font-size: 14pt;
+    font-style: italic;
+    margin-left: .25in;
+    width: 4in;
+  }
+}

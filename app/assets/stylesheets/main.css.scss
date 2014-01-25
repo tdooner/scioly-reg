@@ -1,0 +1,396 @@
+/* CWRU WEBSITE TEMPLATE [A] */
+body, html {
+  margin: 0;
+  height: 100%;
+  background-image: image-url('bright_squares.png');
+}
+
+.alert-message p {
+  color: #fff;
+}
+
+p {
+  color: #333;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  line-height: 1.5;
+}
+
+p img {
+  border: 1px solid #E8E8E8;
+}
+
+.onlyprint {
+  display: none;
+}
+
+img {
+  border: none;
+}
+
+/* Customizations for CWRU-SCIOLY */
+.bluebox {
+  background-color:#D4F0FF;
+  border:4px dashed #0A304E;
+  padding:20px;
+  margin:auto;
+  text-align:center;
+
+  &.smalllinks a {
+    font-size:1em;
+  }
+
+  a {
+    font-size:26px;
+  }
+
+  table {
+    margin: auto;
+  }
+}
+
+div.featureContent a {
+  color: #DDD;
+  text-decoration: underline; }
+
+p.errorbox {
+  border: 2px dashed #FCC;
+  color: #A00000;
+  padding: 8px;
+  text-align: center; }
+
+table#login td {
+  padding: 5px 0px; }
+
+table#timeslot {
+  width:100%;
+  padding:0px;
+  margin:0px;
+  border-collapse:collapse;
+
+  td {
+    margin:0px;
+    padding:6px 0px;
+    vertical-align:middle;
+  }
+
+  tr#current { 
+    // Timeslot reserved by the team that is logged in 
+    background-color:#0A304E;
+    color:#FFF;
+  }
+
+  tr#unavailable { 
+    // Timeslot reserved by the team that is logged in 
+    color:#999;
+  }
+
+  tr#current a {
+    color:#FFF;
+    text-decoration:underline;
+  }
+}
+
+div#recaptcha_area {
+  margin:auto;
+}
+
+.help-block {
+  a {
+    &:link, &:visited {
+      color:#BFBFBF;
+    }
+    &:hover {
+      color:#B0B0B0;
+    }
+  }
+}
+
+/******************************************** Layout Elements **********************************/
+#contentWrapper, #headerWrapper {
+  background-color: #FFF;
+  box-shadow: 0px 0px 3px #CCC;
+  -moz-box-shadow: 0px 0px 3px #CCC;
+  -webkit-box-shadow: 0px 0px 3px #CCC;
+  margin: auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 980px;
+
+  &.expanded-true {
+    width: 1200px;
+  }
+}
+
+#headerWrapper {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+%header-section {
+  height: 75px;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.header-school-logo {
+  @extend %header-section;
+}
+
+.header-tournament-title {
+  @extend %header-section;
+}
+
+.header-host-description {
+  & > p {
+    @extend %header-section;
+  }
+
+  p {
+    color: #BBB;
+
+    a {
+      color: #BBB;
+    }
+  }
+}
+
+#contentWrapper {
+  position: relative;
+  overflow:hidden;
+  clear: both;
+  padding-top:20px;
+  min-height:500px;
+
+  .row {
+    margin-left:auto;
+  }
+}
+
+#homepage {
+  h2 {
+    border-bottom: 1px solid #DDDDDD;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    margin-bottom: 17px;
+  }
+}
+
+// Scoresheet styles
+table.scores-table {
+  width:1150px;
+
+  th {
+    font-size:0.8em;
+
+    div.outer {
+      width:2em;
+      height:125px;
+
+      div.inner {
+        -moz-transform:rotate(270deg);
+        -webkit-transform:rotate(270deg);
+        -ms-transform:rotate(270deg);
+        -o-transform:rotate(270deg);
+        width:240px;
+        position:relative;
+        right:110px;
+      }
+
+      div.trial {
+        color:#999;
+      }
+    }
+  }
+}
+
+.expanded-true {
+  .span11 {
+    width:1150px;
+  }
+
+  .span16 {
+    width:1150px;
+  }
+}
+
+// ******************************************* Feature
+
+#feature {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: #626262;
+  margin: 0;
+
+  #featureHolder {
+    position:relative;
+    width:960px;
+    margin: auto;
+    height: 200px;
+
+    .featureImg {
+      float: right;
+      height: 180px;
+      width: 400px;
+      margin-top: 8px;
+      margin-right: 5px;
+      margin-bottom: 7px;
+      img {
+        border: 2px solid #989898;
+      }
+    }
+
+    .featureContent {
+      float: left;
+      height: 120px;
+      width: 500px;
+      margin-top: 25px;
+      p {
+        color: #CCC;
+      }
+      h1 {
+        color: #FFF;
+      }
+    }
+  }
+}
+
+// ************************************************************* Top Navigation *********
+
+// navigation holder
+
+#umcNav {
+  width:100%;
+  position: relative;
+  background-color: #E7E7E7;
+  margin-right: 0;
+  margin-left: 0;
+  z-index:1;
+  border-bottom:2px solid #CCC;
+  border-top:2px solid #CCC;
+
+}
+#topNavWrapper {
+  margin:auto;
+  position: relative;
+  width: 960px;
+  height: 30px;
+}
+
+#topnav, #topnav ul {
+  list-style:none;
+  padding:0;
+  margin:0;
+
+}
+#topnav li {
+  float:left;
+  position:relative;
+}
+#topnav li ul {
+  position:absolute;
+  margin-top:0;
+  display:none;
+  width: 100%;
+}
+#topnav ul li ul {
+  margin-top:-2.1em;
+  margin-left:13em;
+}
+
+#topnav li:hover ul, #topnav li.over ul {
+  display:block;
+}
+#topnav li:hover ul ul, #topnav li.over ul, #topnav li:hover ul ul ul  {
+  display:none;
+}
+#topnav ul li:hover ul, #topnav ul li.over ul, #topnav  ul ul li:hover ul {
+  display:block;
+}
+#topnav a {
+  display: block;
+  line-height:15px;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #004674;
+  padding: .65em .9em .6em .9em;
+  font-weight: bold;
+}
+#topnav a:hover {
+  background:#0a304e;
+  color:#F4F4F4;
+  text-decoration: none;
+
+}
+#topnav ul a {
+  color: #fff;
+  padding: 8px 12px 6px 16px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: #0A385C;
+  font-weight: normal;
+  width: 180px;
+  background:#0a304e;
+}
+#topnav ul li a:hover {
+  background:#315f80;
+}
+#topnav {
+  z-index:1;
+}
+#topnav ul {
+  z-index:2;
+}
+#topnav ul ul {
+  z-index:3;
+}
+#menuArrow {
+  right:10px;
+  position:absolute;
+}
+
+/************************************************************** Simple footer **********/
+#simpleFooter {
+  width: 100%;
+  position: relative;
+  margin-bottom: 40px; }
+
+.simpleFooterContent {
+  height: 45px;
+  width: 1020px;
+  margin: auto;
+  border-top: 2px solid #C8CACB;
+  color: #AAA;
+  font-family: Arial, Helvetica, serif;
+  text-align: center;
+  padding-top: 10px;
+
+  a:link, a:visited {
+    font-weight: bold;
+    color: #888;
+  }
+  a:hover {
+    color: #999;
+  }
+}
+
+/************************************************************** Content link styles */
+a:link {
+  color: #0E4C7D;
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+  color: #0E4C7D;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  text-decoration: none;
+  color: #0E4C7D;
+}

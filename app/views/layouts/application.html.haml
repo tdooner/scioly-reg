@@ -1,16 +1,15 @@
-=render :partial => "/layouts/header"
+=render :partial => "layouts/header"
 - @layout_expanded ||= false
+
 %body#home
-  #headerWrapper{:class=>"expanded-#{@layout_expanded}"}
+  #headerWrapper{ :class=>"expanded-#{@layout_expanded}" }
     .row
       .span4
-        %span
-          =image_tag @current_school.logo.url(:logo)
+        = image_tag @current_school.logo.url(:logo), class: 'header-school-logo'
       .span9
-        %h2=@current_tournament.title
-      .span3
-        %span.host
-          !=RDiscount.new(@current_tournament.hosted_by_markdown||"").to_html
+        %h2.header-tournament-title= @current_tournament.title
+      .span3.header-host-description
+        !=RDiscount.new(@current_tournament.hosted_by_markdown||"").to_html
   .noprint
     = render :partial => "/layouts/navigation"
   #contentWrapper{:class=>"expanded-#{@layout_expanded}"}
