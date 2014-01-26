@@ -129,12 +129,12 @@ div#recaptcha_area {
 }
 
 %header-section {
-  height: 75px;
   display: table-cell;
   vertical-align: middle;
+  height: 75px;
 }
 
-.header-school-logo {
+.header-school-logo-container {
   @extend %header-section;
 }
 

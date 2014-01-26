@@ -9,7 +9,8 @@
   #headerWrapper{ :class=>"expanded-#{@layout_expanded}" }
     .row
       .span4
-        = image_tag @current_school.logo.url(:logo), class: 'header-school-logo'
+        %span.header-school-logo-container
+          = image_tag @current_school.logo.url(:logo)
       .span9
         %h2.header-tournament-title= @current_tournament.title
       .span3.header-host-description
