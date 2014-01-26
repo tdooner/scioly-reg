@@ -32,7 +32,7 @@ group :test do
     gem 'faker'
     gem 'capybara'
     gem 'time-warp'
-    gem 'mocha'
+    gem 'mocha', require: false
 end
 gem "parallel_tests"
 
