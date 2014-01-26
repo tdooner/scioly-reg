@@ -31,12 +31,12 @@ Scioly::Application.routes.draw do
   resources :schedules, :path => "/schedule" do
     get 'scores'
     post 'scores', :action => "savescores"
-    get 'autocomplete_event' => "schedules#autocomplete_schedule_event"
     get 'batchnew' => "schedules#batchnew"
     post 'batchnew' => "schedules#batchcreate"
 
     collection do
       get 'all_pdfs'
+      get 'autocomplete_event' => "schedules#autocomplete_schedule_event"
       get ':division' => "schedules#index", as: 'division', constraints: { division: /[A-Z]/ }
     end
   end

@@ -31,7 +31,7 @@
       %label{:for=>'schedule[event]'}
         %b Event Name:
       %div.input
-        = f.autocomplete_field :event, schedule_autocomplete_event_path, :id_element => '#schedule_event_id'
+        = f.autocomplete_field :event, autocomplete_event_schedules_path, :id_element => '#schedule_event_id'
         = hidden_field_tag :schedule_event_id, "-1"
     %div.clearfix
       %label{:for=>"schedule_division_b"}
