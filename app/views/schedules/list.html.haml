@@ -47,5 +47,6 @@
                 %td= image_tag('error.png', :width => '16')
               - else
                 %td -
-:javascript
-  $(function(){ mixpanel.track("View All Schedules"); });
+- content_for :javascripts do
+  :javascript
+    mixpanel.track("View All Schedules");

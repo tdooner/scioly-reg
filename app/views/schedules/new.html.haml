@@ -1,18 +1,19 @@
-:javascript
-  $(function() {
-    $("#schedule_event").focus();
-    $("#schedule_event").bind("blur", function() {
+- content_for :javascripts do
+  :javascript
+    $(function() {
+      $("#schedule_event").focus();
+      $("#schedule_event").bind("blur", function() {
 
-    });
+      });
 
-    $("#schedule_online_false").click(function(){
+      $("#schedule_online_false").click(function(){
+        $("div#schedule_online_details").hide();
+      });
+      $("#schedule_online_true").click(function(){
+        $("div#schedule_online_details").show();
+      });
       $("div#schedule_online_details").hide();
     });
-    $("#schedule_online_true").click(function(){
-      $("div#schedule_online_details").show();
-    });
-    $("div#schedule_online_details").hide();
-  });
 = flash[:message]
 %p
   Want to create multiple events at a time? Try

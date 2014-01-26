@@ -1,15 +1,16 @@
-:javascript
-  var toggleTimeslotEdit = function(id) {
-    $("#edit-timeslot-" + id).toggle();
-  }
-  var show_timeslot_form = function() {
-    $("form#new_timeslot").toggle();
-  }
-  $(function() {
-    $(".hidebtn").hide();
-    $("form#new_timeslot").hide();
-    $("table#timeslot tr").hover(function(){ $("a.hidebtn", this).fadeIn(150);}, function() { $("a.hidebtn", this).fadeOut(150);});
-  });
+- content_for :javascripts do
+  :javascript
+    var toggleTimeslotEdit = function(id) {
+      $("#edit-timeslot-" + id).toggle();
+    }
+    var show_timeslot_form = function() {
+      $("form#new_timeslot").toggle();
+    }
+    $(function() {
+      $(".hidebtn").hide();
+      $("form#new_timeslot").hide();
+      $("table#timeslot tr").hover(function(){ $("a.hidebtn", this).fadeIn(150);}, function() { $("a.hidebtn", this).fadeOut(150);});
+    });
 -if !session[:user].nil?
   %div.alert-message.block-message.info
     Hey, it looks like you're an admin. Here are some things you can do:
@@ -102,5 +103,6 @@
                 %td=s.placement
                 %td=s.team.getNumber
                 %td=s.team.name
-:javascript
-  $(function() { mixpanel.track("View Event", {event: "#{@schedule.event}"}); });
+- content_for :javascripts do
+  :javascript
+    mixpanel.track("View Event", {event: "#{@schedule.event}"});

@@ -1,7 +1,8 @@
-:javascript
-  $(function() {
-    $("table#admin-score-table").tablesorter({sortList: [[1,0],[0,0]]});
-  });
+- content_for :javascripts do
+  :javascript
+    $(function() {
+      $("table#admin-score-table").tablesorter({sortList: [[1,0],[0,0]]});
+    });
 
 .alert-message.block-message.info
   Click on an event below to submit scores for that event. After scoring is completed, here are some options of what to do with the scores.

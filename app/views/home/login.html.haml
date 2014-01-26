@@ -24,17 +24,16 @@
   %p
     Case Western Reserve's Science Olympiad tournament is hosted by the
     =link_to "Center for Science and Mathematics Education.", "http://case.edu/artsci/csm/", :id=>"csm"
-/ Track the things on this page
-:javascript
-  var trackIt = function(link, page) {
-    mixpanel.track("Link: " + page, {}, function() {
-      window.location = link.attr("href");
+- content_for :javascripts do
+  :javascript
+    var trackIt = function(link, page) {
+      mixpanel.track("Link: " + page, {}, function() {
+        window.location = link.attr("href");
+      });
+    }
+    $(function() {
+      $("a#scores").click(function(ev) { ev.preventDefault(); trackIt($(this), "Homepage Scores")});
+      $("a#questionaire").click(function(ev) { ev.preventDefault(); trackIt($(this), "Homepage Questionaire")});
+      $("a#csm").click(function(ev) { ev.preventDefault(); trackIt($(this), "Homepage CSM")});
+      mixpanel.track("View Homepage");
     });
-  }
-  $(function() {
-    $("a#scores").click(function(ev) { ev.preventDefault(); trackIt($(this), "Homepage Scores")});
-    $("a#questionaire").click(function(ev) { ev.preventDefault(); trackIt($(this), "Homepage Questionaire")});
-    $("a#csm").click(function(ev) { ev.preventDefault(); trackIt($(this), "Homepage CSM")});
-    mixpanel.track("View Homepage");
-  });
-

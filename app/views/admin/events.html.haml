@@ -1,7 +1,8 @@
-:javascript
-  $(function() {
-    $("#events-table").tablesorter({ sortList: [[0,0],[1,0]] });
-  });
+- content_for :javascripts do
+  :javascript
+    $(function() {
+      $("#events-table").tablesorter({ sortList: [[0,0],[1,0]] });
+    });
 .alert-message.block-message.info
   Below are the event pages for this tournament. Click on "Edit" to edit the properties of an event.
   .alert-actions

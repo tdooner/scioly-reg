@@ -31,5 +31,7 @@
   .actions
     %input{:type=>"hidden", :name=>"is_admin", :value=>"false"}
     =submit_tag "Login", :class=>"btn primary"
-:javascript
-  $(function(){ mixpanel.track("View Login Page"); });
+
+- content_for :javascripts do
+  :javascript
+    mixpanel.track("View Login Page");

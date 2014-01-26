@@ -1,19 +1,20 @@
-:javascript
-  $(function() {
-    $("table#admin-score-table").tablesorter({
-      sortList: [[1,0]],
-      textExtraction: function(node) {
-        if (1 in node.childNodes) {
-          return node.childNodes[1].value
-        } else {
-          return node.innerHTML;
+- content_for :javascripts do
+  :javascript
+    $(function() {
+      $("table#admin-score-table").tablesorter({
+        sortList: [[1,0]],
+        textExtraction: function(node) {
+          if (1 in node.childNodes) {
+            return node.childNodes[1].value
+          } else {
+            return node.innerHTML;
+          }
         }
-      }
+      });
+      $("table#admin-score-table input").bind("change", function() {
+        $(this).trigger("update");
+      });
     });
-    $("table#admin-score-table input").bind("change", function() {
-      $(this).trigger("update");
-    });
-  });
 
 %p
   Note: There are

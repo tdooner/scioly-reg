@@ -1,25 +1,23 @@
-:javascript
-  $(function() {
-    $("#schedule_event").focus();
-    $("#schedule_event").bind("blur", function() {
-      
-    });
-
-    $("#schedule_online_false").click(function(){
-      $("div#schedule_online_details").hide();
-    });
-    $("#schedule_online_keep_existing").click(function(){
-      $("div#schedule_online_details").hide();
-    });
-    $("#schedule_online_true").click(function(){
-      $("div#schedule_online_details").show();
-    });
-  });
-- if !@schedule.new_record?
+- content_for :javascripts do
   :javascript
-    $(function(){
-      $("div#schedule_online_details").hide();
+    $(function() {
+      $("#schedule_event").focus();
+
+      $("#schedule_online_false").click(function(){
+        $("div#schedule_online_details").hide();
+      });
+      $("#schedule_online_keep_existing").click(function(){
+        $("div#schedule_online_details").hide();
+      });
+      $("#schedule_online_true").click(function(){
+        $("div#schedule_online_details").show();
+      });
     });
+  - if !@schedule.new_record?
+    :javascript
+      $(function(){
+        $("div#schedule_online_details").hide();
+      });
 =form_for(@schedule) do |f|
   %fieldset
     %div.clearfix

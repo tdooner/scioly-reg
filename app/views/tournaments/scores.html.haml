@@ -75,7 +75,8 @@
                     %td=res.placement
                   - else
                     %td
-    :javascript
-      $(function(){
-        $("table#scores_table_#{d}").tablesorter({sortList:[[#{@events[d].length+2-@events[d].select{|x| !x.counts_for_score}.length},0]]})
-      });
+    - content_for :javascripts do
+      :javascript
+        $(function(){
+          $("table#scores_table_#{d}").tablesorter({sortList:[[#{@events[d].length+2-@events[d].select{|x| !x.counts_for_score}.length},0]]})
+        });
