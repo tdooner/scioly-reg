@@ -30,7 +30,6 @@ group :test do
     gem 'factory_girl_rails'
     gem 'rspec-rails'
     gem 'faker'
-    gem 'capybara'
     gem 'time-warp'
     gem 'mocha', require: false
     gem 'capybara'
