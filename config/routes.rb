@@ -5,8 +5,6 @@ Scioly::Application.routes.draw do
   get "signups/new"
   get "signups/list"
 
-  get "home/index"
-
   namespace :admin do
     get 'index'
     get 'events', :as => :events
@@ -54,13 +52,16 @@ Scioly::Application.routes.draw do
   match '/signups' => "signups#list", :as => :signups
 
   resources :tournaments do
+    collection do
+      post 'set_active'
+    end
+
     get 'scores'
     get 'scoreslideshow'
     post 'publish_scores'
     post 'scoreslideshow'
     get 'load_default_events'
   end
-  post 'tournament/activate' => "tournaments#set_active"
 
   match '/login' => "teams#login"
   match '/login/:division' => "teams#login", :as => :login
