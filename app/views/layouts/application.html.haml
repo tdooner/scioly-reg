@@ -1,4 +1,9 @@
-=render :partial => "layouts/header"
+!!!
+%head
+  %title Science Olympiad at #{@current_school.name}
+  = stylesheet_link_tag 'application'
+  = javascript_include_tag 'application'
+  = render 'layouts/analytics'
 - @layout_expanded ||= false
 
 %body#home

@@ -103,4 +103,4 @@
                 %td=s.team.getNumber
                 %td=s.team.name
 :javascript
-  $(function() { mpq.track("View Event", {event: "#{@schedule.event}"}); });
+  $(function() { mixpanel.track("View Event", {event: "#{@schedule.event}"}); });

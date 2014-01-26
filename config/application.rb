@@ -10,6 +10,8 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+ActiveRecord::Base.include_root_in_json = false
+
 module Scioly
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
