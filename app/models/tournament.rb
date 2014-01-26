@@ -3,7 +3,7 @@ class Tournament < ActiveRecord::Base
   has_many :schedules
   has_attached_file :homepage_photo,
     :styles => {:medium => "181x200", :slideshow => "163x180" },
-    :default_url => '/images/sciolylogo_transparent.png'
+    :default_url => '/assets/sciolylogo_transparent.png'
   alias_attribute :current?, :is_current
 
   belongs_to :school
