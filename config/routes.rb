@@ -64,8 +64,6 @@ Scioly::Application.routes.draw do
   match '/logout' => "teams#logout"
 
   resources :info
-  #match '/info/' => "info#list", :as => :info
-  #match '/info/:name' => "info#show", :as => :info_show
 
   # Add the Static Pages
   ['about'].each do |static|

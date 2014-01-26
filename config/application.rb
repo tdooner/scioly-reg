@@ -39,6 +39,7 @@ module Scioly
 
     config.assets.enabled = true
     config.assets.initialize_on_precompile = false
+    config.assets.precompile += %w(slidy.css slidy.js)
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
