@@ -28,7 +28,7 @@
         %li
           = link_to @team.name, root_url
           %ul
-            %li=link_to "Register For Events", schedules_url
+            %li=link_to "Register For Events", division_schedules_url(@team.division)
             %li=link_to "View Registrations", signups_url
             %li=link_to "Change Password", edit_team_url(@team)
             %li=link_to "Logout", logout_url

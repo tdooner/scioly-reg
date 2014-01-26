@@ -27,7 +27,7 @@ class SignupsController < ApplicationController
     breadcrumbs.add("Register")
   end
 
-  def list
+  def index
     @sign_ups = @team.sign_ups.reload
     breadcrumbs.add("Team #" + @team.getNumber() + " Registrations")
   end
