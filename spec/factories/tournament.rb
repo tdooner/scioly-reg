@@ -4,6 +4,7 @@ FactoryGirl.define do
     registration_begins { date - 3.weeks }
     registration_ends { date - 1.day }
     is_current false
+    sequence(:title) { |x| "tournament #{x}'s title" }
 
     school
 

@@ -33,6 +33,7 @@ group :test do
     gem 'capybara'
     gem 'time-warp'
     gem 'mocha', require: false
+    gem 'capybara'
 end
 gem "parallel_tests"
 
