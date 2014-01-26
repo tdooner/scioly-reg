@@ -4,7 +4,7 @@
       %li= link_to 'Home', root_path
       - @current_tournament.divisions.each do |d|
         %li
-          = link_to "Division #{d} Events", schedule_division_url(d)
+          = link_to "Division #{d} Events", division_schedules_url(d)
           %ul
             - @all_schedules[d].each do |e|
               - if @team && e.is_scheduled_online? && e.division == @team.division

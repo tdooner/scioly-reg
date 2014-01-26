@@ -28,23 +28,19 @@ Scioly::Application.routes.draw do
   match '/schools/new' => 'home#newschool', :via => [ :get ], :as => :new_school
   match '/schools/new' => 'home#createschool', :via => [ :post ]
 
-  # Rails and I disagree about "schedules" vs "schedule". 
-  # Rails thinks they have all the methods
-  #   of resources (they do), but I think that it seems better to view the schedule for an
-  #   event at the singular:
-  #      example.com/schedule/event_name/
-  match 'schedule/autocomplete_event' => "schedules#autocomplete_schedule_event", :as => :autocomplete_event_schedule
-  match 'schedule/batchnew' => "schedules#batchnew", :via => [:get]
-  match 'schedule/batchnew' => "schedules#batchcreate", :via => [:post]
-  match 'schedule/:division' => "schedules#index", :as=>:schedule_division, :constraints => { :division => /[A-Z]/ }
   resources :schedules, :path => "/schedule" do
     get 'scores'
     post 'scores', :action => "savescores"
+    get 'autocomplete_event' => "schedules#autocomplete_schedule_event"
+    get 'batchnew' => "schedules#batchnew"
+    post 'batchnew' => "schedules#batchcreate"
 
     collection do
       get 'all_pdfs'
+      get ':division' => "schedules#index", as: 'division', constraints: { division: /[A-Z]/ }
     end
   end
+
   resources :timeslots
   match '/schedule/:id/register/' => "signups#new", :as => :newsignup
   match '/schedule/:id/confirm/' => "signups#create", :as => :confirmsignup
