@@ -18,7 +18,7 @@
         %b Time:
       %td=@signup.timeslot.begins.strftime("%I:%M %p")
 %div.actions
-  = link_to("Reserve This Slot!",confirmsignup_url(@signup.timeslot), :class=>[:btn, :primary])
+  = link_to("Reserve This Slot!", timeslot_confirm_path(@signup.timeslot), :class=>[:btn, :primary])
   = link_to("Never Mind", schedule_url(@signup.timeslot.schedule),:class=>:btn)
 :javascript
   $(function() { mpq.track("SignUp Confirmation", {event: "#{@signup.timeslot.schedule.event}", timeslot: #{@signup.timeslot.id}}); });

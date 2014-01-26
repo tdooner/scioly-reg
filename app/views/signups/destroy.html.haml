@@ -4,18 +4,18 @@
     %tr
       %td
         %b Team Name:
-      %td=@signup.team.name
+      %td= @signup.team.name
     %tr
       %td
         %b Event Name:
-      %td=@signup.schedule.event
+      %td= @signup.schedule.event
     %tr
       %td
         %b Time:
-      %td=@signup.time.strftime("%I:%M %p")
+      %td= @signup.time.strftime("%I:%M %p")
 %div{:align=>"center", :style => "padding-top:15px"}
   %b Your registration is not saved until you click on "Yes" below!
   %br
-  = link_to("Yes, I am serious about this.",confirmsignup_url(@signup.schedule, @signup.time.to_i))
+  = link_to "Yes, I am serious about this.", schedule_confirm(@signup.schedule)
   %br
-  = link_to("No, I'm still on the fence.", schedule_url(@signup.schedule))
+  = link_to "No, I'm still on the fence.", schedule_url(@signup.schedule))

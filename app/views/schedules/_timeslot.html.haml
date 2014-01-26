@@ -18,7 +18,7 @@
     - if spots_remaining > 0
       %td
         - if @currentreg.nil?
-          =link_to "Register!", newsignup_path(ts), :class=>"btn"
+          = link_to "Register!", timeslot_register_path(ts), :class=>"btn"
     - else
       %td
   - if session[:user] && session[:user].can_edit?(@schedule)
@@ -42,4 +42,7 @@
       Your team is registered here, in the #{ts.begins.strftime("%I:%M %p")} timeslot.
     - if (@team.can_register_for_event?(@schedule)) || (session[:user] && session[:user].can_register_team_for_event?(@team, @schedule))
       %td
-        =link_to "Unregister", destroysignup_path(@currentreg), :class=>"btn"
+        = link_to 'Unregister', signup_path(@currentreg),
+          confirm: 'Are you sure you wish to remove your registration?',
+          method: :delete,
+          class: 'btn'

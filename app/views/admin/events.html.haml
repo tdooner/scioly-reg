@@ -6,7 +6,7 @@
   Below are the event pages for this tournament. Click on "Edit" to edit the properties of an event.
   .alert-actions
     =link_to "New Event", new_schedule_url, :class=>"btn"
-    =link_to "Import Events", schedule_batchnew_url, :class=>"btn"
+    =link_to "Import Events", batchnew_schedules_path, :class=>"btn"
     =link_to "Export Events to Excel", admin_events_url(:format => 'csv'), :class => 'btn'
     =link_to "Download Registration PDFs", all_pdfs_schedules_url(:format => :pdf), :class=>"btn"
 %table.zebra-striped#events-table

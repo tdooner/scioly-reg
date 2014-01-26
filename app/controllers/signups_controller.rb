@@ -4,8 +4,10 @@ class SignupsController < ApplicationController
   before_filter :load_signup_by_signup_id, :only   => [:destroy]
   before_filter :ensure_registration_open, :only => [:new, :create, :destroy]
 
+  protect_from_forgery except: :destroy
+
   def new
-    @signup = SignUp.new(:timeslot_id => params[:id])
+    @signup = SignUp.new(:timeslot_id => params[:timeslot_id])
 
     # If the user has somehow arrived here without
     # logging in.
@@ -45,7 +47,7 @@ class SignupsController < ApplicationController
   end
 
   def create
-    @signup = SignUp.new(:timeslot_id => params[:id])
+    @signup = SignUp.new(:timeslot_id => params[:timeslot_id])
 
     # If the user has somehow arrived here without
     # logging in.
@@ -70,7 +72,7 @@ class SignupsController < ApplicationController
   end
 
   def load_signup_by_timeslot_id
-    @signup = SignUp.new(:timeslot_id => params[:id])
+    @signup = SignUp.new(:timeslot_id => params[:timeslot_id])
   end
 
   def load_signup_by_signup_id

@@ -16,5 +16,5 @@
 = flash[:message]
 %p
   Want to create multiple events at a time? Try
-  =link_to("Batch Mode", "/schedule/batchnew")+"."
+  #{link_to "Batch Mode", batchnew_schedules_path}.
 =render 'scheduleform'

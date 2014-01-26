@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :tournament do
-    sequence(:date) { |x| Time.now + x.years }
+    sequence(:date) { |x| Date.today + x.days }
     registration_begins { date - 3.weeks }
     registration_ends { date - 1.day }
     is_current false
