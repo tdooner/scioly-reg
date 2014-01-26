@@ -6,4 +6,8 @@ shared_context '(capybara) visiting a tournament' do
     Rails.application.routes.default_url_options[:subdomain] =
       @tournament.school.subdomain
   end
+
+  after do
+    Rails.application.routes.default_url_options.delete(:subdomain)
+  end
 end
