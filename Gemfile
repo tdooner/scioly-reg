@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 ruby '2.0.0'
 
-gem 'rails', '3.2.16'
+gem 'rails', '4.0.2'
 gem 'haml'
 gem 'breadcrumbs'
 gem 'rdiscount'
@@ -10,11 +10,13 @@ gem 'mixpanel'
 gem "paperclip"
 gem "aws-sdk"
 gem 'aws-s3'
-gem 'premailer-rails3'
+gem 'premailer-rails'
 gem 'nokogiri'
 gem 'airbrake'
 gem 'jquery-rails'
 gem 'rails3-jquery-autocomplete'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 group :production do
   gem 'pg'
@@ -30,7 +32,7 @@ group :test do
     gem 'factory_girl_rails'
     gem 'rspec-rails'
     gem 'faker'
-    gem 'time-warp'
+    gem 'timecop'
     gem 'mocha', require: false
     gem 'capybara'
 end

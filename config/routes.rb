@@ -64,15 +64,15 @@ Scioly::Application.routes.draw do
     get 'load_default_events'
   end
 
-  match '/login' => "teams#login"
-  match '/login/:division' => "teams#login", :as => :login
-  match '/logout' => "teams#logout"
+  match '/login' => "teams#login", via: [:get, :post]
+  match '/login/:division' => "teams#login", as: :division_login, via: [:get, :post]
+  match '/logout' => "teams#logout", via: [:get]
 
   resources :info
 
   # Add the Static Pages
   ['about'].each do |static|
-    match "/#{static}" => "home##{static}"
+    match "/#{static}" => "home##{static}", via: [:get]
   end
 
   root :to => "home#index"

@@ -21,13 +21,13 @@ class HomeController < ApplicationController
   end
 
   def createschool
-    @school = School.new(params[:school])
+    @school = School.new(params.fetch(:school, {}).permit(:name, :time_zone, :admin_name, :admin_email, :subdomain))
 
-    @director = User.new(params[:tournament_director])
+    @director = User.new(params.fetch(:tournament_director, {}).permit(:password))
     @director.email = params[:school][:admin_email]
     @director.role = 1          # Role 1 = Admin
 
-    @tournament = Tournament.new(params[:tournament])
+    @tournament = Tournament.new(params.fetch(:tournament, {}).permit(:title, :date))
 
     if @school.save
       @director.school = @school

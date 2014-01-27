@@ -26,7 +26,10 @@
       %a.hidebtn{:href=>"javascript:toggleTimeslotEdit('#{ts.id}')"}
         =image_tag "edit.png"
     %td
-      =link_to(image_tag("delete.png"),timeslot_url(ts), {:method=>:delete, :confirm=>"Are you sure you wish to delete this timeslot? All Sign Ups for that timeslot will be deleted as well.", :class=>"hidebtn"})
+      = link_to image_tag("delete.png"), timeslot_url(ts),
+        method: :delete,
+        data: { confirm: 'Are you sure you wish to delete this timeslot? All Sign Ups for that timeslot will be deleted as well.' },
+        class: 'hidebtn'
 - if session[:user] && session[:user].can_edit?(@schedule)
   %tr{:id=>"edit-timeslot-#{ts.id}",:style=>"display:none;"}
     =form_for(ts, :url=>timeslot_url(ts)) do |f|
@@ -43,6 +46,6 @@
     - if (@team.can_register_for_event?(@schedule)) || (session[:user] && session[:user].can_register_team_for_event?(@team, @schedule))
       %td
         = link_to 'Unregister', signup_path(@currentreg),
-          confirm: 'Are you sure you wish to remove your registration?',
+          data: { confirm: 'Are you sure you wish to remove your registration?' },
           method: :delete,
           class: 'btn'

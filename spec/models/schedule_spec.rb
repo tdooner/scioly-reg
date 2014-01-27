@@ -81,7 +81,7 @@ describe Schedule do
       before do
         @schedule.num_timeslots = 10
         @schedule.updateTimeSlots
-        pretend_now_is(@schedule.tournament.registration_begins + 2.minutes) do
+        Timecop.freeze(@schedule.tournament.registration_begins + 2.minutes) do
           @sign_up = FactoryGirl.create(:sign_up,
                                     :team => team,
                                     :timeslot => @schedule.timeslots.sample)

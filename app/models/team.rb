@@ -13,7 +13,6 @@ class Team < ActiveRecord::Base
   has_many :sign_ups
   has_many :scores
   attr_accessor :password, :password_confirmation, :password_existing
-  attr_protected :hashed_password
 
   @@divisions = {"B" => "B", "C" => "C"}
 
@@ -23,7 +22,7 @@ class Team < ActiveRecord::Base
   end
 
   def self.authenticate(id, password)
-    u = find(:first, :conditions=>["id = ?", id])
+    u = find(id) rescue nil
     return nil if u.nil?
     return u if encrypt(password)==u.hashed_password
     nil

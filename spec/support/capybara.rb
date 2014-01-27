@@ -25,7 +25,7 @@ shared_context '(capybara) as a logged in team' do
 
     @team = FactoryGirl.create(:team, tournament: @tournament,
                                       hashed_password: Digest::SHA1.hexdigest(@password))
-    visit login_url(@team.division)
+    visit division_login_url(@team.division)
     expect(page).to have_content(@team.name)
     select(@team.name, from: 'team_id')
     fill_in 'password', with: @password

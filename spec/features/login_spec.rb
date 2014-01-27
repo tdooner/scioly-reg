@@ -11,7 +11,7 @@ describe 'the login process' do
     end
 
     it 'allows the team to log in' do
-      visit login_url(team.division)
+      visit division_login_url(team.division)
       expect(page).to have_content(team.name)
       select(team.name, from: 'team_id')
       fill_in 'password', with: password
@@ -20,7 +20,7 @@ describe 'the login process' do
     end
 
     it 'denies teams entry with invalid password' do
-      visit login_url(team.division)
+      visit division_login_url(team.division)
       expect(page).to have_content(team.name)
       select(team.name, from: 'team_id')
       fill_in 'password', with: password + 'nope'

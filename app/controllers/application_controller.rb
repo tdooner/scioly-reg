@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   def setup
     @subdomain = request.subdomains.last
-    @mixpanel = Mixpanel::Tracker.new(ENV["MIXPANEL_TOKEN"], request.env, true)
+    @mixpanel = Mixpanel::Tracker.new(ENV["MIXPANEL_TOKEN"], env: request.env)
 
     if @subdomain.present?
       @current_school = School.where(:subdomain => @subdomain).first
@@ -15,9 +15,9 @@ class ApplicationController < ActionController::Base
   def setup_application
     breadcrumbs.add 'Home', root_path
 
-    @current_tournament = @current_school.tournaments.find(:first, :conditions => ["school_id = ? AND is_current = ?", @current_school.id, true]) or raise "No Tournament Found!"
+    @current_tournament = @current_school.tournaments.where(school: @current_school, is_current: true).first or raise "No Tournament Found!"
     @team = Team.find_by_id_and_tournament_id(session[:team], @current_tournament)
-    @all_schedules = @current_tournament.schedules.find(:all, :order => "event ASC").group_by(&:division)
+    @all_schedules = @current_tournament.schedules.order('event ASC').group_by(&:division)
     @all_schedules["B"] ||= []
     @all_schedules["C"] ||= []
 

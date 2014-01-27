@@ -31,14 +31,14 @@ describe Tournament do
 
     context 'when it is before the registration begins' do
       it 'returns false' do
-        pretend_now_is(tournament.registration_begins - 1.second) do
+        Timecop.freeze(tournament.registration_begins - 1.second) do
           tournament.has_registration_begun?.should be_false
         end
       end
     end
     context 'when registration has started' do
       it 'returns true' do
-        pretend_now_is(tournament.registration_begins + 1.second) do
+        Timecop.freeze(tournament.registration_begins + 1.second) do
           tournament.has_registration_begun?.should be_true
         end
       end
@@ -51,14 +51,14 @@ describe Tournament do
 
     context 'when it is before the registration ends' do
       it 'returns false' do
-        pretend_now_is(tournament.registration_ends - 1.second) do
+        Timecop.freeze(tournament.registration_ends - 1.second) do
           tournament.has_registration_ended?.should be_false
         end
       end
     end
     context 'when registration has ended' do
       it 'returns true' do
-        pretend_now_is(tournament.registration_ends + 1.second) do
+        Timecop.freeze(tournament.registration_ends + 1.second) do
           tournament.has_registration_ended?.should be_true
         end
       end

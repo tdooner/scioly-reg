@@ -60,7 +60,7 @@ class Schedule < ActiveRecord::Base
   end
 
   def hasTeamRegistered(team_id)
-    signups = SignUp.find(:first, :conditions => ["timeslot_id in (select id from timeslots where schedule_id = ?) and team_id = ?", self, team_id])
+    signups = SignUp.where("timeslot_id in (select id from timeslots where schedule_id = ?) and team_id = ?", self, team_id).first
     if signups.nil?
       return false
     end
