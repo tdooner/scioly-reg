@@ -17,6 +17,7 @@ gem 'jquery-rails'
 gem 'rails3-jquery-autocomplete'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+gem 'turbolinks'
 
 group :production do
   gem 'pg'
