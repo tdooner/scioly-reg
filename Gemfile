@@ -27,6 +27,8 @@ end
 group :assets do
   gem 'sass'
   gem 'sass-rails'
+  gem 'uglifier'
+  gem 'yui-compressor'
 end
 
 group :test do
