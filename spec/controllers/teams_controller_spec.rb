@@ -70,11 +70,8 @@ describe TeamsController do
       end
     end
 
-    context 'an admin' do
-      before do
-        controller.stubs(:session).returns(:user => FactoryGirl.build(:user))
-        User.any_instance.stubs(:is_admin_of).returns(true)
-      end
+    context 'as an admin' do
+      include_context 'as an admin of the tournament'
 
       let(:form_data) do
         {

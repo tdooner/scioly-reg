@@ -4,7 +4,7 @@ class TournamentsController < ApplicationController
   protect_from_forgery :except => :destroy
 
   def create
-    @tournament = Tournament.new(params[:tournament])
+    @tournament = Tournament.new(tournament_params)
     @tournament.school = @current_school
     @tournament.save()
     redirect_to :tournaments
@@ -33,7 +33,7 @@ class TournamentsController < ApplicationController
 
   def update
     @t = Tournament.find(params[:id])
-    @t.update_attributes(params[:tournament])
+    @t.update_attributes(tournament_params)
     redirect_to :tournaments
   end
 
@@ -131,5 +131,12 @@ class TournamentsController < ApplicationController
       flash[:error] = "Scores for this tournament are not available yet."
       redirect_to root_url
     end
+  end
+
+  def tournament_params
+    params.fetch(:tournament, {}).permit(:title, :date, :registration_begins,
+                                         :registration_ends, :homepage_markdown,
+                                         :hosted_by_markdown,
+                                         :append_division_to_team_number)
   end
 end

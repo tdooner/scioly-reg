@@ -29,14 +29,14 @@ class SchedulesController < ApplicationController
 
   def update
     @schedule = Schedule.find(params[:id])
-    @schedule.update_attributes(params[:schedule])
+    @schedule.update_attributes(schedule_params)
     @schedule.updateTimeSlots if params[:schedule_online] == "true"
     @schedule.timeslots.map(&:delete) if params[:schedule_online] == "false"
     redirect_to edit_schedule_url(@schedule)
   end
 
   def create
-    @schedule = @current_tournament.schedules.create(params[:schedule])
+    @schedule = @current_tournament.schedules.create(schedule_params)
     if @schedule
       if params[:schedule_online] == "true"
         @schedule.updateTimeSlots()
@@ -208,5 +208,13 @@ class SchedulesController < ApplicationController
       flash[:error] = errors.join("<br>")
       redirect_to schedule_scores_url(@schedule)
     end
+  end
+
+private
+
+  def schedule_params
+    params.fetch(:schedule, {}).permit(:event, :division, :room,
+                                       :starttime_in_time_zone, :endtime_in_time_zone,
+                                       :custom_info, :counts_for_score)
   end
 end

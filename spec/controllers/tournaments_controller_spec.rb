@@ -3,15 +3,6 @@ require 'spec_helper'
 describe TournamentsController do
   render_views
 
-  shared_context 'as an admin of the tournament' do
-    let(:admin) { FactoryGirl.create(:user, school: tournament.school) }
-
-    before do
-      request.host = "#{tournament.school.subdomain}.lvh.me"
-      session[:user_id] = admin.id
-    end
-  end
-
   describe '#destroy' do
     context 'with only one tournament' do
       let(:tournament) { FactoryGirl.create(:tournament, :current) }
@@ -41,6 +32,25 @@ describe TournamentsController do
           old_tournament.reload.is_current.should be_true
         end
       end
+    end
+  end
+
+  describe '#update' do
+    let(:tournament) { FactoryGirl.create(:tournament, :current) }
+    let(:new_title) { 'lololol' }
+    let(:new_homepage) { 'hahaha' }
+    let(:update_params) do
+      { id: tournament.id,
+        tournament: { title: new_title, homepage_markdown: new_homepage }
+      }
+    end
+
+    include_context 'as an admin of the tournament'
+
+    it 'updates successfully' do
+      post :update, update_params
+      tournament.reload.title.should == new_title
+      tournament.reload.homepage_markdown.should == new_homepage
     end
   end
 
