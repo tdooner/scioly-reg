@@ -8,9 +8,7 @@ class Admin::SchoolController < ApplicationController
   end
 
   def update
-    if User.authenticate(@current_school, session[:user][:email], params[:current_password]) != session[:user]
-      # Note that if both User.authenticate and session[:user] are nil, then the user will be redirected home
-      # by the is_admin before_filter.
+    if User.authenticate(@current_school, @current_admin.email, params[:current_password]) != @current_admin
       flash[:error] = "Incorrect Password!"
       return redirect_to admin_school_edit_url
     end
@@ -18,7 +16,7 @@ class Admin::SchoolController < ApplicationController
     if params[:delete]
       params[:delete].each do |i|
         u = User.find(i)
-        u.delete if session[:user].can_delete?(u)
+        u.delete if @current_admin.can_delete?(u)
       end
     end
     if !params[:new_user].empty?

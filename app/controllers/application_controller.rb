@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   def setup
     @subdomain = request.subdomains.last
     @mixpanel = Mixpanel::Tracker.new(ENV["MIXPANEL_TOKEN"], env: request.env)
+    @current_admin = User.find(session[:user_id]) if session[:user_id]
 
     if @subdomain.present?
       @current_school = School.where(:subdomain => @subdomain).first
@@ -21,7 +22,7 @@ class ApplicationController < ActionController::Base
     @all_schedules["B"] ||= []
     @all_schedules["C"] ||= []
 
-    @is_admin = session[:user] && session[:user].is_admin_of(@current_school)
+    @is_admin = !!@current_admin.try(:is_admin_of, @current_school)
 
     if @team
       @dont_forget = @team.unregistered_events

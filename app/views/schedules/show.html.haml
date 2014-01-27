@@ -11,14 +11,14 @@
       $("form#new_timeslot").hide();
       $("table#timeslot tr").hover(function(){ $("a.hidebtn", this).fadeIn(150);}, function() { $("a.hidebtn", this).fadeOut(150);});
     });
--if !session[:user].nil?
+-if @is_admin
   %div.alert-message.block-message.info
     Hey, it looks like you're an admin. Here are some things you can do:
     %div.alert-actions
-      - if session[:user].can_edit?(@schedule)
+      - if @current_admin.try(:can_edit?, @schedule)
         %a.btn{:href=>"javascript:show_timeslot_form()"} Add Timeslot
         %a.btn{:href=>edit_schedule_url(@schedule)} Edit Event
-      - if session[:user].is_admin_of(@current_school)
+      - if @is_admin
         %a.btn{:href=>schedule_scores_url(@schedule)} Submit Scores
       = link_to("Download PDF", schedule_url(@schedule, :format=>"pdf"), :class=>"btn")
     =form_for(Timeslot.new) do |f|
@@ -70,7 +70,7 @@
           %th{:style=>"width:49%"} Availability
           - if @team && @team.can_register_for_event?(@schedule)
             %th Sign Up
-          - if session[:user] && session[:user].can_edit?(@schedule)
+          - if @current_admin.try(:can_edit?, @schedule)
             %th{:width=>"16px"}
             %th{:width=>"16px"}
         - @allslots.each do |ts|

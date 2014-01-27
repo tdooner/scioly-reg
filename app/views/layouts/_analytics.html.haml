@@ -1,7 +1,7 @@
 - tracking_data = {}
 - tracking_data[:school] = @current_school.attributes.slice("id", "name", "time_zone") if @current_school
 - tracking_data[:team] = @team.attributes.slice("id", "name") if @team
-- tracking_data[:admin] = !!session[:user]
+- tracking_data[:admin] = @is_admin
 :javascript
   window.data = JSON.parse("#{j tracking_data.to_json}");
 

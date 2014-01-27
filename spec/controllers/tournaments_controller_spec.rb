@@ -8,7 +8,7 @@ describe TournamentsController do
 
     before do
       request.host = "#{tournament.school.subdomain}.lvh.me"
-      session[:user] = admin
+      session[:user_id] = admin.id
     end
   end
 

@@ -2,7 +2,7 @@
   Below is a list of all events for the tournament scheduled for
   =[@current_tournament.humanize, "."].join
   Please check to ensure you register for all events before registration closes.
-- if not session[:user].nil? and session[:user].is_admin_of(@current_school)
+- if @is_admin
   .alert-message.block-message.info
     You are logged in as an administrator. These pages may be useful.
     .alert-actions
@@ -33,10 +33,7 @@
       - @all_schedules.values.flatten.sort_by(&:event).each do |s|
         - next if params[:division] && s.division != params[:division]
         %tr
-          - if @team or not session[:user].nil?
-            %td= link_to(s.event + " (" + s.division + ")", url_for(s))
-          - else
-            %td= s.event
+          %td= link_to(s.event + " (" + s.division + ")", url_for(s))
           %td= s.times[:start]
           %td= s.times[:end]
           -if @team

@@ -17,7 +17,7 @@
   .input
     =select(:team, :id, @teams.map { |x| ["#{x[:name]} (Team #{x.getNumber})", x[:id]] })
 .clearfix
-  - if not session[:user].nil? and session[:user].is_admin_of(@current_school)
+  - if @is_admin
     %b You are an admin.
     Click Login to log in as this team. You can change this team's password once logged in.
   - else

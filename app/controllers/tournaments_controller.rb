@@ -1,5 +1,6 @@
 class TournamentsController < ApplicationController
   before_filter :is_admin, :except => :scores
+  before_filter :verify_scores_visible, only: :scores
   protect_from_forgery :except => :destroy
 
   def create
@@ -63,10 +64,6 @@ class TournamentsController < ApplicationController
 
   def scores
     @active = Tournament.find(params[:tournament_id])
-    if !@active.show_scores? && !(session[:user] && session[:user].is_admin_of(@current_school))
-      flash[:error] = "Scores for this tournament are not available yet."
-      return redirect_to root_url
-    end
     breadcrumbs.add(@active.humanize + " Scores")
     @events = @active.schedules.includes({:scores => :team}).sort_by(&:event).group_by{|x| x.division}
     @teams = @active.teams
@@ -123,6 +120,16 @@ class TournamentsController < ApplicationController
     else
       flash[:error] = "Could not publish scores!"
       redirect_to admin_scorespublish_url
+    end
+  end
+
+  private
+
+  def verify_scores_visible
+    tournament = Tournament.find(params[:tournament_id])
+    if !tournament.show_scores? && !@is_admin
+      flash[:error] = "Scores for this tournament are not available yet."
+      redirect_to root_url
     end
   end
 end
