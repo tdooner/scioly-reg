@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  before_filter :is_admin, :only => [:new, :create, :batchnew, :index]
+  before_filter :is_admin, :only => [:new, :create, :batchnew, :index, :destroy]
   before_filter :is_correct_team, :only => [:edit, :update]
 
   def index
@@ -123,6 +123,23 @@ class TeamsController < ApplicationController
     else
       render :batchnew
     end
+  end
+
+  def destroy
+    @team = Team.find(params[:id])
+
+    unless @current_admin.is_admin_of(@team.tournament.school)
+      flash[:error] = 'Unauthorized!'
+      return redirect_to root_url
+    end
+
+    if @team.destroy
+      flash[:message] = 'Team deleted!'
+    else
+      flash[:error] = 'Could not delete team!'
+    end
+
+    redirect_to teams_url
   end
 
   def create

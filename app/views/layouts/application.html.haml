@@ -3,6 +3,7 @@
   %title Science Olympiad at #{@current_school.name}
   = stylesheet_link_tag 'application'
   = render 'layouts/analytics'
+  = csrf_meta_tags
 - @layout_expanded ||= false
 
 %body#home

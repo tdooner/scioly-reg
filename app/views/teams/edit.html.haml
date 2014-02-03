@@ -1,6 +1,6 @@
 %p
   To change any information about this team, update the form below and click the submit button. Note that changes will overwrite previous settings and cannot be undone.
-=render 'teamform', :team => @this_team
+= render 'teamform', :team => @this_team
 - content_for :javascripts do
   :javascript
     mixpanel.track("View Team Edit Page");

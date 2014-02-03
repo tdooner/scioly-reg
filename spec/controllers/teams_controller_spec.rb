@@ -114,4 +114,37 @@ describe TeamsController do
       end
     end
   end
+
+  context '#destroy' do
+    let!(:team_tournament) { FactoryGirl.create(:current_tournament) }
+    let!(:team) { FactoryGirl.create(:team, tournament: team_tournament) }
+
+    subject { post :destroy, id: team.id }
+
+    it 'redirects home and does not delete anything' do
+      expect { subject }.not_to change { Team.count }
+      response.should redirect_to root_url
+    end
+
+    context 'as an admin' do
+      include_context 'as an admin of the tournament'
+
+      context 'of the correct tournament' do
+        let(:tournament) { team_tournament }
+
+        it 'deletes the team' do
+          expect { subject }.to change { Team.count }.by(-1)
+        end
+      end
+
+      context 'for a different tournament' do
+        let!(:tournament) { FactoryGirl.create(:current_tournament) }
+
+        it 'redirects home and does not delete anything' do
+          expect { subject }.not_to change { Team.count }
+          response.should redirect_to root_url
+        end
+      end
+    end
+  end
 end

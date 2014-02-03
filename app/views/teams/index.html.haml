@@ -21,7 +21,7 @@
   %tbody
     - @teams.each do |t|
       %tr
-        %td=link_to t.name, edit_team_url(t)
+        %td=link_to t.name.presence || '(no name)', edit_team_url(t)
         %td=t.division
         %td=t.getNumber
         %td.states

@@ -48,4 +48,8 @@
             This will send an email to the coach containing the password.
             You can only send the password email if you change the password.
   .actions
-    %input.btn.primary{:type=>"submit", :value=>team.new_record? ? 'Create Team' : 'Save Changes'}
+    %input.btn.primary{ type: 'submit', value: team.persisted? ? 'Save Changes' : 'Create Team' }
+    - if team.persisted? && @is_admin
+      = link_to 'Delete Team', team_path(team), data: { confirm: 'Are you sure you want to delete this team?' },
+        method: 'delete',
+        class: 'btn'
