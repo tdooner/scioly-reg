@@ -68,13 +68,21 @@ class HomeController < ApplicationController
 
   private
 
+  def signup
+    breadcrumbs.add("Welcome!")
+    render :signup # Render app/views/home/signup.html.haml
+  end
+
+  def login
+    render :login
+  end
+
   def render_app_if_subdomain
     if @current_school
-      if not @team.nil? # If logged in...
-        breadcrumbs.add("Welcome!")
-        render :signup # Render app/views/home/signup.html.haml
+      if @team
+        signup
       else
-        render :login  # app/views/home/login.html.haml
+        login
       end
     end
   end

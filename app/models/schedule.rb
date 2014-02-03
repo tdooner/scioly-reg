@@ -60,11 +60,7 @@ class Schedule < ActiveRecord::Base
   end
 
   def hasTeamRegistered(team_id)
-    signups = SignUp.where("timeslot_id in (select id from timeslots where schedule_id = ?) and team_id = ?", self, team_id).first
-    if signups.nil?
-      return false
-    end
-    return true
+    timeslots.any? { |ts| ts.sign_ups.map(&:team_id).include?(team_id) }
   end
 
   def humanize
@@ -81,7 +77,7 @@ class Schedule < ActiveRecord::Base
   end
 
   def is_scheduled_online?
-    not self.timeslots.empty?
+    timeslots.any?
   end
 
   # False if the user has made any customizations to any of the timeslots

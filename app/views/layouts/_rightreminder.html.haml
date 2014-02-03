@@ -4,7 +4,7 @@
   You are currently registering for events at the tournament on
   ="#{@current_tournament.humanize}."
 / If the team has an event to register for...
-- if not @dont_forget.empty?
+- if @dont_forget.present?
   %h4
     Don't Forget!
   %p
@@ -15,16 +15,16 @@
   %ul
     - @dont_forget.each do |i|
       %li
-        = link_to(i.event,url_for(i))
+        = link_to(i.event, url_for(i))
   %p
-    = link_to "View Current Reservations", signups_url
+    = link_to 'View Current Reservations', signups_url
   // If the team has registered for all events:
 - else
   %h4
     Your Event Schedule
   %p
     You have registered for all events.
-    = link_to "View all your registrations.", signups_url
+    = link_to 'View all your registrations.', signups_url
 %h4
   Team Actions
 %p=link_to "Change Password", edit_team_url(session[:team])

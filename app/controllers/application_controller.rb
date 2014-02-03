@@ -16,11 +16,18 @@ class ApplicationController < ActionController::Base
   def setup_application
     breadcrumbs.add 'Home', root_path
 
-    @current_tournament = @current_school.tournaments.where(school: @current_school, is_current: true).first or raise "No Tournament Found!"
-    @team = Team.find_by_id_and_tournament_id(session[:team], @current_tournament)
-    @all_schedules = @current_tournament.schedules.order('event ASC').group_by(&:division)
-    @all_schedules["B"] ||= []
-    @all_schedules["C"] ||= []
+    @current_tournament = @current_school.tournaments.where(is_current: true).first or raise "No Tournament Found!"
+
+    @team = Team.where(id: session[:team], tournament_id: @current_tournament)
+                .includes(tournament: { schedules: :timeslots },
+                          sign_ups: { timeslot: :schedule })
+                .first
+
+    schedules_scope = @current_tournament.schedules
+    schedules_scope = schedules_scope.includes(timeslots: :sign_ups) if @team
+
+    @all_schedules = Hash.new([])
+    @all_schedules.merge!(schedules_scope.group_by(&:division))
 
     @is_admin = !!@current_admin.try(:is_admin_of, @current_school)
 

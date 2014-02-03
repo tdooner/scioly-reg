@@ -58,8 +58,10 @@ class Team < ActiveRecord::Base
 
   # Returns list of all schedules that this team still needs to register for using set subtraction.
   def unregistered_events
-    self.tournament.schedules.where(["schedules.division=?", self.division]).keep_if(&:is_scheduled_online?) -
-    self.sign_ups.includes({:timeslot => :schedule}).map{|x| x.timeslot.schedule}
+    tournament
+      .schedules
+      .keep_if { |s| s.is_scheduled_online? && s.division == division } -
+    sign_ups.map{|x| x.timeslot.schedule }
   end
 
   def can_register_for_event?(s)
