@@ -6,3 +6,4 @@
 //= require autocomplete-rails
 //= require bootstrap-tabs
 //= require jquery.tablesorter.min
+//= require analytics
