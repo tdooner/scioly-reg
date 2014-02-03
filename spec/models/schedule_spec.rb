@@ -69,26 +69,25 @@ describe Schedule do
 
       it 'removes unused timeslots' do
         @schedule.num_timeslots = num_timeslots - 2
-        expect { @schedule.updateTimeSlots }.to change { Timeslot.count}.by -2
+        expect { @schedule.updateTimeSlots }
+          .to change { Timeslot.count }.by(-2)
       end
     end
   end
 
   describe '#hasTeamRegistered' do
     let(:team) { FactoryGirl.create(:team, :tournament => @schedule.tournament) }
+    let(:timeslot) { FactoryGirl.create(:timeslot, schedule: @schedule) }
 
     context 'when the team has registered for the event' do
       before do
-        @schedule.num_timeslots = 10
-        @schedule.updateTimeSlots
-        Timecop.freeze(@schedule.tournament.registration_begins + 2.minutes) do
-          @sign_up = FactoryGirl.create(:sign_up,
-                                    :team => team,
-                                    :timeslot => @schedule.timeslots.sample)
-        end
+        @sign_up = FactoryGirl.build(:sign_up,
+                                      :team => team,
+                                      :timeslot => timeslot)
+        @sign_up.save(validate: false)
       end
 
-      subject { @schedule.hasTeamRegistered(team) }
+      subject { @schedule.hasTeamRegistered(team.id) }
       it { should be_true }
     end
 
