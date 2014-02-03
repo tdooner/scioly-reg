@@ -215,6 +215,7 @@ private
   def schedule_params
     params.fetch(:schedule, {}).permit(:event, :division, :room,
                                        :starttime_in_time_zone, :endtime_in_time_zone,
-                                       :custom_info, :counts_for_score)
+                                       :custom_info, :counts_for_score,
+                                       :num_timeslots, :teams_per_slot)
   end
 end

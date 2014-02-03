@@ -33,6 +33,53 @@ describe SchedulesController do
     end
   end
 
+  describe '#update' do
+    let(:tournament) { FactoryGirl.create(:current_tournament) }
+    let(:schedule) { FactoryGirl.create(:schedule, tournament: tournament) }
+    let(:num_timeslots) { 10 }
+    let(:teams_per_slot) { 3 }
+
+    include_context 'as an admin of the tournament'
+
+    subject { post :update, params }
+
+    context 'when creating timeslots' do
+      let(:params) do
+        {
+          id: schedule.id,
+          schedule_online: 'true',
+          schedule: {
+            num_timeslots: num_timeslots.to_s,
+            teams_per_slot: teams_per_slot.to_s,
+          }
+        }
+      end
+
+      it 'creates timeslots' do
+        subject
+        schedule.timeslots.count.should == num_timeslots
+      end
+    end
+
+    context 'when switching back to fixed schedule' do
+      before do
+        FactoryGirl.create(:timeslot, schedule: schedule)
+      end
+
+      let(:params) do
+        {
+          id: schedule.id,
+          schedule_online: 'false'
+        }
+      end
+
+      it 'removes timeslots' do
+        subject
+        schedule.timeslots.count.should == 0
+      end
+    end
+  end
+
   describe '#create' do
     let(:tournament) { FactoryGirl.create(:tournament, :current) }
 

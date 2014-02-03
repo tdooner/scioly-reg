@@ -99,6 +99,12 @@
               %label
                 = radio_button_tag :schedule_online, "keep_existing", true
                 Do Not Change Schedule
+              - timeslot_count = @schedule.timeslots.length
+              - if timeslot_count > 0
+                %span.help-block
+                  There are currently
+                  %strong #{timeslot_count} timeslots
+                  for this event.
               %span.help-block
                 Do not touch existing timeslots when saving this event.
           %li
