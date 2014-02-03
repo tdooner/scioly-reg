@@ -38,7 +38,6 @@ Scioly::Application.routes.draw do
 
     collection do
       get 'all_pdfs'
-      get 'autocomplete_event' => "schedules#autocomplete_schedule_event"
       get 'batchnew' => "schedules#batchnew"
       post 'batchnew' => "schedules#batchcreate"
       get ':division' => "schedules#index", as: 'division', constraints: { division: /[A-Z]/ }

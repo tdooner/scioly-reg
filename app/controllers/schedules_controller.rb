@@ -7,7 +7,6 @@ class SchedulesController < ApplicationController
 
   before_filter :is_admin, :only => [:new, :destroy, :batchnew, :edit, :create, :update, :scores, :savescores, :batchcreate, :all_pdfs]
   protect_from_forgery :except => :destroy
-  autocomplete :schedule, :event, :display_value => :humanize, :extra_data => [:division]
 
   def new
     breadcrumbs.add("New Event")
