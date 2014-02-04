@@ -17,6 +17,7 @@ gem 'jquery-rails'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'turbolinks'
+gem 'newrelic_rpm'
 
 group :production do
   gem 'pg'
