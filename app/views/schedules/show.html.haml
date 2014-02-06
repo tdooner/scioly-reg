@@ -10,6 +10,7 @@
       $(".hidebtn").hide();
       $("form#new_timeslot").hide();
       $("table#timeslot tr").hover(function(){ $("a.hidebtn", this).fadeIn(150);}, function() { $("a.hidebtn", this).fadeOut(150);});
+      $('body').tabs('.tabs li > a');
     });
 -if @is_admin
   %div.alert-message.block-message.info

@@ -79,4 +79,5 @@
       :javascript
         $(function(){
           $("table#scores_table_#{d}").tablesorter({sortList:[[#{@events[d].length+2-@events[d].select{|x| !x.counts_for_score}.length},0]]})
+          $('body').tabs('.tabs li > a');
         });
