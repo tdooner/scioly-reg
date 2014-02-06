@@ -3,6 +3,7 @@ ruby '2.0.0'
 
 gem 'rails', '4.0.2'
 gem 'haml'
+gem 'slim'
 gem 'breadcrumbs'
 gem 'rdiscount'
 gem 'recaptcha', :require => "recaptcha/rails"
