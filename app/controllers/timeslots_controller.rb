@@ -1,7 +1,7 @@
 class TimeslotsController < ApplicationController
+  before_filter :set_timeslot, except: :create
   before_filter :is_admin
-  before_filter :verify_admin_can_edit
-  protect_from_forgery :except=>[:destroy]
+  before_filter :verify_admin_can_edit, except: :create
 
   def create
     ts = Timeslot.new(params[:timeslot])
@@ -16,24 +16,32 @@ class TimeslotsController < ApplicationController
   end
 
   def update
-    ts = Timeslot.find(params[:id])
-    if !ts.update_attributes(params[:timeslot])
-      flash[:error] = "There was a problem saving the timeslot data: #{ts.errors.full_messages.first}. #{params[:timeslot][:begins].inspect}"
+    if !@timeslot.update_attributes(timeslot_params)
+      flash[:error] = "There was a problem saving the timeslot data: #{@timeslot.errors.full_messages.first}. #{params[:timeslot][:begins].inspect}"
     end
-    redirect_to schedule_url(ts.schedule)
+
+    redirect_to schedule_url(@timeslot.schedule, anchor: 'tab-registration')
   end
 
   def destroy
-    ts = Timeslot.find(params[:id])
-    if !ts.destroy
+    if !@timeslot.destroy
       flash[:error] = "Could not delete!"
     end
-    redirect_to schedule_url(ts.schedule)
+
+    redirect_to schedule_url(@timeslot.schedule)
   end
 
 private
 
+  def set_timeslot
+    @timeslot = Timeslot.find(params[:id])
+  end
+
   def verify_admin_can_edit
-    redirect_to root_url unless @current_admin.can_edit?(ts.schedule)
+    redirect_to root_url unless @current_admin.can_edit?(@timeslot.schedule)
+  end
+
+  def timeslot_params
+    params.fetch(:timeslot, {}).permit(:begins, :team_capacity)
   end
 end

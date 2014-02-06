@@ -32,13 +32,15 @@
         class: 'hidebtn'
 - if @current_admin.try(:can_edit?, @schedule)
   %tr{:id=>"edit-timeslot-#{ts.id}",:style=>"display:none;"}
-    =form_for(ts, :url=>timeslot_url(ts)) do |f|
-      %td=f.time_select :begins, {:default => ts.begins}, :class=>"span2"
-      %td
-        =f.text_field :team_capacity, {:value => ts.team_capacity, :class=>"span1"}
-        teams may register here.
-      %td{:colspan=>3}
-        =f.submit "Save!", :class=>"btn success"
+    %td.row{ colspan: 5 }
+      = form_for(ts, url: timeslot_url(ts), async: true, html: { class: 'row' }) do |f|
+        .span4
+          = f.time_select :begins, {:default => ts.begins}, :class=>"span2"
+        .span7
+          = f.text_field :team_capacity, {:value => ts.team_capacity, :class=>"span1"}
+          teams may register here.
+        .span2
+          = f.submit "Save!", :class=>"btn success"
 - if ts.sign_ups.include?(@currentreg)
   %tr
     %td{:colspan=>2}
