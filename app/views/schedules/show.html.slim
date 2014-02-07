@@ -1,0 +1,111 @@
+- content_for :javascripts do
+  javascript:
+    var toggleTimeslotEdit = function(id) {
+      $("#edit-timeslot-" + id).toggle();
+    }
+    var show_timeslot_form = function() {
+      $("form#new_timeslot").toggle();
+    }
+    $(function() {
+      $(".hidebtn").hide();
+      $("form#new_timeslot").hide();
+      $("table#timeslot tr").hover(function(){ $("a.hidebtn", this).fadeIn(150);}, function() { $("a.hidebtn", this).fadeOut(150);});
+    });
+-if @is_admin
+  div.alert-message.block-message.info
+    | Hey, it looks like you're an admin. Here are some things you can do:
+    div.alert-actions
+      - if @current_admin.try(:can_edit?, @schedule)
+        a.btn href="javascript:show_timeslot_form()"  Add Timeslot
+        a.btn href=edit_schedule_url(@schedule) Edit Event
+      - if @is_admin
+        a.btn href=schedule_scores_url(@schedule)  Submit Scores
+      = link_to("Download PDF", schedule_url(@schedule, :format=>"pdf"), :class=>"btn")
+    =form_for(Timeslot.new) do |f|
+      =hidden_field :timeslot_extra, :schedule, {:value => @schedule.id}
+      fieldset
+        .clearfix
+          =f.label :begins, "Begin Time:"
+          .input
+            =f.time_select :begins, {}, :class=>"span2"
+        .clearfix
+          =f.label :team_capacity, "Team Capacity:"
+          .input
+            =f.text_field :team_capacity, :class=>"span1"
+        .clearfix
+          =f.submit "Create!", :class=>"btn primary"
+ul.tabs.noprint data-tabs="tabs"
+  li.active
+    a href="#information"  Information
+  - if @allslots.length > 0
+    li
+      a href="#registration"  Registration
+  li
+    a href="#scores"  Scores
+div.tab-content
+  div.tab-pane.active#information
+    .onlyprint
+      h2 Event Information
+    - if not @currentreg.nil?
+      div.alert-message.info="Your team is registered in the #{@currentreg.timeslot.begins.strftime("%I:%M %p")} timeslot."
+    - if @allslots.length == 0
+      | This event is not selected for online sign-up. Information pertaining to this event is listed below, however no action is required. After the awards ceremony, scores for this event will be posted to this page.
+    - else
+      | This event is scheduled for online sign-up. When registration is open, you may register for timeslots or change your timeslot. On the day of the tournament, teams that did not complete online registration may choose from the remaining slots.
+    h3 Event Name
+    p= "#{@schedule.event} (#{@schedule.division})"
+    h3 Time
+    p
+      = @schedule.times[:start]
+      | to 
+      = @schedule.times[:end]
+    h3 Room
+    p= @schedule.room
+  div.tab-pane#registration
+    .onlyprint
+      h2 Registration
+    p
+      | Below are the designated timeslots for this event. Timeslots that have been reserved by another team are greyed out. To sign up for a timeslot, click the word "Register!" next to the desired time.
+    div.smalllinks
+      table#timeslot width="100%" style="padding:0;margin:0;"
+        thead
+          th style="width:25%"  Timeslot
+          th style="width:49%"  Availability
+          - if @team && @team.can_register_for_event?(@schedule)
+            th Sign Up
+          - if @current_admin.try(:can_edit?, @schedule)
+            th width="16px"
+            th width="16px"
+        - @allslots.each do |ts|
+          = render :partial=>"schedules/timeslot", :locals => {:ts => ts}
+  div.tab-pane#scores
+    .onlyprint
+      h2 Scores
+    - if !@current_tournament.show_scores?
+      p
+        | Scores will be posted
+        b after the awards ceremony,
+        | or at 8pm EST, whichever comes first.
+      p
+        | Scores may be withheld past that time in the event of a dispute.
+    - else
+      - if !@schedule.counts_for_score
+        div.alert-message.warning
+          b
+            | Note:
+          | This event's scores are not factored into a team's overall score.
+      div style=("width:600px; margin:auto;")
+        table.zebra-striped.bordered-table.condensed-table
+          thead
+            th width="100px"  Placement
+            th width="100px"  Team Number
+            th Team Name
+          tbody
+            - @scores.each do |s|
+              tr
+                td=s.placement
+                td=s.team.getNumber
+                td=s.team.name
+- content_for :javascripts do
+  javascript:
+    | mixpanel.track("View Event", {event: "#{@schedule.event}"});

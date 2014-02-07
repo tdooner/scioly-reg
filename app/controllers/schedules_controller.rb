@@ -143,7 +143,7 @@ class SchedulesController < ApplicationController
         render :pdf => @schedule.event.gsub(/[^a-zA-Z]/, '_') + "_" + @schedule.division
       end
       format.html do
-        render :show
+        render :show, stream: true
       end
     end
   end

@@ -5,7 +5,6 @@ head
   = javascript_include_tag 'application'
   = render 'layouts/analytics'
   = csrf_meta_tags
-  = yield :javascripts
 - @layout_expanded ||= false
 
 body#home
@@ -53,3 +52,4 @@ body#home
       = link_to "the webmaster.", "mailto:tomdooner@gmail.com"
       |  If you are an administrator for this event,
       = link_to "click here to log in.", adminlogin_url
+  = yield :javascripts
