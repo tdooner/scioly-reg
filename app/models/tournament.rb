@@ -29,7 +29,7 @@ class Tournament < ActiveRecord::Base
   end
 
   def divisions
-    @divisions ||= schedules.select(:division).uniq.map(&:division).sort
+    @divisions ||= schedules.map(&:division).uniq.sort
   end
 
   def has_registration_begun?

@@ -16,12 +16,16 @@ class ApplicationController < ActionController::Base
   def setup_application
     breadcrumbs.add 'Home', root_path
 
-    @current_tournament = @current_school.tournaments.where(is_current: true).first or raise "No Tournament Found!"
+    @current_tournament = @current_school
+                            .tournaments
+                            .where(is_current: true)
+                            .includes(:schedules)
+                            .first or raise "No Tournament Found!"
 
     @team = Team.where(id: session[:team], tournament_id: @current_tournament)
                 .includes(tournament: { schedules: :timeslots },
                           sign_ups: { timeslot: :schedule })
-                .first
+                .first if session[:team]
 
     schedules_scope = @current_tournament.schedules
     schedules_scope = schedules_scope.includes(timeslots: :sign_ups) if @team

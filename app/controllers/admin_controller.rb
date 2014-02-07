@@ -6,9 +6,6 @@ class AdminController < ApplicationController
     @teams = @current_tournament.teams
 
     @signups = SignUp.all
-    @num_signups = @signups.length
-    @team_signups = @signups.map{|x| x.team.name}.uniq
-    @num_team_signups = @team_signups.length
   end
 
   def events

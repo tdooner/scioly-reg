@@ -120,7 +120,7 @@ class SchedulesController < ApplicationController
   def show
     @schedule = Schedule.find(params[:id])
     breadcrumbs.add("Division #{@schedule.division} Events", division_schedules_url(@schedule.division))
-    @scores = @schedule.scores.includes(:team => :tournament)
+    @scores = @schedule.scores.includes(team: :tournament)
     breadcrumbs.add(@schedule.event)
     if @schedule.nil?
       flash[:message] = "Event not found!"
