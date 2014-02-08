@@ -26,6 +26,7 @@ Scioly::Application.routes.draw do
     collection do
       get 'batchnew' => 'teams#batchnew'
       post 'batchnew' => 'teams#batchcreate'
+      post 'batchpreview'
     end
   end
 

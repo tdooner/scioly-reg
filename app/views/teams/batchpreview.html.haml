@@ -1,0 +1,25 @@
+- if @errors.any?
+  .alert-message.error
+    The following errors occurred:
+    = @errors.join(',<br>').html_safe
+
+%table.bordered-table.zebra-striped.condensed-table
+  %thead
+    %tr
+      %th Team Name
+      %th Team Number
+      %th Coach Name
+      %th Coach Email
+      %th Division
+      %th Homeroom
+      %th Password
+  %tbody
+    - @teams.each do |team|
+      %tr
+        %td= team.name
+        %td= team.number
+        %td= team.coach
+        %td= team.email
+        %td= team.division
+        %td= team.homeroom
+        %td= team.password

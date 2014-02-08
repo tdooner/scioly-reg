@@ -8,19 +8,29 @@
   %dt Team Number
   %dd For example, 12 or 13. Do not include letters.
   %dt Coach Name
+  %dt Coach Email
   %dt Division
   %dd Either "B" or "C".
   %dt Homeroom
   %dt Password
-  %dt Coach Email
-%p
-  If you are about to make a spreadsheet with these values, here is a template you can use and then copy-paste.
-  %a{:href=>"https://docs.google.com/spreadsheet/ccc?key=0AgQhM9vFx8X8dFhtODFxTGRwa0REV3JFaWpvVFJLTnc"}
-    Batch Team Input Template.
+
 %form{:method=>"POST", :action=>batchnew_teams_path}
-  %fieldset
-    %input{:type=>"hidden",:name=>"authenticity_token",:value=>form_authenticity_token}
-    %textarea{:style=>"width:650px; height:200px;",:name=>"batch"}
+  %ul.tabs{ data: { tabs: 'tabs' } }
+    %li.active
+      %a#tab-import{ href: '#import' } Import
+    %li
+      %a#tab-preview{ href: '#preview' } Preview
+  .tab-content
+    #import.tab-pane.active
+      %p
+        If you are about to make a spreadsheet with these values, here is a
+        template you can use the
+        = link_to 'Batch Team Input Template', 'https://docs.google.com/spreadsheet/ccc?key=0AgQhM9vFx8X8dFhtODFxTGRwa0REV3JFaWpvVFJLTnc'
+      %fieldset
+        %input{:type=>"hidden",:name=>"authenticity_token",:value=>form_authenticity_token}
+        %textarea#batch-input{:style=>"width:650px; height:200px;",:name=>"batch"}
+    #preview.tab-pane
+      Please wait, loading preview...
   %fieldset
     .clearfix
       =label_tag 'send_email', 'Send Passwords via Email'
@@ -32,3 +42,22 @@
   .actions
     %input.btn.primary{:type=>"submit", :value=>"Submit Batch Teams"}
 
+- content_for :javascripts do
+  :javascript
+    $('body').tabs('.tabs li > a');
+
+    $('.tabs').on('change', function(e) {
+      if ($(e.target).is('#tab-preview')) {
+        var $tabBody = $('#preview');
+        $tabBody.html('Please wait, loading preview...');
+
+        $tabBody.load('#{batchpreview_teams_path}', {
+          batch : $('#batch-input').val()
+        }, function(resp, status, xhr) {
+          if (status === 'error') {
+            $tabBody.html('An error occurred while parsing your input! Please ' +
+            'double-check the formatting.');
+          }
+        });
+      }
+    });

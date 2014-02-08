@@ -104,6 +104,7 @@
                 %td=s.placement
                 %td=s.team.getNumber
                 %td=s.team.name
+
 - content_for :javascripts do
   :javascript
     mixpanel.track("View Event", {event: "#{@schedule.event}"});

@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
-  before_filter :is_admin, :only => [:new, :create, :batchnew, :index, :destroy]
+  before_filter :is_admin, :only => [:new, :create, :batchnew, :batchcreate,
+                                     :batchpreview, :index, :destroy]
   before_filter :is_correct_team, :only => [:edit, :update]
 
   def index
@@ -86,33 +87,15 @@ class TeamsController < ApplicationController
   end
 
   def batchcreate
-    @teams = params[:batch].split("\n")
-    @errors = []
+    @teams, @errors = parse_teams_from_batch
 
-    @teams.each do |t|
-      a = t.split("\t")
-
-      if a.length < 7
-        @errors << "Short record found: #{a[0]}!"
-        next
-      end
-
-      team = @current_tournament.teams.new(
-        :name => a[0],
-        :number => a[1],
-        :coach => a[2],
-        :division => a[3],
-        :homeroom => a[4],
-        :password => a[5],
-        :email => a[6].strip,
-      )
-
+    @teams.each do |team|
       if team.save
         if params[:send_email].present? && team.email.present?
           TeamMailer.password_update(team, team.password).deliver
         end
       else
-        @errors << "Error with #{a[0]}: #{team.errors.full_messages.first}"
+        @errors << "Error with #{team.name}: #{team.errors.full_messages.first}"
       end
     end
 
@@ -123,6 +106,13 @@ class TeamsController < ApplicationController
     else
       render :batchnew
     end
+  end
+
+  def batchpreview
+    return unless request.xhr?
+    @teams, @errors = parse_teams_from_batch
+
+    render layout: false
   end
 
   def destroy
@@ -226,6 +216,8 @@ class TeamsController < ApplicationController
     redirect_to root_url
   end
 
+private
+
   # Checks if a team has the rights to perform this action.
   def is_correct_team
     return true if @is_admin
@@ -234,5 +226,46 @@ class TeamsController < ApplicationController
     if @team.id != params[:id].to_i
       return redirect_to edit_team_url(session[:team])
     end
+  end
+
+  def parse_teams_from_batch
+    return [[], ['No teams specified!']] unless params[:batch].present?
+
+    lines = params[:batch].split("\n")
+    errors = []
+    team_numbers = @current_tournament.teams.pluck(:number)
+    team_names = @current_tournament.teams.pluck(:name)
+
+    teams = lines.map do |t|
+      a = t.strip.split("\t")
+
+      if a.length < 7
+        errors << "Short record found: #{a[0]}!"
+        next
+      end
+
+      if team_names.include?(a[0])
+        errors << "Duplicate team name: #{a[0]}"
+      end
+
+      if team_numbers.include?(a[1])
+        errors << "Duplicate team number for team #{a[0]}"
+      end
+
+      team_names << a[0]
+      team_numbers << a[1]
+
+      @current_tournament.teams.new(
+        :name => a[0],
+        :number => a[1],
+        :coach => a[2],
+        :email => a[3],
+        :division => a[4],
+        :homeroom => a[5],
+        :password => a[6],
+      )
+    end
+
+    [teams, errors]
   end
 end
