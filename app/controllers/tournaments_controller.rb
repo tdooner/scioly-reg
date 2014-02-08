@@ -22,7 +22,7 @@ class TournamentsController < ApplicationController
   end
 
   def index
-    @tournaments = @current_school.tournaments
+    @tournaments = @current_school.tournaments.order(:date)
     breadcrumbs.add("Edit Tournaments")
   end
 
