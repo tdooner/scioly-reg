@@ -23,6 +23,11 @@ describe Tournament do
       tournament.set_current
       current_tournament_at_another_school.is_current.should be_true
     end
+
+    it 'does nothing if the tournament is already current' do
+      current_tournament.set_current
+      current_tournament.reload.should be_current
+    end
   end
 
   describe '#has_registration_begun?' do

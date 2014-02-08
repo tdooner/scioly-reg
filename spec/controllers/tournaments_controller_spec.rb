@@ -61,12 +61,24 @@ describe TournamentsController do
       let(:tournament) { FactoryGirl.create(:tournament, :current) }
       let(:other_tournament) { FactoryGirl.create(:tournament) }
 
-      subject { post :set_active, current: other_tournament }
+      subject { post :set_active, current: other_tournament.id }
 
       it 'sets it to current' do
         subject
         other_tournament.reload.should be_current
         response.should redirect_to tournaments_path
+      end
+    end
+
+    context 'with an already current tournament' do
+      include_context 'as an admin of the tournament'
+
+      let(:tournament) { FactoryGirl.create(:current_tournament) }
+
+      subject { post :set_active, current: tournament.id }
+
+      it 'keeps the tournament as current' do
+        expect { subject }.not_to change { tournament.reload.current? }
       end
     end
   end

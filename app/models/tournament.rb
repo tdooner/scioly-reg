@@ -10,9 +10,13 @@ class Tournament < ActiveRecord::Base
 
   validates_presence_of :date, :school_id
 
-  def set_current()
-    self.school.tournaments.update_all("is_current='f'")
-    self.update_attribute("is_current", true)
+  def set_current
+    return if current?
+
+    transaction do
+      school.tournaments.update_all(is_current: false)
+      update_attributes(is_current: true)
+    end
   end
 
   def humanize()
