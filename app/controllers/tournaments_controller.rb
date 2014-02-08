@@ -136,7 +136,7 @@ class TournamentsController < ApplicationController
   def tournament_params
     params.fetch(:tournament, {}).permit(:title, :date, :registration_begins,
                                          :registration_ends, :homepage_markdown,
-                                         :hosted_by_markdown,
+                                         :homepage_photo, :hosted_by_markdown,
                                          :append_division_to_team_number)
   end
 end
