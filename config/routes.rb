@@ -11,7 +11,7 @@ Scioly::Application.routes.draw do
     get 'scorespublish', :as => :scorespublish
     get 'scoreslideshow'
     get "school/edit"
-    put "school/update"
+    patch "school/update"
   end
 
   resource :user
