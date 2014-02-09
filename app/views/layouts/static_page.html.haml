@@ -2,6 +2,7 @@
 %head
   %title Science Olympiad Scoring System
   = stylesheet_link_tag 'application'
+  = javascript_include_tag 'application'
   = render 'layouts/analytics'
   :css
     body, html {
@@ -37,5 +38,4 @@
 %body
   #contentWrapper
     =yield
-  = javascript_include_tag 'application'
   = yield :javascripts
