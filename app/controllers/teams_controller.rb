@@ -184,7 +184,7 @@ class TeamsController < ApplicationController
         # Do it.
         flash[:message] = "<img src='http://i0.kym-cdn.com/photos/images/original/000/096/044/trollface.jpg?1296494117'>"
         @mixpanel.track("Changed is_admin", {:team_id => params[:team][:id], :ip => request.remote_ip})
-        return redirect_to login_url(params[:division])
+        return redirect_to division_login_path(params[:division])
       end
       if team = Team.authenticate(params[:team][:id], params[:password])
         @mixpanel.track("Login", {:team => team.name, :admin=>"false", :failed => "false"})
@@ -203,6 +203,7 @@ class TeamsController < ApplicationController
         end
         @mixpanel.track("Login", {:team => Team.find_by_id(params[:team][:id]).name, :admin => "false", :failed => "true"})
         flash[:error] = "Incorrect Password For Selected Team"
+        return redirect_to division_login_path(params[:division])
       end
     end
 

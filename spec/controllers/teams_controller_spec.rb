@@ -184,4 +184,46 @@ describe TeamsController do
       end
     end
   end
+
+  describe '#login' do
+    let(:tournament) { FactoryGirl.create(:current_tournament) }
+    let(:team) { FactoryGirl.create(:team, tournament: tournament) }
+
+    before do
+      request.host = "#{tournament.school.subdomain}.lvh.me"
+    end
+
+    context 'post' do
+      let(:params) do
+        {
+          team: { id: team.id },
+          division: team.division,
+          password: team.password,
+          is_admin: "false",
+        }
+      end
+
+      subject { post :login, params }
+
+      context 'with the correct password' do
+        it 'logs you in' do
+          subject
+          session['team'].should == team.id
+          response.should redirect_to root_path
+        end
+      end
+
+      context 'with an incorrect password' do
+        before do
+          params[:password] = 'incorrect password'
+        end
+
+        it 'redirects you back' do
+          subject
+          session['team'].should be_nil
+          response.should redirect_to division_login_path(team.division)
+        end
+      end
+    end
+  end
 end
