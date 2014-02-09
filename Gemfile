@@ -23,6 +23,7 @@ group :production do
   gem 'pg'
   gem 'unicorn'
   gem 'rails_12factor'
+  gem 'font_assets'
 end
 
 group :assets do
