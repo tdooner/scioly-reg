@@ -12,11 +12,11 @@
     - @sign_ups.each do |s|
       %tr
         %td
-          =link_to(s.timeslot.schedule.event,s.timeslot.schedule)
+          = link_to(s.timeslot.schedule.event, s.timeslot.schedule)
         %td
-          =s.timeslot.schedule.room
+          = s.timeslot.schedule.room
         %td
-          =s.timeslot.begins.strftime("%I:%M %p")
+          = s.timeslot.begins.strftime("%I:%M %p")
 - content_for :javascripts do
   :javascript
     mixpanel.track("View All Signups");

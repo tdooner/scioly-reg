@@ -28,7 +28,12 @@ class SignupsController < ApplicationController
   end
 
   def index
-    @sign_ups = @team.sign_ups.reload
+    @sign_ups = @team.sign_ups.includes(timeslot: :schedule)
+
+    # this shouldn't be needed in the future, but there is some bad data in the
+    # database right now:
+    @sign_ups.reject! { |s| s.try(:timeslot).try(:schedule).nil? }
+
     breadcrumbs.add("Team #" + @team.getNumber() + " Registrations")
   end
 
