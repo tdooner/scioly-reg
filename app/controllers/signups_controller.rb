@@ -3,6 +3,7 @@ class SignupsController < ApplicationController
   before_filter :load_signup_by_timeslot_id, :only => [:new, :create]
   before_filter :load_signup_by_signup_id, :only   => [:destroy]
   before_filter :ensure_registration_open, :only => [:new, :create, :destroy]
+  before_filter :team_logged_in
 
   protect_from_forgery except: :destroy
 
@@ -40,15 +41,16 @@ class SignupsController < ApplicationController
   def destroy
     @signup = SignUp.find(params[:id])
 
-    schedule = Schedule.first
-    if not @signup.nil? and @signup.team_id == @team.id
-        schedule = @signup.delete().timeslot.schedule
+    if @signup.team_id == @team.id
+      flash[:message] = "Registration deleted."
+      @signup.destroy
+      @mixpanel.track("SignUp Destroy", team: @team.name,
+                                        event: @signup.timeslot.schedule.event)
+    else
+      flash[:error] = 'You cannot delete this timeslot!'
     end
 
-    flash[:message] = "Registration deleted."
-
-    @mixpanel.track("SignUp Destroy", {:team => @team.name, :event=>@signup.timeslot.schedule.event})
-    return redirect_to(schedule_url(schedule))
+    redirect_to schedule_url(@signup.timeslot.schedule)
   end
 
   def create

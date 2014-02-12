@@ -30,7 +30,7 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.find(params[:id])
     @schedule.update_attributes(schedule_params)
     @schedule.updateTimeSlots if params[:schedule_online] == "true"
-    @schedule.timeslots.map(&:delete) if params[:schedule_online] == "false"
+    @schedule.timeslots.destroy_all if params[:schedule_online] == "false"
     redirect_to edit_schedule_url(@schedule)
   end
 
@@ -159,11 +159,7 @@ class SchedulesController < ApplicationController
 
   def destroy
     @schedule = Schedule.find(params[:id])
-    @schedule.timeslots do |e|
-      e.sign_ups.delete_all()
-      e.delete()
-    end
-    @schedule.delete()
+    @schedule.destroy
     redirect_to :admin_events
   end
 

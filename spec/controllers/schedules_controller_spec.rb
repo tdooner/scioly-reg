@@ -103,4 +103,28 @@ describe SchedulesController do
       end
     end
   end
+
+  describe '#destroy' do
+    let!(:tournament) { FactoryGirl.create(:current_tournament) }
+    let!(:schedule)   { FactoryGirl.create(:schedule, :with_timeslots, tournament: tournament) }
+
+    include_context 'as an admin of the tournament'
+
+    subject { delete :destroy, id: schedule.id }
+
+    it 'deletes the schedule' do
+      expect { subject }
+        .to change { Schedule.count }
+        .by(-1)
+    end
+
+    it 'deletes all associated timeslots' do
+      id = schedule.id
+
+      expect { subject }
+        .to change { Timeslot.where(schedule_id: id).count }
+        .to(0)
+    end
+  end
 end
+

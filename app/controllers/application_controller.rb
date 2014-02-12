@@ -53,6 +53,13 @@ class ApplicationController < ActionController::Base
       breadcrumbs.add("Admin", admin_index_url)
     end
   end
+
+  def team_logged_in
+    unless @team
+      session.delete(:team)
+      redirect_to :root
+    end
+  end
 end
 
 class Breadcrumbs::Render::Bootstrap < Breadcrumbs::Render::Base
@@ -72,4 +79,3 @@ class Breadcrumbs::Render::Bootstrap < Breadcrumbs::Render::Base
     end
   end
 end
-

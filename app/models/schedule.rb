@@ -46,7 +46,7 @@ class Schedule < ActiveRecord::Base
 
     existing_timeslots.each do |t|
       if !new_timeslots.include?(t)
-        t.delete
+        t.destroy
       end
     end
 
