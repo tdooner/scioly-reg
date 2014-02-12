@@ -4,7 +4,7 @@ class Schedule < ActiveRecord::Base
 
   attr_accessor :num_timeslots, :teams_per_slot
 
-  has_many :timeslots
+  has_many :timeslots, dependent: :destroy
   has_many :scores
   belongs_to :tournament
 

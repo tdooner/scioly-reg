@@ -10,7 +10,7 @@ class Team < ActiveRecord::Base
   validates_confirmation_of :password, :if => :password_validation_required?
 
   belongs_to :tournament
-  has_many :sign_ups
+  has_many :sign_ups, dependent: :destroy
   has_many :scores
   attr_accessor :password, :password_confirmation, :password_existing
 
