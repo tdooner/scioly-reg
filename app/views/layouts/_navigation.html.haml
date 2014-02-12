@@ -10,7 +10,7 @@
               - if @team && e.is_scheduled_online? && e.division == @team.division
                 %li
                   %a{:href=>schedule_url(e)}
-                    - if e.hasTeamRegistered(@team)
+                    - if e.hasTeamRegistered(@team.id)
                       =image_tag("ok.png",:width=>16)
                     - else
                       =image_tag("error.png", :width=>16)
