@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :schedule do
-    event Faker::Name.name
+    event { Faker::Name.name }
     division 'B'
     room 'Crawford 111'
     starttime { tournament.date + 4.hours }
@@ -13,5 +13,11 @@ FactoryGirl.define do
     end
 
     factory :schedule_c, :traits => [:division_c]
+
+    trait :with_timeslots do
+      after(:create) do |schedule|
+        3.times { FactoryGirl.create(:timeslot, schedule: schedule) }
+      end
+    end
   end
 end

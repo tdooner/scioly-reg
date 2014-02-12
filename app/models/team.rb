@@ -61,7 +61,7 @@ class Team < ActiveRecord::Base
     tournament
       .schedules
       .keep_if { |s| s.is_scheduled_online? && s.division == division } -
-    sign_ups.map{|x| x.timeslot.schedule }
+    sign_ups.map{|x| x.try(:timeslot).try(:schedule) }
   end
 
   def can_register_for_event?(s)

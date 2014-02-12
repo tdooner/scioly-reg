@@ -12,6 +12,11 @@ FactoryGirl.define do
       is_current true
     end
 
+    trait :open_for_registration do
+      registration_begins { Date.today - 3.days }
+      registration_ends { Date.today + 3.days }
+    end
+
     factory :current_tournament, :traits => [ :current ]
   end
 end
