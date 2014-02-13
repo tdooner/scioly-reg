@@ -183,6 +183,11 @@ class SchedulesController < ApplicationController
     @teams = @current_tournament.teams.where("division = ?", @schedule.division).includes(:tournament)
 
     @schedule.scores.each(&:destroy)
+
+    if params[:score_action] == 'Reset Scores'
+      return redirect_to schedule_scores_path(@schedule)
+    end
+
     all_successful = true
     errors = []
     params[:placings].each do |k,v|
