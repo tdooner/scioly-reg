@@ -83,6 +83,8 @@ GEM
       rack
     haml (4.0.5)
       tilt
+    heroku_rails_deflate (0.2.0)
+      rack (~> 1.5.0)
     hike (1.2.3)
     htmlentities (4.3.1)
     i18n (0.6.9)
@@ -219,6 +221,7 @@ DEPENDENCIES
   faker
   font_assets
   haml
+  heroku_rails_deflate
   jquery-rails
   mixpanel
   mocha

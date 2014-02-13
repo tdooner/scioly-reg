@@ -36,6 +36,7 @@ Scioly::Application.configure do
   config.assets.js_compressor  = :uglifier
   config.assets.css_compressor = :yui
   config.assets.digest         = true
+  config.static_cache_control = "public, max-age=31536000"
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
   config.action_controller.asset_host = "http://cdn.sciolyreg.org"

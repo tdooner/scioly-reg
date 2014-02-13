@@ -24,6 +24,7 @@ group :production do
   gem 'unicorn'
   gem 'rails_12factor'
   gem 'font_assets'
+  gem 'heroku_rails_deflate'
 end
 
 group :assets do
