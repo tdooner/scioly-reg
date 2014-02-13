@@ -79,12 +79,22 @@ class TournamentsController < ApplicationController
     if not params[:slideshow]
       return redirect_to admin_scoreslideshow_url
     end
+
+    @divisions = params[:slideshow][:division].try(:keys)
+
+    unless @divisions.any?
+      return redirect_to(admin_scoreslideshow_url, flash: {
+        error: 'Error: You must select a division!'
+      })
+    end
+
     @events = @current_tournament.schedules.includes({:scores => { :team => :tournament } })
     @teams = @current_tournament.teams.includes([:scores, :tournament])
 
-    @events.keep_if{|x| params[:slideshow][:division].include?(x.division) }
+    @events.keep_if{|x| @divisions.include?(x.division) }
     @events.keep_if{|x| !x.scores.empty?}
     @events.keep_if{|x| !x.scores_withheld || params[:slideshow][:skip_withheld] == "false"}
+
     case params[:slideshow][:order]
     when "alpha"
       @events = @events.sort_by(&:event)
@@ -101,6 +111,7 @@ class TournamentsController < ApplicationController
 
     @places = ['First Place', 'Second Place', 'Third Place', 'Fourth Place',
       'Fifth Place', 'Sixth Place', 'Seventh Place', 'Eighth Place']
+
     render :slideshow, :layout=>"scoreslideshow"
   end
 

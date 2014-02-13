@@ -6,10 +6,13 @@ This page will customize a slideshow of results to be shown at the awards ceremo
       %label
         %b Divisions
       .input
-        %select{:multiple=>"multiple", :size=>@current_tournament.divisions.length, :name=>"slideshow[division][]"}
+        %ul.inputs-list
           - @current_tournament.divisions.each do |d|
-            %option #{d}
-        .help-block Note: Hold CTRL to select multiple divisions.
+            %li
+              %label
+                = check_box_tag "slideshow[division][#{d}]", 'true',
+                  checked: 'checked'
+                Division #{d}
     .clearfix
       %label
         %b Show Top
