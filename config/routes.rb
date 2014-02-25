@@ -12,6 +12,16 @@ Scioly::Application.routes.draw do
     get 'scoreslideshow'
     get "school/edit"
     patch "school/update"
+
+    resources :tournaments do
+      collection do
+        post 'set_active'
+      end
+
+      get 'scoreslideshow'
+      post 'publish_scores'
+      get 'load_default_events'
+    end
   end
 
   resource :user
@@ -52,16 +62,8 @@ Scioly::Application.routes.draw do
 
   resources :timeslots
 
-  resources :tournaments do
-    collection do
-      post 'set_active'
-    end
-
+  resources :tournaments, only: [] do
     get 'scores'
-    get 'scoreslideshow'
-    post 'publish_scores'
-    post 'scoreslideshow'
-    get 'load_default_events'
   end
 
   match '/login' => "teams#login", via: [:get, :post]

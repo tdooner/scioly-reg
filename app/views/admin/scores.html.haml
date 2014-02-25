@@ -7,9 +7,9 @@
 .alert-message.block-message.info
   Click on an event below to submit scores for that event. After scoring is completed, here are some options of what to do with the scores.
   .alert-actions
-    %a.btn{:href=>admin_scoreslideshow_url} Award Ceremory Slideshow
-    %a.btn{:href=>tournament_scores_url(@current_tournament)} Score Spreadsheet
-    %a.btn{:href=>admin_scorespublish_url} Publish Scores
+    = link_to 'Award Ceremony Slideshow', admin_scoreslideshow_path, class: 'btn'
+    = link_to 'Score Spreadsheet', tournament_scores_path(@current_tournament), class: 'btn'
+    = link_to 'Publish Scores', admin_scorespublish_path, class: 'btn'
 %table.zebra-striped.condensed-table#admin-score-table
   %thead
     %th Event Name

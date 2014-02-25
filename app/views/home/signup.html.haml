@@ -27,7 +27,7 @@
     /%ul{:style => "text-align:left"}
     %h5=link_to("View Events That You Can Register For",division_schedules_url(@team.division))
     %h5=link_to("View All Your Registrations", signups_url)
-    %h5=link_to("View Scores", tournament_scores_url(@team.tournament))
+    %h5=link_to("View Scores", tournament_scores_path(@team.tournament))
     - if !@team.tournament.scores_revealed?
       .help-block
         Note: Scores will not be available until after the tournament.

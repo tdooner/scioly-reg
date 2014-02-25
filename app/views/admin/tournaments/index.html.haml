@@ -1,10 +1,10 @@
 .alert-message.block-message.info
   This is the page containing all tournaments at #{@current_school.name}. To change the tournament that the site is displaying, select another tournament as the current tournament.
   .alert-actions
-    =link_to "New Tournament", new_tournament_url, :class=>"btn small"
+    =link_to "New Tournament", new_admin_tournament_url, :class=>"btn small"
 %p
   Please select a Tournament to edit:
-= form_tag set_active_tournaments_url do
+= form_tag set_active_admin_tournaments_url do
   %table
     %thead
       %th Tournament
@@ -15,13 +15,13 @@
       -@tournaments.each do |t|
         %tr
           %td{ width: 300 }
-            =link_to t.humanize(), edit_tournament_url(t)
+            =link_to t.humanize(), edit_admin_tournament_url(t)
           %td
             =radio_button_tag(:current, t.id, t.is_current==true)
           %td
-            =link_to "Edit", edit_tournament_url(t)
+            =link_to "Edit", edit_admin_tournament_url(t)
           %td
-            =link_to "Delete", tournament_url(t),
+            =link_to "Delete", admin_tournament_url(t),
               method: :delete,
               data: { confirm: "Are you sure you wish to delete this Tournament? If you delete this, all the corresponding teams, events, and signups will be deleted! Click 'OK' to delete." }
   .actions

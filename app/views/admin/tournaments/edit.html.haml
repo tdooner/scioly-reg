@@ -1,7 +1,7 @@
 %p
   You are now editing the tournament scheduled for
   =@tournament.humanize() + "."
-=form_for(@tournament, :html=>{:multipart=>:true}) do |f|
+=form_for(@tournament, url: admin_tournament_path(@tournament), :html=>{:multipart=>:true}) do |f|
   .clearfix
     =f.label :title, "Tournament Name:"
     .input

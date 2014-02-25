@@ -17,7 +17,7 @@
 %div.tab-content
   %div.tab-pane#download
     %h3
-      =link_to "Download Scores as CSV", tournament_scores_url(@active, :format=>"csv")
+      =link_to "Download Scores as CSV", admin_tournament_scores_url(@active, :format=>"csv")
       (for Excel)
     %h4 More download methods will be posted later...
   - one_active = false

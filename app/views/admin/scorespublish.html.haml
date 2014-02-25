@@ -1,7 +1,7 @@
 Publishing the scores will make event scores publicly available on each event page and the overall
 summary of events available on the homepage.
 
-%form{:method=>"POST", :action=>tournament_publish_scores_url(@current_tournament)}
+%form{:method=>"POST", :action=>admin_tournament_publish_scores_path(@current_tournament)}
   %input{:type=>"hidden", :value=>form_authenticity_token, :name=>"authenticity_token"}
   - if !@withheldevents.empty?
     .alert-message.block-message.warning
