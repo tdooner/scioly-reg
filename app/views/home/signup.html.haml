@@ -21,7 +21,7 @@
         Registration begins
         = @current_tournament.human_times[:registration_begins]
 .row
-  .span5
+  .col-md-6
     %h3
       %b Things To Do
     /%ul{:style => "text-align:left"}
@@ -33,7 +33,7 @@
         Note: Scores will not be available until after the tournament.
     %h5=link_to "Change Password", edit_team_url(@team.id)
     %h5=link_to "Logout", logout_url
-  .span4.offset1
+  .col-md-5.col-md-offset-1
     %h3 Your Information
     %p
       %b Team Name:

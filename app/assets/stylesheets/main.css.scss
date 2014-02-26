@@ -2,7 +2,6 @@
 body, html {
   margin: 0;
   height: 100%;
-  background-image: image-url('bright_squares.png');
 }
 
 .alert-message p {
@@ -106,27 +105,7 @@ div#recaptcha_area {
   }
 }
 
-/******************************************** Layout Elements **********************************/
-#contentWrapper, #headerWrapper {
-  background-color: #FFF;
-  box-shadow: 0px 0px 3px #CCC;
-  -moz-box-shadow: 0px 0px 3px #CCC;
-  -webkit-box-shadow: 0px 0px 3px #CCC;
-  margin: auto;
-  padding-left: 20px;
-  padding-right: 20px;
-  width: 980px;
-
-  &.expanded-true {
-    width: 1200px;
-  }
-}
-
-#headerWrapper {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  text-align: center;
-}
+/* ********************* Layout Elements ******************************** */
 
 %header-section {
   display: table-cell;
@@ -153,18 +132,6 @@ div#recaptcha_area {
     a {
       color: #BBB;
     }
-  }
-}
-
-#contentWrapper {
-  position: relative;
-  overflow:hidden;
-  clear: both;
-  padding-top:20px;
-  min-height:500px;
-
-  .row {
-    margin-left:auto;
   }
 }
 
@@ -350,17 +317,10 @@ table.scores-table {
   position:absolute;
 }
 
-/************************************************************** Simple footer **********/
-#simpleFooter {
-  width: 100%;
-  position: relative;
-  margin-bottom: 40px; }
-
-.simpleFooterContent {
+.site-footer {
   height: 45px;
   width: 1020px;
   margin: auto;
-  border-top: 2px solid #C8CACB;
   color: #AAA;
   font-family: Arial, Helvetica, serif;
   text-align: center;

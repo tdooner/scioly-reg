@@ -8,41 +8,29 @@
     = render 'layouts/analytics'
     = csrf_meta_tags
     :css
-      .site-header {
+      .site-title-container {
         height: 150px;
         background-color: #004674;
       }
       .site-title {
-        color: #fff;
+        font-weight: 800;
         margin: auto;
-        width: 940px;
         padding-top: 90px;
       }
-  - @layout_expanded ||= false
+      .site-title a {
+        color: #fff;
+        text-decoration: none;
+      }
 
   %body#home
-    %header.site-header
-      %h1.site-title= @current_tournament.title
-    /
-      #headerWrapper{ :class=>"expanded-#{@layout_expanded}" }
-        .row
-          .span4
-            %span.header-school-logo-container
-              = image_tag @current_school.logo.url(:logo)
-          .span9
-            %h2.header-tournament-title= @current_tournament.title
-          .span3.header-host-description
-            !=RDiscount.new(@current_tournament.hosted_by_markdown||"").to_html
-    .noprint
-      = render :partial => "/layouts/navigation"
-    #contentWrapper{:class=>"expanded-#{@layout_expanded}"}
-      - if !current_page?("/")
-        .row.noprint
-          .span16
-            %h3
-              =breadcrumbs.render(:format => :bootstrap)
+    %header.site-title-container
+      .container
+        %h1.site-title
+          = link_to @current_tournament.title, root_path
+
+    .container
       .row
-        %div{ :class => (@right_hidden ? 'span16' : 'span11'), :id => 'content' }
+        #content{ :class => (@right_hidden ? 'col-md-12' : 'col-md-8'), :id => 'content' }
           - if flash[:error]
             %div.alert-message.error=flash[:error]
           - if flash[:message]
@@ -51,21 +39,19 @@
             .onlyprint
               You are logged in as #{@team.name} (##{@team.getNumber}).
           = yield
-        - if !@layout_expanded && !@right_hidden
-          .span4.offset1
-            .well
-              - if @team
-                =render :partial => "/layouts/rightreminder"
-              - else
-                =render :partial => "/layouts/rightinformation"
-    #simpleFooter.noprint
-      .simpleFooterContent
-        Hosted for free with Foundry.
-        =link_to "Learn more about Foundry, including how to host your competition with it.", "http://sciolyreg.org"
-        Foundry is free and open-source software hosted on
-        =link_to "GitHub.", "https://github.com/ted27/scioly-reg"
-        To report technical problems, please e-mail
-        =link_to "the webmaster.", "mailto:tomdooner@gmail.com"
-        If you are an administrator for this event,
-        =link_to "click here to log in.", adminlogin_url
+        .col-md-4
+          - if @team
+            =render :partial => "/layouts/rightreminder"
+          - else
+            =render :partial => "/layouts/rightinformation"
+
+    .container.site-footer
+      Hosted for free with Foundry.
+      = link_to "Learn more about Foundry, including how to host your competition with it.", "http://sciolyreg.org"
+      Foundry is free and open-source software hosted on
+      = link_to "GitHub.", "https://github.com/ted27/scioly-reg"
+      To report technical problems, please e-mail
+      = link_to "the webmaster.", "mailto:tomdooner@gmail.com"
+      If you are an administrator for this event,
+      = link_to "click here to log in.", adminlogin_url
     = yield :javascripts
