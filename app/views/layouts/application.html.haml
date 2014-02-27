@@ -31,12 +31,27 @@
               = link_to 'Home', root_path
             %li{ class: ('active' if request.url.include? 'schedule') }
               = link_to 'Events', schedules_path
-            - if @team
+
+          - if @team
+            %h4= @team.coach
+            %ul.nav.nav-pills.nav-stacked
+              %li
+                = link_to 'My Registrations', signups_path
+              %li
+                = link_to 'Change Password', edit_team_path(@team)
               %li
                 = link_to 'Logout', logout_path
-            - else
+          - else
+            %ul.nav.nav-pills.nav-stacked
               %li{ class: ('active' if request.url.include? 'login') }
                 = link_to 'Login', login_path
+
+          - if @current_admin
+            %h4 Admin Panel
+            %ul.nav.nav-pills.nav-stacked
+              %li
+                = link_to 'My Registrations', signups_path
+
           %div{ style: 'height: 100px' }
           = image_tag @current_school.logo.url
           %p= RDiscount.new(@current_tournament.hosted_by_markdown || '').to_html.html_safe
