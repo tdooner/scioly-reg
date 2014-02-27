@@ -1,7 +1,13 @@
-/* CWRU WEBSITE TEMPLATE [A] */
+@import 'sass-enhance';
+
 body, html {
   margin: 0;
   height: 100%;
+}
+
+a {
+  color: #0E4C7D;
+  text-decoration: none;
 }
 
 .alert-message p {
@@ -27,6 +33,33 @@ img {
   border: none;
 }
 
+.site-title-container {
+  height: 63px;
+  background-color: #004674;
+  margin-bottom: 30px;
+
+  @include enhance(tablet) {
+    height: 150px;
+  }
+}
+
+.site-title {
+  font-size: 22px;
+  font-weight: 800;
+  margin: auto;
+  padding-top: 20px;
+
+  @include enhance(tablet) {
+    font-size: 36px;
+    padding-top: 90px;
+  }
+
+  a {
+    color: #fff;
+    text-decoration: none;
+  }
+}
+
 /* Customizations for CWRU-SCIOLY */
 .bluebox {
   background-color:#D4F0FF;
@@ -47,19 +80,6 @@ img {
     margin: auto;
   }
 }
-
-div.featureContent a {
-  color: #DDD;
-  text-decoration: underline; }
-
-p.errorbox {
-  border: 2px dashed #FCC;
-  color: #A00000;
-  padding: 8px;
-  text-align: center; }
-
-table#login td {
-  padding: 5px 0px; }
 
 table#timeslot {
   width:100%;
@@ -107,42 +127,6 @@ div#recaptcha_area {
 
 /* ********************* Layout Elements ******************************** */
 
-%header-section {
-  display: table-cell;
-  vertical-align: middle;
-  height: 75px;
-}
-
-.header-school-logo-container {
-  @extend %header-section;
-}
-
-.header-tournament-title {
-  @extend %header-section;
-}
-
-.header-host-description {
-  & > p {
-    @extend %header-section;
-  }
-
-  p {
-    color: #BBB;
-
-    a {
-      color: #BBB;
-    }
-  }
-}
-
-#homepage {
-  h2 {
-    border-bottom: 1px solid #DDDDDD;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-    margin-bottom: 17px;
-  }
-}
-
 // Scoresheet styles
 table.scores-table {
   width:1150px;
@@ -181,51 +165,7 @@ table.scores-table {
   }
 }
 
-// ******************************************* Feature
-
-#feature {
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  background-color: #626262;
-  margin: 0;
-
-  #featureHolder {
-    position:relative;
-    width:960px;
-    margin: auto;
-    height: 200px;
-
-    .featureImg {
-      float: right;
-      height: 180px;
-      width: 400px;
-      margin-top: 8px;
-      margin-right: 5px;
-      margin-bottom: 7px;
-      img {
-        border: 2px solid #989898;
-      }
-    }
-
-    .featureContent {
-      float: left;
-      height: 120px;
-      width: 500px;
-      margin-top: 25px;
-      p {
-        color: #CCC;
-      }
-      h1 {
-        color: #FFF;
-      }
-    }
-  }
-}
-
-// ************************************************************* Top Navigation *********
-
-// navigation holder
+// ****************************** Top Navigation *********
 
 #umcNav {
   width:100%;
@@ -336,21 +276,3 @@ table.scores-table {
 }
 
 /************************************************************** Content link styles */
-a:link {
-  color: #0E4C7D;
-  text-decoration: none;
-}
-
-a:visited {
-  text-decoration: none;
-  color: #0E4C7D;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-a:active {
-  text-decoration: none;
-  color: #0E4C7D;
-}

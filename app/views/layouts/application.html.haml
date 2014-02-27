@@ -2,50 +2,49 @@
 %html
   %head
     %title Science Olympiad at #{@current_school.name}
-    = stylesheet_link_tag 'application'
     = stylesheet_link_tag '//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'
+    = stylesheet_link_tag 'application'
     = javascript_include_tag 'application'
     = render 'layouts/analytics'
     = csrf_meta_tags
-    :css
-      .site-title-container {
-        height: 150px;
-        background-color: #004674;
-      }
-      .site-title {
-        font-weight: 800;
-        margin: auto;
-        padding-top: 90px;
-      }
-      .site-title a {
-        color: #fff;
-        text-decoration: none;
-      }
 
-  %body#home
+  %body#home{ class: ('homepage' if current_page? '/') }
     %header.site-title-container
       .container
-        %h1.site-title
-          = link_to @current_tournament.title, root_path
+        .row
+          .col-md-12
+            %h1.site-title
+              = link_to @current_tournament.title, root_path
 
     .container
       .row
-        #content{ :class => (@right_hidden ? 'col-md-12' : 'col-md-8'), :id => 'content' }
-          - if flash[:error]
-            %div.alert-message.error=flash[:error]
-          - if flash[:message]
-            %div.alert-message.info!=flash[:message]
-          - if @team
-            .onlyprint
-              You are logged in as #{@team.name} (##{@team.getNumber}).
+        - if flash[:error]
+          %div.alert-message.error=flash[:error]
+        - if flash[:message]
+          %div.alert-message.info!=flash[:message]
+        - if @team
+          .onlyprint
+            You are logged in as #{@team.name} (##{@team.getNumber}).
+        .col-sm-3.hidden-xs
+          %ul.nav.nav-pills.nav-stacked
+            %li{ class: ('active' if current_page? '/') }
+              = link_to 'Home', root_path
+            %li{ class: ('active' if request.url.include? 'schedule') }
+              = link_to 'Events', schedules_path
+            - if @team
+              %li
+                = link_to 'Logout', logout_path
+            - else
+              %li{ class: ('active' if request.url.include? 'login') }
+                = link_to 'Login', login_path
+          %div{ style: 'height: 100px' }
+          = image_tag @current_school.logo.url
+          %p= RDiscount.new(@current_tournament.hosted_by_markdown || '').to_html.html_safe
+        .col-sm-8
           = yield
-        .col-md-4
-          - if @team
-            =render :partial => "/layouts/rightreminder"
-          - else
-            =render :partial => "/layouts/rightinformation"
 
-    .container.site-footer
+    -#
+      .container.site-footer
       Hosted for free with Foundry.
       = link_to "Learn more about Foundry, including how to host your competition with it.", "http://sciolyreg.org"
       Foundry is free and open-source software hosted on
