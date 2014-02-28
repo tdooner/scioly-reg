@@ -1,4 +1,5 @@
 @import 'sass-enhance';
+$color-dark-blue: #004674;
 
 body, html {
   margin: 0;
@@ -35,7 +36,7 @@ img {
 }
 
 .site-title-container {
-  background-color: #004674;
+  background-color: $color-dark-blue;
   margin-bottom: 30px;
   overflow: auto;
 }
@@ -63,6 +64,11 @@ img {
   font-size: 24px;
   padding: 14px;
   margin-left: 10px;
+}
+
+/* Bootstrap Overrides */
+.nav-pills > li.active > a {
+  background-color: $color-dark-blue !important;
 }
 
 /* Customizations for CWRU-SCIOLY */

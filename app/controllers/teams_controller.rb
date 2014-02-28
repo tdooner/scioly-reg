@@ -154,7 +154,7 @@ class TeamsController < ApplicationController
   end
 
   def login
-    @division = params[:division] == "B"?"B":"C"
+    @division = params[:division] == "B" ? "B":"C"
     breadcrumbs.add "Division " + @division + " Login"
     if session[:loginattempts].nil?
         session[:loginattempts] = 0
@@ -165,7 +165,10 @@ class TeamsController < ApplicationController
         @captcha = true
     end
 
-    @teams = @current_tournament.teams.where('division = ?', params[:division]).includes(:tournament).sort_by(&:name)
+    team_arel = @current_tournament.teams.includes(:tournament).order(:name)
+    team_arel = team_arel.where(division: params[:division]) if params[:division].present?
+    @teams = team_arel.load
+
     if @team
       flash[:error] = "Already logged in!"
     end

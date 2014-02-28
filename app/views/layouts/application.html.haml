@@ -50,10 +50,16 @@
             %h4 Admin Panel
             %ul.nav.nav-pills.nav-stacked
               %li
-                = link_to 'My Registrations', signups_path
+                = link_to 'Tournament Settings', edit_admin_tournament_path(@current_tournament)
+              %li
+                = link_to 'School Settings', admin_school_edit_path(@current_tournament)
+              %li
+                = link_to 'Manage Events', admin_events_path
+              %li
+                = link_to 'Manage Teams', teams_path
 
           %div{ style: 'height: 100px' }
-          = image_tag @current_school.logo.url
+          = image_tag @current_school.logo.url, style: 'width: 100%'
           %p= RDiscount.new(@current_tournament.hosted_by_markdown || '').to_html.html_safe
         .col-sm-8
           = yield
