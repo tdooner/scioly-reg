@@ -4,5 +4,6 @@
 //= require nav
 //= require bootstrap-tabs
 //= require bootstrap-tabs-autoselect
+//= require bootstrap.min
 //= require jquery.tablesorter.min
 //= require analytics

@@ -11,10 +11,10 @@
   %body#home{ class: ('homepage' if current_page? '/') }
     %header.site-title-container
       .container
-        .row
-          .col-md-12
-            %h1.site-title
-              = link_to @current_tournament.title, root_path
+        %a.site-menu-icon.visible-xs{ href: '#' }
+          %span.glyphicon.glyphicon-align-justify
+        %h1.site-title
+          = link_to @current_tournament.title, root_path
 
     .container
       .row
