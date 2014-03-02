@@ -1,56 +1,63 @@
-%h3="#{@current_school.name} Information"
-=form_for(@current_school, :url=>admin_school_update_url, :html=>{:multipart=>:true}) do |f|
-  %fieldset
-    .clearfix
-      =f.label :admin_name, "Primary Contact:"
-      .input
-        =f.text_field :admin_name
-    .clearfix
-      =f.label :admin_email, "Email:"
-      .input
-        =f.text_field :admin_email
-    .clearfix
-      =f.label :logo, "School Logo:"
-      .input
-        =f.file_field :logo
-    .clearfix
-      =f.label :time_zone, "School Time Zone"
-      .input
-        =f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones
-    .clearfix
-      .input
-        =image_tag @current_school.logo.url(:medium)
-    .clearfix
-      %label Administrators:
-      .input
-        %table
-          %thead
-            %th Email Address
-            %th Delete This User
-          %tbody
-            -@admins.each do |a|
-              %tr
-                %td=a.email
-                %td
-                  - if a.email != @current_school.admin_email
-                    =check_box_tag "delete[]", a.id
-                  - else
-                    =check_box_tag "cantdelete", a.id, false, :disabled => "true", :title=>"You cannot delete the primary contact!"
-      %label Add Administrator:
-      .input
-        %table
-          %tbody
+= form_for @current_school, url: admin_school_update_url,
+                            html: { multipart: true, class: 'form-horizontal' } do |f|
+
+  .form-group
+    = f.label :admin_name, "Primary Contact:", class: 'col-md-3 control-label'
+    .col-md-9
+      = f.text_field :admin_name, class: 'form-control'
+
+  .form-group
+    = f.label :admin_email, "Email:", class: 'col-md-3 control-label'
+    .col-md-9
+      = f.text_field :admin_email, class: 'form-control'
+
+  .form-group
+    = f.label :logo, "School Logo:", class: 'col-md-3 control-label'
+    .col-md-9
+      = f.file_field :logo
+      %p.help-block
+        Current Logo:
+      = image_tag @current_school.logo.url(:medium)
+
+  .form-group
+    = f.label :time_zone, "School Time Zone:", class: 'col-md-3 control-label'
+    .col-md-9
+      = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, {}, class: 'form-control'
+
+  .form-group
+    .col-md-9
+
+  .form-group
+    %label.col-md-3.control-label Administrators:
+    .col-md-9
+      %table
+        %thead
+          %th Email Address
+          %th Delete This User
+        %tbody
+          -@admins.each do |a|
             %tr
-              %td=text_field_tag :new_user, '', :placeholder => 'Email'
+              %td=a.email
               %td
-                =password_field_tag :new_user_password, '', :placeholder => 'Password'
-                .clearfix
-                =password_field_tag :new_user_password_confirmation, '', :placeholder => 'Confirm Password'
-  %fieldset
-    %p To make any changes, you must enter your password again:
-    .clearfix
-      =label :current_password, "Current Password:"
-      .input
-        =password_field_tag :current_password
-  .actions
-    =f.submit "Submit Changes", :class=>"btn primary"
+                - if a.email != @current_school.admin_email
+                  =check_box_tag "delete[]", a.id
+                - else
+                  =check_box_tag "cantdelete", a.id, false, :disabled => "true", :title=>"You cannot delete the primary contact!"
+
+  .form-group
+    %label.col-md-3.control-label Add Administrator:
+    .col-md-9
+      = text_field_tag :new_user, '', placeholder: 'Email', class: 'form-control'
+      = password_field_tag :new_user_password, '', placeholder: 'Password', class: 'form-control'
+      = password_field_tag :new_user_password_confirmation, '',
+        placeholder: 'Confirm Password', class: 'form-control'
+
+  %p.alert.alert-warning To make any changes, you must enter your password again:
+
+  .form-group
+    = label :current_password, "Current Password:", class: 'col-md-3 control-label'
+    .col-md-9
+      = password_field_tag :current_password, '', class: 'form-control'
+
+  .col-md-9
+    = f.submit "Submit Changes", class: 'btn btn-primary'
