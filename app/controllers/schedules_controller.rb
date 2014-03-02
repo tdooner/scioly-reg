@@ -114,7 +114,6 @@ class SchedulesController < ApplicationController
       @has_registered = Hash.new()
       @all_schedules[@team.division].map{ |e| @has_registered[e.id] = e.hasTeamRegistered(@team)}
     end
-    render :list
   end
 
   def show

@@ -1,56 +1,64 @@
-%p
-  You are now editing the tournament scheduled for
-  =@tournament.humanize() + "."
-=form_for(@tournament, url: admin_tournament_path(@tournament), :html=>{:multipart=>:true}) do |f|
-  .clearfix
-    =f.label :title, "Tournament Name:"
-    .input
-      =f.text_field :title
-  .clearfix
-    =f.label :date, "Date:"
-    .input.small
-      =f.date_select :date, {}, :class=>"small"
-  .clearfix
-    %label Registration Begins:
-    .input.small
-      =f.datetime_select :registration_begins, {}, :class=>"small"
-  .clearfix
-    %label Registration Ends:
-    .input
-      =f.datetime_select :registration_ends, {}, :class=>"small"
-  .clearfix
-    %label Homepage Photo:
-    .input
-      =f.file_field :homepage_photo
-      .help-block
+= form_for(@tournament, url: admin_tournament_path(@tournament),
+                        html: { multipart: true, class: 'form-horizontal'}) do |f|
+  .form-group
+    =f.label :title, "Tournament Name:", class: 'col-md-3 control-label'
+    .col-md-9
+      = f.text_field :title, class: 'form-control'
+
+  .form-group
+    =f.label :date, "Date:", class: 'col-md-3 control-label'
+    .col-md-9
+      .form-control
+        = f.date_select :date, {}
+
+  .form-group
+    %label.col-md-3.control-label Registration Begins:
+    .col-md-9
+      .form-inline
+        = f.datetime_select :registration_begins, {}, class: 'form-control'
+
+  .form-group
+    %label.col-md-3.control-label Registration Ends:
+    .col-md-9
+      .form-inline
+        = f.datetime_select :registration_ends, {}, class: 'form-control'
+
+  .form-group
+    %label.col-md-3.control-label Homepage Photo:
+    .col-md-9
+      = f.file_field :homepage_photo
+      %p.help-block
         This image is shown on the homepage. Use this to upload a logo for the
         %b event.
-      =image_tag @tournament.homepage_photo.url(:medium)
-  .clearfix
-    %label Homepage Text:
-    .input
-      =f.text_area :homepage_markdown, :cols=>30, :rows=>10
-      .help-block
-        =link_to "Markdown Syntax", "http://en.wikipedia.org/wiki/Markdown"
+      = image_tag @tournament.homepage_photo.url(:medium)
+
+  .form-group
+    = f.label :homepage_markdown, 'Homepage Text:', class: 'col-md-3 control-label'
+    .col-md-9
+      =f.text_area :homepage_markdown, rows: 10, class: 'form-control'
+      %p.help-block
+        = link_to "Markdown Syntax", "http://en.wikipedia.org/wiki/Markdown"
         is permitted here.
-  .clearfix
-    %label Hosted By Text:
-    .input
-      =f.text_area :hosted_by_markdown, :cols=>20, :rows=>5
-      .help-block
-        =link_to "Markdown Syntax", "http://en.wikipedia.org/wiki/Markdown"
+
+  .form-group
+    = f.label :hosted_by_markdown, 'Hosted By Text:', class: 'col-md-3 control-label'
+    .col-md-9
+      = f.text_area :hosted_by_markdown, rows: 5, class: 'form-control'
+      %p.help-block
+        = link_to "Markdown Syntax", "http://en.wikipedia.org/wiki/Markdown"
         is permitted here.
-  .clearfix
-    %label Team Number Format:
-    .input
-      %ul.inputs-list
-        %li
-          %label
-            = radio_button 'tournament', :append_division_to_team_number, true
-            Team Number + Division (e.g. 13B)
-        %li
-          %label
-            = radio_button 'tournament', :append_division_to_team_number, false
-            Team Number (e.g. 13)
-  %p.actions
-    =f.submit "Submit Changes", :class=>"btn primary"
+
+  .form-group
+    %label.control-label.col-md-3 Team Number Format:
+    .col-md-9
+      .radio
+        %label
+          = radio_button 'tournament', :append_division_to_team_number, true
+          Team Number + Division (e.g. 13B)
+      .radio
+        %label
+          = radio_button 'tournament', :append_division_to_team_number, false
+          Team Number (e.g. 13)
+
+  .col-md-9.col-md-offset-3
+    = f.submit 'Save Changes', class: 'btn btn-primary'

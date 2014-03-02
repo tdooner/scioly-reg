@@ -1,14 +1,14 @@
 %p
   Below is a list of all events for the tournament scheduled for
-  =[@current_tournament.humanize, "."].join
-  Please check to ensure you register for all events before registration closes.
-- if @is_admin
+  #{@current_tournament.humanize}.  Please check to ensure you register for all
+  events before registration closes.
+-# if @is_admin
   .alert-message.block-message.info
     You are logged in as an administrator. These pages may be useful.
     .alert-actions
       =link_to("View Registration Status", admin_events_url, :class=>"btn small")
       =link_to("New Event", new_schedule_url, :class=>"btn small")
-- if @team
+-# if @team
   .alert-message.info
     %p
       You are logged in as #{@team.name}.
@@ -20,6 +20,7 @@
   - @current_tournament.divisions.each do |d|
     %li{:class=>(d==params[:division])?"active":""}
       %a{:href=>division_schedules_url(d)}="Division #{d} Events"
+
 %div.tab-content
   %table#timeslot
     %thead
