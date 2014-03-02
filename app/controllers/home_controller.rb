@@ -6,12 +6,6 @@ class HomeController < ApplicationController
     render :index, :layout => 'static_page'
   end
 
-  def team_home
-      return redirect_to root_url unless @team
-      breadcrumbs.add("Welcome!")
-      render :signup # Render app/views/home/signup.html.haml
-  end
-
   def about
     render :about, :layout => 'static_page'
   end
@@ -68,23 +62,8 @@ class HomeController < ApplicationController
 
   private
 
-  def signup
-    breadcrumbs.add("Welcome!")
-    render :signup # Render app/views/home/signup.html.haml
-  end
-
-  def login
-    render :login
-  end
-
   def render_app_if_subdomain
-    if @current_school
-      if @team
-        signup
-      else
-        login
-      end
-    end
+    render :login if @current_school
   end
 
   def redirect_to_app_if_subdomain

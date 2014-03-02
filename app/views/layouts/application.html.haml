@@ -25,6 +25,7 @@
         - if @team
           .onlyprint
             You are logged in as #{@team.name} (##{@team.getNumber}).
+
         .col-sm-3.hidden-xs
           %ul.nav.nav-pills.nav-stacked
             %li{ class: ('active' if current_page? '/') }
@@ -33,11 +34,13 @@
               = link_to 'Events', schedules_path
 
           - if @team
-            %h4= @team.coach
+            %h3= @team.coach
             %ul.nav.nav-pills.nav-stacked
-              %li
+              %li{ class: ('active' if current_page?(team_path(@team))) }
+                = link_to @team.name, team_path(@team)
+              %li{ class: ('active' if current_page?(signups_path)) }
                 = link_to 'My Registrations', signups_path
-              %li
+              %li{ class: ('active' if current_page?(edit_team_path(@team))) }
                 = link_to 'Change Password', edit_team_path(@team)
               %li
                 = link_to 'Logout', logout_path
@@ -47,7 +50,7 @@
                 = link_to 'Login', login_path
 
           - if @current_admin
-            %h4 Admin Panel
+            %h3 Admin Panel
             %ul.nav.nav-pills.nav-stacked
               %li
                 = link_to 'Tournament Settings', edit_admin_tournament_path(@current_tournament)
@@ -58,20 +61,10 @@
               %li
                 = link_to 'Manage Teams', teams_path
 
-          %div{ style: 'height: 100px' }
-          = image_tag @current_school.logo.url, style: 'width: 100%'
+          = link_to root_url do
+            = image_tag @current_school.logo.url, class: 'sidebar-school-logo'
           %p= RDiscount.new(@current_tournament.hosted_by_markdown || '').to_html.html_safe
         .col-sm-8
           = yield
 
-    -#
-      .container.site-footer
-      Hosted for free with Foundry.
-      = link_to "Learn more about Foundry, including how to host your competition with it.", "http://sciolyreg.org"
-      Foundry is free and open-source software hosted on
-      = link_to "GitHub.", "https://github.com/ted27/scioly-reg"
-      To report technical problems, please e-mail
-      = link_to "the webmaster.", "mailto:tomdooner@gmail.com"
-      If you are an administrator for this event,
-      = link_to "click here to log in.", adminlogin_url
     = yield :javascripts

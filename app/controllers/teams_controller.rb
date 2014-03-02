@@ -1,12 +1,15 @@
 class TeamsController < ApplicationController
   before_filter :is_admin, :only => [:new, :create, :batchnew, :batchcreate,
                                      :batchpreview, :index, :destroy]
-  before_filter :is_correct_team, :only => [:edit, :update]
+  before_filter :is_correct_team, :only => [:edit, :update, :show]
 
   def index
     @teams = @current_tournament.teams.includes(:tournament)
 
     breadcrumbs.add("Teams")
+  end
+
+  def show
   end
 
   def edit

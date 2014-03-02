@@ -28,7 +28,6 @@ Scioly::Application.routes.draw do
   get "user/login", :as => :adminlogin
   post "user/login"
   get "user/logout", :as => :adminlogout
-  get 'team', :controller => :home, :action => :team_home, :as=>"team_home"
 
   resources :teams do
     get 'qualify' # TODO: this is broken

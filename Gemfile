@@ -18,6 +18,10 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'turbolinks'
 gem 'newrelic_rpm'
+gem 'sass'
+gem 'sass-rails'
+gem 'uglifier'
+gem 'yui-compressor'
 
 group :production do
   gem 'pg'
@@ -25,13 +29,6 @@ group :production do
   gem 'rails_12factor'
   gem 'font_assets'
   gem 'heroku_rails_deflate'
-end
-
-group :assets do
-  gem 'sass'
-  gem 'sass-rails'
-  gem 'uglifier'
-  gem 'yui-compressor'
 end
 
 group :test do
