@@ -1,10 +1,11 @@
+
 - if !@active.show_scores?
   .alert-message.warning
     %b Note:
     These scores have not been released yet. They will be released automatically at 8pm on the night of the tournament or when
     =link_to "Publish Scores", admin_scorespublish_url
     is pressed.
-%ul.tabs{:"data-tabs"=>"tabs"}
+%ul.nav.nav-tabs{:"data-tabs"=>"tabs"}
   - first = true
   - @active.divisions.each do |d|
     %li{ :class => (first ? 'active' : '') }
@@ -14,37 +15,38 @@
   %li
     %a{:href=>"#download"}
       Download Scores
-%div.tab-content
-  %div.tab-pane#download
+
+.tab-content
+  .tab-pane#download
     %h3
-      =link_to "Download Scores as CSV", admin_tournament_scores_url(@active, :format=>"csv")
+      =link_to "Download Scores as CSV", tournament_scores_path(@active, :format=>"csv")
       (for Excel)
     %h4 More download methods will be posted later...
   - one_active = false
   - @active.divisions.each do |d|
-    %div.tab-pane{:id=>"division_#{d}",:class=>(one_active ? "":"active")}
+    .tab-pane{:id=>"division_#{d}",:class=>(one_active ? "":"active")}
       - one_active = true
       - if @events[d].nil? || @teams_by_rank[d].nil?
         %p No scores are available for Division #{d}.
       - else
-        %table.scores-table.condensed-table.zebra-striped{:id=>"scores_table_#{d}"}
+        %table.scores-table.table.table-condensed.table-striped{:id=>"scores_table_#{d}"}
           %thead
             %th{:width=>"300px"}
               Team Name
             - @events[d].select{|x| x.counts_for_score}.each do |e|
               %th
-                %div.outer
-                  %div.inner=e.event
+                .outer
+                  .inner=e.event
             %th
-              %div.outer
-                %div.inner Total
+              .outer
+                .inner Total
             %th
-              %div.outer
-                %div.inner Placement
+              .outer
+                .inner Placement
             - @events[d].select{|x| !x.counts_for_score}.each do |e|
               %th
-                %div.outer
-                  %div.inner.trial="(Trial) #{e.event}"
+                .outer
+                  .inner.trial="(Trial) #{e.event}"
           %tbody
             - ranking = 0
             - num_at_place = 1

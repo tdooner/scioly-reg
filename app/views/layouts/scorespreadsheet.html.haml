@@ -1,0 +1,32 @@
+!!!
+%html
+  %head
+    %title Science Olympiad at #{@current_school.name}
+    = stylesheet_link_tag '//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application'
+    = render 'layouts/analytics'
+    = csrf_meta_tags
+
+  %body
+    %header.site-title-container
+      .container
+        %a.site-menu-icon.visible-xs{ href: '#' }
+          %span.glyphicon.glyphicon-align-justify
+        %h1.site-title
+          = link_to @current_tournament.title, root_path
+
+    .container
+      .row
+        - if flash[:error]
+          %div.alert-message.error=flash[:error]
+        - if flash[:message]
+          %div.alert-message.info!=flash[:message]
+        - if @team
+          .onlyprint
+            You are logged in as #{@team.name} (##{@team.getNumber}).
+
+        .col-sm-12
+          = yield
+
+    = yield :javascripts

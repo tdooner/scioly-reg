@@ -18,14 +18,6 @@
 
     .container
       .row
-        - if flash[:error]
-          %div.alert-message.error=flash[:error]
-        - if flash[:message]
-          %div.alert-message.info!=flash[:message]
-        - if @team
-          .onlyprint
-            You are logged in as #{@team.name} (##{@team.getNumber}).
-
         .col-sm-3.hidden-xs
           %ul.nav.nav-pills.nav-stacked
             %li{ class: ('active' if current_page? '/') }
@@ -56,7 +48,7 @@
               %li{ class: ('active' if current_page?(edit_admin_tournament_path(@current_tournament))) }
                 = link_to 'Tournament Settings', edit_admin_tournament_path(@current_tournament)
               %li{ class: ('active' if current_page?(admin_school_edit_path)) }
-                = link_to 'School Settings', admin_school_edit_path(@current_tournament)
+                = link_to 'School Settings', admin_school_edit_path
               %li{ class: ('active' if current_page?(admin_schedules_path)) }
                 = link_to 'Manage Events', admin_schedules_path
               %li{ class: ('active' if current_page?(admin_teams_path)) }
@@ -69,6 +61,13 @@
           %p= RDiscount.new(@current_tournament.hosted_by_markdown || '').to_html.html_safe
 
         .col-sm-9
+          - if flash[:error]
+            .alert.alert-danger= flash[:error]
+          - if flash[:message]
+            .alert.alert-info= flash[:message]
+          - if @team
+            .onlyprint
+              You are logged in as #{@team.name} (##{@team.getNumber}).
           = yield
 
     = yield :javascripts

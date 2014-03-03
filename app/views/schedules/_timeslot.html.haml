@@ -18,9 +18,10 @@
     - if spots_remaining > 0
       %td
         - if @currentreg.nil?
-          = link_to "Register!", timeslot_register_path(ts), :class=>"btn"
+          = link_to "Register!", timeslot_register_path(ts), :class=>"btn btn-primary"
     - else
       %td
+
   - if @current_admin.try(:can_edit?, @schedule)
     %td
       %a.hidebtn{:href=>"javascript:toggleTimeslotEdit('#{ts.id}')"}
@@ -30,17 +31,21 @@
         method: :delete,
         data: { confirm: 'Are you sure you wish to delete this timeslot? All Sign Ups for that timeslot will be deleted as well.' },
         class: 'hidebtn'
+
 - if @current_admin.try(:can_edit?, @schedule)
   %tr{:id=>"edit-timeslot-#{ts.id}",:style=>"display:none;"}
     %td.row{ colspan: 5 }
-      = form_for(ts, url: timeslot_url(ts), async: true, html: { class: 'row' }) do |f|
-        .span4
-          = f.time_select :begins, {:default => ts.begins}, :class=>"span2"
-        .span7
-          = f.text_field :team_capacity, {:value => ts.team_capacity, :class=>"span1"}
-          teams may register here.
-        .span2
-          = f.submit "Save!", :class=>"btn success"
+      = form_for(ts, url: timeslot_url(ts), async: true, html: { class: 'form-inline' }) do |f|
+        .form-group
+          = f.time_select :begins, { :default => ts.begins }, :class=>"form-control"
+        .form-group
+          .input-group
+            = f.text_field :team_capacity, {:value => ts.team_capacity, :class=>"form-control"}
+            .input-group-addon
+              teams may register here.
+        .form-group
+          = f.submit "Save!", :class=>"btn btn-primary form-control"
+
 - if ts.sign_ups.include?(@currentreg)
   %tr
     %td{:colspan=>2}
@@ -50,4 +55,4 @@
         = link_to 'Unregister', signup_path(@currentreg),
           data: { confirm: 'Are you sure you wish to remove your registration?' },
           method: :delete,
-          class: 'btn'
+          class: 'btn btn-warning'

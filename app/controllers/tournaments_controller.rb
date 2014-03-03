@@ -2,10 +2,11 @@ class TournamentsController < ApplicationController
   before_filter :is_admin, :except => :scores
   before_filter :verify_scores_visible, only: :scores
 
+  layout 'scorespreadsheet'
+
   def scores
     @active = Tournament.find(params[:tournament_id], include: { teams: [:tournament, :scores] })
 
-    breadcrumbs.add(@active.humanize + ' Scores')
     @events = @active.schedules
                      .includes(scores: :team)
                      .sort_by(&:event)
@@ -16,8 +17,6 @@ class TournamentsController < ApplicationController
     @teams_by_rank = @teams.reduce({}) { |a, i| a.merge(i => i.rank_matrix) }
                            .sort_by{|k,v| v}
     @teams_by_rank = @teams_by_rank.group_by {|x| x[0].division}
-
-    @layout_expanded = true
   end
 
 private
