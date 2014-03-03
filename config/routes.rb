@@ -38,7 +38,7 @@ Scioly::Application.routes.draw do
         post 'set_active'
       end
 
-      get 'scoreslideshow'
+      post 'scoreslideshow'
       post 'publish_scores'
       get 'load_default_events'
     end

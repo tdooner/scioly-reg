@@ -1,92 +1,91 @@
 This page will customize a slideshow of results to be shown at the awards ceremony.
 
-%form{ action: admin_tournament_scoreslideshow_path(@current_tournament), target: '_new' }
-  %fieldset
-    .clearfix
-      %label
-        %b Divisions
-      .input
-        %ul.inputs-list
-          - @current_tournament.divisions.each do |d|
-            %li
-              %label
-                = check_box_tag "slideshow[division][#{d}]", 'true',
-                  checked: 'checked'
-                Division #{d}
-    .clearfix
-      %label
-        %b Show Top
-      .input
-        %select.small{:name=>"slideshow[top_places]"}
-          %option 1
-          %option 2
-          %option 3
-          %option 4
-          %option 5
-          %option 6
-        places for each event.
-        .help-block More teams may be displayed in the result of a tie.
-    .clearfix
-      %label
-        %b Show Top
-      .input
-        %select.small{:name=>"slideshow[top_teams]"}
-          %option 1
-          %option 2
-          %option 3
-          %option 4
-          %option 5
-          %option 6
-          %option 7
-          %option 8
-        teams, overall.
-        .help-block More teams may be displayed in the result of a tie.
-    .clearfix
-      %label
-        %b Order Events
-      .input
-        %select{:name=>"slideshow[order]"}
-          %option{:value=>"alpha"} Alphabetically
-          %option{:value=>"alphadiv"} Alphabetically by Division
-          %option{:value=>"random"} Randomly
-          %option{:value=>"randomdiv"} Randomly by Division
+= form_tag admin_tournament_scoreslideshow_path(@current_tournament),
+           class: 'form-horizontal', target: '_new' do
+  .form-group
+    %label.control-label.col-md-3
+      Divisions:
+    .col-md-9
+      - @current_tournament.divisions.each do |d|
+        .checkbox
+          %label
+            = check_box_tag "slideshow[division][#{d}]", 'true',
+              checked: 'checked'
+            Division #{d}
+
+  .form-group
+    %label.control-label.col-md-3
+      %b Show Top
+    .col-md-9
+      .row
+        .col-md-4
+          .input-group
+            = text_field_tag 'slideshow[top_places]', 1, class: 'form-control'
+            %span.input-group-addon places per event
+      .help-block More teams may be displayed in the result of a tie.
+
+  .form-group
+    %label.control-label.col-md-3
+      %b Show Top
+    .col-md-9
+      .row
+        .col-md-4
+          .input-group
+            = text_field_tag 'slideshow[top_teams]', 1, class: 'form-control'
+            %span.input-group-addon teams
+      .help-block More teams may be displayed in the result of a tie.
+
+  .form-group
+    %label.control-label.col-md-3
+      %b Order Events
+    .col-md-9
+      - options = {'Alphabetically' => 'alpha',
+        'Alphabetically by Division' => 'alphadiv',
+        'Randomly' => 'random',
+        'Randomly by Division' => 'randomdiv'}
+      = select_tag 'slideshow[order]', options_for_select(options), class: 'form-control'
+
   - if !@withheldevents.empty?
-    .alert-message.block-message.warning
-      %p
-        %b Warning:
-        The following events have scores withheld. Should they be included in the slideshow?
-        %ul
-          - @withheldevents.each do |e|
-            %li=e.humanize
-        %fieldset
-          %ul.inputs-list
-            %li
-              %label
-                %input{:type=>"radio",:name=>"slideshow[skip_withheld]", :value=>"false", :checked=>"checked"}
-                Yes, include these events in the slideshow.
-            %li
-              %label
-                %input{:type=>"radio", :name=>"slideshow[skip_withheld]", :value=>"true"}
-                No, skip these events in the slideshow.
+    .alert.alert-warning
+      %b Warning:
+      The following events have scores withheld. Should they be included in the slideshow?
+      %ul
+        - @withheldevents.each do |e|
+          %li=e.humanize
+
+      .form-group
+        .checkbox
+          %label
+            %input{:type=>"radio",:name=>"slideshow[skip_withheld]", :value=>"false", :checked=>"checked"}
+            Yes, include these events in the slideshow.
+        .checkbox
+          %label
+            %input{:type=>"radio", :name=>"slideshow[skip_withheld]", :value=>"true"}
+            No, skip these events in the slideshow.
+
   - if !@unfinishedevents.empty?
-    .alert-message.block-message.error
+    .alert.alert-danger
       %b Error:
       The following events have no scores reported. They will be omitted from the awards slideshow.
       %ul
         - @unfinishedevents.each do |e|
           %li=e.humanize
+
   - if @teams.empty?
-    .alert-message.block-message.error
+    .alert.alert-danger
       %b Error
       There are no teams in this tournament!
       .alert-actions
         =link_to "Add some now.", new_team_url, :class=>"btn"
+
   - if @events.empty?
-    .alert-message.block-message.error
+    .alert.alert-danger
       %b Error
       There are no events in this tournament!
       .alert-actions
         =link_to "Add some now.", new_schedule_url, :class=>"btn"
+
   - if !@teams.empty? && !@events.empty?
-    .actions
-      %input.primary.btn{:type=>"submit", :value=>"Create Slideshow!"}
+    .row
+      .col-md-9.col-md-offset-3
+        %input.btn-primary.btn{:type=>"submit", :value=>"Create Slideshow!"}
