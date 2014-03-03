@@ -56,8 +56,8 @@
                 = link_to 'Tournament Settings', edit_admin_tournament_path(@current_tournament)
               %li{ class: ('active' if current_page?(admin_school_edit_path(@current_tournament))) }
                 = link_to 'School Settings', admin_school_edit_path(@current_tournament)
-              %li{ class: ('active' if current_page?(admin_events_path)) }
-                = link_to 'Manage Events', admin_events_path
+              %li{ class: ('active' if current_page?(admin_schedules_path)) }
+                = link_to 'Manage Events', admin_schedules_path
               %li{ class: ('active' if current_page?(teams_path)) }
                 = link_to 'Manage Teams', teams_path
 

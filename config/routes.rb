@@ -6,7 +6,6 @@ Scioly::Application.routes.draw do
 
   namespace :admin do
     get 'index'
-    get 'events', :as => :events
     get 'scores'
     get 'scorespublish', :as => :scorespublish
     get 'scoreslideshow'

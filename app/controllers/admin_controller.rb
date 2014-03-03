@@ -8,21 +8,6 @@ class AdminController < ApplicationController
     @signups = SignUp.all
   end
 
-  def events
-    breadcrumbs.add("Events")
-    @right_hidden = true
-    @events = @current_tournament.schedules.includes(timeslots: :sign_ups)
-    @teams_by_division = @current_tournament.divisions.inject({}) {|a,i|
-      a.merge(i[0] => Team.count(:conditions=>["division = ? AND tournament_id = ?", i[0], @current_tournament]))
-    }
-    @event_signups = @events.inject({}){|a,i|
-      a.merge(i.id => i.timeslots.map{|x| x.sign_ups.length}.sum )
-    }
-    @event_capacity = @events.inject({}){ |a,i|
-      a.merge(i.id => i.timeslots.map{|x| x.team_capacity - x.sign_ups.length}.sum)
-    }
-  end
-
   def scores
     breadcrumbs.add("Scoring")
 

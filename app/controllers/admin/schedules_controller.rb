@@ -1,6 +1,19 @@
 class Admin::SchedulesController < ApplicationController
   before_filter :is_admin
 
+  def index
+    @events = @current_tournament.schedules.includes(timeslots: :sign_ups)
+    @teams_by_division = @current_tournament.divisions.inject({}) {|a,i|
+      a.merge(i[0] => Team.count(:conditions=>["division = ? AND tournament_id = ?", i[0], @current_tournament]))
+    }
+    @event_signups = @events.inject({}){|a,i|
+      a.merge(i.id => i.timeslots.map{|x| x.sign_ups.length}.sum )
+    }
+    @event_capacity = @events.inject({}){ |a,i|
+      a.merge(i.id => i.timeslots.map{|x| x.team_capacity - x.sign_ups.length}.sum)
+    }
+  end
+
   def new
     breadcrumbs.add("New Event")
     @schedule = Schedule.new()
@@ -146,6 +159,21 @@ class Admin::SchedulesController < ApplicationController
       flash[:error] = errors.join("<br>")
       redirect_to schedule_scores_url(@schedule)
     end
+  end
+
+  def scores
+    @schedule = Schedule.find(params[:schedule_id], :include => :scores)
+    @teams = @current_tournament.teams.where("division = ?", @schedule.division).includes(:tournament)
+    @placements = @teams.inject({}) { |a,i|
+      s = @schedule.scores.select{|x| x.team_id == i.id}.first
+      if s
+        a.merge(i.id => s.placement)
+      else
+        a.merge(i.id => "")
+      end
+    }
+    breadcrumbs.add("Scoring", "/admin/scores")
+    breadcrumbs.add(@schedule.humanize)
   end
 
 private

@@ -9,7 +9,7 @@
   .alert-actions
     =link_to "New Event", new_admin_schedule_path, :class=>"btn btn-default"
     =link_to "Import Events", batchnew_admin_schedules_path, :class=>"btn btn-default"
-    =link_to "Export Events to Excel", admin_events_url(:format => 'csv'), :class => 'btn btn-default'
+    =link_to "Export Events to Excel", admin_schedules_path(format: 'csv'), :class => 'btn btn-default'
     =link_to "Download Registration PDFs", all_pdfs_admin_schedules_url(:format => :pdf), :class=>"btn btn-default"
 
 %table.table.table-striped#events-table

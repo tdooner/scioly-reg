@@ -1,13 +1,4 @@
 class SchedulesController < ApplicationController
-  ####
-  # A "schedule" means a "scheduled event" for a given
-  # tournament and division. In other words, a "schedule"
-  # is what a team registers to.
-  ###
-
-  before_filter :is_admin, :only => [:new, :destroy, :batchnew, :edit, :create, :update, :scores, :savescores, :batchcreate, :all_pdfs]
-  protect_from_forgery :except => :destroy
-
   def index
     breadcrumbs.add('Register For Events')
     if not @team.nil?
@@ -46,20 +37,5 @@ class SchedulesController < ApplicationController
         render :show
       end
     end
-  end
-
-  def scores
-    @schedule = Schedule.find(params[:schedule_id], :include => :scores)
-    @teams = @current_tournament.teams.where("division = ?", @schedule.division).includes(:tournament)
-    @placements = @teams.inject({}) { |a,i|
-      s = @schedule.scores.select{|x| x.team_id == i.id}.first
-      if s
-        a.merge(i.id => s.placement)
-      else
-        a.merge(i.id => "")
-      end
-    }
-    breadcrumbs.add("Scoring", "/admin/scores")
-    breadcrumbs.add(@schedule.humanize)
   end
 end

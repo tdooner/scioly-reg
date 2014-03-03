@@ -59,5 +59,6 @@
     .col-md-9
       = password_field_tag :current_password, '', class: 'form-control'
 
-  .col-md-9
-    = f.submit "Submit Changes", class: 'btn btn-primary'
+  .row
+    .col-md-9.col-md-offset-3
+      = f.submit "Submit Changes", class: 'btn btn-primary'
