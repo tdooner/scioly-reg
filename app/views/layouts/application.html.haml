@@ -50,11 +50,12 @@
                 = link_to 'Login', login_teams_path
 
           - if @current_admin
-            %h3 Admin Panel
+            %h3
+              = link_to 'Admin Panel', admin_index_path
             %ul.nav.nav-pills.nav-stacked
               %li{ class: ('active' if current_page?(edit_admin_tournament_path(@current_tournament))) }
                 = link_to 'Tournament Settings', edit_admin_tournament_path(@current_tournament)
-              %li{ class: ('active' if current_page?(admin_school_edit_path(@current_tournament))) }
+              %li{ class: ('active' if current_page?(admin_school_edit_path)) }
                 = link_to 'School Settings', admin_school_edit_path(@current_tournament)
               %li{ class: ('active' if current_page?(admin_schedules_path)) }
                 = link_to 'Manage Events', admin_schedules_path

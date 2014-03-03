@@ -1,19 +1,17 @@
-.page-header
-  %h2
-    ="#{@current_school.name} Admin Panel"
-    %small=link_to "Edit Information", admin_school_edit_url
-.page-header
-  %h3
-    ="#{@current_tournament.humanize} Tournament"
-    %small=link_to "Change Tournament", admin_tournaments_path
+%h2
+  ="#{@current_school.name} Admin Panel"
+  %small=link_to "Edit Information", admin_school_edit_url
+
+%h3
+  ="#{@current_tournament.humanize} Tournament"
+  %small=link_to "Change Tournament", admin_tournaments_path
+
 .row
-  .span4
+  .col-md-6
     %h3
-      =link_to "#{@all_schedules.values.flatten.length} Events", admin_events_url
+      =link_to "#{@all_schedules.values.flatten.length} Events", admin_schedules_path
     %h3
-      =link_to "#{@teams.length} Teams", teams_url
-  .span4
+      =link_to "#{@teams.length} Teams", admin_teams_url
+  .col-md-6
     %h3
       =link_to "Scoring", admin_scores_url
-.actions
-  %a.btn{:href=>admin_scorespublish_url} Publish Scores

@@ -4,31 +4,31 @@
     Each team
   has a unique password, even in the case of multiple teams from the same school.
 %p
-  If you have forgotten or misplaced your password, please contact 
+  If you have forgotten or misplaced your password, please contact
   %a{:href => "mailto:#{@current_school.admin_email}"}
     =@current_school.admin_name
   to receive a new one.
-.page-header
-  %h2 Login Form
-= form_tag division_login_url(@division) do
-  .clearfix
-    %label{:for=>"team_id"}
-      %b Select A Team:
-    .input
-      =select(:team, :id, @teams.map { |x| ["#{x[:name]} (Team #{x.getNumber})", x[:id]] })
-  .clearfix
+
+= form_tag login_teams_path, class: 'form-horizontal' do
+  .form-group
+    = label_tag :team_id, 'Select A Team:', class: 'control-label col-md-3'
+    .col-md-9
+      = select :team, :id, @teams.map { |x| ["#{x[:name]} (Team #{x.getNumber})", x[:id]] }, {}, class: 'form-control'
+
+  .form-group
     - if @is_admin
-      %b You are an admin.
-      Click Login to log in as this team. You can change this team's password once logged in.
+      .col-md-9.col-md-offset-3
+        %b You are an admin.
+        Click Login to log in as this team. You can change this team's password once logged in.
     - else
-      %label{:for=>"password"}
-        %b Password:
-      .input
-        =password_field_tag :password, "",:size => 20
+      = label_tag :password, 'Password:', class: 'control-label col-md-3'
+      .col-md-9
+        = password_field_tag :password, "", :size => 20, class: 'form-control'
       -if @captcha == true
         = recaptcha_tags
-  .clearfix
-    .actions
+
+  .row
+    .col-md-9.col-md-offset-3
       %input{:type=>"hidden", :name=>"is_admin", :value=>"false"}
       =submit_tag "Login", :class=>"btn primary"
 

@@ -14,7 +14,7 @@
       You are logged in as #{@team.name}.
       = link_to("Click here to view your registrations.", signups_url)
 
-%ul.tabs
+%ul.nav.nav-tabs
   %li{:class=>(params[:division].nil?)?"active":""}
     %a{:href=>schedules_url}="All Events"
   - @current_tournament.divisions.each do |d|
@@ -22,7 +22,7 @@
       %a{:href=>division_schedules_url(d)}="Division #{d} Events"
 
 %div.tab-content
-  %table#timeslot
+  %table.table.table-striped#timeslot
     %thead
       %th Event Name
       %th Begin Time
