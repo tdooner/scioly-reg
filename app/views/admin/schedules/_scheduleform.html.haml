@@ -1,0 +1,149 @@
+- content_for :javascripts do
+  :javascript
+    $(function() {
+      $("#schedule_event").focus();
+
+      $("#schedule_online_false").click(function(){
+        $("div#schedule_online_details").hide();
+      });
+      $("#schedule_online_keep_existing").click(function(){
+        $("div#schedule_online_details").hide();
+      });
+      $("#schedule_online_true").click(function(){
+        $("div#schedule_online_details").show();
+      });
+    });
+
+  - if !@schedule.new_record?
+    :javascript
+      $(function(){
+        $("div#schedule_online_details").hide();
+      });
+
+= form_for @schedule, url: admin_schedule_path(@schedule),
+                      html: { class: 'form-horizontal' } do |f|
+  .form-group
+    %label.col-md-3.control-label Tournament:
+    .col-md-9
+      = text_field_tag '', @current_tournament.humanize, class: 'form-control', disabled: true
+
+  .form-group
+    = f.label :event, 'Event Name:', class: 'col-md-3 control-label'
+    .col-md-9
+      = f.text_field :event, class: 'form-control'
+
+  .form-group
+    %label.col-md-3.control-label Division:
+    .col-md-9
+      .radio
+        %label
+          = radio_button :schedule, :division, "A"
+          Division A
+      .radio
+        %label
+          = radio_button :schedule, :division, "B"
+          Division B
+      .radio
+        %label
+          = radio_button :schedule, :division, "C"
+          Division C
+
+  .form-group
+    = f.label :room, 'Room:', class: 'control-label col-md-3'
+    .col-md-9
+      = f.text_field :room, class: 'form-control'
+
+  .form-group
+    %label.col-md-3.control-label Event Start Time:
+    .col-md-9
+      .form-inline
+        = f.time_select :starttime_in_time_zone, { :minute_step => 5 }, class: 'form-control'
+
+  .form-group
+    %label.col-md-3.control-label Event End Time:
+    .col-md-9
+      .form-inline
+        = f.time_select :endtime_in_time_zone, { :minute_step => 5 }, class: 'form-control'
+
+  .form-group
+    = f.label :custom_info, 'Custom Information:', class: 'control-label col-md-3'
+    .col-md-9
+      = f.text_area :custom_info, :rows => 10, class: 'form-control'
+
+  .form-group
+    %label.control-label.col-md-3
+      Include In Score:
+    .col-md-9
+      .radio
+        %label
+          = radio_button :schedule, :counts_for_score, "true", :selected=>:true
+          Yes
+          %span.help-block
+            This event counts towards a team's score and ranking.
+      .radio
+        %label
+          = radio_button :schedule, :counts_for_score, "false"
+          No
+          %span.help-block
+            For example, a trial event.
+
+  .form-group
+    %label.control-label.col-md-3
+      Schedule Online?
+    .col-md-9
+      - if @schedule.persisted?
+        .radio
+          %label
+            = radio_button_tag :schedule_online, "keep_existing", true
+            Do Not Change Schedule
+          - timeslot_count = @schedule.timeslots.length
+          %span.help-block
+            Do not change existing timeslots when saving this event.
+          - if timeslot_count > 0
+            %span.help-block
+              There are currently
+              %strong #{timeslot_count} timeslots
+              for this event.
+      .radio
+        %label
+          = radio_button_tag :schedule_online, "false"
+          Fixed Schedule
+          %span.help-block
+            A schedule where the event has a fixed timeslot.
+            - if !@schedule.new_record?
+              %span.help-block
+                %b Note:
+                This will remove all existing timeslots.
+      .radio
+        %label
+          = radio_button_tag :schedule_online, "true", @schedule.new_record?
+          Schedule Online
+          %span.help-block
+            Allow teams to register for timeslots online.
+          - if !@schedule.new_record?
+            %span.help-block
+              %b Note:
+              This will recreate all timeslots between the start and end times.
+
+  %div#schedule_online_details
+    .form-group
+      = f.label :num_timeslots, 'Number of Timeslots:', class: 'control-label col-md-3'
+      .col-md-9
+        = f.text_field :num_timeslots, class: 'form-control'
+        %span.help-block
+          %b Note:
+          There are
+          %b=@current_tournament.teams.length
+          teams competiting in this tournament.
+
+    .form-group
+      = f.label :teams_per_slot, 'Timeslot Capacity:', class: 'control-label col-md-3'
+      .col-md-9
+        = f.text_field :teams_per_slot, placeholder: 'Teams per Timeslot', class: 'form-control'
+
+  .row
+    .col-md-9.col-md-offset-3
+      - if @schedule.new_record?
+        = f.submit "Add Event To Schedule", :class=>"btn btn-primary"
+      - else
+        = f.submit "Save Changes To Event", :class=>"btn btn-primary"

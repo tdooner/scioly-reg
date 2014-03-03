@@ -13,6 +13,14 @@ Scioly::Application.routes.draw do
     get "school/edit"
     patch "school/update"
 
+    resources :schedules do
+      collection do
+        get 'all_pdfs'
+        get 'batchnew' => "schedules#batchnew"
+        post 'batchnew' => "schedules#batchcreate"
+      end
+    end
+
     resources :tournaments do
       collection do
         post 'set_active'
@@ -42,14 +50,11 @@ Scioly::Application.routes.draw do
   match 'schools/new' => 'home#newschool', :via => [ :get ], :as => :new_school
   match 'schools/new' => 'home#createschool', :via => [ :post ]
 
-  resources :schedules, :path => "/schedule" do
+  resources :schedules, :path => "/schedule", only: [:index, :show] do
     get 'scores'
     post 'scores', :action => "savescores"
 
     collection do
-      get 'all_pdfs'
-      get 'batchnew' => "schedules#batchnew"
-      post 'batchnew' => "schedules#batchcreate"
       get ':division' => "schedules#index", as: 'division', constraints: { division: /[A-Z]/ }
     end
   end
