@@ -23,11 +23,11 @@ class Admin::SchedulesController < ApplicationController
   end
 
   def edit
-    @schedule = Schedule.find(params[:id])
+    @schedule = Schedule.find_by(slug: params[:id])
   end
 
   def update
-    @schedule = Schedule.find(params[:id])
+    @schedule = Schedule.find_by(slug: params[:id])
     @schedule.update_attributes(schedule_params)
     @schedule.updateTimeSlots if params[:schedule_online] == "true"
     @schedule.timeslots.destroy_all if params[:schedule_online] == "false"
@@ -118,13 +118,13 @@ class Admin::SchedulesController < ApplicationController
   end
 
   def destroy
-    @schedule = Schedule.find(params[:id])
+    @schedule = Schedule.find_by(slug: params[:id])
     @schedule.destroy
     redirect_to :admin_events
   end
 
   def savescores
-    @schedule = Schedule.find(params[:schedule_id])
+    @schedule = Schedule.find_by(slug: params[:schedule_id])
     @teams = @current_tournament.teams.where("division = ?", @schedule.division).includes(:tournament)
 
     @schedule.scores.each(&:destroy)
@@ -156,7 +156,7 @@ class Admin::SchedulesController < ApplicationController
   end
 
   def scores
-    @schedule = Schedule.find(params[:schedule_id], :include => :scores)
+    @schedule = Schedule.find_by(slug: params[:schedule_id], :include => :scores)
     @teams = @current_tournament.teams.where("division = ?", @schedule.division).includes(:tournament)
     @placements = @teams.inject({}) { |a,i|
       s = @schedule.scores.select{|x| x.team_id == i.id}.first

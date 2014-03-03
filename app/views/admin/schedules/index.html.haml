@@ -30,7 +30,7 @@
     -@events.each do |e|
       %tr
         %td= e.division
-        %td= link_to "#{e.event} (#{e.division})", edit_admin_schedule_url(e.id)
+        %td= link_to "#{e.event} (#{e.division})", edit_admin_schedule_path(e)
         %td
           - if e.is_scheduled_online?
             %b>="#{@event_signups[e.id]}"
@@ -42,7 +42,7 @@
             =@event_capacity[e.id]
           -else
             \-
-        %td= link_to "Edit", edit_admin_schedule_url(e.id)
+        %td= link_to "Edit", edit_admin_schedule_path(e)
         %td= link_to "Delete!", schedule_url(e),
           data: { confirm: "Are you sure you wish to delete this event? All corresponding Timeslots and Registrations will be deleted!" },
           method: :delete

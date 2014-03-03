@@ -1,6 +1,7 @@
 class Schedule < ActiveRecord::Base
   validates_presence_of :event, :division
   validates_uniqueness_of :event, :scope => [:division, :tournament_id]
+  validates :slug, uniqueness: { scope: :tournament_id }
 
   attr_accessor :num_timeslots, :teams_per_slot
 
@@ -19,6 +20,8 @@ class Schedule < ActiveRecord::Base
     :mapping => %w(DateTime to_s),
     :constructor => Proc.new { |item| item },
     :converter => Proc.new { |item| item }
+
+  before_save :update_slug
 
   def updateTimeSlots
     # Currently, the only supported schedule type is even divisions of time... e.g.
@@ -107,7 +110,11 @@ class Schedule < ActiveRecord::Base
     self.endtime = Time.zone.local(val.year, val.month, val.day, val.hour, val.minute, val.second)
   end
 
-  private
+  def to_param
+    [event, division].join('-').gsub(/\s/, '-').gsub(/[^\w-]/,'').downcase
+  end
+
+private
 
   def _initialize_timeslots(num_timeslots, teams_per_slot)
     return [] unless self.endtime && self.starttime
@@ -120,12 +127,16 @@ class Schedule < ActiveRecord::Base
     num_timeslots.times.map do |i|
       timeslot_begins = self.starttime + slotwidth * 60 * i
       timeslot_ends = timeslot_begins + slotwidth * 60
-      exists = Timeslot.where(
+      Timeslot.where(
         :schedule_id => self.id,
         :begins => timeslot_begins,
         :ends => timeslot_ends,
         :team_capacity => teams_per_slot,
       ).first_or_initialize
     end
+  end
+
+  def update_slug
+    self.slug = to_param
   end
 end
