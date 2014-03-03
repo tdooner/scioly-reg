@@ -18,7 +18,7 @@
     %div.alert-actions
       - if @current_admin.try(:can_edit?, @schedule)
         %a.btn{:href=>"javascript:show_timeslot_form()"} Add Timeslot
-        %a.btn{:href=>edit_schedule_url(@schedule)} Edit Event
+        %a.btn{:href=>edit_admin_schedule_url(@schedule)} Edit Event
       - if @is_admin
         %a.btn{:href=>schedule_scores_url(@schedule)} Submit Scores
       = link_to("Download PDF", schedule_url(@schedule, :format=>"pdf"), :class=>"btn")

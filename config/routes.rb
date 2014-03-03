@@ -20,6 +20,16 @@ Scioly::Application.routes.draw do
       end
     end
 
+    resources :teams do
+      get 'qualify' # TODO: this is broken
+
+      collection do
+        get 'batchnew' => 'teams#batchnew'
+        post 'batchnew' => 'teams#batchcreate'
+        post 'batchpreview'
+      end
+    end
+
     resources :tournaments do
       collection do
         post 'set_active'
@@ -36,13 +46,10 @@ Scioly::Application.routes.draw do
   post "user/login"
   get "user/logout", :as => :adminlogout
 
-  resources :teams do
-    get 'qualify' # TODO: this is broken
-
+  resources :teams, only: [:show, :edit, :update] do
     collection do
-      get 'batchnew' => 'teams#batchnew'
-      post 'batchnew' => 'teams#batchcreate'
-      post 'batchpreview'
+      get 'login'
+      get 'logout'
     end
   end
 
@@ -68,10 +75,6 @@ Scioly::Application.routes.draw do
   resources :tournaments, only: [] do
     get 'scores'
   end
-
-  match '/login' => "teams#login", via: [:get, :post]
-  match '/login/:division' => "teams#login", as: :division_login, via: [:get, :post]
-  match '/logout' => "teams#logout", via: [:get]
 
   resources :info
 

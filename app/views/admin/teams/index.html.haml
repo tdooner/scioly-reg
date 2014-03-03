@@ -1,14 +1,14 @@
 .alert-message.block-message.info
   These are the teams competing in this tournament. Click Edit next to a team to change its details.
   .alert-actions
-    =link_to "Add New Team", new_team_url, :class=>"btn"
-    =link_to "Import Teams", batchnew_teams_path, :class => "btn"
+    =link_to "Add New Team", new_admin_team_url, :class=>"btn"
+    =link_to "Import Teams", batchnew_admin_teams_path, :class => "btn"
     =link_to "Select State Qualifiers", "javascript:show_qualified_buttons()", :class=>"btn"
 %p
   Below are all the teams registered for the Tournament occurring on
   = @current_tournament.humanize() + "."
 
-%table.zebra-striped.condensed-table#teams-table
+%table.table.table-striped#teams-table
   %thead
     %th
       %b Team Name
@@ -26,9 +26,9 @@
         %td=t.getNumber
         %td.states
           - if t.qualified_for_states
-            =link_to "Qualified!", team_qualify_url(t), :class=>"btn success"
+            =link_to "Qualified!", admin_team_qualify_url(t), :class=>"btn success"
           - else
-            =link_to "Didn't Qualify", team_qualify_url(t), :class=>"btn"
+            =link_to "Didn't Qualify", admin_team_qualify_url(t), :class=>"btn"
 
 - content_for :javascripts do
   :javascript

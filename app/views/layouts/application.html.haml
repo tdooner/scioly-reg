@@ -30,7 +30,7 @@
           %ul.nav.nav-pills.nav-stacked
             %li{ class: ('active' if current_page? '/') }
               = link_to 'Home', root_path
-            %li{ class: ('active' if request.url.include? 'schedule') }
+            %li{ class: ('active' if params[:controller] == 'schedules') }
               = link_to 'Events', schedules_path
 
           - if @team
@@ -43,11 +43,11 @@
               %li{ class: ('active' if current_page?(edit_team_path(@team))) }
                 = link_to 'Change Password', edit_team_path(@team)
               %li
-                = link_to 'Logout', logout_path
+                = link_to 'Logout', logout_teams_path
           - else
             %ul.nav.nav-pills.nav-stacked
               %li{ class: ('active' if request.url.include? 'login') }
-                = link_to 'Login', login_path
+                = link_to 'Login', login_teams_path
 
           - if @current_admin
             %h3 Admin Panel
@@ -58,8 +58,8 @@
                 = link_to 'School Settings', admin_school_edit_path(@current_tournament)
               %li{ class: ('active' if current_page?(admin_schedules_path)) }
                 = link_to 'Manage Events', admin_schedules_path
-              %li{ class: ('active' if current_page?(teams_path)) }
-                = link_to 'Manage Teams', teams_path
+              %li{ class: ('active' if current_page?(admin_teams_path)) }
+                = link_to 'Manage Teams', admin_teams_path
 
           = link_to root_url do
             = image_tag @current_school.logo.url, class: 'sidebar-school-logo'

@@ -1,55 +1,57 @@
-=form_for team do |f|
-  %fieldset
-    .clearfix
-      =f.label :name, "Team Name:"
-      .input
-        = f.text_field :name, :disabled => !@is_admin
-    .clearfix
-      =f.label :coach, "Coach's Name:"
-      .input
-        = f.text_field :coach
-    .clearfix
-      =f.label :email, "Email:"
-      .input
-        = f.text_field :email
-    -if !@is_admin
-      .clearfix
-        =f.label :password, "Current Password:"
-        .input
-          = f.password_field :password_existing
-      .clearfix
-        =f.label :password, "Change Password:"
-        .input
-          = f.password_field :password
-      .clearfix
-        =f.label :password, "Change Password (confirm):"
-        .input
-          = f.password_field :password_confirmation
+= form_for team, html: { class: 'form-horizontal' } do |f|
+  .form-group
+    = f.label :name, "Team Name:", class: 'control-label col-md-3'
+    .col-md-9
+      = f.text_field :name, :disabled => !@is_admin, class: 'form-control'
+  .form-group
+    = f.label :coach, "Coach's Name:", class: 'control-label col-md-3'
+    .col-md-9
+      = f.text_field :coach, class: 'form-control'
+  .form-group
+    = f.label :email, "Email:", class: 'control-label col-md-3'
+    .col-md-9
+      = f.text_field :email, class: 'form-control'
+
+  -if !@is_admin
+    .form-group
+      = f.label :password, "Current Password:", class: 'control-label col-md-3'
+      .col-md-9
+        = f.password_field :password_existing, class: 'form-control'
+    .form-group
+      = f.label :password, "Change Password:", class: 'control-label col-md-3'
+      .col-md-9
+        = f.password_field :password, class: 'form-control'
+    .form-group
+      = f.label :password, "Change Password (confirm):", class: 'control-label col-md-3'
+      .col-md-9
+        = f.password_field :password_confirmation, class: 'form-control'
+
   - if @is_admin
-    %fieldset
-      .clearfix
-        =f.label :number, "Team Number:"
-        .input
-          = f.text_field :number
-      .clearfix
-        =f.label :division, "Division:"
-        .input
-          = f.select(:division, [['A', 'A'], ['B', 'B'], ['C', 'C']])
-      .clearfix
-        =f.label :password, "Password:"
-        .input
-          = f.password_field :password
-      .clearfix
-        =label_tag 'send_email', 'Send Password via Email'
-        .input
-          =check_box_tag 'send_email', 'true', :checked => 'checked'
-          %span.help-block
-            %b Note:
-            This will send an email to the coach containing the password.
-            You can only send the password email if you change the password.
-  .actions
-    %input.btn.primary{ type: 'submit', value: team.persisted? ? 'Save Changes' : 'Create Team' }
-    - if team.persisted? && @is_admin
-      = link_to 'Delete Team', team_path(team), data: { confirm: 'Are you sure you want to delete this team?' },
-        method: 'delete',
-        class: 'btn'
+    .form-group
+      = f.label :number, "Team Number:", class: 'control-label col-md-3'
+      .col-md-9
+        = f.text_field :number, class: 'form-control'
+    .form-group
+      = f.label :division, "Division:", class: 'control-label col-md-3'
+      .col-md-9
+        = f.select :division, [['A', 'A'], ['B', 'B'], ['C', 'C']], {}, class: 'form-control'
+    .form-group
+      = f.label :password, "Password:", class: 'control-label col-md-3'
+      .col-md-9
+        = f.password_field :password, class: 'form-control'
+    .form-group
+      =label_tag 'send_email', 'Send Password via Email', class: 'control-label col-md-3'
+      .col-md-9
+        =check_box_tag 'send_email', 'true', :checked => 'checked'
+        %span.help-block
+          %b Note:
+          This will send an email to the coach containing the password.
+          You can only send the password email if you change the password.
+
+  .row
+    .col-md-9.col-md-offset-3
+      %input.btn.btn-primary{ type: 'submit', value: team.persisted? ? 'Save Changes' : 'Create Team' }
+      - if team.persisted? && @is_admin
+        = link_to 'Delete Team', team_path(team), data: { confirm: 'Are you sure you want to delete this team?' },
+          method: 'delete',
+          class: 'btn btn-default'
