@@ -67,6 +67,61 @@ img {
   font-size: 24px;
   padding: 14px;
   margin-left: 10px;
+
+  &:hover {
+    color: #eee;
+  }
+}
+
+.site-menu-close-icon {
+  color: $color-dark-blue;
+  float: right;
+  font-size: 24px;
+  padding: 14px;
+  margin-left: 10px;
+  padding-right: 29px;
+}
+
+.site-menu-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  background-color: #efefef;
+  display: none;
+  z-index: 1;
+  width: 200px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+  overflow: scroll;
+
+  a {
+    text-decoration: none;
+  }
+
+  ul {
+    list-style: none;
+    margin: 65px 0 0 0;
+    padding: 0;
+  }
+
+  li a {
+    line-height: 38px;
+    display: block;
+    padding-left: 14px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &:active {
+      background-color: #ccc;
+    }
+  }
+
+  h3 {
+    font-size: 14px;
+    padding: 7px 0 7px 14px;
+    margin: 14px 0 0 0;
+    background-color: #ccc;
+  }
 }
 
 .sidebar-school-logo {

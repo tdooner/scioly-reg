@@ -6,6 +6,7 @@
     = stylesheet_link_tag 'application'
     = javascript_include_tag 'application'
     = render 'layouts/analytics'
+    %meta{ name: 'viewport', content: 'width=device-width, user-scalable=no' }
     = csrf_meta_tags
 
   %body#home{ class: ('homepage' if current_page? '/') }
@@ -16,45 +17,15 @@
         %h1.site-title
           = link_to @current_tournament.title, root_path
 
+    %nav.site-menu-sidebar
+      %a.site-menu-close-icon{ href: '#' }
+        %span.glyphicon.glyphicon-align-justify
+      = render_site_navigation(:sidebar)
+
     .container
       .row
         .col-sm-3.hidden-xs
-          %ul.nav.nav-pills.nav-stacked
-            %li{ class: ('active' if current_page? '/') }
-              = link_to 'Home', root_path
-            %li{ class: ('active' if params[:controller] == 'schedules') }
-              = link_to 'Events', schedules_path
-
-          - if @team
-            %h3= @team.coach
-            %ul.nav.nav-pills.nav-stacked
-              %li{ class: ('active' if current_page?(team_path(@team))) }
-                = link_to @team.name, team_path(@team)
-              %li{ class: ('active' if current_page?(signups_path)) }
-                = link_to 'My Registrations', signups_path
-              %li{ class: ('active' if current_page?(edit_team_path(@team))) }
-                = link_to 'Change Password', edit_team_path(@team)
-              %li
-                = link_to 'Logout', logout_teams_path
-          - else
-            %ul.nav.nav-pills.nav-stacked
-              %li{ class: ('active' if request.url.include? 'login') }
-                = link_to 'Login', login_teams_path
-
-          - if @current_admin
-            %h3
-              = link_to 'Admin Panel', admin_index_path
-            %ul.nav.nav-pills.nav-stacked
-              %li{ class: ('active' if current_page?(edit_admin_tournament_path(@current_tournament))) }
-                = link_to 'Tournament Settings', edit_admin_tournament_path(@current_tournament)
-              %li{ class: ('active' if current_page?(admin_school_edit_path)) }
-                = link_to 'School Settings', admin_school_edit_path
-              %li{ class: ('active' if current_page?(admin_schedules_path)) }
-                = link_to 'Manage Events', admin_schedules_path
-              %li{ class: ('active' if current_page?(admin_teams_path)) }
-                = link_to 'Manage Teams', admin_teams_path
-              %li
-                = link_to 'Scoring', admin_scores_path
+          = render_site_navigation(:pills)
 
           = link_to root_url do
             = image_tag @current_school.logo.url, class: 'sidebar-school-logo'
@@ -71,3 +42,14 @@
           = yield
 
     = yield :javascripts
+    :javascript
+      $(function() {
+        $('.site-menu-icon').on('click', function(e) {
+          $('.site-menu-sidebar').show();
+          e.preventDefault();
+        });
+        $('.site-menu-close-icon').on('click', function(e) {
+          $('.site-menu-sidebar').hide();
+          e.preventDefault();
+        });
+      });
