@@ -15,21 +15,15 @@ class Admin::SchedulesController < ApplicationController
   end
 
   def new
-    breadcrumbs.add("New Event")
     @schedule = Schedule.new()
   end
 
   def batchnew
-    breadcrumbs.add("New Event", new_schedule_url())
     @can_load_default_events = DefaultEvent.for_year(@current_tournament.date.year).present?
-    breadcrumbs.add("Batch Mode")
   end
 
   def edit
     @schedule = Schedule.find(params[:id])
-    breadcrumbs.add("Events", admin_events_url())
-    breadcrumbs.add(@schedule.humanize, schedule_url(@schedule))
-    breadcrumbs.add("Edit")
   end
 
   def update
@@ -37,7 +31,7 @@ class Admin::SchedulesController < ApplicationController
     @schedule.update_attributes(schedule_params)
     @schedule.updateTimeSlots if params[:schedule_online] == "true"
     @schedule.timeslots.destroy_all if params[:schedule_online] == "false"
-    redirect_to edit_schedule_url(@schedule)
+    redirect_to edit_admin_schedule_url(@schedule)
   end
 
   def create
@@ -172,8 +166,6 @@ class Admin::SchedulesController < ApplicationController
         a.merge(i.id => "")
       end
     }
-    breadcrumbs.add("Scoring", "/admin/scores")
-    breadcrumbs.add(@schedule.humanize)
   end
 
 private

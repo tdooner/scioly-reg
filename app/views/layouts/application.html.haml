@@ -61,6 +61,8 @@
                 = link_to 'Manage Events', admin_schedules_path
               %li{ class: ('active' if current_page?(admin_teams_path)) }
                 = link_to 'Manage Teams', admin_teams_path
+              %li
+                = link_to 'Scoring', admin_scores_path
 
           = link_to root_url do
             = image_tag @current_school.logo.url, class: 'sidebar-school-logo'

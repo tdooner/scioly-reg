@@ -28,35 +28,34 @@
     %li
       Disqualified teams should be ranked
       %b=(@teams.length+2)
-%form{:method=>"POST", :action=>schedule_scores_url(@schedule)}
+
+= form_tag admin_schedule_scores_url(@schedule), class: 'form-horizontal' do
   %input{:type=>"hidden", :name=>"authenticity_token", :value=>"#{form_authenticity_token}"}
-  %table.zebra-striped.condensed-table#admin-score-table
+  %table.table.table-condensed#admin-score-table
     %thead
-      %th.span2 Ranking
-      %th{:width=>"100px"} Team Number
+      %th{width: '100px'} Ranking
+      %th{width: '100px'} Team Number
       %th Team Name
+
     %tbody
       - @teams.each do |t|
         %tr
           %td
-            %input.span1{:type=>"text", :name=>"placings[#{t.id}]", :value=>"#{@placements[t.id]}"}
+            = text_field_tag "placings[#{t.id}]", @placements[t.id], class: 'form-control'
           %td{:style=>"vertical-align:middle"}
             %input{:type=>"hidden",:value=>t.number}
             =t.getNumber
           %td{:style=>"vertical-align:middle"}=t.name
   %p Scores will be posted online at the conclusion of the awards ceremony (or at 8pm on the night of the tournament) by default. Since every event has an impact on the official scores for the entire tournament, holding back scores for an event will stop the official scores for the tournament from being released.
   %p This feature is intended to be used while there is an unresolved scoring dispute for an event.
-  .clearfix
-    .input
-      %ul.inputs-list
-        %li
-          - if @schedule.scores_withheld
-            %input{:type=>"checkbox", :value=>"true", :name=>"scores_withheld", :id=>"scores_withheld", :checked=>"checked"}
-          -else
-            %input{:type=>"checkbox", :value=>"true", :name=>"scores_withheld", :id=>"scores_withheld"}
-          %label{:for=>"scores_withheld"}
-            %b Don't Automatically Publish Scores
-  .actions
-    %input.btn.primary{ name: 'score_action', type: 'submit', value: 'Submit Scores' }
-    %input.btn{ name: 'score_action', type: 'submit', value: 'Reset Scores',
-                data: { confirm: 'Are you sure you wish to delete scores for this event? This cannot be undone!' } }
+
+  .form-group
+    .col-md-11.col-md-offset-1
+      %input{:type=>"checkbox", :value=>"true", :name=>"scores_withheld", :id=>"scores_withheld", checked: @schedule.scores_withheld}
+      %label{:for=>"scores_withheld"}
+        %b Don't Automatically Publish Scores
+
+  .row
+    %input.btn.btn-primary{ name: 'score_action', type: 'submit', value: 'Submit Scores' }
+    %input.btn.btn-default{ name: 'score_action', type: 'submit', value: 'Reset Scores',
+                data: { confirm: 'Are you sure you wish to reset scores for this event? This cannot be undone!' } }

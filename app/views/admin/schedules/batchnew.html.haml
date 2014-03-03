@@ -28,9 +28,11 @@
   If you are about to make a spreadsheet with these values, here is a template you can use and then copy-paste.
   %a{:href=>"https://docs.google.com/spreadsheet/ccc?key=0AgQhM9vFx8X8dG9OVVBjS0stXzBZWTJWN21Md0c3QXc"}
     Batch Event Input Template.
-%form{:method=>"POST", :action=>batchnew_schedules_path}
-  %input{:type=>"hidden", :name=>"authenticity_token", :value=>form_authenticity_token}
-  %textarea{:style=>"width:650px; height:200px;",:name=>"batch"}
-  .actions
-    %input.btn.primary{:type=>"submit", :value=>"Submit Batch Events"}
 
+= form_tag batchnew_admin_schedules_path do
+  .form-group
+    = text_area_tag :batch, '', class: 'form-control'
+
+  .row
+    .col-md-12
+      %input.btn.btn-primary{:type=>"submit", :value=>"Submit Batch Events"}

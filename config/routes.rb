@@ -13,6 +13,9 @@ Scioly::Application.routes.draw do
     patch "school/update"
 
     resources :schedules do
+      get 'scores'
+      post 'scores', action: 'savescores'
+
       collection do
         get 'all_pdfs'
         get 'batchnew' => "schedules#batchnew"
@@ -58,7 +61,6 @@ Scioly::Application.routes.draw do
 
   resources :schedules, :path => "/schedule", only: [:index, :show] do
     get 'scores'
-    post 'scores', :action => "savescores"
 
     collection do
       get ':division' => "schedules#index", as: 'division', constraints: { division: /[A-Z]/ }

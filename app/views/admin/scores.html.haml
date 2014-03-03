@@ -7,10 +7,11 @@
 .alert-message.block-message.info
   Click on an event below to submit scores for that event. After scoring is completed, here are some options of what to do with the scores.
   .alert-actions
-    = link_to 'Award Ceremony Slideshow', admin_scoreslideshow_path, class: 'btn'
-    = link_to 'Score Spreadsheet', tournament_scores_path(@current_tournament), class: 'btn'
-    = link_to 'Publish Scores', admin_scorespublish_path, class: 'btn'
-%table.zebra-striped.condensed-table#admin-score-table
+    = link_to 'Award Ceremony Slideshow', admin_scoreslideshow_path, class: 'btn btn-default'
+    = link_to 'Score Spreadsheet', tournament_scores_path(@current_tournament), class: 'btn btn-default'
+    = link_to 'Publish Scores', admin_scorespublish_path, class: 'btn btn-default'
+
+%table.table.table-striped#admin-score-table
   %thead
     %th Event Name
     %th Division
@@ -18,7 +19,7 @@
   %tbody
     - @events.each do |e|
       %tr
-        %td= link_to(e.humanize, schedule_scores_url(e))
+        %td= link_to(e.humanize, admin_schedule_scores_path(e))
         %td= e.division
         %td
           - if e.scores.length == 0 || e.scores_withheld

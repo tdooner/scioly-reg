@@ -4,8 +4,9 @@
     =link_to "New Tournament", new_admin_tournament_url, :class=>"btn small"
 %p
   Please select a Tournament to edit:
+
 = form_tag set_active_admin_tournaments_url do
-  %table
+  %table.table
     %thead
       %th Tournament
       %th Active?
