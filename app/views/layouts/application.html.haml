@@ -10,11 +10,19 @@
 %body#home
   #headerWrapper{ :class=>"expanded-#{@layout_expanded}" }
     .row
-      .span4
-        %span.header-school-logo-container
-          = image_tag @current_school.logo.url(:logo)
-      .span9
+      - show_logo_box = @current_school.logo.present? || @current_admin
+      - if @current_school.logo.present?
+        .span4
+          %span.header-school-logo-container
+            = image_tag @current_school.logo.url(:logo)
+      - elsif @current_admin
+        .span4
+          %span.header-school-logo-container
+            = link_to '[ Upload Logo for School ]', admin_school_edit_path
+
+      %div{ class: (show_logo_box ? 'span9' : 'span11 offset2') }
         %h2.header-tournament-title= @current_tournament.title
+
       .span3.header-host-description
         !=RDiscount.new(@current_tournament.hosted_by_markdown||"").to_html
   .noprint
