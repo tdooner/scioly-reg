@@ -4,7 +4,7 @@ class TimeslotsController < ApplicationController
   before_filter :verify_admin_can_edit, except: :create
 
   def create
-    ts = Timeslot.new(params[:timeslot])
+    ts = Timeslot.new(timeslot_params)
     ts.schedule_id = params[:timeslot_extra][:schedule].to_i
     # For now, set the timeslot's end time to shortly after its begin time, since the timeslot end time
     # is not displayed anywhere and will be removed in a later version.
