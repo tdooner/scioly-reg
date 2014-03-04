@@ -92,7 +92,8 @@ img {
   z-index: 1;
   width: 200px;
   box-shadow: 0 0 10px rgba(0, 0, 0, .5);
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
 
   a {
     text-decoration: none;
@@ -104,15 +105,22 @@ img {
     padding: 0;
   }
 
-  li a {
-    line-height: 38px;
-    display: block;
-    padding-left: 14px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  li {
+    &:first-child a {
+      border-top: 1px solid #ddd;
+    }
 
-    &:active {
-      background-color: #ccc;
+    a {
+      border-bottom: 1px solid #ddd;
+      line-height: 38px;
+      display: block;
+      padding-left: 14px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &:active {
+        background-color: #ccc;
+      }
     }
   }
 
