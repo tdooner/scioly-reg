@@ -1,8 +1,13 @@
 - content_for :javascripts do
   :javascript
-    var toggleTimeslotEdit = function(id) {
-      $("#edit-timeslot-" + id).toggle();
-    }
+    $(function() {
+      $('.timeslot-edit-link').on('click', function(e) {
+        var tsid = $(e.target).data('timeslot-id');
+        $("#edit-timeslot-" + tsid).toggle();
+
+        e.preventDefault();
+      });
+    });
     var show_timeslot_form = function() {
       $("form#new_timeslot").toggle();
     }
