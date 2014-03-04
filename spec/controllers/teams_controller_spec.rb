@@ -221,7 +221,7 @@ describe TeamsController do
         it 'redirects you back' do
           subject
           session['team'].should be_nil
-          response.should redirect_to division_login_path(team.division)
+          response.should redirect_to login_teams_path
         end
       end
     end

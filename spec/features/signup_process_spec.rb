@@ -18,9 +18,7 @@ describe 'the schedule signup process' do
 
     it 'shows a list of events you can register for' do
       visit division_schedules_url(@team.division)
-      within '#contentWrapper' do
-        click_link event.humanize
-      end
+      click_link event.humanize
       click_link 'Register!'
       click_link 'Reserve This Slot!'
       expect(page).to have_content("Your team is registered in the #{timeslot.begins.strftime("%I:%M %p")} timeslot")

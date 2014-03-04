@@ -6,7 +6,6 @@ class TeamsController < ApplicationController
 
   def edit
     @this_team = Team.find(params[:id])
-    breadcrumbs.add("Edit Team #" + @this_team.getNumber())
   end
 
   def update
@@ -71,8 +70,6 @@ class TeamsController < ApplicationController
   end
 
   def login
-    @division = params[:division] == "B" ? "B":"C"
-    breadcrumbs.add "Division " + @division + " Login"
     if session[:loginattempts].nil?
         session[:loginattempts] = 0
         session[:showedcaptcha] = false
@@ -104,7 +101,7 @@ class TeamsController < ApplicationController
         # Do it.
         flash[:message] = "<img src='http://i0.kym-cdn.com/photos/images/original/000/096/044/trollface.jpg?1296494117'>"
         @mixpanel.track("Changed is_admin", {:team_id => params[:team][:id], :ip => request.remote_ip})
-        return redirect_to division_login_path(params[:division])
+        return redirect_to login_teams_path
       end
       if team = Team.authenticate(params[:team][:id], params[:password])
         @mixpanel.track("Login", {:team => team.name, :admin=>"false", :failed => "false"})
@@ -123,7 +120,7 @@ class TeamsController < ApplicationController
         end
         @mixpanel.track("Login", {:team => Team.find_by_id(params[:team][:id]).name, :admin => "false", :failed => "true"})
         flash[:error] = "Incorrect Password For Selected Team"
-        return redirect_to division_login_path(params[:division])
+        return redirect_to login_teams_path
       end
     end
 

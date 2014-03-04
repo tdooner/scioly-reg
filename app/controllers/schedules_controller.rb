@@ -8,7 +8,8 @@ class SchedulesController < ApplicationController
 
   # TODO: Move the pdf logic to Admit::SchedulesController
   def show
-    @schedule = Schedule.find_by(slug: params[:id])
+    @schedule = Schedule.find_by(slug: params[:id],
+                                 tournament: @current_tournament)
     @scores = @schedule.scores.includes(team: :tournament)
 
     @allslots = @schedule.timeslots.sort { |x,y| x.begins <=> y.begins }

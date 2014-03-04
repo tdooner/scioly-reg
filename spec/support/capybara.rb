@@ -10,6 +10,8 @@ shared_context '(capybara) visiting a tournament' do
                                     registration_ends: registration_ends)
     Rails.application.routes.default_url_options[:subdomain] =
       @tournament.school.subdomain
+
+    Capybara.app_host = "http://#{@tournament.school.subdomain}.example.com"
   end
 
   after do
@@ -25,7 +27,7 @@ shared_context '(capybara) as a logged in team' do
 
     @team = FactoryGirl.create(:team, tournament: @tournament,
                                       hashed_password: Digest::SHA1.hexdigest(@password))
-    visit division_login_url(@team.division)
+    visit login_teams_path
     expect(page).to have_content(@team.name)
     select(@team.name, from: 'team_id')
     fill_in 'password', with: @password

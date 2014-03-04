@@ -38,6 +38,7 @@ group :test do
     gem 'timecop'
     gem 'mocha', require: false
     gem 'capybara'
+    gem 'pry-byebug'
 end
 gem "parallel_tests"
 
@@ -56,6 +57,6 @@ gem "parallel_tests"
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 group :development do
-  gem 'debugger'
+  gem 'pry-byebug'
   gem 'sqlite3-ruby', :require => 'sqlite3'
 end
