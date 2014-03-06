@@ -120,7 +120,7 @@ class Admin::SchedulesController < ApplicationController
   def destroy
     @schedule = Schedule.find_by(slug: params[:id], tournament: @current_tournament)
     @schedule.destroy
-    redirect_to :admin_events
+    redirect_to admin_schedules_path
   end
 
   def savescores
