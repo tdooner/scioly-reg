@@ -20,10 +20,9 @@ describe Admin::TournamentsController do
       let(:school) { FactoryGirl.create(:school) }
       let!(:old_tournament) { FactoryGirl.create(:tournament, school: school) }
       let!(:current_tournament) { FactoryGirl.create(:tournament, :current, school: school) }
+      let!(:tournament) { old_tournament }
 
-      include_context 'as an admin of the tournament' do
-        let(:tournament) { current_tournament }
-      end
+      include_context 'as an admin of the tournament'
 
       context 'when deleting the active tournament' do
         it 'sets a previous tournament as the active tournament' do

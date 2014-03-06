@@ -4,10 +4,9 @@ describe Admin::TeamsController do
   context '#destroy' do
     let!(:team_tournament) { FactoryGirl.create(:current_tournament) }
     let!(:team) { FactoryGirl.create(:team, tournament: team_tournament) }
+    let!(:school) { team_tournament.school }
 
-    include_context 'visiting a school' do
-      let(:school) { team_tournament.school }
-    end
+    include_context 'visiting a school'
 
     subject { post :destroy, id: team.id }
 

@@ -4,9 +4,7 @@ shared_context 'as an admin of the tournament' do
   let(:admin_password) { ('a'..'z').to_a.sample(10).join }
   let(:admin) { FactoryGirl.create(:user, school: tournament.school, password: admin_password) }
 
-  include_context 'visiting a school' do
-    let(:school) { tournament.school }
-  end
+  include_context 'visiting a school'
 
   before do
     session[:user_id] = admin.id
@@ -27,6 +25,16 @@ end
 
 shared_context 'visiting a school' do
   before do
-    request.host = "#{school.subdomain}.lvh.me"
+    the_school = if defined?(school)
+                   school
+                 else
+                   if defined?(tournament)
+                     tournament.school
+                   else
+                     FactoryGirl.create(:school)
+                   end
+                 end
+
+    request.host = "#{the_school.subdomain}.lvh.me"
   end
 end
