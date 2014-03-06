@@ -33,7 +33,7 @@ class Admin::TeamsController < ApplicationController
     flash[:error] = @errors.join("<br />") unless @errors.empty?
 
     if not flash[:error]
-      redirect_to teams_url
+      redirect_to admin_teams_path
     else
       render :batchnew
     end
@@ -60,7 +60,7 @@ class Admin::TeamsController < ApplicationController
       flash[:error] = 'Could not delete team!'
     end
 
-    redirect_to teams_url
+    redirect_to admin_teams_path
   end
 
   def create
