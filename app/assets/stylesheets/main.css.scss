@@ -8,6 +8,11 @@ body, html {
   height: 100%;
   min-width: 320px;
   font-size: $base-font-size;
+  font-family: 'ClearSansRegular', Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
 }
 
 a {
@@ -21,7 +26,6 @@ a {
 
 p {
   color: #333;
-  font-family: Helvetica, Arial, sans-serif;
   font-weight: normal;
   line-height: 1.5;
 }
@@ -159,6 +163,36 @@ img {
     margin: 0;
     padding: 0;
   }
+}
+
+/* Logged out Homepage */
+.jumbotron {
+  background-color: $color-dark-blue;
+  padding: 90px 0 30px 0;
+
+  p {
+    font-size: 24px;
+    font-family: 'ClearSansMedium', Helvetica, sans-serif;
+    color: #ccc;
+  }
+
+  h1, h2, h3 {
+    color: #fff;
+  }
+
+  h1 {
+    font-family: 'ClearSansBold', Helvetica, sans-serif;
+  }
+
+  h2 {
+    font-family: 'ClearSansLight', Helvetica, sans-serif;
+  }
+}
+
+.feature-header {
+  text-align: center;
+  font-size: 36px;
+  font-family: 'ClearSansLight', Helvetica, sans-serif;
 }
 
 /* Customizations for CWRU-SCIOLY */
@@ -303,115 +337,3 @@ table.scores-table {
     width:1150px;
   }
 }
-
-// ****************************** Top Navigation *********
-
-#umcNav {
-  width:100%;
-  position: relative;
-  background-color: #E7E7E7;
-  margin-right: 0;
-  margin-left: 0;
-  z-index:1;
-  border-bottom:2px solid #CCC;
-  border-top:2px solid #CCC;
-
-}
-#topNavWrapper {
-  margin:auto;
-  position: relative;
-  width: 960px;
-  height: 30px;
-}
-
-#topnav, #topnav ul {
-  list-style:none;
-  padding:0;
-  margin:0;
-
-}
-#topnav li {
-  float:left;
-  position:relative;
-}
-#topnav li ul {
-  position:absolute;
-  margin-top:0;
-  display:none;
-  width: 100%;
-}
-#topnav ul li ul {
-  margin-top:-2.1em;
-  margin-left:13em;
-}
-
-#topnav li:hover ul, #topnav li.over ul {
-  display:block;
-}
-#topnav li:hover ul ul, #topnav li.over ul, #topnav li:hover ul ul ul  {
-  display:none;
-}
-#topnav ul li:hover ul, #topnav ul li.over ul, #topnav  ul ul li:hover ul {
-  display:block;
-}
-#topnav a {
-  display: block;
-  line-height:15px;
-  text-decoration: none;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #004674;
-  padding: .65em .9em .6em .9em;
-  font-weight: bold;
-}
-#topnav a:hover {
-  background:#0a304e;
-  color:#F4F4F4;
-  text-decoration: none;
-
-}
-#topnav ul a {
-  color: #fff;
-  padding: 8px 12px 6px 16px;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: #0A385C;
-  font-weight: normal;
-  width: 180px;
-  background:#0a304e;
-}
-#topnav ul li a:hover {
-  background:#315f80;
-}
-#topnav {
-  z-index:1;
-}
-#topnav ul {
-  z-index:2;
-}
-#topnav ul ul {
-  z-index:3;
-}
-#menuArrow {
-  right:10px;
-  position:absolute;
-}
-
-.site-footer {
-  height: 45px;
-  width: 1020px;
-  margin: auto;
-  color: #AAA;
-  font-family: Arial, Helvetica, serif;
-  text-align: center;
-  padding-top: 10px;
-
-  a:link, a:visited {
-    font-weight: bold;
-    color: #888;
-  }
-  a:hover {
-    color: #999;
-  }
-}
-
-/************************************************************** Content link styles */

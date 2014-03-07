@@ -1,33 +1,17 @@
 !!!
 %head
   %title Science Olympiad Scoring System
+  = stylesheet_link_tag '//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'
   = stylesheet_link_tag 'application'
   = javascript_include_tag 'application'
   = render 'layouts/analytics'
   :css
     body, html {
-      font-family: PTSansRegular, Helvetica;
+      font-family: 'ClearSansRegular', Helvetica, sans-serif;
     }
     h1, h2, h3, h4, h5, h6 {
-      font-family: PTSansBold, Helvetica;
+      font-family: 'ClearSansBold', Helvetica, sans-serif;
       font-weight: normal;
-    }
-    .introduction {
-      font-size:24px;
-      font-family: PTSansBold, Helvetica;
-      color: #999;
-    }
-    .title {
-      line-height: 1.2em;
-      font-size: 96px;
-      margin-bottom: 0;
-    }
-    .subtitle {
-      font-size: 24px;
-      line-height: 1.2em;
-    }
-    .section, section {
-      margin: 30px 0;
     }
     .features .feature {
       margin-bottom: 30px;
@@ -36,6 +20,5 @@
       margin-bottom: 30px;
     }
 %body
-  #contentWrapper
-    =yield
+  = yield
   = yield :javascripts

@@ -3,6 +3,7 @@ class HomeController < ApplicationController
   before_filter :redirect_to_app_if_subdomain, :except => :index
 
   def index
+    @schools = School.all
     render :index, :layout => 'static_page'
   end
 
