@@ -36,9 +36,6 @@
             .alert.alert-danger= flash[:error]
           - if flash[:message]
             .alert.alert-info= flash[:message]
-          - if @team
-            .onlyprint
-              You are logged in as #{@team.name} (##{@team.getNumber}).
           = yield
 
     = yield :javascripts

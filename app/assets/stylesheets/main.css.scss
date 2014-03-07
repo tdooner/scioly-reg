@@ -34,12 +34,13 @@ p img {
   border: 1px solid #E8E8E8;
 }
 
-.onlyprint {
-  display: none;
-}
-
 img {
   border: none;
+}
+
+b, strong, th, label {
+  font-weight: normal;
+  font-family: 'ClearSansBold', Helvetica, Arial, sans-serif;
 }
 
 .site-title-container {
@@ -50,7 +51,7 @@ img {
 
 .site-title {
   font-size: 22px;
-  font-weight: 800;
+  font-family: 'ClearSansBold', Helvetica, Arial, sans-serif;
   margin: 12px;
   line-height: 1.3;
 

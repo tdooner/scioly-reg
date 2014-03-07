@@ -24,8 +24,6 @@
 
 .tab-content
   .tab-pane.active#information
-    .onlyprint
-      %h2 Event Information
     - if not @currentreg.nil?
       .alert.alert-info
         Your team is registered in the #{@currentreg.timeslot.begins.strftime("%I:%M %p")} timeslot.
@@ -40,8 +38,6 @@
     %h3 Room
     %p="#{@schedule.room}"
   .tab-pane#registration
-    .onlyprint
-      %h2 Registration
     %p
       Below are the designated timeslots for this event. Timeslots that have been reserved by another team are greyed out. To sign up for a timeslot, click the word "Register!" next to the desired time.
     .smalllinks
@@ -57,8 +53,6 @@
         - @allslots.each do |ts|
           = render :partial=>"schedules/timeslot", :locals => {:ts => ts}
   .tab-pane#scores
-    .onlyprint
-      %h2 Scores
     - if !@current_tournament.show_scores?
       %p
         Scores will be posted

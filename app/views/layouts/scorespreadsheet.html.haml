@@ -22,9 +22,6 @@
           %div.alert-message.error=flash[:error]
         - if flash[:message]
           %div.alert-message.info!=flash[:message]
-        - if @team
-          .onlyprint
-            You are logged in as #{@team.name} (##{@team.getNumber}).
 
         .col-sm-12
           = yield
