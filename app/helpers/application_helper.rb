@@ -24,40 +24,43 @@ module ApplicationHelper
       ],
     }
 
-    content_tag :ul, class: ('nav nav-pills nav-stacked' if type == :pills) do
-      [
-        render_nav_section(@site_navigation[request.subdomain]['main']),
-        if @team
-          render_nav_section(@site_navigation[request.subdomain]['team'], @team.coach)
-        end,
-        if @current_admin
-          render_nav_section(@site_navigation[request.subdomain]['admin'], 'Admin Panel', admin_index_path)
-        end,
-      ].join.html_safe
-    end
+    [
+      render_nav_section(type, @site_navigation[request.subdomain]['main']),
+      if @team
+        render_nav_section(type, @site_navigation[request.subdomain]['team'], @team.coach)
+      end,
+      if @current_admin
+        render_nav_section(type, @site_navigation[request.subdomain]['admin'], 'Admin Panel', admin_index_path)
+      end,
+    ].join.html_safe
   end
 
 private
 
-  def render_nav_section(section_links, heading = nil, heading_link = nil)
+  def render_nav_section(type, section_links, heading = nil, heading_link = nil)
     if heading_link && heading
-      heading_html = content_tag :h3, link_to(heading, heading_link)
+      heading_html = content_tag :h3, link_to(heading, heading_link), class: 'site-menu-section-header'
     elsif heading
-      heading_html = content_tag :h3, heading
+      heading_html = content_tag :h3, heading, class: 'site-menu-section-header'
     else
       heading_html = ''
     end
 
-    heading_html + section_links.map do |item|
-      nav_item = if item.respond_to?(:call)
-                   item.call
-                 else
-                   item
-                 end
-      next if nav_item.nil?
+    ul_classes = ('nav nav-pills nav-stacked' if type == :pills)
 
-      render_nav_item(*nav_item)
-    end.compact.join.html_safe
+    heading_html +
+      content_tag(:ul, class: ul_classes) do
+        section_links.map do |item|
+          nav_item = if item.respond_to?(:call)
+                       item.call
+                     else
+                       item
+                     end
+          next if nav_item.nil?
+
+          render_nav_item(*nav_item)
+        end.compact.join.html_safe
+      end
   end
 
   def render_nav_item(link_text, url, condition_lambda = nil)

@@ -9,6 +9,7 @@ body, html {
   min-width: 320px;
   font-size: $base-font-size;
   font-family: 'ClearSansRegular', Helvetica, Arial, sans-serif;
+  text-rendering: optimizeLegibility;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -66,6 +67,22 @@ b, strong, th, label {
   }
 }
 
+.site-menu-section-header {
+  font-family: 'ClearSansMedium', Helvetica, Arial, sans-serif;
+  margin: 15px 0 0 0;
+
+  a {
+    display: block;
+    padding: 7px 0 7px 15px;
+    width: 100%;
+
+    &:hover {
+      background-color: #eee;
+      text-decoration: none;
+    }
+  }
+}
+
 .site-menu-icon {
   color: #fff;
   float: right;
@@ -81,10 +98,11 @@ b, strong, th, label {
 .site-menu-close-icon {
   color: $color-dark-blue;
   float: right;
+  position: absolute;
   font-size: 24px;
   padding: 14px;
-  margin-left: 10px;
-  padding-right: 29px;
+  top: 0;
+  right: 15px;
 }
 
 .site-menu-sidebar {
@@ -99,6 +117,7 @@ b, strong, th, label {
   box-shadow: 0 0 10px rgba(0, 0, 0, .5);
   overflow-x: hidden;
   overflow-y: scroll;
+  padding-top: 60px;
 
   a {
     text-decoration: none;
@@ -106,7 +125,7 @@ b, strong, th, label {
 
   ul {
     list-style: none;
-    margin: 65px 0 0 0;
+    margin: 0;
     padding: 0;
   }
 
@@ -143,6 +162,11 @@ b, strong, th, label {
 }
 
 /* Bootstrap Overrides */
+.nav-pills> li > a {
+  padding: 7px 15px;
+  border-radius: 0;
+}
+
 .nav-pills > li.active > a {
   background-color: $color-dark-blue !important;
 }
