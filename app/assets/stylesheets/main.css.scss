@@ -193,7 +193,7 @@ b, strong, th, label {
 /* Logged out Homepage */
 .jumbotron {
   background-color: $color-dark-blue;
-  padding: 90px 0 30px 0;
+  padding: 50px 0 30px 0;
 
   p {
     font-size: 24px;
@@ -203,6 +203,7 @@ b, strong, th, label {
 
   h1, h2, h3 {
     color: #fff;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .5);
   }
 
   h1 {
@@ -214,10 +215,20 @@ b, strong, th, label {
   }
 }
 
+.main-feature {
+  margin-bottom: 36px;
+}
+
 .feature-header {
   text-align: center;
   font-size: 36px;
   font-family: 'ClearSansLight', Helvetica, sans-serif;
+}
+
+.feature-subheader {
+  font-family: 'ClearSansBold', Helvetica, sans-serif;
+  text-align: center;
+  font-size: 24px;
 }
 
 /* Customizations for CWRU-SCIOLY */

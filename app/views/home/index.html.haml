@@ -1,28 +1,46 @@
-.navbar.navbar-default{ style: 'position: fixed; width: 100%; z-index: 1' }
+- provide :title, 'Foundry – Science Olympaid Scoring and Registration'
+
+.navbar-default
   .container-fluid
     .navbar-right
-      .btn.btn-default.navbar-btn View Sandbox
-      .btn.btn-primary.navbar-btn Sign Up
+      %ul.nav.navbar-nav
+        %li= link_to 'About', '#'
+        %li= link_to 'Help', '#'
 
 .jumbotron
   .container
     %h1 Foundry
-    %h2 Science Olympiad Tournament Management Platform
+    %h2 Science Olympiad Tournament Platform
+    .btn.btn-default.navbar-btn View Sandbox
+    .btn.btn-primary.navbar-btn Sign Up
 
-%section.features.container
+%section.container
+  .row.main-feature
+    .col-md-12
+      %h3.feature-header Designed To Make Your Tournament Easier
+      %h4.feature-subheader
+        Online Scoring, Event Registration, and more. We've got it all.
+
   .row
     .col-md-3
       .list-group
         - @schools.first(6).each do |s|
           = link_to s.name, root_url(subdomain: s.subdomain), class: 'list-group-item'
-      %h3 About Foundry
+      %h3 FAQs
+
+      %h4 Is Foundry free?
       %p
-        Foundry is an
+        Yes! Foundry is an
         = link_to 'open source project', 'https://github.com/ted27/scioly-reg'
-        and will always remain free to use.
+        and will always remain completely
+        %strong free to use.
+
+      %h4 How long does it take to set up?
+      %p
+        It's pretty quick! You just have to import your teams and customize your
+        timeslots.
 
     .col-md-9
-      %h3.feature-header Designed To Make Your Tournament Easier
       .row
         .col-md-6
           Description here
