@@ -1,0 +1,24 @@
+!!!
+%head
+  = render 'shared/header'
+
+%body
+  .navbar-default
+    .container-fluid
+      .navbar-right
+        %ul.nav.navbar-nav
+          %li= link_to 'About', '#'
+          %li= link_to 'Help', '#'
+          %li= link_to 'Log In', adminlogin_path
+
+  - if content_for?(:before_content)
+    = yield :before_content
+  - else
+    %header.site-title-container
+      .container
+        %h1.site-title= link_to 'Foundry', root_path
+
+  %section.container
+    = yield
+
+  = yield :javascripts

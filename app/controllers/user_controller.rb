@@ -1,7 +1,7 @@
 class UserController < ApplicationController
+  layout 'no_school'
 
   def login
-    breadcrumbs.add("Admin Login")
     if request.post?
       u = User.authenticate(@current_school, params[:email], params[:password])
       if u.nil?

@@ -1,0 +1,13 @@
+- if content_for?(:title)
+  %title= yield :title
+- else
+  - if @current_school
+    %title Science Olympiad at #{@current_school.name}
+  - else
+    %title Science Olympiad Scoring System
+%meta{ name: 'viewport', content: 'width=device-width, user-scalable=no' }
+= csrf_meta_tags
+= stylesheet_link_tag '//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css'
+= stylesheet_link_tag 'application'
+= javascript_include_tag 'application'
+= render 'layouts/analytics'

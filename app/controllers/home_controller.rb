@@ -4,15 +4,15 @@ class HomeController < ApplicationController
 
   def index
     @schools = School.all
-    render :index, :layout => 'static_page'
+    render :index, :layout => 'no_school'
   end
 
   def about
-    render :about, :layout => 'static_page'
+    render :about, :layout => 'no_school'
   end
 
   def newschool
-    render :newschool, :layout => 'static_page'
+    render :newschool, :layout => 'no_school'
   end
 
   def createschool
@@ -41,23 +41,23 @@ class HomeController < ApplicationController
 
           @school_url = @school.url(request.domain)
           HomeMailer.welcome(@tournament).deliver
-          render :createdschool, :layout => 'static_page'
+          render :createdschool, :layout => 'no_school'
         else
           flash[:error] = "Error: Could not create tournament for
             #{@school.name}. The following error occurred:
             #{@tournament.errors.full_messages.first}. This is a site error."
-          render :newschool, :layout => 'static_page'
+          render :newschool, :layout => 'no_school'
         end
       else
         flash[:error] = "Error: Could not create administrator user for
           #{@school.name}. The following error occurred:
           #{@director.errors.full_messages.first}"
-        render :newschool, :layout => 'static_page'
+        render :newschool, :layout => 'no_school'
       end
     else
       flash[:error] = "Error: We could not register your school. The following
         error occurred: #{@school.errors.full_messages.first}"
-      render :newschool, :layout => 'static_page'
+      render :newschool, :layout => 'no_school'
     end
   end
 

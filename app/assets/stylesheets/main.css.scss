@@ -215,6 +215,17 @@ b, strong, th, label {
   }
 }
 
+.jumbotron-calls-to-action {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0 65px 0;
+
+  li {
+    float: left;
+    margin-right: 10px;
+  }
+}
+
 .main-feature {
   margin-bottom: 36px;
 }

@@ -1,67 +1,61 @@
 - provide :title, 'Foundry – Science Olympaid Scoring and Registration'
 
-.navbar-default
-  .container-fluid
-    .navbar-right
-      %ul.nav.navbar-nav
-        %li= link_to 'About', '#'
-        %li= link_to 'Help', '#'
+- content_for :before_content do
+  .jumbotron
+    .container
+      %h1 Foundry
+      %h2 Science Olympiad Tournament Platform
+      %ul.jumbotron-calls-to-action
+        %li= link_to 'View Sandbox', '#', class: 'btn btn-default'
+        %li= link_to 'Sign Up', '#', class: 'btn btn-primary'
 
-.jumbotron
-  .container
-    %h1 Foundry
-    %h2 Science Olympiad Tournament Platform
-    .btn.btn-default.navbar-btn View Sandbox
-    .btn.btn-primary.navbar-btn Sign Up
+.row.main-feature
+  .col-md-12
+    %h3.feature-header Designed To Make Your Tournament Easier
+    %h4.feature-subheader
+      Online Scoring, Event Registration, and more. We've got it all.
 
-%section.container
-  .row.main-feature
-    .col-md-12
-      %h3.feature-header Designed To Make Your Tournament Easier
-      %h4.feature-subheader
-        Online Scoring, Event Registration, and more. We've got it all.
+.row
+  .col-md-3
+    .list-group
+      - @schools.first(6).each do |s|
+        = link_to s.name, root_url(subdomain: s.subdomain), class: 'list-group-item'
+    %h3 FAQs
 
-  .row
-    .col-md-3
-      .list-group
-        - @schools.first(6).each do |s|
-          = link_to s.name, root_url(subdomain: s.subdomain), class: 'list-group-item'
-      %h3 FAQs
+    %h4 Is Foundry free?
+    %p
+      Yes! Foundry is an
+      = link_to 'open source project', 'https://github.com/ted27/scioly-reg'
+      and will always remain completely
+      %strong free to use.
 
-      %h4 Is Foundry free?
-      %p
-        Yes! Foundry is an
-        = link_to 'open source project', 'https://github.com/ted27/scioly-reg'
-        and will always remain completely
-        %strong free to use.
+    %h4 How long does it take to set up?
+    %p
+      It's pretty quick! You just have to import your teams and customize your
+      timeslots.
 
-      %h4 How long does it take to set up?
-      %p
-        It's pretty quick! You just have to import your teams and customize your
-        timeslots.
+  .col-md-9
+    .row
+      .col-md-6
+        Description here
+      .col-md-6
+        = image_tag 'feature_teams.png', :width => '100%'
 
-    .col-md-9
-      .row
-        .col-md-6
-          Description here
-        .col-md-6
-          = image_tag 'feature_teams.png', :width => '100%'
+    %h3.feature-header Minimize Event Conflicts, Maximize Communication
+    .row
+      .col-md-6
+        Description here
+      .col-md-6
+        = image_tag 'feature_registration.png', :width => '100%'
 
-      %h3.feature-header Minimize Event Conflicts, Maximize Communication
-      .row
-        .col-md-6
-          Description here
-        .col-md-6
-          = image_tag 'feature_registration.png', :width => '100%'
+    %h3.feature-header No more paper-shuffling!
+    .row
+      .col-md-6
+      .col-md-6
+        = image_tag 'feature_scoresheet.png', :width => '100%'
 
-      %h3.feature-header No more paper-shuffling!
-      .row
-        .col-md-6
-        .col-md-6
-          = image_tag 'feature_scoresheet.png', :width => '100%'
-
-      %h3.feature-header Present in style
-      .row
-        .col-md-6
-        .col-md-6
-          = image_tag 'feature_scoresheet.png', :width => '100%'
+    %h3.feature-header Present in style
+    .row
+      .col-md-6
+      .col-md-6
+        = image_tag 'feature_scoresheet.png', :width => '100%'
