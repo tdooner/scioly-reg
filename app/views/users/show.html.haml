@@ -1,0 +1,17 @@
+= render layout: 'layouts/no_school_user' do
+  - schools = @user.administered_schools
+  - teams = @user.administered_teams
+  - if teams
+    %h3 Manage Teams
+    %ul
+      - teams.each do |t|
+        %li= t.name
+
+  - if schools
+    %h3 Manage Schools
+    %ul
+      - schools.each do |s|
+        %li= link_to s.name, root_url(subdomain: s.subdomain)
+  
+  %h4 Want to use Foundry at your school?
+  = link_to 'Create new school', new_school_path

@@ -1,0 +1,12 @@
+- provide :title, @current_user.email
+
+.row
+  .col-md-3
+    %ul.nav.nav-pills.nav-stacked
+      %li= link_to 'Home', user_path(@current_user)
+      %li= link_to 'Tournaments', '#'
+      %li= link_to 'Change Password', edit_user_path(@current_user)
+      %li= link_to 'Logout', logout_users_path
+
+  .col-md-9
+    = yield

@@ -2,7 +2,12 @@ class UsersController < ApplicationController
   layout 'no_school'
 
   def new
+  end
 
+  def show
+    @user = User.find(params[:id])
+
+    return redirect_to root_path unless @user == @current_user
   end
 
   def create
@@ -14,7 +19,7 @@ class UsersController < ApplicationController
       redirect_to root_path
     else
       flash[:error] = @user.errors.full_messages.first
-      redirect_to new_users_path
+      redirect_to new_user_path
     end
   end
 

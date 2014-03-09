@@ -44,10 +44,12 @@ Scioly::Application.routes.draw do
     end
   end
 
-  resource :user
-  get "user/login", :as => :adminlogin
-  post "user/login"
-  get "user/logout", :as => :adminlogout
+  resources :users do
+    collection do
+      match 'login', via: [:get, :post]
+      get 'logout'
+    end
+  end
 
   resources :teams, only: [:show, :edit, :update] do
     collection do
@@ -56,8 +58,7 @@ Scioly::Application.routes.draw do
     end
   end
 
-  match 'schools/new' => 'home#newschool', :via => [ :get ], :as => :new_school
-  match 'schools/new' => 'home#createschool', :via => [ :post ]
+  resources :schools, only: [:new, :create]
 
   resources :schedules, :path => "/schedule", only: [:index, :show] do
     get 'scores'
@@ -82,8 +83,12 @@ Scioly::Application.routes.draw do
 
   # Add the Static Pages
   ['about'].each do |static|
-    match "/#{static}" => "home##{static}", via: [:get]
+    get "/#{static}" => "home##{static}"
   end
 
-  root :to => "home#index"
+  constraints subdomain: '' do
+    get '/' => "home#index"
+  end
+
+  get '/' => 'tournaments#show', as: :root
 end

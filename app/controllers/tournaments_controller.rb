@@ -1,8 +1,10 @@
 class TournamentsController < ApplicationController
-  before_filter :is_admin, :except => :scores
   before_filter :verify_scores_visible, only: :scores
 
-  layout 'scorespreadsheet'
+  layout 'scorespreadsheet', only: :scores
+
+  def show
+  end
 
   def scores
     @active = Tournament.find(params[:tournament_id], include: { teams: [:tournament, :scores] })

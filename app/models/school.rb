@@ -9,7 +9,10 @@ class School < ActiveRecord::Base
     :case_sensitive => false
 
   has_many :tournaments
-  has_many :users
+
+  has_many :administrations, as: :administrates
+  has_many :administrators, through: :administrations,
+    class_name: 'User', source: :user
 
   def url(domain = 'sciolyreg.org')
     "http://#{subdomain}.#{domain}"

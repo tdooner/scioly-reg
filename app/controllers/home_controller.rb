@@ -1,18 +1,19 @@
 class HomeController < ApplicationController
-  before_filter :render_app_if_subdomain, :only => :index
   before_filter :redirect_to_app_if_subdomain, :except => :index
+
+  layout 'no_school'
 
   def index
     @schools = School.all
-    render :index, :layout => 'no_school'
+  end
+
+  def logged_in
   end
 
   def about
-    render :about, :layout => 'no_school'
   end
 
   def newschool
-    render :newschool, :layout => 'no_school'
   end
 
   def createschool
@@ -41,31 +42,27 @@ class HomeController < ApplicationController
 
           @school_url = @school.url(request.domain)
           HomeMailer.welcome(@tournament).deliver
-          render :createdschool, :layout => 'no_school'
+          render :createdschool
         else
           flash[:error] = "Error: Could not create tournament for
             #{@school.name}. The following error occurred:
             #{@tournament.errors.full_messages.first}. This is a site error."
-          render :newschool, :layout => 'no_school'
+          render :newschool
         end
       else
         flash[:error] = "Error: Could not create administrator user for
           #{@school.name}. The following error occurred:
           #{@director.errors.full_messages.first}"
-        render :newschool, :layout => 'no_school'
+        render :newschool
       end
     else
       flash[:error] = "Error: We could not register your school. The following
         error occurred: #{@school.errors.full_messages.first}"
-      render :newschool, :layout => 'no_school'
+      render :newschool
     end
   end
 
   private
-
-  def render_app_if_subdomain
-    render :login if @current_school
-  end
 
   def redirect_to_app_if_subdomain
     # Redirect from http://cwru.sciolyreg.org/about to

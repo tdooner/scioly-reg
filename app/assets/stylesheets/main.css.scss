@@ -12,6 +12,10 @@ body, html {
   text-rendering: optimizeLegibility;
 }
 
+body {
+  overflow: scroll;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
@@ -61,7 +65,7 @@ b, strong, th, label {
     padding-top: 90px;
   }
 
-  a {
+  &, a {
     color: #fff;
     text-decoration: none;
   }

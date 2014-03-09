@@ -4,7 +4,7 @@ class Admin::SchoolController < ApplicationController
   def edit
     breadcrumbs.add("Edit School Information")
 
-    @admins = @current_school.users
+    @admins = @current_school.administrators
   end
 
   def update

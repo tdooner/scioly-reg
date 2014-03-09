@@ -1,0 +1,63 @@
+- provide :title, 'Use Foundry at Your School'
+- content_for :javascripts do
+  = javascript_include_tag 'http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/jquery.validate.min.js'
+  :javascript
+    $(function() {
+      $("#register_school").validate({
+        errorClass: 'help-inline',
+        errorElement: 'span',
+        highlight: function(element, errorClass) {
+          $(element).parent().parent().addClass("error");
+        },
+        success: function(label) {
+          label.parent().parent().removeClass("error");
+        },
+        rules: {
+          'tournament_director[password_confirmation]': {
+            equalTo: "#tournament_director_password",
+          }
+        }
+      });
+    });
+
+-if flash[:error]
+  .alert-message.error= flash[:error]
+
+= form_tag '/schools/new', :multipart => true, :id => 'register_school', :class => 'form-horizontal' do
+  %h3 First, tell us a little about your school and tournament:
+
+  .form-group
+    = label_tag 'school[name]', 'School Name', class: 'control-label col-md-2'
+    .col-md-6
+      = text_field_tag 'school[name]', '', class: 'required form-control'
+
+  .form-group
+    = label_tag 'school[time_zone]', 'Time Zone', class: 'control-label col-md-2'
+    .col-md-6
+      = time_zone_select 'school', 'time_zone', ActiveSupport::TimeZone.us_zones, { :default => 'Eastern Time (US & Canada)' }, class: 'form-control'
+
+  .form-group
+    =label_tag 'school[logo]', 'Logo (optional)', class: 'control-label col-md-2'
+    .col-md-6
+      = file_field 'school', :logo, class: 'form-control'
+
+  .form-group
+    =label_tag 'tournament[title]', 'Tournament Title', class: 'control-label col-md-2'
+    .col-md-6
+      =text_field_tag 'tournament[title]', '', :class => 'required form-control'
+  .form-group
+    =label_tag 'tournament[date]', 'Tournament Date', class: 'control-label col-md-2'
+    .col-md-6.form-inline
+      =date_select 'tournament', 'date', {:order => [:month, :day, :year]}, :class => 'required form-control col-md-2'
+
+  %h3 Pick a web address:
+  .form-group
+    =label_tag 'school[subdomain]', 'Web Address', class: 'control-label col-md-2'
+    .col-md-6
+      %span http://
+      = text_field_tag 'school[subdomain]', '', class: 'required '
+      %span .sciolyreg.org
+
+  .row
+    .col-md-6.col-md-offset-2
+      =submit_tag 'Sign Up!', :class => 'btn btn-primary'
