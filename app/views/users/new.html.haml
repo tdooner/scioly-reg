@@ -1,9 +1,11 @@
 - provide :title, 'Sign Up for a Foundry Account'
 
 %p
-  A Foundry account is your unified account for multiple tournaments.
-  Create an account to set up a tournament, or as a coach create an account
-  to manage your team.
+  To use Foundry as a coach or tournament director, you need a Foundry account.
+
+%p
+  If you think you might already have a username / password, you can try
+  #{link_to 'logging in to an existing account', login_users_path(next_path: params[:next_path])}.
 
 .row
   .col-md-8
@@ -26,4 +28,4 @@
 
       .row
         .col-md-9.col-md-offset-3
-          = f.submit "Log In!", :class=>"btn btn-primary"
+          = f.submit "Sign Up!", :class=>"btn btn-primary"

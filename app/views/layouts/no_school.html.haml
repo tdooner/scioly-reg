@@ -5,8 +5,9 @@
 %body
   .navbar-default
     .container
-      .navbar-left
-        = link_to 'Foundry', root_path, class: 'navbar-brand'
+      - if !current_page? '/'
+        .navbar-left
+          = link_to 'Foundry', root_path, class: 'navbar-brand'
       .navbar-right
         %ul.nav.navbar-nav
           %li= link_to 'About', '#'

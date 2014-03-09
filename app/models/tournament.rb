@@ -23,11 +23,11 @@ class Tournament < ActiveRecord::Base
     end
   end
 
-  def humanize()
+  def humanize
     return date.strftime("%B %d, %Y")
   end
 
-  def human_times()
+  def human_times
     format1 = "%B %e, %Y @ %I:%M %p %Z"
     {
       :registration_begins => self.registration_begins.strftime(format1),

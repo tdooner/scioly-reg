@@ -2,13 +2,13 @@
   - schools = @user.administered_schools
   - teams = @user.administered_teams
   - if teams
-    %h3 Manage Teams
+    %h3 Coach Of:
     %ul
       - teams.each do |t|
         %li= t.name
 
   - if schools
-    %h3 Manage Schools
+    %h3 Tournament Director Of:
     %ul
       - schools.each do |s|
         %li= link_to s.name, root_url(subdomain: s.subdomain)
