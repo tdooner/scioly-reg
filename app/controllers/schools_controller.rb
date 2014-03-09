@@ -6,7 +6,7 @@ class SchoolsController < ApplicationController
   def new
     @school = School.new
   end
-  
+
   def create
     @school = School.new(params.fetch(:school, {}).permit(:name, :time_zone, :subdomain))
 

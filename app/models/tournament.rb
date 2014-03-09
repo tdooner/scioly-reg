@@ -61,9 +61,11 @@ class Tournament < ActiveRecord::Base
   end
 
   def load_default_events(year = date.year)
-    DefaultEvent.for_year(year).each do |e|
-      self.schedules.where(:event => e.name, :division => e.division).
-        first_or_create(:room => 'TBD')
+    divisions.each do |division|
+      DefaultEvent.where(year: year, division: division).each do |e|
+        self.schedules.where(:event => e.name, :division => e.division).
+          first_or_create(:room => 'TBD')
+      end
     end
   end
 end
