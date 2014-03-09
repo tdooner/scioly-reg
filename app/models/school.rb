@@ -8,9 +8,8 @@ class School < ActiveRecord::Base
     :message => 'is used by another school',
     :case_sensitive => false
 
-  has_many :tournaments
-
-  has_many :administrations, as: :administrates
+  has_many :tournaments, dependent: :destroy
+  has_many :administrations, as: :administrates, dependent: :destroy
   has_many :administrators, through: :administrations,
     class_name: 'User', source: :user
 

@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
       false
     end
   end
+  alias_method :administrates?, :administers?
 
   def password=(p)
     @password = p

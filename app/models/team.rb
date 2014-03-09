@@ -11,7 +11,7 @@ class Team < ActiveRecord::Base
 
   belongs_to :tournament
   has_many :sign_ups, dependent: :destroy
-  has_many :scores
+  has_many :scores, dependent: :destroy
   attr_accessor :password, :password_confirmation, :password_existing
 
   @@divisions = {"B" => "B", "C" => "C"}

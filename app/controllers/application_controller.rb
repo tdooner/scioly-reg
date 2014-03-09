@@ -5,7 +5,12 @@ class ApplicationController < ActionController::Base
   def setup
     @subdomain = request.subdomains.last
     @mixpanel = Mixpanel::Tracker.new(ENV["MIXPANEL_TOKEN"], env: request.env)
-    @current_user = User.find(session[:user_id]) if session[:user_id]
+    @current_user = begin
+                      User.find(session[:user_id])
+                    rescue ActiveRecord::RecordNotFound
+                      session.delete(:user_id)
+                      nil
+                    end if session[:user_id]
 
     @current_admin = @current_user # TODO KILL THIS IT IS BAD
 

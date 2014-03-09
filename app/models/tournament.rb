@@ -1,6 +1,6 @@
 class Tournament < ActiveRecord::Base
-  has_many :teams
-  has_many :schedules
+  has_many :teams, dependent: :destroy
+  has_many :schedules, dependent: :destroy
   has_attached_file :homepage_photo,
     :styles => {:medium => "181x200", :slideshow => "163x180" },
     :default_url => '/assets/sciolylogo_transparent.png'
