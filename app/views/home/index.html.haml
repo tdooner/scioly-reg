@@ -6,11 +6,12 @@
       %h1 Foundry
       %h2 Science Olympiad Tournament Platform
       %ul.jumbotron-calls-to-action
-        %li= link_to 'View Sandbox', '#', class: 'btn btn-default'
+        %li= link_to 'View Demo Sandbox Site', '#', class: 'btn btn-default'
         - if @current_user
-          %li= link_to 'Use Foundry at Your School', new_school_path, class: 'btn btn-primary'
+          - link_dest = new_school_path
         - else
-          %li= link_to 'Sign Up', new_user_path, class: 'btn btn-primary'
+          - link_dest = new_user_path(next_path: new_school_path)
+        %li= link_to 'Use Foundry at Your School', link_dest, class: 'btn btn-primary'
 
 .row.main-feature
   .col-md-12

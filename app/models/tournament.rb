@@ -6,9 +6,13 @@ class Tournament < ActiveRecord::Base
     :default_url => '/assets/sciolylogo_transparent.png'
   alias_attribute :current?, :is_current
 
+  serialize :divisions
+
   belongs_to :school
 
   validates_presence_of :date, :school_id
+
+  AVAILABLE_DIVISIONS = ['A', 'B', 'C']
 
   def set_current
     return if current?
@@ -30,10 +34,6 @@ class Tournament < ActiveRecord::Base
       :registration_ends => self.registration_ends.strftime(format1),
       :date_filename => date.strftime("%F"),
     }
-  end
-
-  def divisions
-    @divisions ||= schedules.map(&:division).uniq.sort
   end
 
   def has_registration_begun?

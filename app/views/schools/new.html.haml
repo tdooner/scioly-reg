@@ -7,56 +7,69 @@
         errorClass: 'help-inline',
         errorElement: 'span',
         highlight: function(element, errorClass) {
-          $(element).parent().parent().addClass("error");
+          $(element).parent().parent().addClass("has-error");
         },
         success: function(label) {
-          label.parent().parent().removeClass("error");
-        },
-        rules: {
-          'tournament_director[password_confirmation]': {
-            equalTo: "#tournament_director_password",
-          }
+          label.parent().parent().removeClass("has-error");
         }
       });
     });
 
--if flash[:error]
-  .alert-message.error= flash[:error]
-
-= form_tag '/schools/new', :multipart => true, :id => 'register_school', :class => 'form-horizontal' do
-  %h3 First, tell us a little about your school and tournament:
+= form_for @school, html: { :id => 'register_school', :class => 'form-horizontal' } do |f|
+  %h3 School + Tournament Information:
 
   .form-group
-    = label_tag 'school[name]', 'School Name', class: 'control-label col-md-2'
+    = f.label :name, 'School Name', class: 'control-label col-md-2'
     .col-md-6
-      = text_field_tag 'school[name]', '', class: 'required form-control'
+      = f.text_field :name, class: 'required form-control'
 
   .form-group
-    = label_tag 'school[time_zone]', 'Time Zone', class: 'control-label col-md-2'
+    = f.label :time_zone, 'Time Zone', class: 'control-label col-md-2'
     .col-md-6
-      = time_zone_select 'school', 'time_zone', ActiveSupport::TimeZone.us_zones, { :default => 'Eastern Time (US & Canada)' }, class: 'form-control'
+      = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, { :default => 'Eastern Time (US & Canada)' }, class: 'form-control'
 
   .form-group
-    =label_tag 'school[logo]', 'Logo (optional)', class: 'control-label col-md-2'
+    = f.label :logo, 'Logo (optional)', class: 'control-label col-md-2'
     .col-md-6
-      = file_field 'school', :logo, class: 'form-control'
+      = f.file_field :logo, class: 'form-control'
 
-  .form-group
-    =label_tag 'tournament[title]', 'Tournament Title', class: 'control-label col-md-2'
-    .col-md-6
-      =text_field_tag 'tournament[title]', '', :class => 'required form-control'
-  .form-group
-    =label_tag 'tournament[date]', 'Tournament Date', class: 'control-label col-md-2'
-    .col-md-6.form-inline
-      =date_select 'tournament', 'date', {:order => [:month, :day, :year]}, :class => 'required form-control col-md-2'
+  = fields_for Tournament.new do |tournament|
+    .form-group
+      = tournament.label :title, 'Tournament Title', class: 'control-label col-md-2'
+      .col-md-6
+        = tournament.text_field :title, class: 'required form-control'
+
+    .form-group
+      = tournament.label :date, 'Tournament Date', class: 'control-label col-md-2'
+      .col-md-6.form-inline
+        = tournament.date_select :date, {:order => [:month, :day, :year]}, :class => 'required form-control col-md-2'
+
+    .form-group
+      %label.control-label.col-md-2 Divisions
+      .col-md-6
+        .radio
+          %label
+            = check_box_tag 'tournament[divisions][]', "A"
+            Division A
+        .radio
+          %label
+            = check_box_tag 'tournament[divisions][]', "B", true
+            Division B
+        .radio
+          %label
+            = check_box_tag 'tournament[divisions][]', "C", true
+            Division C
+        %p.help-block Events will be imported from the official list on soinc.org.
+
 
   %h3 Pick a web address:
   .form-group
-    =label_tag 'school[subdomain]', 'Web Address', class: 'control-label col-md-2'
+    = f.label :subdomain, 'Web Address', class: 'control-label col-md-2'
     .col-md-6
-      %span http://
-      = text_field_tag 'school[subdomain]', '', class: 'required '
-      %span .sciolyreg.org
+      .input-group
+        %span.input-group-addon http://
+        = f.text_field :subdomain, class: 'required form-control'
+        %span.input-group-addon .sciolyreg.org
 
   .row
     .col-md-6.col-md-offset-2

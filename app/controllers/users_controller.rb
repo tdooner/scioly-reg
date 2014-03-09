@@ -5,9 +5,9 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    return redirect_to root_path unless params[:id].to_i == @current_user.id
 
-    return redirect_to root_path unless @user == @current_user
+    @user = @current_user
   end
 
   def create
@@ -16,10 +16,15 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       flash[:message] = 'You have signed up!'
-      redirect_to root_path
+
+      if params[:next_path] && params[:next_path] !~ /\/\//
+        redirect_to params[:next_path]
+      else
+        redirect_to root_path
+      end
     else
       flash[:error] = @user.errors.full_messages.first
-      redirect_to new_user_path
+      redirect_to new_users_path
     end
   end
 

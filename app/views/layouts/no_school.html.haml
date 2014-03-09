@@ -30,6 +30,8 @@
   %section.container
     - if flash[:error]
       .alert.alert-danger= flash[:error]
+    - if flash[:message]
+      .alert.alert-warning= flash[:message]
     = yield
 
   = yield :javascripts

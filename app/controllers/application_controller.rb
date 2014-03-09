@@ -62,6 +62,12 @@ class ApplicationController < ActionController::Base
       redirect_to :root
     end
   end
+
+  def ensure_logged_in
+    unless @current_user
+      redirect_to login_users_url(next_path: request.path), flash: { message: 'You must log in or create an account to view that page' }
+    end
+  end
 end
 
 class Breadcrumbs::Render::Bootstrap < Breadcrumbs::Render::Base

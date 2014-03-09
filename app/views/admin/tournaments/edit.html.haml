@@ -12,6 +12,15 @@
         = f.date_select :date, {}
 
   .form-group
+    %label.control-label.col-md-3 Divisions:
+    .col-md-6
+      - Tournament::AVAILABLE_DIVISIONS.each do |div|
+        .radio
+          %label
+            = check_box_tag 'tournament[divisions][]', div, @tournament.divisions.include?(div)
+            Division #{div}
+
+  .form-group
     %label.col-md-3.control-label Registration Begin:
     .col-md-9
       .form-inline

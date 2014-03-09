@@ -7,8 +7,9 @@ Hello, welcome to Foundry! Your tournament is almost ready to go. To speed thing
   %li
     %b Registration Ends:
     =@tournament.human_times[:registration_ends]
+
 You can change these dates in the
-= link_to 'administrator control panel.', adminlogin_url(:subdomain => @tournament.school.subdomain)
+= link_to 'administrator control panel.', admin_index_url(:subdomain => @tournament.school.subdomain)
 %p
   In order to have a fully-functional tournament, there are only a couple things to do:
 %ol
