@@ -11,7 +11,10 @@ describe TimeslotsController do
 
     let(:params) do
       { timeslot_extra: { schedule: schedule },
-        timeslot: { begins: Time.now } }
+        timeslot: {
+          begins: Time.now,
+          team_capacity: 5
+      } }
     end
 
     it 'submits successfully' do
