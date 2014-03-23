@@ -1,9 +1,38 @@
 require 'spec_helper'
 
 describe SchedulesController do
-  render_views
+  describe '#show' do
+    let(:tournament) { FactoryGirl.create(:tournament, :current) }
+    let(:schedule) { FactoryGirl.create(:schedule, tournament: tournament) }
+
+    before do
+      request.host = "#{tournament.school.subdomain}.lvh.me"
+      controller.stubs(:render)
+    end
+
+    describe 'when requesting a PDF' do
+      subject { get :show, id: schedule.id, format: 'pdf' }
+
+      it 'redirects as a normal user' do
+        controller.expects(:render).never
+        subject
+        response.should redirect_to schedule_path(schedule.id)
+      end
+
+      context 'as an admin' do
+        include_context 'as an admin of the tournament'
+
+        it 'calls render with :pdf' do
+          controller.expects(:render).with(has_key(:pdf)).once
+          subject
+        end
+      end
+    end
+  end
 
   describe '#edit' do
+    render_views
+
     let(:tournament) { FactoryGirl.create(:tournament, :current) }
     let(:admin)  { FactoryGirl.create(:user, school: tournament.school) }
 
@@ -34,6 +63,8 @@ describe SchedulesController do
   end
 
   describe '#update' do
+    render_views
+
     let(:tournament) { FactoryGirl.create(:current_tournament) }
     let(:schedule) { FactoryGirl.create(:schedule, tournament: tournament) }
     let(:num_timeslots) { 10 }
@@ -81,6 +112,8 @@ describe SchedulesController do
   end
 
   describe '#create' do
+    render_views
+
     let(:tournament) { FactoryGirl.create(:tournament, :current) }
 
     include_context 'as an admin of the tournament'
@@ -105,6 +138,8 @@ describe SchedulesController do
   end
 
   describe '#destroy' do
+    render_views
+
     let!(:tournament) { FactoryGirl.create(:current_tournament) }
     let!(:schedule)   { FactoryGirl.create(:schedule, :with_timeslots, tournament: tournament) }
 
@@ -127,4 +162,3 @@ describe SchedulesController do
     end
   end
 end
-
