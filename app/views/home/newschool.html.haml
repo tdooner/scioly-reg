@@ -84,7 +84,7 @@
     %fieldset
       %legend Finally, prove you're not a robot
       .input{ style: "width: 318px" }
-        = recaptcha_tags
+        = recaptcha_tags ajax: true
 
     .actions
       =submit_tag 'Sign Up!', :class => 'btn primary'
