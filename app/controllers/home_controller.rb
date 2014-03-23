@@ -29,6 +29,11 @@ class HomeController < ApplicationController
 
     @tournament = Tournament.new(params.fetch(:tournament, {}).permit(:title, :date))
 
+    if !verify_recaptcha
+      flash[:error] = "Error: Image verification failed. Pleas try again!"
+      return render :newschool, layout: 'static_page'
+    end
+
     if @school.save
       @director.school = @school
       @tournament.school = @school

@@ -54,7 +54,7 @@
           =date_select 'tournament', 'date', {:order => [:month, :day, :year]}, :class => 'required span2'
 
     %fieldset
-      %legend Finally, create your user account
+      %legend And, create your user account
       .clearfix
         =label_tag 'school[admin_name]', 'Director Name'
         .input
@@ -73,13 +73,18 @@
           =password_field_tag 'tournament_director[password_confirmation]', '', :class => 'required'
 
     %fieldset
-      %legend Finally, choose your address for your tournament...
+      %legend Then, choose your address for your tournament
       .clearfix
         =label_tag 'school[subdomain]', 'Address'
         .input
           %span http://
           =text_field_tag 'school[subdomain]', '', :class => 'span2 required'
           %span .sciolyreg.org
+
+    %fieldset
+      %legend Finally, prove you're not a robot
+      .input{ style: "width: 318px" }
+        = recaptcha_tags
 
     .actions
       =submit_tag 'Sign Up!', :class => 'btn primary'

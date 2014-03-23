@@ -31,7 +31,10 @@ describe HomeController do
       }
 
       it 'creates the school' do
-        post :createschool, formdata
+        expect { post :createschool, formdata }
+          .to change { School.count }
+          .by(1)
+
         response.should render_template(:createdschool)
       end
 
@@ -43,6 +46,17 @@ describe HomeController do
       it 'sends an email to welcome the coach' do
         HomeMailer.expects(:welcome => stub(:deliver => ''))
         post :createschool, formdata
+      end
+
+      context 'but with an invalid captcha' do
+        before do
+          controller.stubs(verify_recaptcha: false)
+        end
+
+        it "doesn't create the school" do
+          expect { post :createschool, formdata }
+            .to_not change { School.count }
+        end
       end
     end
   end
