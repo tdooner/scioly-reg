@@ -21,7 +21,9 @@ Scioly::Application.routes.draw do
   get 'team', :controller => :home, :action => :team_home, :as=>"team_home"
 
   resources :teams do
-    get 'qualify' # TODO: this is broken
+    member do
+      get 'qualify'
+    end
 
     collection do
       get 'batchnew' => 'teams#batchnew'

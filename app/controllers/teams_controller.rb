@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
   before_filter :is_admin, :only => [:new, :create, :batchnew, :batchcreate,
-                                     :batchpreview, :index, :destroy]
+                                     :batchpreview, :index, :destroy, :qualify]
   before_filter :is_correct_team, :only => [:edit, :update]
 
   def index
@@ -215,6 +215,12 @@ class TeamsController < ApplicationController
     session[:team] = nil
     @mixpanel.track("Logout", {:team => @team.name, :admin=>@is_admin}) if @team
     redirect_to root_url
+  end
+
+  def qualify
+    @team = Team.find(params[:id])
+    @team.update_attribute(:qualified, !@team.qualified)
+    redirect_to teams_path
   end
 
 private
