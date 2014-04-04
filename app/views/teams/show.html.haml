@@ -29,6 +29,7 @@
     %h5=link_to("View All Your Registrations", signups_url)
     %h5=link_to("View Scores", tournament_scores_path(@team.tournament))
     - if !@team.tournament.scores_revealed?
+      %h5=link_to("View Scores", tournament_scores_url(@team.tournament))
       .help-block
         Note: Scores will not be available until after the tournament.
     %h5=link_to "Change Password", edit_team_url(@team.id)

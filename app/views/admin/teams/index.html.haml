@@ -3,7 +3,7 @@
   .alert-actions
     =link_to "Add New Team", new_admin_team_url, :class=>"btn"
     =link_to "Import Teams", batchnew_admin_teams_path, :class => "btn"
-    =link_to "Select State Qualifiers", "javascript:show_qualified_buttons()", :class=>"btn"
+    =link_to "Select Qualifiers", "javascript:show_qualified_buttons()", :class=>"btn"
 %p
   Below are all the teams registered for the Tournament occurring on
   = @current_tournament.humanize() + "."
@@ -17,7 +17,7 @@
     %th
       %b Team Number
     %th.states
-      %b Qualified For States
+      %b Qualified
   %tbody
     - @teams.each do |t|
       %tr
@@ -25,10 +25,10 @@
         %td=t.division
         %td=t.getNumber
         %td.states
-          - if t.qualified_for_states
-            =link_to "Qualified!", admin_team_qualify_url(t), :class=>"btn success"
+          - if t.qualified
+            = link_to "Qualified!", admin_qualify_team_path(t), :class=>"btn success"
           - else
-            =link_to "Didn't Qualify", admin_team_qualify_url(t), :class=>"btn"
+            = link_to "Didn't Qualify", admin_qualify_team_path(t), :class=>"btn"
 
 - content_for :javascripts do
   :javascript

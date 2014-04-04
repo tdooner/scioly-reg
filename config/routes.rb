@@ -52,6 +52,10 @@ Scioly::Application.routes.draw do
   end
 
   resources :teams, only: [:show, :edit, :update] do
+    member do
+      get 'qualify'
+    end
+
     collection do
       match 'login', via: [:get, :post]
       get 'logout'

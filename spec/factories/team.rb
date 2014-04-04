@@ -7,6 +7,7 @@ FactoryGirl.define do
     password 'password'
     hashed_password Digest::SHA1.hexdigest('password')
     email Faker::Internet.email
+    qualified false
 
     tournament
   end

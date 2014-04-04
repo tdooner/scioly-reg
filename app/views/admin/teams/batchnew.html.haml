@@ -14,6 +14,20 @@
   %dt Homeroom
   %dt Password
 
+%p
+  A good way to do this is by following these steps:
+
+%ol
+  %li
+    Fill out the
+    %strong
+      = link_to 'Batch Team Input Template',
+        'https://docs.google.com/spreadsheet/ccc?key=0AgQhM9vFx8X8dFhtODFxTGRwa0REV3JFaWpvVFJLTnc',
+        target: '_new'
+  %li Copy-paste the entire spreadsheet (but without the header row) into the box below.
+  %li Use the "Preview" tab to make sure the results match your original spreadsheet.
+  %li Hit "Submit Batch Teams". Be patient, as it might take a few seconds to run.
+
 %form{:method=>"POST", :action=>batchnew_teams_path}
   %ul.tabs{ data: { tabs: 'tabs' } }
     %li.active
@@ -22,10 +36,6 @@
       %a#tab-preview{ href: '#preview' } Preview
   .tab-content
     #import.tab-pane.active
-      %p
-        If you are about to make a spreadsheet with these values, you can use
-        the
-        = link_to 'Batch Team Input Template', 'https://docs.google.com/spreadsheet/ccc?key=0AgQhM9vFx8X8dFhtODFxTGRwa0REV3JFaWpvVFJLTnc'
       %fieldset
         %input{:type=>"hidden",:name=>"authenticity_token",:value=>form_authenticity_token}
         %textarea#batch-input{:style=>"width:650px; height:200px;",:name=>"batch"}

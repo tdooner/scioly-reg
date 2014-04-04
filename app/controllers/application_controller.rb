@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
                           sign_ups: { timeslot: :schedule })
                 .first if session[:team]
 
-    schedules_scope = @current_tournament.schedules
+    schedules_scope = @current_tournament.schedules.order('event ASC')
     schedules_scope = schedules_scope.includes(timeslots: :sign_ups) if @team
 
     @all_schedules = Hash.new([])
