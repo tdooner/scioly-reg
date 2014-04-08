@@ -2,12 +2,16 @@ require 'spec_helper'
 
 shared_context 'as an admin of the tournament' do
   let(:admin_password) { ('a'..'z').to_a.sample(10).join }
-  let(:admin) { FactoryGirl.create(:user, school: tournament.school, password: admin_password) }
+  let(:user) { FactoryGirl.create(:user, password: admin_password) }
+  let(:tournament) { FactoryGirl.create(:tournament, :current) }
 
-  include_context 'visiting a school'
+  include_context 'visiting a school' do
+    let(:school) { tournament.school }
+  end
 
   before do
-    session[:user_id] = admin.id
+    Administration.create(user: user, administrates: school)
+    session[:user_id] = user.id
   end
 end
 

@@ -11,12 +11,12 @@ describe SchedulesController do
       include_context 'as a team in the tournament'
 
       describe 'when requesting a PDF' do
-        subject { get :show, id: schedule.id, format: 'pdf' }
+        subject { get :show, id: schedule, format: 'pdf' }
 
         it 'redirects as a normal user' do
           controller.expects(:render).never
           subject
-          response.should redirect_to schedule_path(schedule.id)
+          response.should redirect_to schedule_path(schedule.to_param)
         end
 
         context 'as an admin' do

@@ -138,7 +138,7 @@ class TeamsController < ApplicationController
   def qualify
     @team = Team.find(params[:id])
     @team.update_attribute(:qualified, !@team.qualified)
-    redirect_to teams_path
+    redirect_to admin_teams_path
   end
 
 private

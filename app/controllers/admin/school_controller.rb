@@ -9,8 +9,7 @@ class Admin::SchoolController < ApplicationController
 
   def update
     unless params[:current_password].present? &&
-      User.authenticate(@current_school,
-                        @current_admin.email,
+      User.authenticate(@current_admin.email,
                         params[:current_password]) == @current_admin
       flash[:error] = "Incorrect Password!"
       return redirect_to admin_school_edit_url

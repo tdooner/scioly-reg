@@ -13,7 +13,7 @@ describe TeamsController do
 
       let(:form_data) do
         {
-          'id' => team.id,
+          'id' => team,
           'team' => {
             'coach' => 'ghijkl',
             'password' => 'new_password',
@@ -74,7 +74,7 @@ describe TeamsController do
 
       let(:form_data) do
         {
-          'id' => team.id,
+          'id' => team,
           'team' => {
             'coach' => 'ghijkl',
             'division' => 'D',
@@ -125,7 +125,7 @@ describe TeamsController do
     context 'post' do
       let(:params) do
         {
-          team: { id: team.id },
+          team: { id: team },
           division: team.division,
           password: team.password,
           is_admin: "false",
@@ -166,7 +166,7 @@ describe TeamsController do
 
     include_context 'as an admin of the tournament'
 
-    subject { get :qualify, id: team.id }
+    subject { get :qualify, id: team }
 
     it 'marks the team as qualified' do
       expect { subject }
@@ -181,7 +181,7 @@ describe TeamsController do
 
     describe 'when hit again' do
       before do
-        get :qualify, id: team.id
+        get :qualify, id: team
       end
 
       it 'unmarks the team as qualified' do

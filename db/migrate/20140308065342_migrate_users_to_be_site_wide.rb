@@ -29,10 +29,13 @@ class MigrateUsersToBeSiteWide < ActiveRecord::Migration
       original = users.shift
 
       users.each do |duplicate_user|
-        Administration.create(user: original,
-                              administrates: School.find(duplicate_user.school_id))
-        original.update_attributes(hashed_password: duplicate_user.hashed_password)
-        duplicate_user.destroy
+        begin
+          Administration.create(user: original,
+                                administrates: School.find(duplicate_user.school_id))
+          original.update_attributes(hashed_password: duplicate_user.hashed_password)
+          duplicate_user.destroy
+        rescue ActiveRecord::RecordNotFound
+        end
       end
     end
 

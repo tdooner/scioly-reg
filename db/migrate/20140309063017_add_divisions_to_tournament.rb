@@ -4,8 +4,10 @@ class AddDivisionsToTournament < ActiveRecord::Migration
       t.string :divisions
     end
 
+    Tournament.reset_column_information
+
     Tournament.all.each do |tournament|
-      tournament.divisions = tournament.schedules.pluck(:division).uniq || []
+      tournament.divisions = tournament.schedules.pluck(:division).uniq.presence || %w[B C]
       tournament.save
     end
   end

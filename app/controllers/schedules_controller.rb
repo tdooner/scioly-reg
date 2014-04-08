@@ -6,7 +6,7 @@ class SchedulesController < ApplicationController
     end
   end
 
-  # TODO: Move the pdf logic to Admit::SchedulesController
+  # TODO: Move the pdf logic to Admin::SchedulesController
   def show
     @schedule = Schedule.find_by(slug: params[:id],
                                  tournament: @current_tournament)

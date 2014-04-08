@@ -5,7 +5,6 @@ describe Admin::SchedulesController do
 
   describe '#edit' do
     let(:tournament) { FactoryGirl.create(:tournament, :current) }
-    let(:admin)  { FactoryGirl.create(:user, school: tournament.school) }
 
     subject { get :edit, id: schedule.slug }
 
