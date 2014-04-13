@@ -156,40 +156,4 @@ describe TeamsController do
     end
   end
 
-  describe '#qualify' do
-    let!(:tournament) { FactoryGirl.create(:current_tournament) }
-    let!(:team) { FactoryGirl.create(:team, tournament: tournament) }
-
-    before do
-      request.host = "#{tournament.school.subdomain}.lvh.me"
-    end
-
-    include_context 'as an admin of the tournament'
-
-    subject { get :qualify, id: team }
-
-    it 'marks the team as qualified' do
-      expect { subject }
-        .to change { team.reload.qualified }
-        .from(false)
-        .to(true)
-    end
-
-    it 'redirects back to the team page' do
-      subject.should redirect_to teams_path
-    end
-
-    describe 'when hit again' do
-      before do
-        get :qualify, id: team
-      end
-
-      it 'unmarks the team as qualified' do
-        expect { subject }
-          .to change { team.reload.qualified }
-          .from(true)
-          .to(false)
-      end
-    end
-  end
 end

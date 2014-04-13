@@ -10,7 +10,7 @@ describe TimeslotsController do
     end
 
     let(:params) do
-      { timeslot_extra: { schedule: schedule },
+      { timeslot_extra: { schedule: schedule.id },
         timeslot: {
           begins: Time.now,
           team_capacity: 5

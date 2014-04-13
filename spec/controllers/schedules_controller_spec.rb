@@ -11,6 +11,12 @@ describe SchedulesController do
       include_context 'as a team in the tournament'
 
       describe 'when requesting a PDF' do
+        before do
+          # Don't actually try to render the PDF since that executable differs
+          # by platform and is slow.
+          controller.stubs(:render)
+        end
+
         subject { get :show, id: schedule, format: 'pdf' }
 
         it 'redirects as a normal user' do

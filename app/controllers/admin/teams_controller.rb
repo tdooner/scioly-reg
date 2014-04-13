@@ -49,7 +49,7 @@ class Admin::TeamsController < ApplicationController
   def destroy
     @team = Team.find(params[:id])
 
-    unless @current_admin.is_admin_of(@team.tournament.school)
+    unless @current_user.administers?(@team.tournament.school)
       flash[:error] = 'Unauthorized!'
       return redirect_to root_url
     end
@@ -81,7 +81,12 @@ class Admin::TeamsController < ApplicationController
 
         render :new
     end
+  end
 
+  def qualify
+    @team = Team.find(params[:id])
+    @team.update_attribute(:qualified, !@team.qualified)
+    redirect_to admin_teams_path
   end
 
 private

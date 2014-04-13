@@ -12,9 +12,8 @@ describe 'the homepage' do
 
   context 'when viewing the non-tournament homepage' do
     it 'renders' do
-      visit root_url
-      expect(page).to have_content('Foundry is a free, open-source solution for ' +
-        'managing a Science Olympiad Tournament.')
+      visit root_url(subdomain: '')
+      expect(page).to have_content('Use Foundry at Your School')
     end
   end
 end

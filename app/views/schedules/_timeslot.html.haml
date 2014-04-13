@@ -28,7 +28,7 @@
     %td
       = link_to 'Delete', timeslot_url(ts),
         method: :delete,
-        data: { confirm: 'Are you sure you wish to delete this timeslot? All Sign Ups for that timeslot will be deleted as well.' },
+        data: { confirm: 'Are you sure you wish to delete this timeslot? All Sign Ups for that timeslot will be deleted as well.' }
 
 - if @current_admin.try(:can_edit?, @schedule)
   %tr{:id=>"edit-timeslot-#{ts.id}",:style=>"display:none;"}

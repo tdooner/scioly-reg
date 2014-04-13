@@ -135,12 +135,6 @@ class TeamsController < ApplicationController
     redirect_to root_url
   end
 
-  def qualify
-    @team = Team.find(params[:id])
-    @team.update_attribute(:qualified, !@team.qualified)
-    redirect_to admin_teams_path
-  end
-
 private
 
   # Checks if a team has the rights to perform this action.

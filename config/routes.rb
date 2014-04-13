@@ -24,7 +24,7 @@ Scioly::Application.routes.draw do
     end
 
     resources :teams do
-      get 'qualify' # TODO: this is broken
+      get 'qualify'
 
       collection do
         get 'batchnew' => 'teams#batchnew'
@@ -52,10 +52,6 @@ Scioly::Application.routes.draw do
   end
 
   resources :teams, only: [:show, :edit, :update] do
-    member do
-      get 'qualify'
-    end
-
     collection do
       match 'login', via: [:get, :post]
       get 'logout'
