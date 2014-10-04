@@ -68,17 +68,7 @@ describe Admin::SchoolController do
       end
 
       context 'when given delete params' do
-        let!(:delete_me) { FactoryGirl.create(:user, school: school) }
-        let(:params)    { super().merge(delete: [delete_me.id]) }
-
-        it 'deletes the user' do
-          expect { subject }
-            .to change { User.count }.by(-1)
-
-          User.authenticate(school,
-                            delete_me.email,
-                            delete_me.password).should be_nil
-        end
+        xit 'deletes the user'
       end
     end
   end

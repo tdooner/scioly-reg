@@ -52,6 +52,11 @@ b, strong, th, label {
   background-color: $color-dark-blue;
   margin-bottom: 30px;
   overflow: auto;
+
+  &, a {
+    color: #fff;
+    text-decoration: none;
+  }
 }
 
 .site-title {
@@ -62,12 +67,17 @@ b, strong, th, label {
 
   @include enhance(tablet) {
     font-size: 36px;
-    padding-top: 90px;
+    padding-top: 60px;
   }
+}
 
-  &, a {
-    color: #fff;
-    text-decoration: none;
+.site-subtitle {
+  display: none;
+  font-size: 24px;
+  margin: 0 12px 24px;
+
+  @include enhance(tablet) {
+    display: block;
   }
 }
 

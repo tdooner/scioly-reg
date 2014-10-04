@@ -2,12 +2,30 @@
 %html
   %head= render 'shared/header'
   %body#home{ class: ('homepage' if current_page? '/') }
+    -# TODO: DRY this up with the no_school layout
+    .navbar-default
+      .container
+        .navbar-left
+          = link_to root_path, class: 'navbar-brand dropdown' do
+            = @current_school.name
+            %b.caret
+        .navbar-right
+          %ul.nav.navbar-nav
+            %li= link_to 'About', '#'
+            %li= link_to 'Help', '#'
+            - if @current_user
+              %li= link_to @current_user.email, user_path(@current_user)
+            - else
+              %li= link_to 'Log In', login_users_path
+
     %header.site-title-container
       .container
         %a.site-menu-icon.visible-xs{ href: '#' }
           %span.glyphicon.glyphicon-align-justify
         %h1.site-title
           = link_to @current_tournament.title, root_path
+        %h2.site-subtitle
+          Science Olympiad @ #{@current_school.name}
 
     %nav.site-menu-sidebar
       %a.site-menu-close-icon{ href: '#' }
