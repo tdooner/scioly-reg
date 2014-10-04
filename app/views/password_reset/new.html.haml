@@ -1,0 +1,14 @@
+.row
+  %h3 Forgot Password?
+  %p No problem. We'll send you a link to pick a new password.
+
+  = form_tag password_reset_index_path, class: 'form-horizontal' do
+    .form-group
+      = label_tag :email, 'Email:', class: 'control-label col-md-3'
+      .col-md-9
+        = text_field_tag :email, '', class: 'form-control'
+
+    .row
+      .col-md-9.col-md-offset-3
+        = submit_tag "Send Recovery Email", :class=>"btn btn-primary"
+        = link_to 'Cancel', login_users_path, class: 'btn'

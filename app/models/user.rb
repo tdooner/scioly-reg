@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
-  validates_presence_of :email, :hashed_password
-  validates_uniqueness_of :email
+  validates_presence_of :hashed_password
+  validates :email, presence: true, uniqueness: true
 
   validates_confirmation_of :password
   attr_accessor :password, :password_confirmation
@@ -71,5 +71,11 @@ class User < ActiveRecord::Base
     return false unless team.is_a?(Team)
     return false unless team.division == obj.division
     return administers?(obj.tournament.school)
+  end
+
+  def set_reset_token!(token: SecureRandom.hex, sent_at: Time.now)
+    update_attributes(reset_token: token, reset_token_sent_at: sent_at)
+
+    token
   end
 end

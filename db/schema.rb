@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140403061510) do
+ActiveRecord::Schema.define(version: 20141004231259) do
 
   create_table "administrations", force: true do |t|
     t.integer "user_id"
@@ -152,8 +152,10 @@ ActiveRecord::Schema.define(version: 20140403061510) do
   add_index "tournaments", ["school_id", "is_current"], name: "index_tournaments_on_school_id_and_is_current"
 
   create_table "users", force: true do |t|
-    t.string "email"
-    t.string "hashed_password"
+    t.string   "email"
+    t.string   "hashed_password"
+    t.datetime "reset_token_sent_at"
+    t.string   "reset_token"
   end
 
   add_index "users", ["email", "hashed_password"], name: "index_users_on_school_id_and_email_and_hashed_password"

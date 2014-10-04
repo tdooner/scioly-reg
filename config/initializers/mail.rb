@@ -7,4 +7,3 @@ ActionMailer::Base.smtp_settings = {
   :password       => ENV['MANDRILL_APIKEY'],
   :domain         => 'sciolyreg.org'
 }
-ActionMailer::Base.delivery_method = :smtp

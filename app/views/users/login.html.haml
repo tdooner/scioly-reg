@@ -1,6 +1,7 @@
 - provide :title, 'Login to Foundry'
 .row
-  = form_tag login_users_path(next_path: params[:next_path]), class: 'form-horizontal' do
+  %h3 Log In to Foundry
+  = form_tag session_path(next_path: params[:next_path]), class: 'form-horizontal' do
     .form-group
       = label_tag :email, 'Email:', class: 'control-label col-md-3'
       .col-md-9
@@ -13,4 +14,7 @@
 
     .row
       .col-md-9.col-md-offset-3
-        = submit_tag "Log In!", :class=>"btn btn-primary"
+        = submit_tag 'Log In!', class: 'btn btn-primary'
+        - if @current_tournament.present?
+          = link_to 'Forgot Email', new_forgotten_email_path, class: 'btn'
+        = link_to 'Forgot Password', new_password_reset_path, class: 'btn'

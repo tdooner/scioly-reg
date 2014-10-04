@@ -44,10 +44,20 @@ Scioly::Application.routes.draw do
     end
   end
 
-  resources :users do
+  resource :session, only: %i[create destroy]
+
+  resources :users, id: /\d+/ do
     collection do
-      match 'login', via: [:get, :post]
-      get 'logout'
+      resources :forgotten_email, only: %i[new] do
+        post 'show', on: :collection
+      end
+
+      resources :password_reset, only: %i[create new] do
+        get 'choose_password', on: :collection
+        post 'set_new_password', on: :collection
+      end
+
+      get 'login'
     end
   end
 

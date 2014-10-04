@@ -1,6 +1,8 @@
 require 'digest/sha1'
 
 class Team < ActiveRecord::Base
+  include AdministrationExtension
+
   validates_length_of :password, :minimum => 5, :if => :password_validation_required?
   validates_presence_of :number
   validates_presence_of :tournament_id

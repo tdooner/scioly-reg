@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  layout 'no_school', except: :login
+  layout 'no_school', only: %i[new]
 
   def new
   end
@@ -29,31 +29,11 @@ class UsersController < ApplicationController
   end
 
   def login
-    if request.post?
-      u = User.authenticate(params[:email], params[:password])
-      if u.nil?
-        flash[:error] = "Invalid Email or Password"
-      else
-        session[:user_id] = u.id
+    @teams = @current_tournament.teams if @current_tournament
 
-        if params[:next_path] && params[:next_path] !~ /\/\//
-          redirect_to params[:next_path]
-        elsif @current_school && u.administrates?(@current_school)
-          redirect_to admin_index_url
-        else
-          redirect_to root_path
-        end
-      end
-    else
-      if request.subdomain.blank?
-        render layout: 'no_school'
-      end
+    if request.subdomain.blank?
+      render layout: 'no_school'
     end
-  end
-
-  def logout
-    session.delete(:user_id)
-    redirect_to :root
   end
 
 private

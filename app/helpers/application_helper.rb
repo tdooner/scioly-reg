@@ -5,7 +5,7 @@ module ApplicationHelper
       'main' => [
              ['Home', root_path],
              ['Events', schedules_path, -> { params[:controller] == 'schedules' }],
-        -> { ['Login', login_teams_path] unless @team }
+        -> { ['Login', login_users_path] unless @team }
       ],
 
       'team' => [
