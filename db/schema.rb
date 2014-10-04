@@ -13,6 +13,12 @@
 
 ActiveRecord::Schema.define(version: 20140403061510) do
 
+  create_table "administrations", force: true do |t|
+    t.integer "user_id"
+    t.integer "administrates_id"
+    t.string  "administrates_type"
+  end
+
   create_table "default_events", force: true do |t|
     t.integer  "year"
     t.string   "name"
@@ -44,6 +50,7 @@ ActiveRecord::Schema.define(version: 20140403061510) do
     t.text     "custom_info",      default: ""
     t.time     "starttime"
     t.time     "endtime"
+    t.string   "slug"
   end
 
   add_index "schedules", ["tournament_id"], name: "index_schedules_on_tournament_id"
@@ -139,17 +146,16 @@ ActiveRecord::Schema.define(version: 20140403061510) do
     t.string   "title"
     t.datetime "date"
     t.boolean  "append_division_to_team_number", default: true
+    t.string   "divisions"
   end
 
   add_index "tournaments", ["school_id", "is_current"], name: "index_tournaments_on_school_id_and_is_current"
 
   create_table "users", force: true do |t|
-    t.integer "role",            default: 0
-    t.integer "school_id"
-    t.string  "email"
-    t.string  "hashed_password"
+    t.string "email"
+    t.string "hashed_password"
   end
 
-  add_index "users", ["school_id", "email", "hashed_password"], name: "index_users_on_school_id_and_email_and_hashed_password"
+  add_index "users", ["email", "hashed_password"], name: "index_users_on_school_id_and_email_and_hashed_password"
 
 end

@@ -10,7 +10,7 @@ class Tournament < ActiveRecord::Base
 
   belongs_to :school
 
-  validates_presence_of :date, :school_id
+  validates_presence_of :date, :school_id, :divisions
 
   AVAILABLE_DIVISIONS = ['A', 'B', 'C']
 
