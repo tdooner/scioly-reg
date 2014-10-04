@@ -17,10 +17,6 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 gem 'turbolinks'
 gem 'newrelic_rpm'
-gem 'sass'
-gem 'sass-rails'
-gem 'uglifier'
-gem 'yui-compressor'
 
 group :production do
   gem 'pg'

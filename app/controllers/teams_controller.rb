@@ -70,15 +70,6 @@ class TeamsController < ApplicationController
   end
 
   def login
-    if session[:loginattempts].nil?
-        session[:loginattempts] = 0
-        session[:showedcaptcha] = false
-    end
-    @captcha = false
-    if session[:loginattempts] > 3
-        @captcha = true
-    end
-
     team_arel = @current_tournament.teams.includes(:tournament).order(:name)
     team_arel = team_arel.where(division: params[:division]) if params[:division].present?
     @teams = team_arel.load
@@ -86,28 +77,12 @@ class TeamsController < ApplicationController
     if @team
       flash[:error] = "Already logged in!"
     end
+
     if request.post?
-      if @captcha == true and session[:showedcaptcha] == true
-        if not verify_recaptcha()
-          flash[:error] = "Incorrect Image Verification"
-          return
-        end
-      end
-      session[:loginattempts] += 1
-      if params[:password].nil?
-        params[:password] = ""
-      end
-      if params[:is_admin] != "false"
-        # Do it.
-        flash[:message] = "<img src='http://i0.kym-cdn.com/photos/images/original/000/096/044/trollface.jpg?1296494117'>"
-        @mixpanel.track("Changed is_admin", {:team_id => params[:team][:id], :ip => request.remote_ip})
-        return redirect_to login_teams_path
-      end
       if team = Team.authenticate(params[:team][:id], params[:password])
         @mixpanel.track("Login", {:team => team.name, :admin=>"false", :failed => "false"})
         session[:team] = team.id
         flash[:message] = "Logged in!"
-        session[:loginattempts] = nil
         return redirect_to :root
       else
         # If the user is logged in as an admin
@@ -115,17 +90,12 @@ class TeamsController < ApplicationController
             team = Team.find(params[:team][:id])
             @mixpanel.track("Login", {:team => team.name, :admin=>"true", :failed => "false"})
             session[:team] = team.id
-            session[:loginattempts] = nil
             return redirect_to :root
         end
         @mixpanel.track("Login", {:team => Team.find_by_id(params[:team][:id]).name, :admin => "false", :failed => "true"})
         flash[:error] = "Incorrect Password For Selected Team"
         return redirect_to login_teams_path
       end
-    end
-
-    if @captcha == true
-      session[:showedcaptcha] = true
     end
   end
 
