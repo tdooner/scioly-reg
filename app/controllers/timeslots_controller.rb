@@ -38,7 +38,7 @@ private
   end
 
   def verify_admin_can_edit
-    redirect_to root_url unless @current_admin.can_edit?(@timeslot.schedule)
+    redirect_to root_url unless @current_user.can_edit?(@timeslot.schedule)
   end
 
   def timeslot_params

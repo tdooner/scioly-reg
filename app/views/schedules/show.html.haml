@@ -52,7 +52,7 @@
           %th{:style=>"width:49%"} Availability
           - if @team && @team.can_register_for_event?(@schedule)
             %th Sign Up
-          - if @current_admin.try(:can_edit?, @schedule)
+          - if @current_user.try(:can_edit?, @schedule)
             %th{:width=>"16px"}
             %th{:width=>"16px"}
         - @allslots.each do |ts|

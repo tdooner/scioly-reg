@@ -24,38 +24,10 @@
     .col-md-9
       = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, {}, class: 'form-control'
 
-  .form-group
-    .col-md-9
+  %p.alert.alert-warning To make any changes, you must enter your password:
 
   .form-group
-    %label.col-md-3.control-label Administrators:
-    .col-md-9
-      %table
-        %thead
-          %th Email Address
-          %th Delete This User
-        %tbody
-          -@admins.each do |a|
-            %tr
-              %td=a.email
-              %td
-                - if a.email != @current_school.admin_email
-                  =check_box_tag "delete[]", a.id
-                - else
-                  =check_box_tag "cantdelete", a.id, false, :disabled => "true", :title=>"You cannot delete the primary contact!"
-
-  .form-group
-    %label.col-md-3.control-label Add Administrator:
-    .col-md-9
-      = text_field_tag :new_user, '', placeholder: 'Email', class: 'form-control'
-      = password_field_tag :new_user_password, '', placeholder: 'Password', class: 'form-control'
-      = password_field_tag :new_user_password_confirmation, '',
-        placeholder: 'Confirm Password', class: 'form-control'
-
-  %p.alert.alert-warning To make any changes, you must enter your password again:
-
-  .form-group
-    = label :current_password, "Current Password:", class: 'col-md-3 control-label'
+    = label :current_password, "Password:", class: 'col-md-3 control-label'
     .col-md-9
       = password_field_tag :current_password, '', class: 'form-control'
 

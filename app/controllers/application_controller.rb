@@ -12,8 +12,6 @@ class ApplicationController < ActionController::Base
                       nil
                     end if session[:user_id]
 
-    @current_admin = @current_user # TODO KILL THIS IT IS BAD
-
     if @subdomain.present?
       @current_school = School.where(:subdomain => @subdomain).first
       setup_application if @current_school
@@ -40,13 +38,8 @@ class ApplicationController < ActionController::Base
     @all_schedules = Hash.new([])
     @all_schedules.merge!(schedules_scope.group_by(&:division))
 
-    @is_admin = !!@current_admin.try(:administers?, @current_school)
-
-    if @team
-      @dont_forget = @team.unregistered_events
-    end
-
-    @dont_forget ||= nil
+    @is_admin = @current_user.administers? @current_school if @current_user
+    @dont_forget = @team.unregistered_events if @team
 
     Time.zone = @current_school.time_zone
   end

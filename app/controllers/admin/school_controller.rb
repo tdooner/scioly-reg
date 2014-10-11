@@ -9,8 +9,7 @@ class Admin::SchoolController < ApplicationController
 
   def update
     unless params[:current_password].present? &&
-      User.authenticate(@current_admin.email,
-                        params[:current_password]) == @current_admin
+      User.authenticate(@current_user.email, params[:current_password]) == @current_user
       flash[:error] = "Incorrect Password!"
       return redirect_to admin_school_edit_url
     end
@@ -19,15 +18,7 @@ class Admin::SchoolController < ApplicationController
     if params[:delete]
       params[:delete].each do |i|
         u = User.find(i)
-        u.delete if @current_admin.can_delete?(u)
-      end
-    end
-
-    if !params[:new_user].empty?
-      u = @current_school.users.new(user_params)
-
-      if !u.save
-        flash[:error] = "Could not create user: #{u.errors.full_messages.first}"
+        u.delete if @current_user.can_delete?(u)
       end
     end
 

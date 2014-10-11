@@ -26,9 +26,9 @@
         %td=t.getNumber
         %td.states
           - if t.qualified
-            = link_to "Qualified!", admin_qualify_team_path(t), :class=>"btn success"
+            = link_to "Qualified!", admin_team_qualify_path(t), :class=>"btn success"
           - else
-            = link_to "Didn't Qualify", admin_qualify_team_path(t), :class=>"btn"
+            = link_to "Didn't Qualify", admin_team_qualify_path(t), :class=>"btn"
 
 - content_for :javascripts do
   :javascript

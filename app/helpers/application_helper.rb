@@ -29,7 +29,7 @@ module ApplicationHelper
       if @team
         render_nav_section(type, @site_navigation[request.subdomain]['team'], @team.coach)
       end,
-      if @current_admin
+      if @is_admin
         render_nav_section(type, @site_navigation[request.subdomain]['admin'], 'Admin Panel', admin_index_path)
       end,
     ].join.html_safe
