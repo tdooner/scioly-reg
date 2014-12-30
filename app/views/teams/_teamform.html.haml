@@ -36,6 +36,10 @@
         .input
           = f.select(:division, [['A', 'A'], ['B', 'B'], ['C', 'C']])
       .clearfix
+        =f.label :division, "Homeroom:"
+        .input
+          = f.text_field :homeroom
+      .clearfix
         =f.label :password, "Password:"
         .input
           = f.password_field :password

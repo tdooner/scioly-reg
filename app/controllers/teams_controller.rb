@@ -21,7 +21,7 @@ class TeamsController < ApplicationController
     user_attributes =
       [:coach, :email, :password_existing, :password, :password_confirmation]
     admin_attributes =
-      [:name, :number, :division]
+      [:name, :number, :division, :homeroom]
 
     @valid_attributes = params[:team].select do |k,_|
       user_attributes.include?(k.to_sym) ||

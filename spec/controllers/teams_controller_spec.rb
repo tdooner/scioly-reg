@@ -79,6 +79,7 @@ describe TeamsController do
           'team' => {
             'coach' => 'ghijkl',
             'division' => 'D',
+            'homeroom' => 'foobar',
           }
         }
       end
@@ -92,7 +93,9 @@ describe TeamsController do
 
       it 'changes protected attributes' do
         post :update, form_data
-        team.reload.division.should == form_data['team']['division']
+        team.reload
+        team.division.should == form_data['team']['division']
+        team.homeroom.should == form_data['team']['homeroom']
       end
 
       context "when send_email is not present" do
