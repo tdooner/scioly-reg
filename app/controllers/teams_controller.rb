@@ -135,7 +135,7 @@ class TeamsController < ApplicationController
   def create
     @this_team = Team.new(params.fetch(:team, {}).permit(:name, :coach, :email,
                                                          :password, :division,
-                                                         :number))
+                                                         :number, :homeroom))
     @this_team.tournament = @current_tournament
     if @this_team.save
         flash[:message] = "Done!"
