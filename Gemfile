@@ -35,13 +35,12 @@ group :assets do
 end
 
 group :test do
-    gem 'factory_girl_rails'
-    gem 'rspec-rails'
-    gem 'faker'
-    gem 'timecop'
-    gem 'mocha', require: false
-    gem 'capybara'
-    gem 'pry-byebug'
+  gem 'factory_girl_rails'
+  gem 'rspec-rails'
+  gem 'faker'
+  gem 'timecop'
+  gem 'mocha', require: false
+  gem 'capybara'
 end
 gem "parallel_tests"
 
@@ -61,5 +60,5 @@ gem "parallel_tests"
 # and rake tasks are available in development mode:
 group :development do
   gem 'pry-byebug'
-  gem 'sqlite3-ruby', :require => 'sqlite3'
+  gem 'sqlite3'
 end
