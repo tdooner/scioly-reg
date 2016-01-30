@@ -12,6 +12,7 @@ class TournamentsController < ApplicationController
         copy_tournament = Tournament.find_by(id: params[:copy_tournament_id])
         @tournament.schedules = copy_tournament.schedules.map do |old_schedule|
           old_schedule.dup.tap do |new_schedule|
+            new_schedule.tournament_id = nil
             new_schedule.scores_withheld = false
           end
         end
