@@ -4,14 +4,27 @@ class TournamentsController < ApplicationController
   protect_from_forgery :except => :destroy
 
   def create
-    @tournament = Tournament.new(tournament_params)
-    @tournament.school = @current_school
-    @tournament.save()
+    Tournament.transaction do
+      @tournament = Tournament.new(tournament_params)
+      @tournament.school = @current_school
+
+      if params[:copy_tournament_id]
+        copy_tournament = Tournament.find_by(id: params[:copy_tournament_id])
+        @tournament.schedules = copy_tournament.schedules.map do |old_schedule|
+          old_schedule.dup.tap do |new_schedule|
+            new_schedule.scores_withheld = false
+          end
+        end
+      end
+
+      @tournament.save
+    end
+
     redirect_to :tournaments
   end
 
   def new
-    @tournament = Tournament.new()
+    @tournament = @current_school.tournaments.new
     breadcrumbs.add("New Tournament")
   end
 

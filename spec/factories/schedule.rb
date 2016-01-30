@@ -5,6 +5,7 @@ FactoryGirl.define do
     room 'Crawford 111'
     starttime { tournament.date + 4.hours }
     endtime { tournament.date + 4.hours + 50.minutes }
+    scores_withheld false
 
     tournament
 

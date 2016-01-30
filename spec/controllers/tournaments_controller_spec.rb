@@ -3,6 +3,60 @@ require 'spec_helper'
 describe TournamentsController do
   render_views
 
+  describe '#new' do
+    let(:tournament) { FactoryGirl.create(:tournament, :current) }
+
+    subject { get :new }
+
+    include_context 'as an admin of the tournament'
+
+    it 'renders' do
+      subject
+      expect(response).to be_success
+    end
+
+    it 'offers to copy the schedule' do
+      subject
+      expect(response.body).to match(/copy schedule/i)
+    end
+  end
+
+  describe '#create' do
+    let(:tournament) { FactoryGirl.create(:tournament, :current) }
+    include_context 'as an admin of the tournament'
+
+    let(:params) do
+      {
+        'tournament' => {
+          'date' => '2016-01-01',
+          'registration_begins' => '2015-12-01 00:00:00',
+          'registration_ends' => '2015-12-15 00:00:00',
+        }
+      }
+    end
+
+    subject { post :create, params }
+
+    it 'creates the tournament' do
+      expect { subject }
+        .to change { Tournament.count }.by(1)
+    end
+
+    describe 'with copy_tournament_id' do
+      let(:params) { super().tap { |p| p['copy_tournament_id'] = tournament.id } }
+      let!(:schedules) do
+        5.times.map { FactoryGirl.create(:schedule, tournament: tournament, scores_withheld: true) }
+      end
+
+      it 'copies the schedules to the new tournament' do
+        subject
+        new_tournament = assigns(:tournament)
+        expect(new_tournament.schedules.length).to eq(tournament.schedules.length)
+        expect(new_tournament.schedules).to be_none(&:scores_withheld)
+      end
+    end
+  end
+
   describe '#destroy' do
     context 'with only one tournament' do
       let(:tournament) { FactoryGirl.create(:tournament, :current) }
