@@ -17,6 +17,10 @@ class TournamentsController < ApplicationController
         end
       end
 
+      unless @tournament.valid?
+        flash[:error] = "Error: #{@tournament.errors.full_messages.first}"
+      end
+
       @tournament.save
     end
 
