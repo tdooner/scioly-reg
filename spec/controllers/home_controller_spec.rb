@@ -1,6 +1,20 @@
 require 'spec_helper'
 
 describe HomeController do
+  render_views
+
+  describe '#index' do
+    let(:tournament) { FactoryGirl.create(:current_tournament) }
+    before { request.host = "#{tournament.school.subdomain}.lvh.me" }
+
+    subject { get :index }
+
+    it 'renders' do
+      subject
+      expect(response).to be_success
+    end
+  end
+
   describe 'createschool action' do
     before do
       HomeMailer.stubs(:welcome).returns(stub(:deliver => ''))

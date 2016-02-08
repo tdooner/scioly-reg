@@ -140,4 +140,13 @@ describe Schedule do
       it { should be_false }
     end
   end
+
+  describe 'division validation' do
+    let(:invalid_schedule) { FactoryGirl.build(:schedule, division: 'AB')  }
+
+    it 'disallows multiple-letter divisions' do
+      expect { invalid_schedule.save }.not_to change { Schedule.count }
+      expect(invalid_schedule.errors.full_messages).to include(match(/division/i))
+    end
+  end
 end

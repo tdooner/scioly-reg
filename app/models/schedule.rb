@@ -1,6 +1,7 @@
 class Schedule < ActiveRecord::Base
   validates_presence_of :event, :division
   validates_uniqueness_of :event, :scope => [:division, :tournament_id]
+  validates_format_of :division, with: /\A#{Tournament::VALID_DIVISIONS}\Z/
 
   attr_accessor :num_timeslots, :teams_per_slot
 

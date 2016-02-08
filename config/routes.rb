@@ -43,7 +43,7 @@ Scioly::Application.routes.draw do
       get 'all_pdfs'
       get 'batchnew' => "schedules#batchnew"
       post 'batchnew' => "schedules#batchcreate"
-      get ':division' => "schedules#index", as: 'division', constraints: { division: /[A-Z]/ }
+      get ':division' => "schedules#index", as: 'division', constraints: { division: Tournament::VALID_DIVISIONS }
     end
   end
 

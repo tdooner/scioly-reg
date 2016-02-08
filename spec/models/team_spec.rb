@@ -75,11 +75,11 @@ describe Team do
     end
     let!(:schedule_other_division) do
       FactoryGirl.create(:schedule, :with_timeslots,
-                         division: "not #{team.division}",
+                         division: (('A'..'Z').to_a - [team.division]).sample,
                          tournament: team.tournament)
     end
     let!(:schedule_no_timeslots) do
-      FactoryGirl.create(:schedule, division: "not #{team.division}",
+      FactoryGirl.create(:schedule, division: (('A'..'Z').to_a - [team.division]).sample,
                                     tournament: team.tournament)
     end
 

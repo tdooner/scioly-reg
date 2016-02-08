@@ -1,4 +1,6 @@
 class Tournament < ActiveRecord::Base
+  VALID_DIVISIONS = /[A-Z]/
+
   has_many :teams
   has_many :schedules
   has_attached_file :homepage_photo,
@@ -33,7 +35,8 @@ class Tournament < ActiveRecord::Base
   end
 
   def divisions
-    @divisions ||= schedules.map(&:division).uniq.sort
+    @divisions ||=
+      schedules.map(&:division).find_all { |d| d =~ VALID_DIVISIONS }.uniq.sort
   end
 
   def has_registration_begun?
