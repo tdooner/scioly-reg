@@ -68,12 +68,15 @@ class Schedule < ActiveRecord::Base
     "#{self.event} (#{self.division})"
   end
 
+  # TODO: Store the full timestamp to the event start time in the database.
   def times
+    offset = Time.zone.now.formatted_offset
+
     @times ||= {
-      :start => (starttime && starttime.in_time_zone.strftime("%l:%M %P")) || 'TBD',
-      :start_excel => (starttime && starttime.in_time_zone.strftime("%T")) || 'TBD',
-      :end => (endtime && endtime.in_time_zone.strftime("%l:%M %P")) || 'TBD',
-      :end_excel => (endtime && endtime.in_time_zone.strftime("%T")) || 'TBD',
+      start: (starttime && starttime.localtime(offset).strftime("%l:%M %P")) || 'TBD',
+      start_excel: (starttime && starttime.localtime(offset).strftime("%T")) || 'TBD',
+      end: (endtime && endtime.localtime(offset).strftime("%l:%M %P")) || 'TBD',
+      end_excel: (endtime && endtime.localtime(offset).strftime("%T")) || 'TBD',
     }
   end
 
