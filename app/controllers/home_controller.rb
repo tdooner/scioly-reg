@@ -21,7 +21,7 @@ class HomeController < ApplicationController
   end
 
   def createschool
-    @school = School.new(params.fetch(:school, {}).permit(:name, :time_zone, :admin_name, :admin_email, :subdomain))
+    @school = School.new(school_params)
 
     @director = User.new(params.fetch(:tournament_director, {}).permit(:password))
     @director.email = params[:school][:admin_email]
@@ -72,6 +72,11 @@ class HomeController < ApplicationController
   end
 
   private
+
+  def school_params
+    params.fetch(:school, {})
+      .permit(:name, :time_zone, :admin_name, :admin_email, :subdomain, :logo)
+  end
 
   def signup
     breadcrumbs.add("Welcome!")
