@@ -8,7 +8,7 @@ class TournamentsController < ApplicationController
       @tournament = Tournament.new(tournament_params)
       @tournament.school = @current_school
 
-      if params[:copy_tournament_id]
+      if params[:copy_tournament_id].present?
         copy_tournament = Tournament.find_by(id: params[:copy_tournament_id])
         @tournament.schedules = copy_tournament.schedules.map do |old_schedule|
           old_schedule.dup.tap do |new_schedule|
