@@ -1,26 +1,26 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    actionmailer (4.0.2)
-      actionpack (= 4.0.2)
-      mail (~> 2.5.4)
-    actionpack (4.0.2)
-      activesupport (= 4.0.2)
+    actionmailer (4.0.13)
+      actionpack (= 4.0.13)
+      mail (~> 2.5, >= 2.5.4)
+    actionpack (4.0.13)
+      activesupport (= 4.0.13)
       builder (~> 3.1.0)
       erubis (~> 2.7.0)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
-    activemodel (4.0.2)
-      activesupport (= 4.0.2)
+    activemodel (4.0.13)
+      activesupport (= 4.0.13)
       builder (~> 3.1.0)
-    activerecord (4.0.2)
-      activemodel (= 4.0.2)
+    activerecord (4.0.13)
+      activemodel (= 4.0.13)
       activerecord-deprecated_finders (~> 1.0.2)
-      activesupport (= 4.0.2)
+      activesupport (= 4.0.13)
       arel (~> 4.0.0)
-    activerecord-deprecated_finders (1.0.3)
-    activesupport (4.0.2)
-      i18n (~> 0.6, >= 0.6.4)
+    activerecord-deprecated_finders (1.0.4)
+    activesupport (4.0.13)
+      i18n (~> 0.6, >= 0.6.9)
       minitest (~> 4.2)
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
@@ -29,8 +29,7 @@ GEM
     airbrake (5.1.0)
       airbrake-ruby (~> 1.1)
     airbrake-ruby (1.2.0)
-    arel (4.0.1)
-    atomic (1.1.14)
+    arel (4.0.2)
     aws-s3 (0.6.3)
       builder
       mime-types
@@ -86,18 +85,19 @@ GEM
       rack (~> 1.5.0)
     hike (1.2.3)
     htmlentities (4.3.1)
-    i18n (0.6.9)
+    i18n (0.8.1)
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.8.6)
     kgio (2.11.0)
-    mail (2.5.4)
-      mime-types (~> 1.16)
-      treetop (~> 1.4.8)
+    mail (2.6.4)
+      mime-types (>= 1.16, < 4)
     metaclass (0.0.2)
     method_source (0.8.2)
-    mime-types (1.25.1)
+    mime-types (3.1)
+      mime-types-data (~> 3.2015)
+    mime-types-data (3.2016.0521)
     mini_portile (0.5.2)
     minitest (4.7.5)
     mixpanel (4.1.1)
@@ -106,7 +106,7 @@ GEM
       rack
     mocha (1.0.0)
       metaclass (~> 0.0.1)
-    multi_json (1.11.2)
+    multi_json (1.12.1)
     newrelic_rpm (3.6.6.147)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
@@ -119,7 +119,6 @@ GEM
     parallel_tests (0.16.8)
       parallel
     pg (0.17.1)
-    polyglot (0.3.3)
     premailer (1.8.0)
       css_parser (>= 1.3.5)
       htmlentities (>= 4.0.0)
@@ -133,29 +132,29 @@ GEM
     pry-byebug (1.3.2)
       byebug (~> 2.7)
       pry (~> 0.9.12)
-    rack (1.5.2)
-    rack-test (0.6.2)
+    rack (1.5.5)
+    rack-test (0.6.3)
       rack (>= 1.0)
-    rails (4.0.2)
-      actionmailer (= 4.0.2)
-      actionpack (= 4.0.2)
-      activerecord (= 4.0.2)
-      activesupport (= 4.0.2)
+    rails (4.0.13)
+      actionmailer (= 4.0.13)
+      actionpack (= 4.0.13)
+      activerecord (= 4.0.13)
+      activesupport (= 4.0.13)
       bundler (>= 1.3.0, < 2.0)
-      railties (= 4.0.2)
-      sprockets-rails (~> 2.0.0)
+      railties (= 4.0.13)
+      sprockets-rails (~> 2.0)
     rails_12factor (0.0.2)
       rails_serve_static_assets
       rails_stdout_logging
     rails_serve_static_assets (0.0.2)
     rails_stdout_logging (0.0.3)
-    railties (4.0.2)
-      actionpack (= 4.0.2)
-      activesupport (= 4.0.2)
+    railties (4.0.13)
+      actionpack (= 4.0.13)
+      activesupport (= 4.0.13)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     raindrops (0.12.0)
-    rake (10.1.1)
+    rake (12.0.0)
     rdiscount (2.1.7)
     recaptcha (0.3.6)
     rspec-core (2.14.7)
@@ -176,7 +175,7 @@ GEM
       sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
     slop (3.4.7)
-    sprockets (2.10.1)
+    sprockets (2.12.4)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
@@ -186,17 +185,13 @@ GEM
       activesupport (>= 3.0)
       sprockets (~> 2.8)
     sqlite3 (1.3.13)
-    thor (0.18.1)
-    thread_safe (0.1.3)
-      atomic
+    thor (0.19.4)
+    thread_safe (0.3.6)
     tilt (1.4.1)
     timecop (0.7.1)
-    treetop (1.4.15)
-      polyglot
-      polyglot (>= 0.3.1)
     turbolinks (2.2.0)
       coffee-rails
-    tzinfo (0.3.38)
+    tzinfo (0.3.52)
     uglifier (2.4.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
@@ -237,7 +232,7 @@ DEPENDENCIES
   pg
   premailer-rails
   pry-byebug
-  rails (= 4.0.2)
+  rails (= 4.0.13)
   rails_12factor
   rdiscount
   recaptcha
@@ -254,7 +249,7 @@ DEPENDENCIES
   yui-compressor
 
 RUBY VERSION
-   ruby 2.4.0p0
+   ruby 2.3.0p0
 
 BUNDLED WITH
    1.14.6
