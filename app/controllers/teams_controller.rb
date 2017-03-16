@@ -15,17 +15,6 @@ class TeamsController < ApplicationController
     breadcrumbs.add("Edit Team #" + @this_team.getNumber())
   end
 
-  def team_user_attributes
-    params.fetch(:team, {})
-      .permit(:coach, :email, :password_existing, :password, :password_confirmation)
-  end
-
-  def team_admin_attributes
-    params.fetch(:team, {})
-      .permit(:coach, :email, :password_existing, :password, :password_confirmation,
-        :name, :number, :division, :homeroom)
-  end
-
   def update
     @this_team = Team.find(params[:id])
 
@@ -275,5 +264,16 @@ private
     end
 
     [teams, errors]
+  end
+
+  def team_user_attributes
+    params.fetch(:team, {})
+      .permit(:coach, :email, :password_existing, :password, :password_confirmation)
+  end
+
+  def team_admin_attributes
+    params.fetch(:team, {})
+      .permit(:coach, :email, :password_existing, :password, :password_confirmation,
+        :name, :number, :division, :homeroom)
   end
 end
