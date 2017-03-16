@@ -15,22 +15,23 @@ class TeamsController < ApplicationController
     breadcrumbs.add("Edit Team #" + @this_team.getNumber())
   end
 
+  def team_user_attributes
+    params.fetch(:team, {})
+      .permit(:coach, :email, :password_existing, :password, :password_confirmation)
+  end
+
+  def team_admin_attributes
+    params.fetch(:team, {})
+      .permit(:coach, :email, :password_existing, :password, :password_confirmation,
+        :name, :number, :division, :homeroom)
+  end
+
   def update
     @this_team = Team.find(params[:id])
 
-    user_attributes =
-      [:coach, :email, :password_existing, :password, :password_confirmation]
-    admin_attributes =
-      [:name, :number, :division, :homeroom]
-
-    @valid_attributes = params[:team].select do |k,_|
-      user_attributes.include?(k.to_sym) ||
-      (@is_admin && admin_attributes.include?(k.to_sym))
-    end.with_indifferent_access
-
     # First, verify the password entered if necessary...
     if !@is_admin
-      if Team.encrypt(@valid_attributes[:password_existing]) != @this_team.hashed_password
+      if Team.encrypt(params[:team][:password_existing]) != @this_team.hashed_password
         flash[:error] = "Current password is incorrect!"
         return redirect_to(edit_team_url(params[:id]))
       end
@@ -39,25 +40,25 @@ class TeamsController < ApplicationController
     # Then handle changing the password if the user desires
     # TODO: Bug: Move this below update_attributes so if an admin changes both
     # the password and the email, the password email is sent to the right place.
-    if @valid_attributes[:password].present?
+    if params[:team][:password].present?
       if @is_admin
-        @this_team.password = @valid_attributes[:password]
+        @this_team.password = params[:team][:password]
         if params[:send_email].present? && @this_team.email.present?
           TeamMailer.password_update(@this_team, params[:team][:password]).deliver
         end
-      elsif @valid_attributes[:password] == @valid_attributes[:password_confirmation]
-        @this_team.password = @valid_attributes[:password]
+      elsif params[:team][:password] == params[:team][:password_confirmation]
+        @this_team.password = params[:team][:password]
       else
         flash[:error] = "Passwords do not match!"
         return redirect_to(edit_team_url(params[:id]))
       end
     else
-      @valid_attributes.delete(:password)
-      @valid_attributes.delete(:password_confirmation)
+      params[:team].delete(:password)
+      params[:team].delete(:password_confirmation)
     end
 
     # Commit!
-    if !@this_team.update_attributes(@valid_attributes)
+    if !@this_team.update_attributes(@is_admin ? team_admin_attributes : team_user_attributes)
       flash[:error] = "A save error occurred: " + @this_team.errors.full_messages.first + "."
       @mixpanel.track("Team Update",
         team: @this_team.name,

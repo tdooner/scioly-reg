@@ -41,6 +41,7 @@ group :test do
   gem 'timecop'
   gem 'mocha', require: false
   gem 'capybara'
+  gem 'test-unit'
 end
 gem "parallel_tests"
 
