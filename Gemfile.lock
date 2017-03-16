@@ -253,5 +253,8 @@ DEPENDENCIES
   wkhtmltopdf-binary
   yui-compressor
 
+RUBY VERSION
+   ruby 2.0.0p247
+
 BUNDLED WITH
-   1.11.2
+   1.14.6

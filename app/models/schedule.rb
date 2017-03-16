@@ -9,18 +9,6 @@ class Schedule < ActiveRecord::Base
   has_many :scores
   belongs_to :tournament
 
-  composed_of :starttime_in_time_zone,
-    :class_name => 'DateTime',
-    :mapping => %w(DateTime to_s),
-    :constructor => Proc.new { |item| item },
-    :converter => Proc.new { |item| item }
-
-  composed_of :endtime_in_time_zone,
-    :class_name => 'DateTime',
-    :mapping => %w(DateTime to_s),
-    :constructor => Proc.new { |item| item },
-    :converter => Proc.new { |item| item }
-
   def updateTimeSlots
     # Currently, the only supported schedule type is even divisions of time... e.g.
     #  StartTime = 9am, EndTime = 10am, timeslots = 4
@@ -70,13 +58,11 @@ class Schedule < ActiveRecord::Base
 
   # TODO: Store the full timestamp to the event start time in the database.
   def times
-    offset = Time.zone.now.formatted_offset
-
     @times ||= {
-      start: (starttime && starttime.localtime(offset).strftime("%l:%M %P")) || 'TBD',
-      start_excel: (starttime && starttime.localtime(offset).strftime("%T")) || 'TBD',
-      end: (endtime && endtime.localtime(offset).strftime("%l:%M %P")) || 'TBD',
-      end_excel: (endtime && endtime.localtime(offset).strftime("%T")) || 'TBD',
+      start: (starttime && starttime.strftime("%l:%M %P")) || 'TBD',
+      start_excel: (starttime && starttime.strftime("%T")) || 'TBD',
+      end: (endtime && endtime.strftime("%l:%M %P")) || 'TBD',
+      end_excel: (endtime && endtime.strftime("%T")) || 'TBD',
     }
   end
 
@@ -93,24 +79,6 @@ class Schedule < ActiveRecord::Base
     (!num_timeslots || self.timeslots.count == num_timeslots.to_i)
   end
 
-  # These four methods provide backend glue for the rails form helpers to
-  # display and save the correct start and end times:
-  def starttime_in_time_zone
-    starttime.try(:in_time_zone)
-  end
-
-  def starttime_in_time_zone=(val)
-    self.starttime = Time.zone.local(val.year, val.month, val.day, val.hour, val.minute, val.second)
-  end
-
-  def endtime_in_time_zone
-    endtime.try(:in_time_zone)
-  end
-
-  def endtime_in_time_zone=(val)
-    self.endtime = Time.zone.local(val.year, val.month, val.day, val.hour, val.minute, val.second)
-  end
-
   private
 
   def _initialize_timeslots(num_timeslots, teams_per_slot)
@@ -121,10 +89,11 @@ class Schedule < ActiveRecord::Base
     minutes = (( self.endtime - self.starttime ) / 60 ).round
     slotwidth = (minutes / num_timeslots).floor
 
+    # TODO: https://github.com/tdooner/scioly-reg/issues/12
     num_timeslots.times.map do |i|
       timeslot_begins = self.starttime + slotwidth * 60 * i
       timeslot_ends = timeslot_begins + slotwidth * 60
-      exists = Timeslot.where(
+      Timeslot.where(
         :schedule_id => self.id,
         :begins => timeslot_begins,
         :ends => timeslot_ends,
