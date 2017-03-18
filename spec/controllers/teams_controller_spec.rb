@@ -152,8 +152,9 @@ describe TeamsController do
   end
 
   describe '#batchcreate' do
-    let(:team1_str) { "Nordonia High School\t13\tJohn Doe\tcoach@school.edu\tC\t211\tneur0n\n" }
-    let(:team2_str) { "Nordonia High School 2\t14\tJohn Doe\tcoach@school.edu\tC\t211\tneur0n\n" }
+    let(:nonce) { (Random.rand * 100000).floor }
+    let(:team1_str) { "Nordonia High School #{nonce}\t13\tJohn Doe\tcoach@school.edu\tC\t211\tneur0n\n" }
+    let(:team2_str) { "Nordonia High School #{nonce + 1}\t14\tJohn Doe\tcoach@school.edu\tC\t211\tneur0n\n" }
     let(:params) { { batch: team1_str + team2_str } }
     let(:tournament) { FactoryGirl.create(:current_tournament) }
 
@@ -169,7 +170,7 @@ describe TeamsController do
     it 'sets the right attributes' do
       subject
 
-      team = Team.where(name: 'Nordonia High School').first
+      team = Team.where(name: "Nordonia High School #{nonce}").first
       team.number.should == "13"
       team.coach.should == 'John Doe'
       team.email.should == 'coach@school.edu'
