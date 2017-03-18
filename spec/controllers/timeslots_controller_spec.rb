@@ -41,7 +41,10 @@ describe TimeslotsController do
     it 'updates' do
       post :update, valid_params
 
-      timeslot.reload.begins.should be_within(1).of(new_begin_time)
+      timeslot.reload
+      timeslot.begins.hour.should eq(new_begin_time.hour)
+      timeslot.begins.min.should eq(new_begin_time.min)
+      timeslot.begins.sec.should eq(new_begin_time.sec)
       timeslot.team_capacity.should == new_team_capacity
     end
 

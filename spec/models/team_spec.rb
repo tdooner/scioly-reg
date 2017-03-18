@@ -40,7 +40,7 @@ describe Team do
       end
 
       subject { team.can_register_for_event?(@schedule) }
-      it { should be_true }
+      it { should be_truthy }
     end
 
     context 'when the divisions differ' do
@@ -51,7 +51,7 @@ describe Team do
       end
 
       subject { team.can_register_for_event?(@schedule) }
-      it { should be_false }
+      it { should be_falsy }
     end
 
     context 'when the tournaments differ' do
@@ -63,7 +63,7 @@ describe Team do
       end
 
       subject { team.can_register_for_event?(@schedule) }
-      it { should be_false }
+      it { should be_falsy }
     end
   end
 

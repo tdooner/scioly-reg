@@ -39,13 +39,14 @@ describe Schedule do
 
         it 'should create timeslots that have the correct number of teams' do
           @schedule.timeslots.all? { |t| t.team_capacity == teams_per_slot }.
-            should be_true
+            should be_truthy
         end
 
         it 'produces timeslots only within the start and end times' do
-          @schedule.timeslots.all? do |t|
-            t.begins >= @schedule.starttime && t.ends <= @schedule.endtime
-          end.should be_true
+          @schedule.timeslots.should be_all do |t|
+            t.begins.utc.hour >= @schedule.starttime.utc.hour &&
+              t.ends.utc.hour <= @schedule.endtime.utc.hour
+          end
         end
       end
 
@@ -55,7 +56,7 @@ describe Schedule do
         end
 
         it 'defaults to one team per timeslot' do
-          @schedule.timeslots.all? { |t| t.team_capacity == 1 }.should be_true
+          @schedule.timeslots.all? { |t| t.team_capacity == 1 }.should be_truthy
         end
       end
     end
@@ -88,7 +89,7 @@ describe Schedule do
       end
 
       subject { @schedule.hasTeamRegistered(team.id) }
-      it { should be_true }
+      it { should be_truthy }
     end
 
     context 'when the team has not registered for the event' do
@@ -98,7 +99,7 @@ describe Schedule do
       end
 
       subject { @schedule.hasTeamRegistered(team) }
-      it { should be_false }
+      it { should be_falsy }
     end
   end
 
@@ -110,7 +111,7 @@ describe Schedule do
 
     context 'when no customizations to timeslots have occurred' do
       subject { @schedule.default_timeslots? }
-      it { should be_true }
+      it { should be_truthy }
     end
 
     context 'when one timeslot has a different team capacity' do
@@ -119,7 +120,7 @@ describe Schedule do
       end
 
       subject { @schedule.default_timeslots? }
-      it { should be_false }
+      it { should be_falsy }
     end
 
     context 'when a timeslot has been removed' do
@@ -128,7 +129,7 @@ describe Schedule do
       end
 
       subject { @schedule.default_timeslots? }
-      it { should be_false }
+      it { should be_falsy }
     end
 
     context 'when a timeslot has been added' do
@@ -137,7 +138,7 @@ describe Schedule do
       end
 
       subject { @schedule.default_timeslots? }
-      it { should be_false }
+      it { should be_falsy }
     end
   end
 

@@ -83,7 +83,7 @@ describe TournamentsController do
         it 'sets a previous tournament as the active tournament' do
           expect { delete :destroy, id: current_tournament.id }
             .to change { Tournament.count }.by(-1)
-          old_tournament.reload.is_current.should be_true
+          old_tournament.reload.is_current.should be_truthy
         end
       end
     end

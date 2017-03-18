@@ -23,7 +23,7 @@ describe 'the schedule signup process' do
       end
       click_link 'Register!'
       click_link 'Reserve This Slot!'
-      expect(page).to have_content("Your team is registered in the #{timeslot.begins.strftime("%I:%M %p")} timeslot")
+      expect(page).to have_content("Your team is registered in the #{timeslot.begins.utc.strftime("%I:%M %p")} timeslot")
     end
   end
 end
