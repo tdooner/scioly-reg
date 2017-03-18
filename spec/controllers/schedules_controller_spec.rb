@@ -2,19 +2,43 @@ require 'spec_helper'
 
 describe SchedulesController do
   describe '#show' do
+    render_views
+
     let(:tournament) { FactoryGirl.create(:tournament, :current) }
     let(:schedule) { FactoryGirl.create(:schedule, tournament: tournament) }
 
     before do
       request.host = "#{tournament.school.subdomain}.lvh.me"
-      controller.stubs(:render)
+    end
+
+    describe 'with a timeslot' do
+      let!(:timeslot) do
+        # currently the timeslots are stored as UTC and then we rely on
+        # Time.zone to convert them back for display
+        #
+        # So for a 14:00 timeslot in EST (UTC-5), the database would have 19:00.
+        begins = Time.new(2017, 2, 1, 19, 0, 0, 0)
+        ends = Time.new(2017, 2, 1, 21, 0, 0, 0)
+
+        FactoryGirl.create(:timeslot, schedule: schedule, begins: begins, ends: ends)
+      end
+
+      subject { get :show, id: schedule.id }
+
+      it "converts the timeslot times to the school's timezone" do
+        subject
+
+        begins_human = timeslot.begins.in_time_zone(schedule.tournament.school.time_zone).strftime("%I:%M %p")
+        timeslot_table = Nokogiri::HTML(response.body).xpath('//table[@id="timeslot"]')
+        expect(timeslot_table.text).to include(begins_human)
+        expect(timeslot_table.text).to include('2:00 PM')
+      end
     end
 
     describe 'when requesting a PDF' do
       subject { get :show, id: schedule.id, format: 'pdf' }
 
       it 'redirects as a normal user' do
-        controller.expects(:render).never
         subject
         response.should redirect_to schedule_path(schedule.id)
       end
@@ -23,6 +47,7 @@ describe SchedulesController do
         include_context 'as an admin of the tournament'
 
         it 'calls render with :pdf' do
+          controller.stubs(:render)
           controller.expects(:render).with(has_key(:pdf)).once
           subject
         end

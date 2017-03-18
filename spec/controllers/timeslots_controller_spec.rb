@@ -45,7 +45,7 @@ describe TimeslotsController do
       timeslot.begins.hour.should eq(new_begin_time.hour)
       timeslot.begins.min.should eq(new_begin_time.min)
       timeslot.begins.sec.should eq(new_begin_time.sec)
-      timeslot.team_capacity.should == new_team_capacity
+      timeslot.team_capacity.should eq(new_team_capacity)
     end
 
     context 'when the admin cannot edit the timeslot' do
