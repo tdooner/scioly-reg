@@ -9,6 +9,14 @@ end
 
 ActiveRecord::Base.include_root_in_json = false
 
+Raven.configure do |config|
+  if ENV['SENTRY_DSN']
+    config.dsn = ENV['SENTRY_DSN']
+  elsif ENV['RAILS_ENV'] == 'production'
+    Rails.logger.error "NO VALUE IN ENV['SENTRY_DSN']"
+  end
+end
+
 module Scioly
   class Application < Rails::Application
     # Remove for Rails 4.1:

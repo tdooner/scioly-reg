@@ -12,7 +12,7 @@ gem "aws-sdk"
 gem 'aws-s3'
 gem 'premailer-rails'
 gem 'nokogiri'
-gem 'airbrake'
+gem 'sentry-raven'
 gem 'jquery-rails'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'

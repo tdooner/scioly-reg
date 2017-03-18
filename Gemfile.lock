@@ -26,9 +26,6 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
-    airbrake (5.1.0)
-      airbrake-ruby (~> 1.1)
-    airbrake-ruby (1.2.0)
     arel (4.0.2)
     aws-s3 (0.6.3)
       builder
@@ -77,6 +74,8 @@ GEM
       railties (>= 3.0.0)
     faker (1.2.0)
       i18n (~> 0.5)
+    faraday (0.11.0)
+      multipart-post (>= 1.2, < 3)
     font_assets (0.1.10)
       rack
     haml (4.0.5)
@@ -107,6 +106,7 @@ GEM
     mocha (1.0.0)
       metaclass (~> 0.0.1)
     multi_json (1.12.1)
+    multipart-post (2.0.0)
     newrelic_rpm (3.6.6.147)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
@@ -175,6 +175,8 @@ GEM
       railties (>= 4.0.0, < 5.0)
       sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
+    sentry-raven (2.4.0)
+      faraday (>= 0.7.6, < 1.0)
     slop (3.4.7)
     sprockets (2.12.4)
       hike (~> 1.2)
@@ -215,7 +217,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  airbrake
   aws-s3
   aws-sdk
   breadcrumbs
@@ -242,6 +243,7 @@ DEPENDENCIES
   rspec-rails
   sass
   sass-rails
+  sentry-raven
   sqlite3
   test-unit
   timecop
