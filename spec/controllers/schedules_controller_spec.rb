@@ -17,18 +17,21 @@ describe SchedulesController do
         # Time.zone to convert them back for display
         #
         # So for a 14:00 timeslot in EST (UTC-5), the database would have 19:00.
-        begins = Time.new(2017, 2, 1, 19, 0, 0, 0)
-        ends = Time.new(2017, 2, 1, 21, 0, 0, 0)
+        begins = Time.new(2017, 2, 1, 14, 0, 0, 0)
+        ends = Time.new(2017, 2, 1, 16, 0, 0, 0)
 
         FactoryGirl.create(:timeslot, schedule: schedule, begins: begins, ends: ends)
       end
 
       subject { get :show, id: schedule.id }
 
-      it "converts the timeslot times to the school's timezone" do
+      it 'uses the literal time zone value' do
         subject
 
-        begins_human = timeslot.begins.in_time_zone(schedule.tournament.school.time_zone).strftime("%I:%M %p")
+        # sanity check the time zone
+        expect(timeslot.begins.utc_offset).to eq(0)
+        begins_human = timeslot.begins.strftime("%I:%M %p")
+
         timeslot_table = Nokogiri::HTML(response.body).xpath('//table[@id="timeslot"]')
         expect(timeslot_table.text).to include(begins_human)
         expect(timeslot_table.text).to include('2:00 PM')
