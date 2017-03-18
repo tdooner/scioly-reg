@@ -9,7 +9,6 @@ gem 'recaptcha', :require => "recaptcha/rails"
 gem 'mixpanel'
 gem "paperclip"
 gem "aws-sdk"
-gem 'aws-s3'
 gem 'premailer-rails'
 gem 'nokogiri'
 gem 'sentry-raven'

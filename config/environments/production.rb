@@ -55,9 +55,11 @@ Scioly::Application.configure do
   config.active_support.deprecation = :notify
 
   config.paperclip_defaults = {
-    :s3_credentials => {
-      :access_key_id => ENV['AWS_ACCESS_KEY'],
-      :secret_access_key => ENV['AWS_SECRET_KEY']
-    }, :storage => :s3, :bucket => 'sciolyreg'
+    storage: :s3,
+    s3_credentials: {
+      access_key_id: ENV['AWS_ACCESS_KEY'],
+      secret_access_key: ENV['AWS_SECRET_KEY'],
+    },
+    bucket: 'sciolyreg',
   }
 end
