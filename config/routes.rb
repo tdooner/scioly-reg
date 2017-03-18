@@ -77,5 +77,7 @@ Scioly::Application.routes.draw do
     match "/#{static}" => "home##{static}", via: [:get]
   end
 
+  get '/force-error', to: 'home#force_error'
+
   root :to => "home#index"
 end

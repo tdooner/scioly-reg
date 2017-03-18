@@ -71,6 +71,10 @@ class HomeController < ApplicationController
     end
   end
 
+  def force_error
+    raise 'Testing Error For Sentry'
+  end
+
   private
 
   def school_params
