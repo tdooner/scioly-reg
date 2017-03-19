@@ -5,7 +5,7 @@ gem 'rails', '4.0.13'
 gem 'haml'
 gem 'breadcrumbs'
 gem 'rdiscount'
-gem 'recaptcha', :require => "recaptcha/rails"
+gem 'recaptcha', require: 'recaptcha/rails'
 gem 'mixpanel'
 gem "paperclip"
 gem "aws-sdk"
