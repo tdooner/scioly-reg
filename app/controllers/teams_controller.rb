@@ -89,7 +89,7 @@ class TeamsController < ApplicationController
       end
     end
 
-    flash[:error] = @errors.join("<br />") unless @errors.empty?
+    flash[:error] = @errors.first(3).join("<br />") unless @errors.empty?
 
     if not flash[:error]
       redirect_to teams_url
