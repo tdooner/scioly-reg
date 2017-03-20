@@ -101,4 +101,22 @@ describe Tournament do
       tournament.schedules.reload.pluck(:event).should == [ default_event.name ]
     end
   end
+
+  describe '#human_times' do
+    let(:tournament) { FactoryGirl.create(:tournament) }
+
+    # Keep us in UTC to guard against when Time.zone has not been set
+    around { |ex| Time.use_zone('UTC', &ex) }
+
+    it 'converts to school timezone' do
+      times = tournament.human_times
+      zone = tournament.school.time_zone
+
+      begins_local = tournament.registration_begins.in_time_zone(zone).strftime('%I:%M %p')
+      expect(times[:registration_begins]).to include(begins_local)
+
+      ends_local = tournament.registration_ends.in_time_zone(zone).strftime('%I:%M %p')
+      expect(times[:registration_ends]).to include(ends_local)
+    end
+  end
 end

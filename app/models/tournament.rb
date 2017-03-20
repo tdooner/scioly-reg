@@ -21,16 +21,18 @@ class Tournament < ActiveRecord::Base
     end
   end
 
-  def humanize()
-    return date.strftime("%B %d, %Y")
+  def humanize
+    date.strftime("%B %d, %Y")
   end
 
-  def human_times()
+  def human_times
     format1 = "%B %e, %Y @ %I:%M %p %Z"
+    zone = school.time_zone
+
     {
-      :registration_begins => self.registration_begins.strftime(format1),
-      :registration_ends => self.registration_ends.strftime(format1),
-      :date_filename => date.strftime("%F"),
+      registration_begins: registration_begins.in_time_zone(zone).strftime(format1),
+      registration_ends: registration_ends.in_time_zone(zone).strftime(format1),
+      date_filename: date.strftime("%F"),
     }
   end
 
