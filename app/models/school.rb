@@ -7,6 +7,7 @@ class School < ActiveRecord::Base
   validates_uniqueness_of :subdomain,
     :message => 'is used by another school',
     :case_sensitive => false
+  validates_attachment_content_type :logo, content_type: %w[image/jpg image/jpeg image/png image/gif]
 
   has_many :tournaments
   has_many :users

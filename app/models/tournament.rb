@@ -11,6 +11,7 @@ class Tournament < ActiveRecord::Base
   belongs_to :school
 
   validates_presence_of :date, :school_id
+  validates_attachment_content_type :homepage_photo, content_type: %w[image/jpg image/jpeg image/png image/gif]
 
   def set_current
     return if current?
